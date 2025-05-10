@@ -14,6 +14,25 @@ config/name="Desmanguezados"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SceneManager="*res://Scripts/Autoloads/sceneManager.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
+
+[file_customization]
+
+folder_colors={
+"res://Assets/": "yellow",
+"res://Cenas/": "orange",
+"res://Scripts/": "purple"
+}
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
