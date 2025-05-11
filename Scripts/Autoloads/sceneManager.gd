@@ -14,9 +14,6 @@ func goto_menu():
 	#if level_paths.has(level):
 		#change_scene(level_paths[level])
 
-func goto_result_menu():
-	change_scene(RESULTADO_PATH)
-
 # ------  ---------
 func change_scene(path: String):
 	# Clean up current scene
