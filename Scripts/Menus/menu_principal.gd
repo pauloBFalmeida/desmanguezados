@@ -4,7 +4,7 @@ func _ready() -> void:
 	$GridContainer/ButtonJogar.grab_focus()
 
 func _on_button_jogar_pressed() -> void:
-	SceneManager.change_scene("res://Cenas/Menus/node_2d.tscn")
+	SceneManager.goto_selecao()
 
 func _on_button_config_pressed() -> void:
 	pass

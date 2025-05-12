@@ -1,9 +1,10 @@
 extends Sprite2D
 
-var device_id : int = -1
+var player_id := InputManager.PlayerId.P1
 
 var speed: float = 250.0
 
+# acoes do InputMap
 var action : Dictionary
 
 func _process(delta: float) -> void:
@@ -12,13 +13,13 @@ func _process(delta: float) -> void:
 	global_position += move_dir * delta * speed
 
 func _input(event):
-	## do nothing if device id does not match the assigned id
-	if event.device != device_id:
-		return
-
-	## do nothing if no device id assigned
-	if device_id == -1:
-		return
+	### do nothing if device id does not match the assigned id
+	#if event.device != device_id:
+		#return
+#
+	### do nothing if no device id assigned
+	#if device_id == -1:
+		#return
 	
 	## Process events!
 	if (Input.is_action_just_pressed("x")):

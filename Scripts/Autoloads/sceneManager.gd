@@ -1,14 +1,17 @@
 extends Node
 
-const MENU_PATH = "res://Scenes/Menus/main_menu.tscn"
-const RESULTADO_PATH = "res://Scenes/Menus/result_menu.tscn"
+const MENU_PRINCIPAL_PATH := "res://Cenas/Menus/menuPrincipal.tscn"
+const MENU_SELECAO_PATH := "res://Cenas/Menus/menuSelecao.tscn"
 
 #const level_paths := {
 	#LevelData.Level_t.TUTORIAL: "res://Scenes/Levels/level_Tutorial.tscn",
 #}
 
 func goto_menu():
-	change_scene(MENU_PATH)
+	change_scene(MENU_PRINCIPAL_PATH)
+
+func goto_selecao():
+	change_scene(MENU_SELECAO_PATH)
 
 #func goto_level(level: LevelData.Level_t):
 	#if level_paths.has(level):
