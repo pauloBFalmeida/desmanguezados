@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhv3qjf6ytml5"]
+
+[ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_42x8c"]
+[ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/spawn_jogadores.tscn" id="1_w1eyt"]
+
+[node name="Level_1" type="Node"]
+script = ExtResource("1_42x8c")
+
+[node name="SpawnJogadores" parent="." instance=ExtResource("1_w1eyt")]
+position = Vector2(518, 343)
+
+[editable path="SpawnJogadores"]

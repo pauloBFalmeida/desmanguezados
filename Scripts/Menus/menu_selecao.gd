@@ -6,7 +6,7 @@ extends Control
 @onready var container_leveis := $ScrollContainerLeveis/HBoxContainer
 
 const LEVEIS_REF := [
-	"res://Cenas/Menus/node_2d.tscn"
+	"res://Cenas/Leveis/level_1.tscn"
 ]
 
 var leveis_itens = []
@@ -36,9 +36,6 @@ func _criar_level_itens() -> void:
 		var level_num = leveis_itens.size()
 		btn.text = "Level " + str(level_num)
 	leveis_itens[0].get_node("ButtonStart").grab_focus()
-
-func _on_button_pressed() -> void:
-	SceneManager.change_scene("res://Cenas/Menus/node_2d.tscn")
 
 # --- Controles Conectados ---
 func update_conectados():
