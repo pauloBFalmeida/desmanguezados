@@ -13,11 +13,12 @@ const action_names = [
 	"move_left",
 	"move_right",
 	"move_down",
-	"move_up"
+	"move_up",
+	"action"
 ]
 
-# actions_player[player id] -> acoes[nome da acao (do action_names)] -> nome da acao pro player no InputMap
-var actions_player = {}
+# actionMap_players[player id] -> acoes[nome da acao (do action_names)] -> nome da acao pro player no InputMap
+var actionMap_players = {}
 
 # controles conectados [controle id] -> player id
 var controles_conectados = {}
@@ -33,26 +34,26 @@ func set_default_keyboard() -> void:
 # ----- Adiciona as actionMap para o teclado ----
 func add_keyboard(player_id: PlayerId):
 	# se nao tiver mapa de acoes pro player -> crie
-	if not actions_player.has(player_id):
-		actions_player[player_id] = {}
+	if not actionMap_players.has(player_id):
+		actionMap_players[player_id] = {}
 	# add as acoes do keyboard para esse player
 	var prefix = "key_1_" if player_id == PlayerId.P1 else "key_2_"
 	for action_name in action_names:
 		var ref_name: String = prefix + action_name
-		actions_player[player_id][action_name] = ref_name
+		actionMap_players[player_id][action_name] = ref_name
 
 # ---- Adiciona as actionMap para controle ----
 func add_controller(player_id: PlayerId, device_id: int) -> void:
 	controles_conectados[device_id] = player_id
 	# se nao tiver mapa de acoes pro player -> crie
-	if not actions_player.has(player_id):
-		actions_player[player_id] = {}
+	if not actionMap_players.has(player_id):
+		actionMap_players[player_id] = {}
 	# copia as acoes do controle, especifico do device_id do controle
 	for action_name in action_names:
 		var new_name: String = action_name + "_" +str(device_id)
 		var ref_name: String = "contr_" + action_name
 		_clone_action_controller(ref_name, new_name, device_id)
-		actions_player[player_id][action_name] = new_name
+		actionMap_players[player_id][action_name] = new_name
 	# emite o sinal avisando que foi adicionado um controle
 	emit_signal("controle_added")
 

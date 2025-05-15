@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://dhv3qjf6ytml5"]
+[gd_scene load_steps=6 format=3 uid="uid://dhv3qjf6ytml5"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_42x8c"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/spawn_jogadores.tscn" id="1_w1eyt"]
+[ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Cortar.tscn" id="3_o11j3"]
+[ext_resource type="Texture2D" uid="uid://cvesjtff0f2n6" path="res://icon.svg" id="4_b8hwj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bklhl"]
+radius = 37.0135
 
 [node name="Level_1" type="Node"]
 script = ExtResource("1_42x8c")
@@ -9,4 +14,23 @@ script = ExtResource("1_42x8c")
 [node name="SpawnJogadores" parent="." instance=ExtResource("1_w1eyt")]
 position = Vector2(518, 343)
 
+[node name="Arvore" type="RigidBody2D" parent="." groups=["Marcador"]]
+modulate = Color(0.246201, 0.530814, 0.199596, 1)
+position = Vector2(1113, 145)
+collision_layer = 9
+collision_mask = 0
+gravity_scale = 0.0
+
+[node name="Icon" type="Sprite2D" parent="Arvore"]
+scale = Vector2(0.56, 1.84)
+texture = ExtResource("4_b8hwj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arvore"]
+scale = Vector2(1, 3.16)
+shape = SubResource("CircleShape2D_bklhl")
+
+[node name="Cortar" parent="." groups=["Ferramentas"] instance=ExtResource("3_o11j3")]
+position = Vector2(165, 586)
+
 [editable path="SpawnJogadores"]
+[editable path="Cortar"]

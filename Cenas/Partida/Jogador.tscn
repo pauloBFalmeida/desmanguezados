@@ -1,10 +1,34 @@
-[gd_scene load_steps=3 format=3 uid="uid://c38kt6bogw2mq"]
+[gd_scene load_steps=5 format=3 uid="uid://c38kt6bogw2mq"]
 
 [ext_resource type="Script" uid="uid://wmjg8xw6jhs4" path="res://Scripts/Partida/jogador.gd" id="1_hjt1h"]
 [ext_resource type="Texture2D" uid="uid://cvesjtff0f2n6" path="res://icon.svg" id="2_li7es"]
 
-[node name="Jogador" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hjt1h"]
+size = Vector2(122, 120)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hjt1h"]
+radius = 146.014
+
+[node name="Jogador" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+motion_mode = 1
 script = ExtResource("1_hjt1h")
+speed = 350.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_li7es")
+
+[node name="CollisionCorpo" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hjt1h")
+
+[node name="AreaInteracao" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaInteracao"]
+shape = SubResource("CircleShape2D_hjt1h")
+debug_color = Color(0.466019, 0.766409, 0.908058, 0.258824)
+
+[connection signal="body_entered" from="AreaInteracao" to="." method="_on_area_interacao_body_entered"]
+[connection signal="body_exited" from="AreaInteracao" to="." method="_on_area_interacao_body_exited"]
