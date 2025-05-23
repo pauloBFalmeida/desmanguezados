@@ -1,5 +1,5 @@
 extends Ferramenta
 
 func _ready() -> void:
-	add_to_group("Ferramentas")
+	super()
 	print("cortar criado")

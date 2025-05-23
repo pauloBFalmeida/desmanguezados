@@ -10,3 +10,6 @@ enum Ferramenta_tipo {CORTAR, PLANTAR, LIXO}
 # int da layer [1, 32]
 func get_layer_acao() -> int:
 	return int(log(layer_acao) / log(2)) + 1
+
+func _ready() -> void:
+	add_to_group("Ferramentas")

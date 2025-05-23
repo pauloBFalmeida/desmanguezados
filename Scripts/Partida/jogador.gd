@@ -53,6 +53,7 @@ func acao() -> void:
 	# fazemos a acao sobre o corpo
 	if body.is_in_group("Ferramentas"):
 		pegar_ferramenta(body)
+		bodys_dentro_area.erase(body)
 	elif body.is_in_group("Marcador"):
 		print("usando: ", segurando_ferramenta)
 		print("em: ", body)
@@ -72,6 +73,8 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	add_child(sprite)
 	sprite.scale = Vector2.ONE * 0.4
 	sprite.position = Vector2.ZERO
+	# remove a ferramenta do mapa
+	ferramenta.queue_free()
 
 # ------ Area Interacao -------
 var bodys_dentro_area := {}
