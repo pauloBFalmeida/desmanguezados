@@ -11,6 +11,12 @@ radius = 37.0135
 [node name="Level_1" type="Node"]
 script = ExtResource("1_42x8c")
 
+[node name="WorldTileMap" type="TileMap" parent="."]
+format = 2
+
+[node name="DisplayTileMap" type="TileMap" parent="."]
+format = 2
+
 [node name="SpawnJogadores" parent="." instance=ExtResource("1_w1eyt")]
 position = Vector2(518, 343)
 
