@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhv3qjf6ytml5"]
+[gd_scene load_steps=7 format=3 uid="uid://dhv3qjf6ytml5"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_42x8c"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/spawn_jogadores.tscn" id="1_w1eyt"]
+[ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps.tscn" id="2_bklhl"]
 [ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Cortar.tscn" id="3_o11j3"]
 [ext_resource type="Texture2D" uid="uid://cvesjtff0f2n6" path="res://icon.svg" id="4_b8hwj"]
 
@@ -11,11 +12,7 @@ radius = 37.0135
 [node name="Level_1" type="Node"]
 script = ExtResource("1_42x8c")
 
-[node name="WorldTileMap" type="TileMap" parent="."]
-format = 2
-
-[node name="DisplayTileMap" type="TileMap" parent="."]
-format = 2
+[node name="TileMaps" parent="." instance=ExtResource("2_bklhl")]
 
 [node name="SpawnJogadores" parent="." instance=ExtResource("1_w1eyt")]
 position = Vector2(518, 343)
@@ -36,7 +33,6 @@ scale = Vector2(1, 3.16)
 shape = SubResource("CircleShape2D_bklhl")
 
 [node name="Cortar" parent="." groups=["Ferramentas"] instance=ExtResource("3_o11j3")]
-position = Vector2(165, 586)
+position = Vector2(401, 522)
 
 [editable path="SpawnJogadores"]
-[editable path="Cortar"]

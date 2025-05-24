@@ -8,14 +8,17 @@ extends CharacterBody2D
 var actionMap : Dictionary
 
 @onready var area_interacao : Area2D = $AreaInteracao
+@onready var sprite := $Sprite2DJogador
 
-var segurando_ferramenta : Ferramenta = null
+var segurando_ferramenta : Ferramenta.Ferramenta_tipo = Ferramenta.Ferramenta_tipo.NONE
 
 func _ready() -> void:
 	# ajusta o action map do player
 	actionMap = InputManager.actionMap_players[player_id]
 	# ajusta o nome
 	set_name('Jogador_id_' + str(player_id))
+	# ajeita o sprite
+	anim_idle()
 
 func _process(delta: float) -> void:
 	var move_dir = Input.get_vector(actionMap["move_left"], actionMap["move_right"], actionMap["move_up"], actionMap["move_down"])
@@ -61,20 +64,54 @@ func acao() -> void:
 		print('body escolhido: ', body)
 
 func pegar_ferramenta(ferramenta : Ferramenta) -> void:
-	segurando_ferramenta = ferramenta
+	segurando_ferramenta = ferramenta.tipo_ferramenta
 	# ajusta para a area de interacao reconhecer o alvo da ferramenta
 	area_interacao.set_collision_mask_value(ferramenta.get_layer_acao(), true)
 	# TODO: Pegar a ferramenta msm
 	
+	
 	# --- temp : rouba a sprite ---
-	var sprite = ferramenta.get_node("Icon")
-	sprite.get_parent().remove_child(sprite)
-	# add
-	add_child(sprite)
-	sprite.scale = Vector2.ONE * 0.4
-	sprite.position = Vector2.ZERO
+	
+	#var sprite = ferramenta.get_node("Icon")
+	#sprite.get_parent().remove_child(sprite)
+	## add
+	#add_child(sprite)
+	#sprite.scale = Vector2.ONE * 0.4
+	#sprite.position = Vector2.ZERO
+	
+	anim_segurar_ferramenta(segurando_ferramenta)
+	
 	# remove a ferramenta do mapa
 	ferramenta.queue_free()
+
+# ------ Animacao -------
+func anim_segurar_ferramenta(tipo_ferramenta : Ferramenta.Ferramenta_tipo) -> void:
+	match tipo_ferramenta:
+		Ferramenta.Ferramenta_tipo.CORTAR:
+			# sprite com machado dependendo da cor
+			if player_id == InputManager.PlayerId.P1:
+				sprite.texture = preload("res://Assets/Personagem/blue axe 1x.png")
+			else:
+				sprite.texture = preload("res://Assets/Personagem/Red axe x1.png")
+			# ajeita a posicao
+			sprite.region_rect = Rect2(10, 17, 42, 27)
+			sprite.offset = Vector2(0, 4)
+		Ferramenta.Ferramenta_tipo.PLANTAR:
+			pass
+		Ferramenta.Ferramenta_tipo.LIXO:
+			pass
+		Ferramenta.Ferramenta_tipo.NONE:
+			anim_idle()
+
+func anim_idle() -> void:
+	# sprite com machado dependendo da cor
+	if player_id == InputManager.PlayerId.P1:
+		sprite.texture = preload("res://Assets/Personagem/bluex1.png")
+	else:
+		sprite.texture = preload("res://Assets/Personagem/Redx1.png")
+	# ajeita a posicao
+	sprite.region_rect = Rect2(10, 31, 42, 19)
+	sprite.offset = Vector2.ZERO
 
 # ------ Area Interacao -------
 var bodys_dentro_area := {}
