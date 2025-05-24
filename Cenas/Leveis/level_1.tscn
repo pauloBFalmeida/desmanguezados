@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhv3qjf6ytml5"]
+[gd_scene load_steps=7 format=3 uid="uid://dhv3qjf6ytml5"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_42x8c"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/spawn_jogadores.tscn" id="1_w1eyt"]
 [ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Cortar.tscn" id="3_o11j3"]
 [ext_resource type="Texture2D" uid="uid://cvesjtff0f2n6" path="res://icon.svg" id="4_b8hwj"]
+[ext_resource type="Script" uid="uid://be657ux77gadq" path="res://Cenas/Leveis/control.gd" id="5_bklhl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bklhl"]
 radius = 37.0135
@@ -37,6 +38,24 @@ shape = SubResource("CircleShape2D_bklhl")
 
 [node name="Cortar" parent="." groups=["Ferramentas"] instance=ExtResource("3_o11j3")]
 position = Vector2(165, 586)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 471.0
+offset_top = -4.0
+offset_right = 754.0
+offset_bottom = 138.0
+script = ExtResource("5_bklhl")
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 106.0
+offset_top = 21.0
+offset_right = 307.0
+offset_bottom = 130.0
+text = "03:00"
+horizontal_alignment = 1
 
 [editable path="SpawnJogadores"]
 [editable path="Cortar"]
