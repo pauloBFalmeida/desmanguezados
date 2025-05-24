@@ -3,7 +3,11 @@ jogo da disciplina projeto de jogos
 
 
 ## Guia de Desenvolvimento
-Lembrar de fazer um **pull** das atualizações do git antes de editar as coisas
+
+Quando for começar a mexer no projeto, ir no Github Cliente antes e dar um ```Fetch Origin``` para ver se tem atualizações.
+
+
+Se tiver, fazer o ```Pull``` para baixar as atualizações
 
 
 *No Godot -> recarregar do disco*
