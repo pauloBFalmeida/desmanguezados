@@ -4,30 +4,51 @@ extends CharacterBody2D
 
 @export var speed: float = 250.0
 
-# acoes do InputMap
-var actionMap : Dictionary
+@export var ferramentas_mgmt : Node2D
 
 @onready var area_interacao : Area2D = $AreaInteracao
 @onready var sprite := $Sprite2DJogador
 
 var segurando_ferramenta : Ferramenta.Ferramenta_tipo = Ferramenta.Ferramenta_tipo.NONE
 
+var ferramenta_collision_mask : int
+
+# -- Input --
+var move_left: StringName
+var move_right: StringName
+var move_up: StringName
+var move_down: StringName
+var interact: StringName
+var drop: StringName
+
 func _ready() -> void:
-	# ajusta o action map do player
-	actionMap = InputManager.actionMap_players[player_id]
+	_ajustar_input_map()
 	# ajusta o nome
 	set_name('Jogador_id_' + str(player_id))
 	# ajeita o sprite
 	anim_idle()
 
+func _ajustar_input_map() -> void:
+	# ajusta o action map do player
+	var actionMap : Dictionary = InputManager.actionMap_players[player_id]
+	
+	move_left  = actionMap["move_left"]
+	move_right = actionMap["move_right"]
+	move_up    = actionMap["move_up"]
+	move_down  = actionMap["move_down"]
+	interact   = actionMap["interact"]
+	drop       = actionMap["drop"]
+
 func _process(delta: float) -> void:
-	var move_dir = Input.get_vector(actionMap["move_left"], actionMap["move_right"], actionMap["move_up"], actionMap["move_down"])
+	var move_dir = Input.get_vector(move_left, move_right, move_up, move_down)
 	
 	velocity = move_dir * speed
 	move_and_slide()
 	
-	if Input.is_action_just_pressed(actionMap["action"]):
+	if Input.is_action_just_pressed(interact):
 		acao()
+	if Input.is_action_just_pressed(drop):
+		drop_ferramenta()
 
 # ------ Acao -------
 func acao() -> void:
@@ -60,29 +81,41 @@ func acao() -> void:
 	elif body.is_in_group("Marcador"):
 		print("usando: ", segurando_ferramenta)
 		print("em: ", body)
+		# TODO : usar a ferramenta direito
+		var tween = create_tween()
+		tween.set_ease(Tween.EASE_IN)
+		tween.tween_property(body, "modulate:a", 0.3, 0.2)
+		tween.finished.connect(func():
+			var tween2 = create_tween()
+			tween2.set_ease(Tween.EASE_OUT)
+			tween2.tween_property(body, "modulate:a", 1.0, 0.2) )
 	else:
 		print('body escolhido: ', body)
 
 func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	segurando_ferramenta = ferramenta.tipo_ferramenta
 	# ajusta para a area de interacao reconhecer o alvo da ferramenta
-	area_interacao.set_collision_mask_value(ferramenta.get_layer_acao(), true)
-	# TODO: Pegar a ferramenta msm
-	
-	
-	# --- temp : rouba a sprite ---
-	
-	#var sprite = ferramenta.get_node("Icon")
-	#sprite.get_parent().remove_child(sprite)
-	## add
-	#add_child(sprite)
-	#sprite.scale = Vector2.ONE * 0.4
-	#sprite.position = Vector2.ZERO
-	
+	ferramenta_collision_mask = ferramenta.get_layer_acao()
+	area_interacao.set_collision_mask_value(ferramenta_collision_mask, true)
+	# anim pegar a ferramenta
 	anim_segurar_ferramenta(segurando_ferramenta)
-	
 	# remove a ferramenta do mapa
 	ferramenta.queue_free()
+
+# ------ Dropar -------
+func drop_ferramenta() -> void:
+	# se n tiver segurando nenhuma ferramenta, nao faca nada
+	if segurando_ferramenta == Ferramenta.Ferramenta_tipo.NONE: return
+	
+	# spawn a ferramenta no chao
+	var pos_ferramenta = global_position + Vector2(-15, 40)
+	ferramentas_mgmt.spawn_ferramenta(segurando_ferramenta, pos_ferramenta)
+	# area de interacao nao reconhece mais o alvo da ferramenta
+	area_interacao.set_collision_mask_value(ferramenta_collision_mask, false)
+	ferramenta_collision_mask = 32
+	# limpa a mao
+	segurando_ferramenta = Ferramenta.Ferramenta_tipo.NONE
+	anim_idle()
 
 # ------ Animacao -------
 func anim_segurar_ferramenta(tipo_ferramenta : Ferramenta.Ferramenta_tipo) -> void:
