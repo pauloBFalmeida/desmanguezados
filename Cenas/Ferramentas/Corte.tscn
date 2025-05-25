@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://7bu15100afxn" path="res://Assets/Ferramentas/Axe 1x.png" id="3_clo20"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m88eb"]
-radius = 30.4138
+radius = 25.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6e2qi"]
 shader = ExtResource("2_tk8ln")
@@ -26,7 +26,7 @@ debug_color = Color(0.645027, 0.373631, 0.922552, 0.42)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_6e2qi")
-scale = Vector2(4, 4)
+scale = Vector2(3, 3)
 texture = ExtResource("3_clo20")
 region_enabled = true
 region_rect = Rect2(22, 26, 12, 15)
