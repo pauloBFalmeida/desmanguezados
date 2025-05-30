@@ -7,6 +7,5 @@
 [node name="Jogador1" parent="." instance=ExtResource("2_j1fy2")]
 
 [node name="Jogador2" parent="." instance=ExtResource("2_j1fy2")]
-modulate = Color(1, 1, 0, 1)
 position = Vector2(147, 0)
 player_id = 1

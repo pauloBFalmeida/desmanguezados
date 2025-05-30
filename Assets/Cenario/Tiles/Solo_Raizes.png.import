@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://db5bsc03nlqjd"
-path="res://.godot/imported/Lodo.png-5d17238a863cc6132739c12b332f2b7e.ctex"
+uid="uid://bbuyad0mhse1y"
+path="res://.godot/imported/Solo_Raizes.png-59c4b85721ce62d77ad97e7c224fb575.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tiles/Lodo.png"
-dest_files=["res://.godot/imported/Lodo.png-5d17238a863cc6132739c12b332f2b7e.ctex"]
+source_file="res://Assets/Cenario/Tiles/Solo_Raizes.png"
+dest_files=["res://.godot/imported/Solo_Raizes.png-59c4b85721ce62d77ad97e7c224fb575.ctex"]
 
 [params]
 

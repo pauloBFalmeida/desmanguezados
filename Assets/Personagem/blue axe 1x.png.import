@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtebowo0fwydo"
-path="res://.godot/imported/Solo_Raizes.png-03916a220d29e3bb4cab33e974998fae.ctex"
+uid="uid://cnijxmprg2tsn"
+path="res://.godot/imported/blue axe 1x.png-afb2d3129e2b0b3f62597a2f54f4b06e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tiles/Solo_Raizes.png"
-dest_files=["res://.godot/imported/Solo_Raizes.png-03916a220d29e3bb4cab33e974998fae.ctex"]
+source_file="res://Assets/Personagem/blue axe 1x.png"
+dest_files=["res://.godot/imported/blue axe 1x.png-afb2d3129e2b0b3f62597a2f54f4b06e.ctex"]
 
 [params]
 

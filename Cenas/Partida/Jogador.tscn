@@ -1,13 +1,51 @@
-[gd_scene load_steps=5 format=3 uid="uid://c38kt6bogw2mq"]
+[gd_scene load_steps=9 format=3 uid="uid://c38kt6bogw2mq"]
 
 [ext_resource type="Script" uid="uid://wmjg8xw6jhs4" path="res://Scripts/Partida/jogador.gd" id="1_hjt1h"]
-[ext_resource type="Texture2D" uid="uid://cvesjtff0f2n6" path="res://icon.svg" id="2_li7es"]
+[ext_resource type="Texture2D" uid="uid://dsh7bbk3nt6fp" path="res://Assets/Personagem/bluex1.png" id="2_hjt1h"]
+[ext_resource type="Texture2D" uid="uid://cnijxmprg2tsn" path="res://Assets/Personagem/blue axe 1x.png" id="2_qpddn"]
+[ext_resource type="Texture2D" uid="uid://d3gs1ee0kps1c" path="res://Assets/Personagem/Red axe x1.png" id="3_una1k"]
+[ext_resource type="Texture2D" uid="uid://dyanf5fyuy83k" path="res://Assets/Personagem/Redx1.png" id="5_lws5r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hjt1h"]
-size = Vector2(122, 120)
+size = Vector2(92, 36)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hjt1h"]
-radius = 146.014
+radius = 105.005
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gr1wa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qpddn")
+}],
+"loop": true,
+"name": &"hold_cortar_blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_una1k")
+}],
+"loop": true,
+"name": &"hold_cortar_red",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_hjt1h")
+}],
+"loop": true,
+"name": &"idle_Blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_lws5r")
+}],
+"loop": true,
+"name": &"idle_Red",
+"speed": 5.0
+}]
 
 [node name="Jogador" type="CharacterBody2D"]
 collision_layer = 2
@@ -16,10 +54,8 @@ motion_mode = 1
 script = ExtResource("1_hjt1h")
 speed = 350.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_li7es")
-
 [node name="CollisionCorpo" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
 shape = SubResource("RectangleShape2D_hjt1h")
 
 [node name="AreaInteracao" type="Area2D" parent="."]
@@ -29,6 +65,19 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaInteracao"]
 shape = SubResource("CircleShape2D_hjt1h")
 debug_color = Color(0.466019, 0.766409, 0.908058, 0.258824)
+
+[node name="Sprite2DJogador" type="Sprite2D" parent="."]
+z_index = 2
+scale = Vector2(3, 3)
+texture = ExtResource("5_lws5r")
+region_enabled = true
+region_rect = Rect2(10, 31, 42, 19)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_gr1wa")
+animation = &"idle_Red"
 
 [connection signal="body_entered" from="AreaInteracao" to="." method="_on_area_interacao_body_entered"]
 [connection signal="body_exited" from="AreaInteracao" to="." method="_on_area_interacao_body_exited"]

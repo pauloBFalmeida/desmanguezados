@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://dhv3qjf6ytml5"]
+[gd_scene load_steps=9 format=3 uid="uid://dhv3qjf6ytml5"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_42x8c"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/spawn_jogadores.tscn" id="1_w1eyt"]
-[ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Cortar.tscn" id="3_o11j3"]
+[ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps.tscn" id="2_bklhl"]
+[ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Corte.tscn" id="3_o11j3"]
 [ext_resource type="Texture2D" uid="uid://cvesjtff0f2n6" path="res://icon.svg" id="4_b8hwj"]
-[ext_resource type="Script" uid="uid://be657ux77gadq" path="res://Cenas/Leveis/control.gd" id="5_bklhl"]
+[ext_resource type="Script" path="res://Cenas/Leveis/control.gd" id="5_bklhl"]
+[ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="6_q0w2f"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bklhl"]
 radius = 37.0135
@@ -12,14 +14,16 @@ radius = 37.0135
 [node name="Level_1" type="Node"]
 script = ExtResource("1_42x8c")
 
-[node name="WorldTileMap" type="TileMap" parent="."]
-format = 2
-
-[node name="DisplayTileMap" type="TileMap" parent="."]
-format = 2
+[node name="TileMaps" parent="." instance=ExtResource("2_bklhl")]
 
 [node name="SpawnJogadores" parent="." instance=ExtResource("1_w1eyt")]
 position = Vector2(518, 343)
+
+[node name="Jogador1" parent="SpawnJogadores" index="0" node_paths=PackedStringArray("ferramentas_mgmt")]
+ferramentas_mgmt = NodePath("../../FerramentasMgmt")
+
+[node name="Jogador2" parent="SpawnJogadores" index="1" node_paths=PackedStringArray("ferramentas_mgmt")]
+ferramentas_mgmt = NodePath("../../FerramentasMgmt")
 
 [node name="Arvore" type="RigidBody2D" parent="." groups=["Marcador"]]
 modulate = Color(0.246201, 0.530814, 0.199596, 1)
@@ -36,8 +40,11 @@ texture = ExtResource("4_b8hwj")
 scale = Vector2(1, 3.16)
 shape = SubResource("CircleShape2D_bklhl")
 
-[node name="Cortar" parent="." groups=["Ferramentas"] instance=ExtResource("3_o11j3")]
-position = Vector2(165, 586)
+[node name="FerramentasMgmt" type="Node2D" parent="."]
+script = ExtResource("6_q0w2f")
+
+[node name="Corte" parent="FerramentasMgmt" groups=["Ferramentas"] instance=ExtResource("3_o11j3")]
+position = Vector2(401, 522)
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -57,5 +64,5 @@ offset_bottom = 130.0
 text = "03:00"
 horizontal_alignment = 1
 
+[editable path="TileMaps"]
 [editable path="SpawnJogadores"]
-[editable path="Cortar"]

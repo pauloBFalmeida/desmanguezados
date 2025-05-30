@@ -14,7 +14,8 @@ const action_names = [
 	"move_right",
 	"move_down",
 	"move_up",
-	"action"
+	"interact",
+	"drop"
 ]
 
 # actionMap_players[player id] -> acoes[nome da acao (do action_names)] -> nome da acao pro player no InputMap

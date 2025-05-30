@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://cciukv0gmo85j"]
 
-[ext_resource type="Texture2D" uid="uid://mqhusyq3gsru" path="res://Assets/temp/black.png" id="1_ggp4t"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8ekff"]
+load_path = "res://.godot/imported/black.png-b55a21a4fe4ea6060432afadc2d13d8b.ctex"
 
 [node name="LevelItem" type="Control"]
 custom_minimum_size = Vector2(350, 250)
@@ -24,7 +25,7 @@ offset_right = 838.0
 offset_bottom = 492.0
 grow_horizontal = 2
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("1_ggp4t")
+texture = SubResource("CompressedTexture2D_8ekff")
 
 [node name="ButtonStart" type="Button" parent="."]
 layout_mode = 1
