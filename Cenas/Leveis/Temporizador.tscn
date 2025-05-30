@@ -1,23 +1,37 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwgamtfi6a04s"]
+[gd_scene load_steps=3 format=3 uid="uid://cwgamtfi6a04s"]
 
-[ext_resource type="Script" uid="uid://cbv3innall3vt" path="res://control.gd" id="1_5lhc0"]
+[ext_resource type="Script" uid="uid://be657ux77gadq" path="res://Cenas/Leveis/control.gd" id="1_a006e"]
+[ext_resource type="Texture2D" uid="uid://baqabqllw7w8r" path="res://Assets/Interface/GameOverImage.jpg" id="2_a006e"]
 
 [node name="Temporizador" type="Node2D"]
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 141.0
-offset_top = 3.0
-offset_right = 451.0
-offset_bottom = 167.0
-script = ExtResource("1_5lhc0")
+offset_left = 490.0
+offset_top = 8.0
+offset_right = 800.0
+offset_bottom = 172.0
+size_flags_horizontal = 6
+size_flags_vertical = 4
+script = ExtResource("1_a006e")
 
 [node name="Label" type="Label" parent="Control"]
-layout_mode = 0
-offset_left = 240.0
-offset_top = -2.0
-offset_right = 360.0
-offset_bottom = 83.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -32.0
+offset_top = 3.0
+offset_right = 30.0
+offset_bottom = 36.0
+grow_horizontal = 2
 text = "02:00"
 horizontal_alignment = 1
+visible_characters = 6
+visible_ratio = 1.2
+
+[node name="GameOverImage" type="Sprite2D" parent="Control"]
+position = Vector2(202, 340)
+scale = Vector2(0.792188, 0.851852)
+texture = ExtResource("2_a006e")
