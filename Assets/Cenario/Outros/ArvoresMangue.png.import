@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dan5k4efpappd"
-path="res://.godot/imported/Areia_final.png-3ce28b58ddb0273d767b85768faa7b8a.ctex"
+uid="uid://e14uxly4awj8"
+path="res://.godot/imported/ArvoresMangue.png-ee24b8c77076c034f30221d3d1ef1de3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tiles/Areia_final.png"
-dest_files=["res://.godot/imported/Areia_final.png-3ce28b58ddb0273d767b85768faa7b8a.ctex"]
+source_file="res://Assets/Cenario/Outros/ArvoresMangue.png"
+dest_files=["res://.godot/imported/ArvoresMangue.png-ee24b8c77076c034f30221d3d1ef1de3.ctex"]
 
 [params]
 

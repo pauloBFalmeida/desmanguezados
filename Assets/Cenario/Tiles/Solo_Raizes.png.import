@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmy65oaowx5kt"
-path="res://.godot/imported/Solo_Raizes_correto.png-c6631161e406043ad1e43ab4fd9aac23.ctex"
+uid="uid://bbuyad0mhse1y"
+path="res://.godot/imported/Solo_Raizes.png-59c4b85721ce62d77ad97e7c224fb575.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/temp/Solo_Raizes_correto.png"
-dest_files=["res://.godot/imported/Solo_Raizes_correto.png-c6631161e406043ad1e43ab4fd9aac23.ctex"]
+source_file="res://Assets/Cenario/Tiles/Solo_Raizes.png"
+dest_files=["res://.godot/imported/Solo_Raizes.png-59c4b85721ce62d77ad97e7c224fb575.ctex"]
 
 [params]
 
