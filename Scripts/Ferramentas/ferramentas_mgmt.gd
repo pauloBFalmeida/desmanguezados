@@ -2,7 +2,7 @@ extends Node2D
 
 const ref_corte   = preload("res://Cenas/Ferramentas/Corte.tscn")
 const ref_planta  = preload("res://Cenas/Ferramentas/Corte.tscn")
-const ref_recolhe = preload("res://Cenas/Ferramentas/Corte.tscn")
+const ref_recolhe = preload("res://Cenas/Ferramentas/Recolher.tscn")
 
 func spawn_ferramenta(ferramenta_tipo : Ferramenta.Ferramenta_tipo, global_pos : Vector2) -> void:
 	if ferramenta_tipo == Ferramenta.Ferramenta_tipo.NONE: return
@@ -12,9 +12,9 @@ func spawn_ferramenta(ferramenta_tipo : Ferramenta.Ferramenta_tipo, global_pos :
 		Ferramenta.Ferramenta_tipo.CORTAR:
 			ferramenta_inst = ref_corte.instantiate()
 		Ferramenta.Ferramenta_tipo.PLANTAR:
-			ferramenta_inst = ref_corte.instantiate()
-		Ferramenta.Ferramenta_tipo.LIXO:
-			ferramenta_inst = ref_corte.instantiate()
+			ferramenta_inst = ref_planta.instantiate()
+		Ferramenta.Ferramenta_tipo.RECOLHER:
+			ferramenta_inst = ref_recolhe.instantiate()
 	# adiciona na tree
 	add_child(ferramenta_inst)
 	ferramenta_inst.global_position = global_pos

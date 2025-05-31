@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2nkskgbg1yd0"]
+
+[ext_resource type="Script" uid="uid://c7wdry4p71a1t" path="res://Scripts/Partida/lixo.gd" id="1_7e778"]
+[ext_resource type="Texture2D" uid="uid://cd7kpxvt7hc3i" path="res://Assets/Cenario/Outros/Lixo.png" id="2_rubf7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7e778"]
+size = Vector2(29, 20)
+
+[node name="LixoLata" type="RigidBody2D" groups=["Marcador"]]
+collision_layer = 33
+collision_mask = 35
+gravity_scale = 0.0
+script = ExtResource("1_7e778")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 0.537386
+scale = Vector2(3, 3)
+texture = ExtResource("2_rubf7")
+region_enabled = true
+region_rect = Rect2(31, 0, 11, 9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 1)
+shape = SubResource("RectangleShape2D_7e778")
+debug_color = Color(0.835294, 0.384314, 0.160784, 0.32549)

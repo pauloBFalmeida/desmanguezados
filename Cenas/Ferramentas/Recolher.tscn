@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://bcgkqnqdxu4g"]
+
+[ext_resource type="Script" uid="uid://cktr1sno3fgax" path="res://Scripts/Ferramentas/recolher.gd" id="1_cft17"]
+[ext_resource type="Shader" uid="uid://cw712yn14yynr" path="res://Scripts/Shaders/outline.gdshader" id="2_3hrgq"]
+[ext_resource type="Texture2D" uid="uid://cvesjtff0f2n6" path="res://icon.svg" id="3_cft17"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m88eb"]
+radius = 25.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6e2qi"]
+shader = ExtResource("2_3hrgq")
+shader_parameter/clr = Color(0, 1, 0, 1)
+shader_parameter/type = 1
+shader_parameter/thickness = 1.0
+
+[node name="Recolhe" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_cft17")
+layer_acao = 32
+tipo_ferramenta = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m88eb")
+debug_color = Color(0.645027, 0.373631, 0.922552, 0.42)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_6e2qi")
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_cft17")
+region_rect = Rect2(-3, -4, 135, 136)

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://b22561nl1a3f8"]
+
+[ext_resource type="Script" uid="uid://c7wdry4p71a1t" path="res://Scripts/Partida/lixo.gd" id="1_yeetu"]
+[ext_resource type="Texture2D" uid="uid://cd7kpxvt7hc3i" path="res://Assets/Cenario/Outros/Lixo.png" id="2_42yip"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yeetu"]
+size = Vector2(48, 18)
+
+[node name="LixoGarrafa" type="RigidBody2D" groups=["Marcador"]]
+collision_layer = 33
+collision_mask = 35
+gravity_scale = 0.0
+script = ExtResource("1_yeetu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("2_42yip")
+region_enabled = true
+region_rect = Rect2(16, 12, 17, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_yeetu")
+debug_color = Color(0.835294, 0.384314, 0.160784, 0.32549)

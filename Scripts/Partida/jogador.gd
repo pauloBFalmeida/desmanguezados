@@ -77,22 +77,43 @@ func acao() -> void:
 	# fazemos a acao sobre o corpo
 	if body.is_in_group("Ferramentas"):
 		pegar_ferramenta(body)
-		bodys_dentro_area.erase(body)
 	elif body.is_in_group("Marcador"):
 		print("usando: ", segurando_ferramenta)
 		print("em: ", body)
-		# TODO : usar a ferramenta direito
-		var tween = create_tween()
-		tween.set_ease(Tween.EASE_IN)
-		tween.tween_property(body, "modulate:a", 0.3, 0.2)
-		tween.finished.connect(func():
-			var tween2 = create_tween()
-			tween2.set_ease(Tween.EASE_OUT)
-			tween2.tween_property(body, "modulate:a", 1.0, 0.2) )
+		usar_ferramenta(body)
 	else:
 		print('body escolhido: ', body)
 
+
+# ------ Usar -------
+func usar_ferramenta(body : Node2D) -> void:
+	match (segurando_ferramenta):
+		Ferramenta.Ferramenta_tipo.CORTAR:
+			#TODO: Cortar arvore
+			var tween = create_tween()
+			tween.set_ease(Tween.EASE_IN)
+			tween.tween_property(body, "modulate:a", 0.3, 0.2)
+			tween.finished.connect(func():
+				var tween2 = create_tween()
+				tween2.set_ease(Tween.EASE_OUT)
+				tween2.tween_property(body, "modulate:a", 1.0, 0.2)
+			)
+		Ferramenta.Ferramenta_tipo.PLANTAR:
+			pass
+		Ferramenta.Ferramenta_tipo.RECOLHER:
+			var lixo = body
+			var tween = create_tween()
+			tween.set_ease(Tween.EASE_IN)
+			tween.tween_property(lixo, "modulate:a", 0.0, 0.5).from_current()
+			tween.finished.connect( func():
+				lixo.queue_free() ### TODO fix this
+			)
+
+# ------ Pegar -------
 func pegar_ferramenta(ferramenta : Ferramenta) -> void:
+	# se ja estiver segurando uma ferramenta, nao faca nada
+	if segurando_ferramenta != Ferramenta.Ferramenta_tipo.NONE: return
+	
 	segurando_ferramenta = ferramenta.tipo_ferramenta
 	# ajusta para a area de interacao reconhecer o alvo da ferramenta
 	ferramenta_collision_mask = ferramenta.get_layer_acao()
@@ -100,6 +121,9 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	# anim pegar a ferramenta
 	anim_segurar_ferramenta(segurando_ferramenta)
 	# remove a ferramenta do mapa
+	print('antes', bodys_dentro_area)
+	bodys_dentro_area.erase(ferramenta)
+	print('depois', bodys_dentro_area)
 	ferramenta.queue_free()
 
 # ------ Dropar -------
@@ -131,7 +155,9 @@ func anim_segurar_ferramenta(tipo_ferramenta : Ferramenta.Ferramenta_tipo) -> vo
 			sprite.offset = Vector2(0, 4)
 		Ferramenta.Ferramenta_tipo.PLANTAR:
 			pass
-		Ferramenta.Ferramenta_tipo.LIXO:
+		Ferramenta.Ferramenta_tipo.RECOLHER:
+			sprite.modulate = Color.SANDY_BROWN
+			print("omg 0000000")
 			pass
 		Ferramenta.Ferramenta_tipo.NONE:
 			anim_idle()
