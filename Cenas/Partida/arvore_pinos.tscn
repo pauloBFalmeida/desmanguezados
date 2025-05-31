@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6fqbdb1cd3kc"]
+
+[ext_resource type="Script" uid="uid://ecg0wp8e35w1" path="res://Scripts/Partida/arvore_pinos.gd" id="1_ik7rc"]
+[ext_resource type="Texture2D" uid="uid://x7dqi6ggmsw0" path="res://Assets/Cenario/Outros/Pinos.png" id="2_8f0k6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bklhl"]
+radius = 17.0294
+
+[node name="ArvorePinos" type="RigidBody2D" groups=["Marcador"]]
+collision_layer = 9
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_ik7rc")
+idade = 2
+
+[node name="Pinos" type="Sprite2D" parent="."]
+position = Vector2(0, -92)
+scale = Vector2(5, 5)
+texture = ExtResource("2_8f0k6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 4)
+shape = SubResource("CircleShape2D_bklhl")
+debug_color = Color(0.27673, 0.533623, 0.318494, 0.25098)

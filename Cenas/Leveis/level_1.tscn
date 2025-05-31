@@ -1,15 +1,11 @@
-[gd_scene load_steps=9 format=4 uid="uid://dhv3qjf6ytml5"]
+[gd_scene load_steps=7 format=4 uid="uid://dhv3qjf6ytml5"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_42x8c"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/spawn_jogadores.tscn" id="1_w1eyt"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps.tscn" id="2_bklhl"]
 [ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Corte.tscn" id="3_o11j3"]
-[ext_resource type="Texture2D" uid="uid://cvesjtff0f2n6" path="res://icon.svg" id="4_b8hwj"]
 [ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="6_q0w2f"]
 [ext_resource type="PackedScene" uid="uid://cwgamtfi6a04s" path="res://Cenas/Leveis/Temporizador.tscn" id="7_thw6l"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_bklhl"]
-radius = 37.0135
 
 [node name="Level_1" type="Node"]
 script = ExtResource("1_42x8c")
@@ -28,21 +24,6 @@ ferramentas_mgmt = NodePath("../../FerramentasMgmt")
 [node name="Jogador2" parent="SpawnJogadores" index="1" node_paths=PackedStringArray("ferramentas_mgmt")]
 ferramentas_mgmt = NodePath("../../FerramentasMgmt")
 
-[node name="Arvore" type="RigidBody2D" parent="." groups=["Marcador"]]
-modulate = Color(0.246201, 0.530814, 0.199596, 1)
-position = Vector2(1113, 145)
-collision_layer = 9
-collision_mask = 0
-gravity_scale = 0.0
-
-[node name="Icon" type="Sprite2D" parent="Arvore"]
-scale = Vector2(0.56, 1.84)
-texture = ExtResource("4_b8hwj")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Arvore"]
-scale = Vector2(1, 3.16)
-shape = SubResource("CircleShape2D_bklhl")
-
 [node name="FerramentasMgmt" type="Node2D" parent="."]
 script = ExtResource("6_q0w2f")
 
@@ -53,3 +34,4 @@ position = Vector2(401, 522)
 
 [editable path="TileMaps"]
 [editable path="SpawnJogadores"]
+[editable path="SpawnJogadores/Jogador2"]

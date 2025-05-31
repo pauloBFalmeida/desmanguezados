@@ -32,6 +32,7 @@ visible_characters = 6
 visible_ratio = 1.2
 
 [node name="GameOverImage" type="Sprite2D" parent="Control"]
+visible = false
 position = Vector2(202, 340)
 scale = Vector2(0.792188, 0.851852)
 texture = ExtResource("2_a006e")

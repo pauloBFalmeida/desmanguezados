@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://cedrrktxte7k6"]
+
+[ext_resource type="Script" uid="uid://dbq0k02hr2o0m" path="res://Scripts/Partida/arvore_mangue.gd" id="1_63al1"]
+[ext_resource type="Texture2D" uid="uid://e14uxly4awj8" path="res://Assets/Cenario/Outros/ArvoresMangue.png" id="1_yyjcj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bklhl"]
+radius = 23.0217
+
+[node name="ArvoreMangue" type="RigidBody2D" node_paths=PackedStringArray("sprites_idade") groups=["Marcador"]]
+collision_layer = 9
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_63al1")
+sprites_idade = {
+0: NodePath("MangueBebe"),
+1: NodePath("MangueJovem"),
+2: NodePath("MangueAdulta")
+}
+crescimento_time = 10.0
+
+[node name="MangueBebe" type="Sprite2D" parent="."]
+position = Vector2(3, -35)
+scale = Vector2(5, 5)
+texture = ExtResource("1_yyjcj")
+region_enabled = true
+region_rect = Rect2(0, 17, 15, 20)
+
+[node name="MangueJovem" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -58)
+scale = Vector2(5, 5)
+texture = ExtResource("1_yyjcj")
+region_enabled = true
+region_rect = Rect2(16, 9, 20, 28)
+
+[node name="MangueAdulta" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -73)
+scale = Vector2(5, 5)
+texture = ExtResource("1_yyjcj")
+region_enabled = true
+region_rect = Rect2(38, 0, 27, 37)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_bklhl")
+debug_color = Color(0.27673, 0.533623, 0.318494, 0.25098)
+
+[node name="TimerCrescer" type="Timer" parent="."]
+process_callback = 0
+
+[connection signal="timeout" from="TimerCrescer" to="." method="_on_timer_crescer_timeout"]
