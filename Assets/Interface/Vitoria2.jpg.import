@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clny3k8wxq5x1"
-path="res://.godot/imported/GameOverImage.jpg-a7bcee1b2be65088605ce082dacd60fa.ctex"
+uid="uid://b0eo0x4xcairy"
+path="res://.godot/imported/Vitoria2.jpg-544eef74397e88b7807bcfc4b83e0a0e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Interface/GameOverImage.jpg"
-dest_files=["res://.godot/imported/GameOverImage.jpg-a7bcee1b2be65088605ce082dacd60fa.ctex"]
+source_file="res://Assets/Interface/Vitoria2.jpg"
+dest_files=["res://.godot/imported/Vitoria2.jpg-544eef74397e88b7807bcfc4b83e0a0e.ctex"]
 
 [params]
 

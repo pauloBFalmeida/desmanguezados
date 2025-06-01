@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwgamtfi6a04s"]
+[gd_scene load_steps=5 format=3 uid="uid://cwgamtfi6a04s"]
 
 [ext_resource type="Script" uid="uid://be657ux77gadq" path="res://Cenas/Leveis/control.gd" id="1_a006e"]
-[ext_resource type="Texture2D" uid="uid://baqabqllw7w8r" path="res://Assets/Interface/GameOverImage.jpg" id="2_a006e"]
+[ext_resource type="Texture2D" uid="uid://clny3k8wxq5x1" path="res://Assets/Interface/GameOverImage.jpg" id="2_a006e"]
+[ext_resource type="Texture2D" uid="uid://bsiu6yvfgiroo" path="res://Assets/Interface/Vitoria1.jpg" id="3_gk0ai"]
+[ext_resource type="Texture2D" uid="uid://b0eo0x4xcairy" path="res://Assets/Interface/Vitoria2.jpg" id="4_p48od"]
 
 [node name="Temporizador" type="Node2D"]
 
@@ -36,3 +38,15 @@ visible = false
 position = Vector2(202, 340)
 scale = Vector2(0.792188, 0.851852)
 texture = ExtResource("2_a006e")
+
+[node name="Vitoria1" type="Sprite2D" parent="Control"]
+visible = false
+position = Vector2(154.521, 347.468)
+scale = Vector2(0.679666, 0.688022)
+texture = ExtResource("3_gk0ai")
+
+[node name="Vitoria2" type="Sprite2D" parent="Control"]
+visible = false
+position = Vector2(149, 352.936)
+scale = Vector2(0.680469, 0.690859)
+texture = ExtResource("4_p48od")
