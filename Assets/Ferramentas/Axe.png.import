@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://e14uxly4awj8"
-path="res://.godot/imported/ArvoresMangue.png-ee24b8c77076c034f30221d3d1ef1de3.ctex"
+uid="uid://7bu15100afxn"
+path="res://.godot/imported/Axe.png-0dd8e78998ca3434a6b8b0537d9d929c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Cenario/Outros/ArvoresMangue.png"
-dest_files=["res://.godot/imported/ArvoresMangue.png-ee24b8c77076c034f30221d3d1ef1de3.ctex"]
+source_file="res://Assets/Ferramentas/Axe.png"
+dest_files=["res://.godot/imported/Axe.png-0dd8e78998ca3434a6b8b0537d9d929c.ctex"]
 
 [params]
 

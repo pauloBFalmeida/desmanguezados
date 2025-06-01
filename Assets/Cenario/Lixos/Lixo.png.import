@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7bu15100afxn"
-path="res://.godot/imported/Axe 1x.png-153035d8aea7ad41b0d53580eff6b6f0.ctex"
+uid="uid://cd7kpxvt7hc3i"
+path="res://.godot/imported/Lixo.png-508229444582cb0d8846e99966b8fdf9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Ferramentas/Axe 1x.png"
-dest_files=["res://.godot/imported/Axe 1x.png-153035d8aea7ad41b0d53580eff6b6f0.ctex"]
+source_file="res://Assets/Cenario/Lixos/Lixo.png"
+dest_files=["res://.godot/imported/Lixo.png-508229444582cb0d8846e99966b8fdf9.ctex"]
 
 [params]
 

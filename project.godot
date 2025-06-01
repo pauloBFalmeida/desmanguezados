@@ -46,6 +46,8 @@ folder_colors={
 
 Ferramentas="as ferramentas"
 Marcador="alvo das interações das ferramentas"
+Arvore="é uma arvore interagivel"
+Lixo="é um lixo interagivel"
 
 [input]
 

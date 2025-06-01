@@ -1,11 +1,13 @@
 extends Arvore
 
 @onready var timer_crescer := $TimerCrescer
+@onready var anim_player := $AnimationPlayer
 
 @export var sprites_idade : Dictionary[Crescimento, Sprite2D] = {}
 @export var collisions_idade : Dictionary[Crescimento, CollisionShape2D] = {}
 
 func _ready() -> void:
+	super() # chama _ready da classe Arvore
 	comecar_crescer()
 	# desligar as colisoes e sprites
 	for key in sprites_idade.keys():
@@ -42,3 +44,16 @@ func _update_sprite(mostrar : bool) -> void:
 
 func _on_timer_crescer_timeout() -> void:
 	crescer()
+
+func cortar() -> void:
+	# nao faz nada se tiver sendo cortada
+	if not viva: return
+	viva = false
+	
+	anim_player.play("cortar")
+	anim_player.animation_finished.connect( morrer )
+
+func morrer(_anim_name: String) -> void:
+	hide()
+	# TODO: signal
+	queue_free()

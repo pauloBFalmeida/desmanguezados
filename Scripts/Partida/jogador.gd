@@ -9,7 +9,8 @@ extends CharacterBody2D
 @onready var area_interacao : Area2D = $AreaInteracao
 @onready var sprite := $Sprite2DJogador
 
-var segurando_ferramenta : Ferramenta.Ferramenta_tipo = Ferramenta.Ferramenta_tipo.NONE
+#var segurando_ferramenta : Ferramenta.Ferramenta_tipo = Ferramenta.Ferramenta_tipo.NONE
+var segurando : Ferramenta = null
 
 var ferramenta_collision_mask : int
 
@@ -78,7 +79,7 @@ func acao() -> void:
 	if body.is_in_group("Ferramentas"):
 		pegar_ferramenta(body)
 	elif body.is_in_group("Marcador"):
-		print("usando: ", segurando_ferramenta)
+		print("usando: ", segurando)
 		print("em: ", body)
 		usar_ferramenta(body)
 	else:
@@ -87,62 +88,72 @@ func acao() -> void:
 
 # ------ Usar -------
 func usar_ferramenta(body : Node2D) -> void:
-	match (segurando_ferramenta):
-		Ferramenta.Ferramenta_tipo.CORTAR:
-			#TODO: Cortar arvore
-			var tween = create_tween()
-			tween.set_ease(Tween.EASE_IN)
-			tween.tween_property(body, "modulate:a", 0.3, 0.2)
-			tween.finished.connect(func():
-				var tween2 = create_tween()
-				tween2.set_ease(Tween.EASE_OUT)
-				tween2.tween_property(body, "modulate:a", 1.0, 0.2)
-			)
-		Ferramenta.Ferramenta_tipo.PLANTAR:
-			pass
-		Ferramenta.Ferramenta_tipo.RECOLHER:
-			var lixo = body
-			var tween = create_tween()
-			tween.set_ease(Tween.EASE_IN)
-			tween.tween_property(lixo, "modulate:a", 0.0, 0.5).from_current()
-			tween.finished.connect( func():
-				lixo.queue_free() ### TODO fix this
-			)
+	#Ferramenta 
+	segurando.usar_ferramenta(body)
+	#
+	#match (segurando_ferramenta):
+		#Ferramenta.Ferramenta_tipo.CORTAR:
+			##TODO: Cortar arvore
+			#var tween = create_tween()
+			#tween.set_ease(Tween.EASE_IN)
+			#tween.tween_property(body, "modulate:a", 0.3, 0.2)
+			#tween.finished.connect(func():
+				#var tween2 = create_tween()
+				#tween2.set_ease(Tween.EASE_OUT)
+				#tween2.tween_property(body, "modulate:a", 1.0, 0.2)
+			#)
+		#Ferramenta.Ferramenta_tipo.PLANTAR:
+			#pass
+		#Ferramenta.Ferramenta_tipo.RECOLHER:
+			#var lixo = body
+			#var tween = create_tween()
+			#tween.set_ease(Tween.EASE_IN)
+			#tween.tween_property(lixo, "modulate:a", 0.0, 0.5).from_current()
+			#tween.finished.connect( func():
+				#lixo.queue_free() ### TODO fix this
+			#)
 
 # ------ Pegar -------
 func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	# se ja estiver segurando uma ferramenta, nao faca nada
-	if segurando_ferramenta != Ferramenta.Ferramenta_tipo.NONE: return
+	if segurando and is_instance_valid(segurando): return
 	
-	segurando_ferramenta = ferramenta.tipo_ferramenta
+	segurando = ferramenta
+	ferramentas_mgmt.jogador_pegar(self, ferramenta)
+	
 	# ajusta para a area de interacao reconhecer o alvo da ferramenta
 	ferramenta_collision_mask = ferramenta.get_layer_acao()
 	area_interacao.set_collision_mask_value(ferramenta_collision_mask, true)
 	# anim pegar a ferramenta
-	anim_segurar_ferramenta(segurando_ferramenta)
+	anim_segurar_ferramenta(segurando)
 	# remove a ferramenta do mapa
 	print('antes', bodys_dentro_area)
 	bodys_dentro_area.erase(ferramenta)
 	print('depois', bodys_dentro_area)
-	ferramenta.queue_free()
 
 # ------ Dropar -------
 func drop_ferramenta() -> void:
 	# se n tiver segurando nenhuma ferramenta, nao faca nada
-	if segurando_ferramenta == Ferramenta.Ferramenta_tipo.NONE: return
+	if (not segurando) or (not is_instance_valid(segurando)): return
 	
-	# spawn a ferramenta no chao
-	var pos_ferramenta = global_position + Vector2(-15, 40)
-	ferramentas_mgmt.spawn_ferramenta(segurando_ferramenta, pos_ferramenta)
+	var ferramenta = segurando
+	# limpa a mao
+	segurando = null
+	
+	ferramentas_mgmt.jogador_soltar(self, ferramenta)
+	
 	# area de interacao nao reconhece mais o alvo da ferramenta
 	area_interacao.set_collision_mask_value(ferramenta_collision_mask, false)
 	ferramenta_collision_mask = 32
-	# limpa a mao
-	segurando_ferramenta = Ferramenta.Ferramenta_tipo.NONE
+	
 	anim_idle()
+	#TODO: Remove this
+	sprite.modulate = Color.WHITE
+	
 
 # ------ Animacao -------
-func anim_segurar_ferramenta(tipo_ferramenta : Ferramenta.Ferramenta_tipo) -> void:
+func anim_segurar_ferramenta(ferramenta : Ferramenta) -> void:
+	var tipo_ferramenta : Ferramenta.Ferramenta_tipo = ferramenta.tipo_ferramenta
 	match tipo_ferramenta:
 		Ferramenta.Ferramenta_tipo.CORTAR:
 			# sprite com machado dependendo da cor
@@ -159,7 +170,7 @@ func anim_segurar_ferramenta(tipo_ferramenta : Ferramenta.Ferramenta_tipo) -> vo
 			sprite.modulate = Color.SANDY_BROWN
 			print("omg 0000000")
 			pass
-		Ferramenta.Ferramenta_tipo.NONE:
+		_: # default, caso nao de match com nenhuma das opcoes anteriores
 			anim_idle()
 
 func anim_idle() -> void:

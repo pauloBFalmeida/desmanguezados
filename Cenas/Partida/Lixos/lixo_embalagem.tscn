@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnr6tp6k6p5mk"]
+
+[ext_resource type="Script" uid="uid://c7wdry4p71a1t" path="res://Scripts/Partida/lixo.gd" id="1_6ja5p"]
+[ext_resource type="Texture2D" uid="uid://dl1mimb4x3thn" path="res://Assets/Cenario/Lixos/lixoEmbalagem1.png" id="2_6ja5p"]
+[ext_resource type="Texture2D" uid="uid://d3hrqqoeqnsmh" path="res://Assets/Cenario/Lixos/lixoEmbalagem2.png" id="3_037bf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_037bf"]
+radius = 11.0
+height = 56.0
+
+[node name="LixoEmbalagem" type="RigidBody2D" groups=["Lixo", "Marcador"]]
+collision_layer = 33
+collision_mask = 35
+gravity_scale = 0.0
+script = ExtResource("1_6ja5p")
+variantes_sprites = Array[CompressedTexture2D]([ExtResource("2_6ja5p"), ExtResource("3_037bf")])
+variantes_offset = Array[Vector2]([Vector2(0, 0), Vector2(1.5, -0.5)])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2, 6)
+scale = Vector2(3, 3)
+texture = ExtResource("3_037bf")
+offset = Vector2(1.5, -0.5)
+region_enabled = true
+region_rect = Rect2(7, 10, 19, 14)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+rotation = -1.0917
+shape = SubResource("CapsuleShape2D_037bf")
+debug_color = Color(0.835294, 0.384314, 0.160784, 0.32549)

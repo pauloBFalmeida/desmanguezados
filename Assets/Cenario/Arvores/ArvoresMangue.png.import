@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x7dqi6ggmsw0"
-path="res://.godot/imported/Pinos.png-642d25b4c0b5a4c3d2e5464ca6060c2a.ctex"
+uid="uid://e14uxly4awj8"
+path="res://.godot/imported/ArvoresMangue.png-e9d14d3611c4f273027f469d04201d1d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Cenario/Outros/Pinos.png"
-dest_files=["res://.godot/imported/Pinos.png-642d25b4c0b5a4c3d2e5464ca6060c2a.ctex"]
+source_file="res://Assets/Cenario/Arvores/ArvoresMangue.png"
+dest_files=["res://.godot/imported/ArvoresMangue.png-e9d14d3611c4f273027f469d04201d1d.ctex"]
 
 [params]
 

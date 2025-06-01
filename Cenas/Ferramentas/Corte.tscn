@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://gr6eecxca26c" path="res://Scripts/Ferramentas/cortar.gd" id="1_m88eb"]
 [ext_resource type="Shader" uid="uid://cw712yn14yynr" path="res://Scripts/Shaders/outline.gdshader" id="2_tk8ln"]
-[ext_resource type="Texture2D" uid="uid://7bu15100afxn" path="res://Assets/Ferramentas/Axe 1x.png" id="3_clo20"]
+[ext_resource type="Texture2D" uid="uid://7bu15100afxn" path="res://Assets/Ferramentas/Axe.png" id="3_clo20"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m88eb"]
 radius = 25.0

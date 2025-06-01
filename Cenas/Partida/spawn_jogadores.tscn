@@ -6,12 +6,13 @@
 [node name="SpawnJogadores" type="Node2D"]
 
 [node name="Jogador1" parent="." instance=ExtResource("2_j1fy2")]
+player_id = 0
 
 [node name="Jogador2" parent="." instance=ExtResource("2_j1fy2")]
 position = Vector2(147, 0)
 player_id = 1
 
-[node name="Sprite2DJogador" parent="Jogador2" index="2"]
+[node name="Sprite2DJogador" parent="Jogador2" index="0"]
 texture = ExtResource("2_gigb0")
 
 [editable path="Jogador2"]

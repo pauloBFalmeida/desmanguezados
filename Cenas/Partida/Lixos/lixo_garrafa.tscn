@@ -1,12 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://b22561nl1a3f8"]
 
 [ext_resource type="Script" uid="uid://c7wdry4p71a1t" path="res://Scripts/Partida/lixo.gd" id="1_yeetu"]
-[ext_resource type="Texture2D" uid="uid://cd7kpxvt7hc3i" path="res://Assets/Cenario/Outros/Lixo.png" id="2_42yip"]
+[ext_resource type="Texture2D" uid="uid://cd7kpxvt7hc3i" path="res://Assets/Cenario/Lixos/Lixo.png" id="2_42yip"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yeetu"]
 size = Vector2(48, 18)
 
-[node name="LixoGarrafa" type="RigidBody2D" groups=["Marcador"]]
+[node name="LixoGarrafa" type="RigidBody2D" groups=["Lixo", "Marcador"]]
 collision_layer = 33
 collision_mask = 35
 gravity_scale = 0.0

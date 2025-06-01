@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd7kpxvt7hc3i"
-path="res://.godot/imported/Lixo.png-e27baae259ab48a2e3cc874e255963d6.ctex"
+uid="uid://d3hrqqoeqnsmh"
+path="res://.godot/imported/lixoEmbalagem2.png-96422783142317c1410fca26b329236b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Cenario/Outros/Lixo.png"
-dest_files=["res://.godot/imported/Lixo.png-e27baae259ab48a2e3cc874e255963d6.ctex"]
+source_file="res://Assets/Cenario/Lixos/lixoEmbalagem2.png"
+dest_files=["res://.godot/imported/lixoEmbalagem2.png-96422783142317c1410fca26b329236b.ctex"]
 
 [params]
 

@@ -10,6 +10,11 @@ enum Crescimento {BEBE, JOVEM, ADULTA}
 ## tempo em segundos para crescer para a proxima idade
 @export var crescimento_time : float = 12.0
 
+var viva : bool = true
+
+func _ready() -> void:
+	add_to_group("Arvore")
+
 func is_adulta() -> bool:
 	return idade == Crescimento.ADULTA
 
@@ -24,3 +29,7 @@ func crescer() -> void:
 			idade = Crescimento.JOVEM
 		Crescimento.JOVEM:
 			idade = Crescimento.ADULTA
+
+# --- Abstrato ---
+func cortar() -> void:
+	pass
