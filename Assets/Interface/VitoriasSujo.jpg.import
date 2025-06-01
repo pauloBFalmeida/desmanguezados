@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bsiu6yvfgiroo"
-path="res://.godot/imported/Vitoria1.jpg-b98ed2976239d810d818d15c0478d319.ctex"
+path="res://.godot/imported/VitoriasSujo.jpg-cd06d7a2d4c6fa04ba5dce7e103374b8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Interface/Vitoria1.jpg"
-dest_files=["res://.godot/imported/Vitoria1.jpg-b98ed2976239d810d818d15c0478d319.ctex"]
+source_file="res://Assets/Interface/VitoriasSujo.jpg"
+dest_files=["res://.godot/imported/VitoriasSujo.jpg-cd06d7a2d4c6fa04ba5dce7e103374b8.ctex"]
 
 [params]
 

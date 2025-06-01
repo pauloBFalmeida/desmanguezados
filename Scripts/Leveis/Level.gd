@@ -5,7 +5,7 @@ extends Node
 @export var lixos_colecao : Node
 @export var locais_plantar_colecao : Node2D
 @export var ferramenta_mgmt : FerramentaMgmt
-@export var fim_jogo : Node
+@export var temporizador : Node
 @export var hud : Hud
 
 @export var qtd_mudas_para_plantar : int
@@ -25,18 +25,18 @@ func _ready() -> void:
 	ajustar_arvores()
 	ajustar_lixo()
 	ajustar_locais_plantar()
-	fim_jogo.fim_tempo.connect(_fim_tempo)
+	# 
+	temporizador.fim_tempo.connect(_fim_partida)
 
 # ----- Fim de Jogo -----
-func _fim_tempo() -> void:
+func _fim_partida() -> void:
 	if qtd_arvores_nativas < qtd_mudas_para_plantar:
-		print("perdeu por tempo")
-		#fim_jogo.game_over()
+		hud.show_tela_fim(Hud.Tipo_fim.DERROTA_TEMPO)
 	else: # quantidade suficiente de mudas plantadas
 		if qtd_lixo > 0: # deixou lixo
-			print("ganhou, mas mangue sujo")
+			hud.show_tela_fim(Hud.Tipo_fim.VITORIA_SUJO)
 		else: # limpou tudo
-			print("ganhou, com mangue limpo")
+			hud.show_tela_fim(Hud.Tipo_fim.VITORIA_LIMPO)
 
 func update_hud_mudas() -> void:
 	hud.update_mudas(qtd_mudas_para_plantar - qtd_arvores_nativas)

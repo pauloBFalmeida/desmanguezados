@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://dhv3qjf6ytml5"]
+[gd_scene load_steps=16 format=4 uid="uid://dhv3qjf6ytml5"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_42x8c"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/spawn_jogadores.tscn" id="1_w1eyt"]
@@ -10,20 +10,19 @@
 [ext_resource type="PackedScene" uid="uid://c2nkskgbg1yd0" path="res://Cenas/Partida/Lixos/lixo_lata.tscn" id="6_00t72"]
 [ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="6_q0w2f"]
 [ext_resource type="PackedScene" uid="uid://c1r8m1e25lai3" path="res://Cenas/Partida/Lixos/lixo_saco.tscn" id="7_poegd"]
-[ext_resource type="PackedScene" uid="uid://cwgamtfi6a04s" path="res://Cenas/Leveis/Temporizador.tscn" id="7_thw6l"]
 [ext_resource type="PackedScene" uid="uid://bxemk6uv78eif" path="res://Cenas/Partida/local_plantar.tscn" id="9_hdr42"]
 [ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="11_00t72"]
 [ext_resource type="PackedScene" uid="uid://bnr6tp6k6p5mk" path="res://Cenas/Partida/Lixos/lixo_embalagem.tscn" id="13_poegd"]
 [ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Plantar.tscn" id="14_7uol4"]
-[ext_resource type="Script" uid="uid://brncsdifpd8ke" path="res://Scripts/Partida/hud.gd" id="16_xeic4"]
+[ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Partida/hud.tscn" id="15_7uol4"]
 
-[node name="Level_1" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "fim_jogo", "hud")]
+[node name="Level_1" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
 script = ExtResource("1_42x8c")
 arvores_colecao = NodePath("AvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
-fim_jogo = NodePath("Temporizador/Control")
+temporizador = NodePath("HUD/Temporizador")
 hud = NodePath("HUD")
 qtd_mudas_para_plantar = 1
 
@@ -92,24 +91,12 @@ position = Vector2(755, 611)
 [node name="Recolhe" parent="FerramentasMgmt" instance=ExtResource("11_00t72")]
 position = Vector2(935, 465)
 
-[node name="Temporizador" parent="." instance=ExtResource("7_thw6l")]
+[node name="HUD" parent="." instance=ExtResource("15_7uol4")]
 
-[node name="HUD" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("16_xeic4")
-
-[node name="LabelMudas" type="Label" parent="HUD"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Qtde de arvores a serem plantadas: "
+[node name="Temporizador" parent="HUD" index="0"]
+tempo_restante = 60.0
 
 [editable path="TileMaps"]
 [editable path="SpawnJogadores"]
 [editable path="SpawnJogadores/Jogador2"]
-[editable path="Temporizador"]
+[editable path="HUD"]

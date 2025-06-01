@@ -1,11 +1,13 @@
-extends Control
+extends Node
 
 signal fim_tempo
 
-@onready var GameOverImage := $GameOverImage
+## segundo que duracao da partida
+@export var tempo_restante: float = 60.0
 
-@export var tempo_restante: float = 60.0  # 3 minutos em segundos
 var cronometro_ativo: bool = false
+
+@onready var hud : Hud = get_parent()
 
 func _ready():
 	# Inicia o cronômetro
@@ -17,7 +19,7 @@ func _process(delta):
 		tempo_restante -= delta
 		if tempo_restante <= 0:
 			
-			game_over()
+			acabar_tempo()
 			
 		else:
 			atualizar_cronometro()
@@ -25,11 +27,10 @@ func _process(delta):
 func atualizar_cronometro():
 	var minutos: int = int(tempo_restante) / 60
 	var segundos: int = int(tempo_restante) % 60
-	$Label.text = str(minutos).pad_zeros(2) + ":" + str(segundos).pad_zeros(2)
+	var texto_tempo : String = str(minutos).pad_zeros(2) + ":" + str(segundos).pad_zeros(2)
+	hud.update_tempo(texto_tempo)
 
-func game_over():
-	print(GameOverImage)
-	GameOverImage.show()
+func acabar_tempo():
 	cronometro_ativo = false
-	# Aqui você pode adicionar lógica para finalizar o jogo ou reiniciar
+	# emite signal de fim do tempo
 	emit_signal("fim_tempo")

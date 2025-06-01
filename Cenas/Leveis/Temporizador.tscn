@@ -1,11 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwgamtfi6a04s"]
+[gd_scene load_steps=6 format=3 uid="uid://ie6fxthfbski"]
 
-[ext_resource type="Script" uid="uid://be657ux77gadq" path="res://Cenas/Leveis/control.gd" id="1_a006e"]
+[ext_resource type="Script" uid="uid://drk55k12qbjvp" path="res://Scripts/Partida/temporizador.gd" id="1_p48od"]
 [ext_resource type="Texture2D" uid="uid://clny3k8wxq5x1" path="res://Assets/Interface/GameOverImage.jpg" id="2_a006e"]
-[ext_resource type="Texture2D" uid="uid://bsiu6yvfgiroo" path="res://Assets/Interface/Vitoria1.jpg" id="3_gk0ai"]
-[ext_resource type="Texture2D" uid="uid://b0eo0x4xcairy" path="res://Assets/Interface/Vitoria2.jpg" id="4_p48od"]
+[ext_resource type="Texture2D" uid="uid://bsiu6yvfgiroo" path="res://Assets/Interface/VitoriasSujo.jpg" id="3_gk0ai"]
+[ext_resource type="Texture2D" uid="uid://b0eo0x4xcairy" path="res://Assets/Interface/VitoriaLimpo.jpg" id="4_p48od"]
 
-[node name="Temporizador" type="Node2D"]
+[sub_resource type="GDScript" id="GDScript_gk0ai"]
+script/source = "extends Control
+"
+
+[node name="Temporizador" type="Node"]
+script = ExtResource("1_p48od")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -16,9 +21,9 @@ offset_right = 800.0
 offset_bottom = 172.0
 size_flags_horizontal = 6
 size_flags_vertical = 4
-script = ExtResource("1_a006e")
+script = SubResource("GDScript_gk0ai")
 
-[node name="Label" type="Label" parent="Control"]
+[node name="LabelTempo" type="Label" parent="Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
