@@ -13,9 +13,11 @@ func _ready() -> void:
 	# esconde a tela de fim de jogo
 	sprite_fim_jogo.hide()
 
+## atualiza a label que conta quantas mudas tem que ser plantadas
 func update_mudas(qtd_mudas : int) -> void:
-	label_qtd_mudas.text = "Qtde de arvores a serem plantadas: " + str(qtd_mudas)
+	label_qtd_mudas.text = "Quantidade de Árvores a serem plantadas: " + str(qtd_mudas)
 
+## atualiza a label do cronometro
 func update_tempo(texto : String) -> void:
 	label_cronometro.text = texto
 
