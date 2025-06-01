@@ -12,9 +12,7 @@ func cortar() -> void:
 	viva = false
 	
 	anim_player.play("cortar")
-	anim_player.animation_finished.connect( morrer )
+	anim_player.animation_finished.connect( _morrer )
 
-func morrer(_anim_name: String) -> void:
-	hide()
-	# TODO: signal
-	queue_free()
+func _morrer(_anim_name: String) -> void:
+	super.morrer()

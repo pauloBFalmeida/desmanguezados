@@ -1,6 +1,8 @@
 extends RigidBody2D
 class_name Lixo
 
+signal coletado
+
 ## Lista de Imagens para variar entre, se nao tiver variacoes, deixar vazio
 @export var variantes_sprites : Array[CompressedTexture2D]
 
@@ -36,5 +38,5 @@ func recolher() -> void:
 
 func morrer() -> void:
 	hide()
-	# TODO: signal?
+	emit_signal("coletado")
 	queue_free()

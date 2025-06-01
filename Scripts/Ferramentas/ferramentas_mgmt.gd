@@ -1,11 +1,15 @@
 extends Node2D
+class_name FerramentaMgmt
 
-#const ref_corte   = preload("res://Cenas/Ferramentas/Corte.tscn")
-#const ref_planta  = preload("res://Cenas/Ferramentas/Corte.tscn")
-#const ref_recolhe = preload("res://Cenas/Ferramentas/Recolher.tscn")
+var locais_plantar_colecao : Node2D
+var level : Level
+
+@export var mudas_referencias : Array[PackedScene]
 
 func jogador_pegar(jogador : Node2D, ferramenta : Ferramenta) -> void:
-	#ferramenta.queue_free()
+	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
+		ferramenta.ferramenta_mgmt = self
+		locais_plantar_colecao.show()
 	
 	ferramenta.hide_ferramenta()
 	
@@ -13,7 +17,8 @@ func jogador_pegar(jogador : Node2D, ferramenta : Ferramenta) -> void:
 	jogador.add_child(ferramenta)
 
 func jogador_soltar(jogador : Node2D, ferramenta : Ferramenta) -> void:
-	#ferramentas_mgmt.spawn_ferramenta(ferramenta, pos_ferramenta)
+	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
+		locais_plantar_colecao.hide()
 	
 	jogador.remove_child(ferramenta)
 	add_child(ferramenta)
@@ -28,23 +33,8 @@ func _position_ferramenta(ferramenta : Ferramenta, global_pos : Vector2) -> void
 	var ferramenta_inst : Node2D = ferramenta
 	ferramenta_inst.global_position = global_pos
 
-#func spawn_ferramenta(ferramenta : Ferramenta, global_pos : Vector2) -> void:
-	## nao eh valido
-	#if not ferramenta or (not is_instance_valid(ferramenta)): return
-	#
-	#var ferramenta_inst : Node2D = ferramenta
-	#
-	##var ferramenta_inst : Node2D
-	##match ferramenta.tipo_ferramenta:
-		##Ferramenta.Ferramenta_tipo.CORTAR:
-			##ferramenta_inst = ref_corte.instantiate()
-		##Ferramenta.Ferramenta_tipo.PLANTAR:
-			##ferramenta_inst = ref_planta.instantiate()
-		##Ferramenta.Ferramenta_tipo.RECOLHER:
-			##ferramenta_inst = ref_recolhe.instantiate()
-	#
-	## adiciona na tree
-	#add_child(ferramenta_inst)
-	#ferramenta_inst.global_position = global_pos
-	#
-	#print("ferramenta ", ferramenta, " em ", global_pos)
+func plantar_muda(global_pos : Vector2) -> void:
+	var muda_ref = mudas_referencias.pick_random()
+	var muda : Arvore = muda_ref.instantiate()
+	muda.global_position = global_pos
+	level.plantada_arvore_nativa(muda)

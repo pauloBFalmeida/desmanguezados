@@ -2,7 +2,6 @@ extends Ferramenta
 
 func _ready() -> void:
 	super() # chama _ready da classe Ferramenta
-	print("recolher criado")
 
 func usar_ferramenta(body : Node2D) -> void:
 	# se nao for lixo, nao faca nada

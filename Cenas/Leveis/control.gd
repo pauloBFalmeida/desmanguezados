@@ -1,5 +1,7 @@
 extends Control
 
+signal fim_tempo
+
 @onready var GameOverImage := $GameOverImage
 
 @export var tempo_restante: float = 60.0  # 3 minutos em segundos
@@ -30,3 +32,4 @@ func game_over():
 	GameOverImage.show()
 	cronometro_ativo = false
 	# Aqui você pode adicionar lógica para finalizar o jogo ou reiniciar
+	emit_signal("fim_tempo")

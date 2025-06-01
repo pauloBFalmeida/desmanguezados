@@ -3,7 +3,7 @@ extends RigidBody2D
 
 @export_flags_2d_physics var layer_acao : int
 
-enum Ferramenta_tipo {CORTAR, PLANTAR, RECOLHER, NONE}
+enum Ferramenta_tipo {CORTAR, PLANTAR, RECOLHER}
 
 @export var tipo_ferramenta : Ferramenta_tipo
 

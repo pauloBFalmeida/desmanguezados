@@ -1,9 +1,13 @@
 class_name Arvore
 extends RigidBody2D
 
+signal cortada
+
 enum Arvore_tipo {PINOS, MANGUE}
 
 enum Crescimento {BEBE, JOVEM, ADULTA}
+
+@export var is_invasora : bool
 
 @export var idade : Crescimento = Crescimento.BEBE
 
@@ -21,14 +25,17 @@ func is_adulta() -> bool:
 func comecar_crescer() -> void:
 	if idade == Crescimento.ADULTA: return
 
-func crescer() -> void:
-	print("Crescer ", idade)
-	
+func crescer() -> void:	
 	match (idade):
 		Crescimento.BEBE:
 			idade = Crescimento.JOVEM
 		Crescimento.JOVEM:
 			idade = Crescimento.ADULTA
+
+func morrer() -> void:
+	hide()
+	emit_signal("cortada")
+	queue_free()
 
 # --- Abstrato ---
 func cortar() -> void:

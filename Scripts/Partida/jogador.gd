@@ -9,7 +9,6 @@ extends CharacterBody2D
 @onready var area_interacao : Area2D = $AreaInteracao
 @onready var sprite := $Sprite2DJogador
 
-#var segurando_ferramenta : Ferramenta.Ferramenta_tipo = Ferramenta.Ferramenta_tipo.NONE
 var segurando : Ferramenta = null
 
 var ferramenta_collision_mask : int
@@ -52,7 +51,7 @@ func _process(delta: float) -> void:
 		drop_ferramenta()
 
 # ------ Acao -------
-func acao() -> void:
+func acao() -> void:	
 	# se nao tiver nada na area -> nao faca nada
 	if bodys_dentro_area.is_empty(): return
 	
@@ -79,8 +78,6 @@ func acao() -> void:
 	if body.is_in_group("Ferramentas"):
 		pegar_ferramenta(body)
 	elif body.is_in_group("Marcador"):
-		print("usando: ", segurando)
-		print("em: ", body)
 		usar_ferramenta(body)
 	else:
 		print('body escolhido: ', body)
@@ -88,30 +85,7 @@ func acao() -> void:
 
 # ------ Usar -------
 func usar_ferramenta(body : Node2D) -> void:
-	#Ferramenta 
 	segurando.usar_ferramenta(body)
-	#
-	#match (segurando_ferramenta):
-		#Ferramenta.Ferramenta_tipo.CORTAR:
-			##TODO: Cortar arvore
-			#var tween = create_tween()
-			#tween.set_ease(Tween.EASE_IN)
-			#tween.tween_property(body, "modulate:a", 0.3, 0.2)
-			#tween.finished.connect(func():
-				#var tween2 = create_tween()
-				#tween2.set_ease(Tween.EASE_OUT)
-				#tween2.tween_property(body, "modulate:a", 1.0, 0.2)
-			#)
-		#Ferramenta.Ferramenta_tipo.PLANTAR:
-			#pass
-		#Ferramenta.Ferramenta_tipo.RECOLHER:
-			#var lixo = body
-			#var tween = create_tween()
-			#tween.set_ease(Tween.EASE_IN)
-			#tween.tween_property(lixo, "modulate:a", 0.0, 0.5).from_current()
-			#tween.finished.connect( func():
-				#lixo.queue_free() ### TODO fix this
-			#)
 
 # ------ Pegar -------
 func pegar_ferramenta(ferramenta : Ferramenta) -> void:
@@ -126,10 +100,9 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	area_interacao.set_collision_mask_value(ferramenta_collision_mask, true)
 	# anim pegar a ferramenta
 	anim_segurar_ferramenta(segurando)
-	# remove a ferramenta do mapa
-	print('antes', bodys_dentro_area)
+	
+	# remove a ferramenta dos bodies dentro da area de interacao do jogador
 	bodys_dentro_area.erase(ferramenta)
-	print('depois', bodys_dentro_area)
 
 # ------ Dropar -------
 func drop_ferramenta() -> void:
@@ -165,10 +138,10 @@ func anim_segurar_ferramenta(ferramenta : Ferramenta) -> void:
 			sprite.region_rect = Rect2(10, 17, 42, 27)
 			sprite.offset = Vector2(0, 4)
 		Ferramenta.Ferramenta_tipo.PLANTAR:
+			sprite.modulate = Color.SEA_GREEN
 			pass
 		Ferramenta.Ferramenta_tipo.RECOLHER:
 			sprite.modulate = Color.SANDY_BROWN
-			print("omg 0000000")
 			pass
 		_: # default, caso nao de match com nenhuma das opcoes anteriores
 			anim_idle()
@@ -186,10 +159,11 @@ func anim_idle() -> void:
 # ------ Area Interacao -------
 var bodys_dentro_area := {}
 var pos_inicio_interacao : Vector2
+
 func _on_area_interacao_body_entered(body: Node2D) -> void:
-	bodys_dentro_area[body] = body
+	if not bodys_dentro_area.has(body):
+		bodys_dentro_area[body] = body
 	pos_inicio_interacao = global_position
-	print(body)
 
 func _on_area_interacao_body_exited(body: Node2D) -> void:
 	if bodys_dentro_area.has(body):

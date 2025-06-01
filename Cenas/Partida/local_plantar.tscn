@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxemk6uv78eif"]
+
+[ext_resource type="Texture2D" uid="uid://cvesjtff0f2n6" path="res://icon.svg" id="1_ank1a"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ank1a"]
+radius = 13.0384
+
+[node name="LocalPlantar" type="RigidBody2D" groups=["LocalPlantar", "Marcador"]]
+collision_layer = 16
+collision_mask = 0
+gravity_scale = 0.0
+
+[node name="Icon" type="Sprite2D" parent="."]
+modulate = Color(0.84995, 0.89, 0.089, 0.501961)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_ank1a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ank1a")
+debug_color = Color(0.492033, 0.58, 0.174, 0.196078)

@@ -119,6 +119,7 @@ collision_layer = 9
 collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("1_ik7rc")
+is_invasora = true
 idade = 2
 
 [node name="Pinos" type="Sprite2D" parent="."]

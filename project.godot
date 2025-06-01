@@ -48,6 +48,7 @@ Ferramentas="as ferramentas"
 Marcador="alvo das interações das ferramentas"
 Arvore="é uma arvore interagivel"
 Lixo="é um lixo interagivel"
+LocalPlantar="local para plantar as mudas de arvores"
 
 [input]
 
