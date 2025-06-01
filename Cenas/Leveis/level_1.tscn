@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://dhv3qjf6ytml5"]
+[gd_scene load_steps=14 format=4 uid="uid://dhv3qjf6ytml5"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_42x8c"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/spawn_jogadores.tscn" id="1_w1eyt"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c1r8m1e25lai3" path="res://Cenas/Partida/Lixos/lixo_saco.tscn" id="7_poegd"]
 [ext_resource type="PackedScene" uid="uid://cwgamtfi6a04s" path="res://Cenas/Leveis/Temporizador.tscn" id="7_thw6l"]
 [ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="11_00t72"]
+[ext_resource type="PackedScene" uid="uid://bnr6tp6k6p5mk" path="res://Cenas/Partida/Lixos/lixo_embalagem.tscn" id="13_poegd"]
 
 [node name="Level_1" type="Node"]
 script = ExtResource("1_42x8c")
@@ -49,6 +50,9 @@ position = Vector2(333, 230)
 
 [node name="LixoSaco" parent="LixosColecao" instance=ExtResource("7_poegd")]
 position = Vector2(546, 156)
+
+[node name="LixoEmbalagem" parent="LixosColecao" instance=ExtResource("13_poegd")]
+position = Vector2(639, 501)
 
 [node name="SpawnJogadores" parent="." instance=ExtResource("1_w1eyt")]
 position = Vector2(518, 343)

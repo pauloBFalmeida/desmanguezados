@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cciukv0gmo85j"]
+[gd_scene load_steps=3 format=3 uid="uid://cciukv0gmo85j"]
+
+[ext_resource type="Script" uid="uid://cipaecfgi6vb2" path="res://Scripts/Menus/UsadosMenus/level_item.gd" id="1_ggp4t"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8ekff"]
 load_path = "res://.godot/imported/black.png-b55a21a4fe4ea6060432afadc2d13d8b.ctex"
@@ -14,6 +16,7 @@ offset_right = -290.0
 offset_bottom = 250.0
 grow_horizontal = 2
 size_flags_vertical = 0
+script = ExtResource("1_ggp4t")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -41,3 +44,5 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 30
 text = "Level 1"
+
+[connection signal="pressed" from="ButtonStart" to="." method="_on_button_start_pressed"]

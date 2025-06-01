@@ -5,10 +5,6 @@ extends Control
 
 @onready var container_leveis := $ScrollContainerLeveis/HBoxContainer
 
-const LEVEIS_REF := [
-	"res://Cenas/Leveis/level_1.tscn"
-]
-
 var leveis_itens = []
 
 func _ready() -> void:
@@ -25,17 +21,13 @@ func _on_button_voltar_pressed() -> void:
 # --- Leveis ---
 func _criar_level_itens() -> void:
 	var item_ref = preload("res://Cenas/Menus/SubItems/level_item.tscn")
-	for level_ref in LEVEIS_REF:
+	for level_num in range(len(SceneManager.LEVEIS_REF)):
 		var item = item_ref.instantiate()
 		leveis_itens.append(item)
 		container_leveis.add_child(item)
 		# link botao com inicio do level
-		var btn : Button = item.get_node("ButtonStart")
-		btn.pressed.connect(func(): SceneManager.change_scene(level_ref) )
-		# texto
-		var level_num = leveis_itens.size()
-		btn.text = "Level " + str(level_num)
-	leveis_itens[0].get_node("ButtonStart").grab_focus()
+		item.ajust(level_num)
+	leveis_itens[0].btn_grab_focus()
 
 # --- Controles Conectados ---
 func update_conectados():
