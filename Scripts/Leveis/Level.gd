@@ -16,6 +16,8 @@ var qtd_arvores_nativas : int = 0
 
 var qtd_lixo : int = 0
 
+const local_plantar_ref := preload("res://Cenas/Partida/local_plantar.tscn")
+
 func _ready() -> void:
 	# ferramentas
 	locais_plantar_colecao.hide()
@@ -53,24 +55,35 @@ func ajustar_arvores() -> void:
 		if arvore.is_invasora:
 			qtd_arvores_invasoras += 1
 			arvore.cortada.connect(_cortada_arvore_invasora)
+			arvore.cortada.connect(_update_arvore_cortada.bind(arvore))
 		else: # arvore nativa
 			#qtd_arvores_nativas += 1
 			arvore.cortada.connect(_cortada_arvore_nativa)
+			arvore.cortada.connect(_update_arvore_cortada.bind(arvore))
 
 func plantada_arvore_nativa(arvore : Arvore) -> void:
 	arvores_colecao.add_child(arvore)
 	qtd_arvores_nativas += 1
 	arvore.cortada.connect(_cortada_arvore_nativa)
+	arvore.cortada.connect(_update_arvore_cortada.bind(arvore))
 	update_hud_mudas()
 
 func _cortada_arvore_invasora() -> void:
 	qtd_arvores_invasoras -= 1
-	update_hud_mudas()
 
 func _cortada_arvore_nativa() -> void:
 	qtd_arvores_nativas -= 1
-	update_hud_mudas()
 	# TODO: penalizacao por cortar arvore nativa
+
+func _update_arvore_cortada(arvore : Arvore) -> void:
+	update_hud_mudas()
+	# spawn local de plantar no local da arvore cortada
+	spawn_local_plantar(arvore.global_position)
+
+func spawn_local_plantar(global_pos : Vector2) -> void:
+	var local_plantar = local_plantar_ref.instantiate()
+	local_plantar.global_position = global_pos
+	locais_plantar_colecao.add_child(local_plantar)
 
 # ----- Lixo -----
 func ajustar_lixo() -> void:

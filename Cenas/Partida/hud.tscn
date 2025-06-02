@@ -45,6 +45,7 @@ visible_characters = 6
 visible_ratio = 1.2
 
 [node name="ImagemFim" type="Sprite2D" parent="."]
+visible = false
 scale = Vector2(0.672527, 0.682795)
 texture = ExtResource("4_k3s11")
 centered = false

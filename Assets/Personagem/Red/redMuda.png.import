@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7bu15100afxn"
-path="res://.godot/imported/Axe.png-0dd8e78998ca3434a6b8b0537d9d929c.ctex"
+uid="uid://bl6jvgsop22ge"
+path="res://.godot/imported/redMuda.png-597c089b58bbce7097f3e57c9b166c32.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Ferramentas/Axe.png"
-dest_files=["res://.godot/imported/Axe.png-0dd8e78998ca3434a6b8b0537d9d929c.ctex"]
+source_file="res://Assets/Personagem/Red/redMuda.png"
+dest_files=["res://.godot/imported/redMuda.png-597c089b58bbce7097f3e57c9b166c32.ctex"]
 
 [params]
 

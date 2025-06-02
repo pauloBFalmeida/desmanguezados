@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b1mtmyav5n0qq"]
 
 [ext_resource type="Texture2D" uid="uid://dsh7bbk3nt6fp" path="res://Assets/Personagem/bluex1.png" id="2_gigb0"]
-[ext_resource type="PackedScene" uid="uid://c38kt6bogw2mq" path="res://Cenas/Partida/Jogador.tscn" id="2_j1fy2"]
+[ext_resource type="PackedScene" uid="uid://c38kt6bogw2mq" path="res://Cenas/Partida/Jogadores/Jogador.tscn" id="2_j1fy2"]
 
 [node name="SpawnJogadores" type="Node2D"]
 

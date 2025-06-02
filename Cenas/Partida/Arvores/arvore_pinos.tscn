@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://x7dqi6ggmsw0" path="res://Assets/Cenario/Arvores/Pinos.png" id="2_8f0k6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bklhl"]
-radius = 17.0294
+radius = 14.0
 
 [sub_resource type="Animation" id="Animation_q3uxc"]
 length = 0.001

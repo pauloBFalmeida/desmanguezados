@@ -1,45 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c38kt6bogw2mq"]
+[gd_scene load_steps=7 format=3 uid="uid://c38kt6bogw2mq"]
 
 [ext_resource type="Script" uid="uid://wmjg8xw6jhs4" path="res://Scripts/Partida/jogador.gd" id="1_hjt1h"]
-[ext_resource type="Texture2D" uid="uid://dsh7bbk3nt6fp" path="res://Assets/Personagem/bluex1.png" id="2_hjt1h"]
-[ext_resource type="Texture2D" uid="uid://cnijxmprg2tsn" path="res://Assets/Personagem/blue axe 1x.png" id="2_qpddn"]
-[ext_resource type="Texture2D" uid="uid://d3gs1ee0kps1c" path="res://Assets/Personagem/Red axe x1.png" id="3_una1k"]
+[ext_resource type="SpriteFrames" uid="uid://jrc3bqgmf5t" path="res://Cenas/Partida/Jogadores/JogadorAnim.tres" id="3_801pi"]
 [ext_resource type="Texture2D" uid="uid://dyanf5fyuy83k" path="res://Assets/Personagem/Redx1.png" id="5_lws5r"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_gr1wa"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_qpddn")
-}],
-"loop": true,
-"name": &"hold_cortar_blue",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_una1k")
-}],
-"loop": true,
-"name": &"hold_cortar_red",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_hjt1h")
-}],
-"loop": true,
-"name": &"idle_Blue",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_lws5r")
-}],
-"loop": true,
-"name": &"idle_Red",
-"speed": 5.0
-}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hjt1h"]
 radius = 76.0
@@ -49,6 +12,7 @@ radius = 17.0
 height = 58.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_una1k"]
+radius = 12.0
 height = 46.0
 
 [node name="Jogador" type="CharacterBody2D"]
@@ -59,6 +23,7 @@ script = ExtResource("1_hjt1h")
 speed = 350.0
 
 [node name="Sprite2DJogador" type="Sprite2D" parent="."]
+visible = false
 z_index = 2
 scale = Vector2(3, 3)
 texture = ExtResource("5_lws5r")
@@ -66,10 +31,12 @@ region_enabled = true
 region_rect = Rect2(10, 31, 42, 19)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-visible = false
-scale = Vector2(5, 5)
-sprite_frames = SubResource("SpriteFrames_gr1wa")
-animation = &"idle_Red"
+z_index = 2
+position = Vector2(0, -26)
+scale = Vector2(3, 3)
+sprite_frames = ExtResource("3_801pi")
+animation = &"redIdle"
+frame_progress = 0.416853
 
 [node name="AreaInteracao" type="Area2D" parent="."]
 collision_layer = 0
@@ -81,14 +48,14 @@ debug_color = Color(0.466667, 0.764706, 0.909804, 0.0509804)
 
 [node name="CollisionCorpo" type="CollisionShape2D" parent="."]
 z_index = 100
-position = Vector2(0, -10)
+position = Vector2(-2, -9)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_qpddn")
 debug_color = Color(0.717647, 0.411765, 0.654902, 0.247059)
 
 [node name="CollisionGarra" type="CollisionShape2D" parent="."]
 z_index = 100
-position = Vector2(1, 17)
+position = Vector2(-2, 13)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_una1k")
 debug_color = Color(0.670588, 0.419608, 0.74902, 0.137255)

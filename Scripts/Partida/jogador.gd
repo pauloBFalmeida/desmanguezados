@@ -7,7 +7,8 @@ extends CharacterBody2D
 @export var ferramentas_mgmt : Node2D
 
 @onready var area_interacao : Area2D = $AreaInteracao
-@onready var sprite := $Sprite2DJogador
+#@onready var sprite := $Sprite2DJogador
+@onready var anim_sprite := $AnimatedSprite2D
 
 var segurando : Ferramenta = null
 
@@ -119,10 +120,7 @@ func drop_ferramenta() -> void:
 	area_interacao.set_collision_mask_value(ferramenta_collision_mask, false)
 	ferramenta_collision_mask = 32
 	
-	anim_idle()
-	#TODO: Remove this
-	sprite.modulate = Color.WHITE
-	
+	anim_idle()	
 
 # ------ Animacao -------
 func anim_segurar_ferramenta(ferramenta : Ferramenta) -> void:
@@ -131,30 +129,40 @@ func anim_segurar_ferramenta(ferramenta : Ferramenta) -> void:
 		Ferramenta.Ferramenta_tipo.CORTAR:
 			# sprite com machado dependendo da cor
 			if player_id == InputManager.PlayerId.P1:
-				sprite.texture = preload("res://Assets/Personagem/blue axe 1x.png")
+				anim_sprite.play("blueCortar")
+				#sprite.texture = preload("res://Assets/Personagem/blue axe 1x.png")
 			else:
-				sprite.texture = preload("res://Assets/Personagem/Red axe x1.png")
+				anim_sprite.play("redCortar")
+				#sprite.texture = preload("res://Assets/Personagem/Red axe x1.png")
 			# ajeita a posicao
-			sprite.region_rect = Rect2(10, 17, 42, 27)
-			sprite.offset = Vector2(0, 4)
+			#sprite.region_rect = Rect2(10, 17, 42, 27)
+			#sprite.offset = Vector2(0, 4)
 		Ferramenta.Ferramenta_tipo.PLANTAR:
-			sprite.modulate = Color.SEA_GREEN
-			pass
+			if player_id == InputManager.PlayerId.P1:
+				anim_sprite.play("bluePlantar")
+			else:
+				anim_sprite.play("redPlantar")
 		Ferramenta.Ferramenta_tipo.RECOLHER:
-			sprite.modulate = Color.SANDY_BROWN
-			pass
+			if player_id == InputManager.PlayerId.P1:
+				anim_sprite.play("blueRecolher")
+			else:
+				anim_sprite.play("redRecolher")
 		_: # default, caso nao de match com nenhuma das opcoes anteriores
 			anim_idle()
 
 func anim_idle() -> void:
-	# sprite com machado dependendo da cor
 	if player_id == InputManager.PlayerId.P1:
-		sprite.texture = preload("res://Assets/Personagem/bluex1.png")
+		anim_sprite.play("blueIdle")
 	else:
-		sprite.texture = preload("res://Assets/Personagem/Redx1.png")
-	# ajeita a posicao
-	sprite.region_rect = Rect2(10, 31, 42, 19)
-	sprite.offset = Vector2.ZERO
+		anim_sprite.play("redIdle")
+	## sprite com machado dependendo da cor
+	#if player_id == InputManager.PlayerId.P1:
+		#sprite.texture = preload("res://Assets/Personagem/bluex1.png")
+	#else:
+		#sprite.texture = preload("res://Assets/Personagem/Redx1.png")
+	## ajeita a posicao
+	#sprite.region_rect = Rect2(10, 31, 42, 19)
+	#sprite.offset = Vector2.ZERO
 
 # ------ Area Interacao -------
 var bodys_dentro_area := {}

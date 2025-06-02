@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ie6fxthfbski"]
+[gd_scene load_steps=6 format=3 uid="uid://crt43rbcc1je0"]
 
 [ext_resource type="Script" uid="uid://drk55k12qbjvp" path="res://Scripts/Partida/temporizador.gd" id="1_p48od"]
 [ext_resource type="Texture2D" uid="uid://clny3k8wxq5x1" path="res://Assets/Interface/GameOverImage.jpg" id="2_a006e"]
