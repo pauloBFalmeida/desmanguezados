@@ -3,7 +3,7 @@ extends Node
 
 @export var arvores_colecao : Node
 @export var lixos_colecao : Node
-@export var locais_plantar_colecao : Node2D
+@export var locais_plantar_colecao : LocalPlantarColecao
 @export var ferramenta_mgmt : FerramentaMgmt
 @export var temporizador : Node
 @export var hud : Hud
@@ -20,7 +20,7 @@ const local_plantar_ref := preload("res://Cenas/Partida/local_plantar.tscn")
 
 func _ready() -> void:
 	# ferramentas
-	locais_plantar_colecao.hide()
+	locais_plantar_colecao.esconder()
 	ferramenta_mgmt.level = self
 	ferramenta_mgmt.locais_plantar_colecao = locais_plantar_colecao
 	# 
@@ -78,12 +78,12 @@ func _cortada_arvore_nativa() -> void:
 func _update_arvore_cortada(arvore : Arvore) -> void:
 	update_hud_mudas()
 	# spawn local de plantar no local da arvore cortada
-	spawn_local_plantar(arvore.global_position)
+	spawn_local_plantar(arvore.global_position) 
 
 func spawn_local_plantar(global_pos : Vector2) -> void:
 	var local_plantar = local_plantar_ref.instantiate()
 	local_plantar.global_position = global_pos
-	locais_plantar_colecao.add_child(local_plantar)
+	locais_plantar_colecao.add_local_plantar(local_plantar)
 
 # ----- Lixo -----
 func ajustar_lixo() -> void:

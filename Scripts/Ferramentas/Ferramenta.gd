@@ -1,13 +1,16 @@
 class_name Ferramenta
 extends RigidBody2D
 
-@export_flags_2d_physics var layer_acao : int
-
 enum Ferramenta_tipo {CORTAR, PLANTAR, RECOLHER}
+enum Som_tipo {ACERTO, ERRO, BALANCAR}
 
+@export_flags_2d_physics var layer_acao : int
 @export var tipo_ferramenta : Ferramenta_tipo
+@export var sons : Dictionary[Som_tipo, AudioStream]
 
-@onready var collison := get_node("CollisionShape2D")
+var collison : CollisionShape2D
+var audio_player : AudioStreamPlayer2D
+
 
 # int da layer [1, 32]
 func get_layer_acao() -> int:
@@ -15,6 +18,8 @@ func get_layer_acao() -> int:
 
 func _ready() -> void:
 	add_to_group("Ferramentas")
+	collison = get_node("CollisionShape2D")
+	audio_player = get_node("AudioStreamPlayer2D")
 
 func hide_ferramenta() -> void:
 	visible = false
@@ -28,27 +33,19 @@ func show_ferramenta() -> void:
 	set_process(true)
 	collison.disabled = false
 
+# -- som --
+func tocar_som(tipo_som : Som_tipo) -> void:
+	audio_player.set_stream(sons[tipo_som])
+	#audio_player.play()
+	
+	#match tipo_som:
+		#Som_tipo.ACERTO:
+		#Som_tipo.ERRO:
+		#Som_tipo.BALANCAR:
+
+func balancar_ferramenta() -> void:
+	tocar_som(Som_tipo.BALANCAR)
+
 # --- Abstrato ---
-func usar_ferramenta(body : Node2D) -> void:
+func usar_ferramenta(_body : Node2D) -> void:
 	pass
-	#match (tipo):
-		#Ferramenta.Ferramenta_tipo.CORTAR:
-			##TODO: Cortar arvore
-			#var tween = create_tween()
-			#tween.set_ease(Tween.EASE_IN)
-			#tween.tween_property(body, "modulate:a", 0.3, 0.2)
-			#tween.finished.connect(func():
-				#var tween2 = create_tween()
-				#tween2.set_ease(Tween.EASE_OUT)
-				#tween2.tween_property(body, "modulate:a", 1.0, 0.2)
-			#)
-		#Ferramenta.Ferramenta_tipo.PLANTAR:
-			#pass
-		#Ferramenta.Ferramenta_tipo.RECOLHER:
-			#var lixo = body
-			#var tween = create_tween()
-			#tween.set_ease(Tween.EASE_IN)
-			#tween.tween_property(lixo, "modulate:a", 0.0, 0.5).from_current()
-			#tween.finished.connect( func():
-				#lixo.queue_free() ### TODO fix this
-			#)

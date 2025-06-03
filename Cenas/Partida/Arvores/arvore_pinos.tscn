@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6fqbdb1cd3kc"]
+[gd_scene load_steps=8 format=3 uid="uid://b6fqbdb1cd3kc"]
 
 [ext_resource type="Script" uid="uid://ecg0wp8e35w1" path="res://Scripts/Partida/arvore_pinos.gd" id="1_ik7rc"]
 [ext_resource type="Texture2D" uid="uid://x7dqi6ggmsw0" path="res://Assets/Cenario/Arvores/Pinos.png" id="2_8f0k6"]
+[ext_resource type="Texture2D" uid="uid://bnsy7do16v8k5" path="res://Assets/Ferramentas/circle.png" id="2_q3uxc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bklhl"]
 radius = 14.0
@@ -121,6 +122,12 @@ gravity_scale = 0.0
 script = ExtResource("1_ik7rc")
 is_invasora = true
 idade = 2
+
+[node name="Icon" type="Sprite2D" parent="."]
+modulate = Color(0.69, 0.069, 0, 1)
+position = Vector2(2, 6)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_q3uxc")
 
 [node name="Pinos" type="Sprite2D" parent="."]
 position = Vector2(0, 1)

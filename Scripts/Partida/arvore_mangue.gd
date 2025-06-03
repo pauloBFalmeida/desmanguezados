@@ -55,3 +55,10 @@ func cortar() -> void:
 
 func _morrer(_anim_name: String) -> void:
 	super.morrer()
+
+
+func _on_area_2d_preso_dentro_body_exited(body: Node2D) -> void:
+	print("jogador saiu arvore")
+
+func _on_area_2d_preso_dentro_body_entered(body: Node2D) -> void:
+	print("jogador dentro arvore")

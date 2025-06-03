@@ -40,7 +40,7 @@ func _ajustar_input_map() -> void:
 	interact   = actionMap["interact"]
 	drop       = actionMap["drop"]
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var move_dir = Input.get_vector(move_left, move_right, move_up, move_down)
 	
 	velocity = move_dir * speed
@@ -54,7 +54,9 @@ func _process(delta: float) -> void:
 # ------ Acao -------
 func acao() -> void:	
 	# se nao tiver nada na area -> nao faca nada
-	if bodys_dentro_area.is_empty(): return
+	if bodys_dentro_area.is_empty():
+		balancar_ferramenta()
+		return
 	
 	var body : Node2D
 	# so 1 body dentro -> pega esse
@@ -86,7 +88,12 @@ func acao() -> void:
 
 # ------ Usar -------
 func usar_ferramenta(body : Node2D) -> void:
-	segurando.usar_ferramenta(body)
+	if segurando and is_instance_valid(segurando):
+		segurando.usar_ferramenta(body)
+
+func balancar_ferramenta() -> void:
+	if segurando and is_instance_valid(segurando):
+		segurando.balancar_ferramenta()
 
 # ------ Pegar -------
 func pegar_ferramenta(ferramenta : Ferramenta) -> void:

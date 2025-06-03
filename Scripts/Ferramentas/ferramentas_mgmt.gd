@@ -1,7 +1,7 @@
 extends Node2D
 class_name FerramentaMgmt
 
-var locais_plantar_colecao : Node2D
+var locais_plantar_colecao : LocalPlantarColecao
 var level : Level
 
 @export var mudas_referencias : Array[PackedScene]
@@ -9,7 +9,7 @@ var level : Level
 func jogador_pegar(jogador : Node2D, ferramenta : Ferramenta) -> void:
 	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
 		ferramenta.ferramenta_mgmt = self
-		locais_plantar_colecao.show()
+		locais_plantar_colecao.mostrar()
 	
 	ferramenta.hide_ferramenta()
 	
@@ -18,7 +18,7 @@ func jogador_pegar(jogador : Node2D, ferramenta : Ferramenta) -> void:
 
 func jogador_soltar(jogador : Node2D, ferramenta : Ferramenta) -> void:
 	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
-		locais_plantar_colecao.hide()
+		locais_plantar_colecao.esconder()
 	
 	jogador.remove_child(ferramenta)
 	add_child(ferramenta)
@@ -33,8 +33,13 @@ func _position_ferramenta(ferramenta : Ferramenta, global_pos : Vector2) -> void
 	var ferramenta_inst : Node2D = ferramenta
 	ferramenta_inst.global_position = global_pos
 
-func plantar_muda(global_pos : Vector2) -> void:
+func plantar_muda(local_plantar : Node2D) -> void:
+	locais_plantar_colecao.remove_local_plantar(local_plantar)
+	
 	var muda_ref = mudas_referencias.pick_random()
 	var muda : Arvore = muda_ref.instantiate()
-	muda.global_position = global_pos
+	
+	muda.global_position = local_plantar.global_position
 	level.plantada_arvore_nativa(muda)
+	
+	

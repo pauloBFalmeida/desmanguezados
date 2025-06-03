@@ -1,9 +1,88 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxemk6uv78eif"]
+[gd_scene load_steps=15 format=3 uid="uid://bxemk6uv78eif"]
 
-[ext_resource type="Texture2D" uid="uid://cvesjtff0f2n6" path="res://icon.svg" id="1_ank1a"]
+[ext_resource type="Texture2D" uid="uid://bnsy7do16v8k5" path="res://Assets/Ferramentas/circle.png" id="1_uyc3p"]
+[ext_resource type="Texture2D" uid="uid://cc4b48si41pof" path="res://Assets/Ferramentas/seta.png" id="2_uyc3p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ank1a"]
 radius = 13.0384
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3gip"]
+atlas = ExtResource("2_uyc3p")
+region = Rect2(0, 0, 12, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rqe2"]
+atlas = ExtResource("2_uyc3p")
+region = Rect2(12, 0, 12, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8cce"]
+atlas = ExtResource("2_uyc3p")
+region = Rect2(24, 0, 12, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbttq"]
+atlas = ExtResource("2_uyc3p")
+region = Rect2(0, 22, 12, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nr0k4"]
+atlas = ExtResource("2_uyc3p")
+region = Rect2(12, 22, 12, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuyhd"]
+atlas = ExtResource("2_uyc3p")
+region = Rect2(24, 22, 12, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18wau"]
+atlas = ExtResource("2_uyc3p")
+region = Rect2(12, 22, 12, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4i5g"]
+atlas = ExtResource("2_uyc3p")
+region = Rect2(0, 22, 12, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjpmm"]
+atlas = ExtResource("2_uyc3p")
+region = Rect2(24, 0, 12, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lj1um"]
+atlas = ExtResource("2_uyc3p")
+region = Rect2(12, 0, 12, 22)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g0fw1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3gip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rqe2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8cce")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbttq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nr0k4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuyhd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18wau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4i5g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sjpmm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lj1um")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
 
 [node name="LocalPlantar" type="RigidBody2D" groups=["LocalPlantar", "Marcador"]]
 collision_layer = 16
@@ -11,10 +90,18 @@ collision_mask = 0
 gravity_scale = 0.0
 
 [node name="Icon" type="Sprite2D" parent="."]
-modulate = Color(0.84995, 0.89, 0.089, 0.501961)
+modulate = Color(0.075, 0.45, 0, 0.823529)
+position = Vector2(2, 6)
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("1_ank1a")
+texture = ExtResource("1_uyc3p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 3)
 shape = SubResource("CircleShape2D_ank1a")
 debug_color = Color(0.492033, 0.58, 0.174, 0.196078)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(4, -32)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_g0fw1")
+frame_progress = 0.479142

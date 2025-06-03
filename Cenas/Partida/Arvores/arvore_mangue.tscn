@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cedrrktxte7k6"]
+[gd_scene load_steps=10 format=3 uid="uid://cedrrktxte7k6"]
 
 [ext_resource type="Script" uid="uid://dbq0k02hr2o0m" path="res://Scripts/Partida/arvore_mangue.gd" id="1_63al1"]
 [ext_resource type="Texture2D" uid="uid://e14uxly4awj8" path="res://Assets/Cenario/Arvores/ArvoresMangue.png" id="1_yyjcj"]
@@ -303,6 +303,9 @@ _data = {
 &"cortar": SubResource("Animation_wngaa")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_wngaa"]
+radius = 12.0
+
 [node name="ArvoreMangue" type="RigidBody2D" node_paths=PackedStringArray("sprites_idade", "collisions_idade") groups=["Arvore", "Marcador"]]
 collision_layer = 9
 collision_mask = 0
@@ -329,7 +332,6 @@ region_enabled = true
 region_rect = Rect2(0, 17, 15, 20)
 
 [node name="CollisionBebe" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(1, -11)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_5uk8w")
@@ -375,4 +377,14 @@ libraries = {
 &"": SubResource("AnimationLibrary_8l0ih")
 }
 
+[node name="Area2DPresoDentro" type="Area2D" parent="."]
+position = Vector2(0, -10)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DPresoDentro"]
+shape = SubResource("CircleShape2D_wngaa")
+
 [connection signal="timeout" from="TimerCrescer" to="." method="_on_timer_crescer_timeout"]
+[connection signal="body_entered" from="Area2DPresoDentro" to="." method="_on_area_2d_preso_dentro_body_entered"]
+[connection signal="body_exited" from="Area2DPresoDentro" to="." method="_on_area_2d_preso_dentro_body_exited"]

@@ -1,8 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://wc8anpmb316x"]
+[gd_scene load_steps=9 format=3 uid="uid://wc8anpmb316x"]
 
 [ext_resource type="Script" uid="uid://gr6eecxca26c" path="res://Scripts/Ferramentas/cortar.gd" id="1_m88eb"]
 [ext_resource type="Shader" uid="uid://cw712yn14yynr" path="res://Scripts/Shaders/outline.gdshader" id="2_tk8ln"]
 [ext_resource type="Texture2D" uid="uid://7bu15100afxn" path="res://Assets/Ferramentas/Cortar.png" id="3_clo20"]
+
+[sub_resource type="AudioStream" id="AudioStream_jli3b"]
+
+[sub_resource type="AudioStream" id="AudioStream_67lvn"]
+
+[sub_resource type="AudioStream" id="AudioStream_dd7e1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m88eb"]
 radius = 25.0
@@ -19,6 +25,11 @@ collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("1_m88eb")
 layer_acao = 8
+sons = Dictionary[int, AudioStream]({
+0: SubResource("AudioStream_jli3b"),
+1: SubResource("AudioStream_67lvn"),
+2: SubResource("AudioStream_dd7e1")
+})
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_m88eb")
@@ -30,3 +41,6 @@ scale = Vector2(3, 3)
 texture = ExtResource("3_clo20")
 region_enabled = true
 region_rect = Rect2(22, 26, 12, 15)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+area_mask = 4

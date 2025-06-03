@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://dhv3qjf6ytml5"]
+[gd_scene load_steps=17 format=4 uid="uid://dhv3qjf6ytml5"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_42x8c"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="1_w1eyt"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="6_q0w2f"]
 [ext_resource type="PackedScene" uid="uid://c1r8m1e25lai3" path="res://Cenas/Partida/Lixos/lixo_saco.tscn" id="7_poegd"]
 [ext_resource type="PackedScene" uid="uid://bxemk6uv78eif" path="res://Cenas/Partida/local_plantar.tscn" id="9_hdr42"]
+[ext_resource type="Script" uid="uid://ymebirrcc0d3" path="res://Scripts/Partida/locais_plantar_colecao.gd" id="9_xeic4"]
 [ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="11_00t72"]
 [ext_resource type="PackedScene" uid="uid://bnr6tp6k6p5mk" path="res://Cenas/Partida/Lixos/lixo_embalagem.tscn" id="13_poegd"]
 [ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Plantar.tscn" id="14_7uol4"]
@@ -65,6 +66,7 @@ position = Vector2(182, 69)
 position = Vector2(639, 501)
 
 [node name="LocaisPlantarColecao" type="Node2D" parent="."]
+script = ExtResource("9_xeic4")
 
 [node name="LocalPlantar" parent="LocaisPlantarColecao" instance=ExtResource("9_hdr42")]
 position = Vector2(210, 284)
@@ -99,4 +101,5 @@ tempo_restante = 60.0
 
 [editable path="TileMaps"]
 [editable path="SpawnJogadores"]
+[editable path="SpawnJogadores/Jogador2"]
 [editable path="HUD"]

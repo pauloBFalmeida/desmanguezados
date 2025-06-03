@@ -9,13 +9,9 @@ func usar_ferramenta(body : Node2D) -> void:
 	# se nao for local de plantar, nao faca nada
 	if not body.is_in_group("LocalPlantar"): return
 	
+	var local_plantar : Node2D = body
 	# planta
-	plantar(body.global_position)
-	
-	# apaga o local de plantar
-	body.hide()
-	body.queue_free()
-	
+	plantar(local_plantar)
 
-func plantar(global_pos : Vector2) -> void:
-	ferramenta_mgmt.plantar_muda(global_pos)
+func plantar(local_plantar : Node2D) -> void:
+	ferramenta_mgmt.plantar_muda(local_plantar)

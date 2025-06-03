@@ -10,3 +10,7 @@ func usar_ferramenta(body : Node2D) -> void:
 	var arvore : Arvore = body
 	
 	arvore.cortar()
+	
+	var tipo_som : Ferramenta.Som_tipo 
+	tipo_som = Ferramenta.Som_tipo.ACERTO if arvore.is_invasora else Ferramenta.Som_tipo.ERRO
+	super.tocar_som(tipo_som)
