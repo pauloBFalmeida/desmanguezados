@@ -93,3 +93,15 @@ func _verificar_preso_dentro(body: Node2D) -> void:
 		# 	que eh o que estamos verificando nesse while
 		await get_tree().create_timer(0.1).timeout
 		
+
+# --- mostrar atras ---
+var objs_dentro_buraco : Array[Node2D] = []
+func _on_area_2d_mostrar_buraco_body_entered(body: Node2D) -> void:
+	objs_dentro_buraco.append(body)
+	modulate.a = 0.7
+
+func _on_area_2d_mostrar_buraco_body_exited(body: Node2D) -> void:
+	if objs_dentro_buraco.has(body):
+		objs_dentro_buraco.erase(body)
+	if objs_dentro_buraco.is_empty():
+		modulate.a = 1.0

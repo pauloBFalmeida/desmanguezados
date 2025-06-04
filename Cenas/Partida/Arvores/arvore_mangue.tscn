@@ -306,7 +306,7 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_wngaa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wngaa"]
-size = Vector2(188, 168)
+size = Vector2(128, 132)
 
 [node name="ArvoreMangue" type="RigidBody2D" node_paths=PackedStringArray("sprites_idade", "collisions_idade") groups=["Arvore", "Marcador"]]
 collision_layer = 9
@@ -356,6 +356,7 @@ shape = SubResource("CapsuleShape2D_wngaa")
 debug_color = Color(0.278431, 0.533333, 0.317647, 0.25098)
 
 [node name="MangueAdulta" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(-21, -6)
 scale = Vector2(5, 5)
 texture = ExtResource("1_yyjcj")
@@ -394,10 +395,12 @@ collision_mask = 54
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DMostrarBuraco"]
-position = Vector2(0, -31)
+position = Vector2(0, -13)
 shape = SubResource("RectangleShape2D_wngaa")
 debug_color = Color(0.53208, 0.54, 0.4806, 0.203922)
 
 [connection signal="timeout" from="TimerCrescer" to="." method="_on_timer_crescer_timeout"]
 [connection signal="body_entered" from="Area2DPresoDentro" to="." method="_on_area_2d_preso_dentro_body_entered"]
 [connection signal="body_exited" from="Area2DPresoDentro" to="." method="_on_area_2d_preso_dentro_body_exited"]
+[connection signal="body_entered" from="Area2DMostrarBuraco" to="." method="_on_area_2d_mostrar_buraco_body_entered"]
+[connection signal="body_exited" from="Area2DMostrarBuraco" to="." method="_on_area_2d_mostrar_buraco_body_exited"]

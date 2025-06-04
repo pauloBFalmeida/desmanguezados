@@ -51,14 +51,11 @@ func _physics_process(_delta: float) -> void:
 	var tile_pos = tilemap_lodo.local_to_map(global_position / tilemap_lodo.scale.x)
 	var tile = tilemap_lodo.get_cell_tile_data(tile_pos)
 	
-	if tile != null:
+	if tile != null: # se setiver emcima de um tile existente no tilemap
 		var slow_speed : float = tile.get_custom_data("slow_speed")
 		speed_modifier = slow_speed * slowdown_lodo
-		print('speed_modifier lodo ', speed_modifier)
 	else:
 		speed_modifier = 1.0
-		print('speed_modifier ', speed_modifier)
-		
 
 func _process(_delta: float) -> void:
 	var move_dir = Input.get_vector(move_left, move_right, move_up, move_down)
