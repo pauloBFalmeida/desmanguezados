@@ -6,7 +6,7 @@ const MENU_SELECAO_PATH := "res://Cenas/Menus/menuSelecao.tscn"
 enum Level_id {TUTORIAL, LEVEL_1, LEVEL_2}
 
 const LEVEIS_REF  : Dictionary[Level_id, String] = {
-	Level_id.TUTORIAL: "res://Cenas/Leveis/level_1.tscn",
+	Level_id.TUTORIAL: "res://Cenas/Leveis/level_0_tutorial.tscn",
 	Level_id.LEVEL_1: "res://Cenas/Leveis/level_1.tscn",
 }
 
