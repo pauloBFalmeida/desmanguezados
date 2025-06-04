@@ -16,6 +16,8 @@ class_name Hud
 @export var start_count_num : int = 3
 var is_comecando_contar : bool = false
 
+@onready var temporizador := $Temporizador
+
 enum Tipo_fim {DERROTA_TEMPO, VITORIA_SUJO, VITORIA_LIMPO}
 
 @export var imagens_fim_jogo : Dictionary[Tipo_fim, CompressedTexture2D]
@@ -87,6 +89,8 @@ func comecar_contar() -> void:
 	start_menu.hide()
 	get_tree().paused = false
 	is_comecando_contar = false
+	# comeca o temporizador
+	temporizador.comecar()
 
 # ---- Menu Game Over ----
 func show_tela_fim(tipo : Tipo_fim) -> void:

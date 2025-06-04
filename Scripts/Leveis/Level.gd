@@ -5,9 +5,11 @@ extends Node
 @export var lixos_colecao : CanvasGroup
 @export var locais_plantar_colecao : LocalPlantarColecao
 @export var ferramenta_mgmt : FerramentaMgmt
-@export var temporizador : Node
+@export var temporizador : Temporizador
 @export var hud : Hud
 
+## duracao da partida em segundos
+@export var duracao_partida_segundos : int = 60
 @export var qtd_mudas_para_plantar : int
 
 #var qtd_mudas_para_plantar : int = 0
@@ -36,6 +38,7 @@ func _ready() -> void:
 	ajustar_locais_plantar()
 	# 
 	temporizador.fim_tempo.connect(_fim_partida)
+	temporizador.set_duracao(duracao_partida_segundos)
 	# contagem inicial para comecar o jogo
 	hud.comecar_contar()
 

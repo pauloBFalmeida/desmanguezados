@@ -1,15 +1,20 @@
 extends Node
+class_name Temporizador
 
 signal fim_tempo
 
 ## segundo que duracao da partida
-@export var tempo_restante: float = 60.0
+var tempo_restante: float = 60.0
 
 var cronometro_ativo: bool = false
 
 @onready var hud : Hud = get_parent()
 
-func _ready():
+func set_duracao(valor : int) -> void:
+	tempo_restante = float(valor)
+	atualizar_cronometro()
+
+func comecar():
 	# Inicia o cronômetro
 	cronometro_ativo = true
 

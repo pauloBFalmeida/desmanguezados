@@ -102,9 +102,6 @@ position = Vector2(210, 284)
 [node name="HUD" parent="." instance=ExtResource("16_3olvf")]
 metadata/_edit_lock_ = true
 
-[node name="Temporizador" parent="HUD" index="0"]
-tempo_restante = 20.0
-
 [editable path="TileMaps"]
 [editable path="SpawnJogadores"]
 [editable path="SpawnJogadores/Jogador2"]

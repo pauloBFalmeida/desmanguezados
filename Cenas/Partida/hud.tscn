@@ -23,7 +23,6 @@ imagens_fim_jogo = Dictionary[int, CompressedTexture2D]({
 
 [node name="Temporizador" type="Node" parent="."]
 script = ExtResource("5_wa2qo")
-tempo_restante = 5.0
 
 [node name="LabelMudas" type="Label" parent="."]
 layout_mode = 0
@@ -162,6 +161,7 @@ text = "0"
 horizontal_alignment = 1
 
 [node name="GameOverMenu" type="Control" parent="."]
+visible = false
 z_index = 99
 layout_mode = 1
 anchors_preset = 15
