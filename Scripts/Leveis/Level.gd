@@ -1,8 +1,8 @@
 class_name Level
 extends Node
 
-@export var arvores_colecao : ArvoresColecao
-@export var lixos_colecao : Node
+@export var arvores_colecao : CanvasGroup
+@export var lixos_colecao : CanvasGroup
 @export var locais_plantar_colecao : LocalPlantarColecao
 @export var ferramenta_mgmt : FerramentaMgmt
 @export var temporizador : Node
@@ -85,8 +85,6 @@ func ajustar_arvores() -> void:
 			#qtd_arvores_nativas += 1
 			arvore.cortada.connect(_cortada_arvore_nativa)
 			arvore.cortada.connect(_update_arvore_cortada.bind(arvore))
-	# 
-	arvores_colecao.update_arvores()
 
 func plantada_arvore_nativa(arvore : Arvore) -> void:
 	arvores_colecao.add_child(arvore)
@@ -95,8 +93,6 @@ func plantada_arvore_nativa(arvore : Arvore) -> void:
 	arvore.cortada.connect(_update_arvore_cortada.bind(arvore))
 	# 
 	update_hud_mudas()
-	# 
-	arvores_colecao.update_arvores()
 
 func _cortada_arvore_invasora() -> void:
 	qtd_arvores_invasoras -= 1
@@ -109,8 +105,6 @@ func _update_arvore_cortada(arvore : Arvore) -> void:
 	update_hud_mudas()
 	# spawn local de plantar no local da arvore cortada
 	spawn_local_plantar(arvore.global_position) 
-	# 
-	arvores_colecao.update_arvores()
 
 func spawn_local_plantar(global_pos : Vector2) -> void:
 	var local_plantar = local_plantar_ref.instantiate()

@@ -154,7 +154,7 @@ libraries = {
 collision_layer = 0
 collision_mask = 54
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2DMostrarBuraco"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DMostrarBuraco"]
 position = Vector2(3, -114)
 shape = SubResource("RectangleShape2D_q3uxc")
 debug_color = Color(0.537853, 0.539163, 0.502104, 0.42)
