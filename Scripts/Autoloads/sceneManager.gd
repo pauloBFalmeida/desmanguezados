@@ -3,9 +3,22 @@ extends Node
 const MENU_PRINCIPAL_PATH := "res://Cenas/Menus/menuPrincipal.tscn"
 const MENU_SELECAO_PATH := "res://Cenas/Menus/menuSelecao.tscn"
 
-const LEVEIS_REF : Array[String] = [
-	"res://Cenas/Leveis/level_1.tscn"
-]
+enum Level_id {TUTORIAL, LEVEL_1, LEVEL_2}
+
+const LEVEIS_REF  : Dictionary[Level_id, String] = {
+	Level_id.TUTORIAL: "res://Cenas/Leveis/level_1.tscn",
+	Level_id.LEVEL_1: "res://Cenas/Leveis/level_1.tscn",
+}
+
+const LEVEIS_NOME : Dictionary[Level_id, String] = {
+	Level_id.TUTORIAL: "Tutorial",
+	Level_id.LEVEL_1: "Level 1",
+}
+
+const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
+	#Level_id.TUTORIAL: preload()
+}
+
 
 #const level_paths := {
 	#LevelData.Level_t.TUTORIAL: "res://Scenes/Levels/level_Tutorial.tscn",
@@ -17,9 +30,9 @@ func goto_menu():
 func goto_selecao():
 	change_scene(MENU_SELECAO_PATH)
 
-func goto_level(level_num: int):
-	if level_num < len(LEVEIS_REF) and level_num >= 0:
-		change_scene(LEVEIS_REF[level_num])
+func goto_level(level_id : Level_id):
+	if LEVEIS_REF.has(level_id):
+		change_scene(LEVEIS_REF[level_id])
 
 # ------  ---------
 func change_scene(path: String):

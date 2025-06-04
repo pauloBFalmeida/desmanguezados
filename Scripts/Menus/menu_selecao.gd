@@ -21,12 +21,12 @@ func _on_button_voltar_pressed() -> void:
 # --- Leveis ---
 func _criar_level_itens() -> void:
 	var item_ref = preload("res://Cenas/Menus/SubItems/level_item.tscn")
-	for level_num in range(len(SceneManager.LEVEIS_REF)):
+	for level_id in SceneManager.LEVEIS_REF.keys():
 		var item = item_ref.instantiate()
 		leveis_itens.append(item)
 		container_leveis.add_child(item)
 		# link botao com inicio do level
-		item.ajust(level_num)
+		item.ajust(level_id)
 	leveis_itens[0].btn_grab_focus()
 
 # --- Controles Conectados ---

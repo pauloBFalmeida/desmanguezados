@@ -18,6 +18,10 @@ var qtd_lixo : int = 0
 
 const local_plantar_ref := preload("res://Cenas/Partida/local_plantar.tscn")
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		SceneManager.goto_menu()
+
 func _ready() -> void:
 	# ferramentas
 	locais_plantar_colecao.esconder()
