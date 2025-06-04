@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://drk55k12qbjvp" path="res://Scripts/Partida/temporizador.gd" id="5_wa2qo"]
 
 [node name="HUD" type="Control"]
+z_index = 199
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,8 +45,168 @@ horizontal_alignment = 1
 visible_characters = 6
 visible_ratio = 1.2
 
-[node name="ImagemFim" type="Sprite2D" parent="."]
+[node name="PauseMenu" type="Control" parent="."]
 visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenu"]
+modulate = Color(0.117, 0.27795, 0.45, 0.745098)
+layout_mode = 0
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
+custom_minimum_size = Vector2(400, 350)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -175.0
+offset_right = 200.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelTit" type="Label" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Pausado"
+horizontal_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="PauseMenu/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="ButtonJogo" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Continuar Jogo"
+
+[node name="VSeparator2" type="VSeparator" parent="PauseMenu/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="ButtonRestart" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Reiniciar Level"
+
+[node name="VSeparator3" type="VSeparator" parent="PauseMenu/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="ButtonMenu" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Voltar Menu"
+
+[node name="StartMenu" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="StartMenu"]
+modulate = Color(0.225724, 0.46692, 0.315934, 0.643137)
+layout_mode = 0
+offset_left = -205.0
+offset_top = -50.0
+offset_right = -165.0
+offset_bottom = -10.0
+scale = Vector2(11.3826, 3.75964)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StartMenu"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -48.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelStartText" type="Label" parent="StartMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Jogo começa em"
+horizontal_alignment = 1
+
+[node name="LabelStartCount" type="Label" parent="StartMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+
+[node name="GameOverMenu" type="Control" parent="."]
+visible = false
+z_index = 99
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ImagemFim" type="Sprite2D" parent="GameOverMenu"]
 scale = Vector2(0.672527, 0.682795)
 texture = ExtResource("4_k3s11")
 centered = false
+
+[node name="ButtonReplay" type="Button" parent="GameOverMenu"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = -70.0
+offset_right = 204.0
+offset_bottom = -39.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "Jogar de Novo"
+
+[node name="ButtonMenu" type="Button" parent="GameOverMenu"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -204.0
+offset_top = -70.0
+offset_right = -100.0
+offset_bottom = -39.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "Voltar Menu"
+
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonJogo" to="." method="_on_button_jogo_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonRestart" to="." method="_on_button_restart_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonMenu" to="." method="_on_button_menu_pressed"]
+[connection signal="pressed" from="GameOverMenu/ButtonReplay" to="." method="_on_button_replay_pressed"]
+[connection signal="pressed" from="GameOverMenu/ButtonMenu" to="." method="_on_button_menu_gameover_pressed"]

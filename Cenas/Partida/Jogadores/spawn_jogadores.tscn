@@ -6,7 +6,6 @@
 [node name="SpawnJogadores" type="Node2D"]
 
 [node name="Jogador1" parent="." instance=ExtResource("2_j1fy2")]
-player_id = 0
 
 [node name="Jogador2" parent="." instance=ExtResource("2_j1fy2")]
 position = Vector2(147, 0)

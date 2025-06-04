@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6fqbdb1cd3kc"]
+[gd_scene load_steps=9 format=3 uid="uid://b6fqbdb1cd3kc"]
 
 [ext_resource type="Script" uid="uid://ecg0wp8e35w1" path="res://Scripts/Partida/arvore_pinos.gd" id="1_ik7rc"]
 [ext_resource type="Texture2D" uid="uid://x7dqi6ggmsw0" path="res://Assets/Cenario/Arvores/Pinos.png" id="2_8f0k6"]
@@ -115,6 +115,9 @@ _data = {
 &"cortar": SubResource("Animation_i7iiy")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q3uxc"]
+size = Vector2(130, 219)
+
 [node name="ArvorePinos" type="RigidBody2D" groups=["Arvore", "Marcador"]]
 collision_layer = 9
 collision_mask = 0
@@ -146,3 +149,12 @@ debug_color = Color(0.27673, 0.533623, 0.318494, 0.25098)
 libraries = {
 &"": SubResource("AnimationLibrary_k3s1f")
 }
+
+[node name="Area2DMostrarBuraco" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 54
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2DMostrarBuraco"]
+position = Vector2(0, -127.5)
+shape = SubResource("RectangleShape2D_q3uxc")
+debug_color = Color(0.537853, 0.539163, 0.502104, 0.42)

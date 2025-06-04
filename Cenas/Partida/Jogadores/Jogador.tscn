@@ -16,6 +16,7 @@ radius = 12.0
 height = 46.0
 
 [node name="Jogador" type="CharacterBody2D"]
+z_index = 5
 collision_layer = 2
 collision_mask = 3
 motion_mode = 1
@@ -24,14 +25,12 @@ speed = 350.0
 
 [node name="Sprite2DJogador" type="Sprite2D" parent="."]
 visible = false
-z_index = 2
 scale = Vector2(3, 3)
 texture = ExtResource("5_lws5r")
 region_enabled = true
 region_rect = Rect2(10, 31, 42, 19)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-z_index = 2
 position = Vector2(0, -26)
 scale = Vector2(3, 3)
 sprite_frames = ExtResource("3_801pi")

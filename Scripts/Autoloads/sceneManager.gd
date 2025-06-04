@@ -19,7 +19,7 @@ const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
 	#Level_id.TUTORIAL: preload()
 }
 
-
+var current_level_id : Level_id
 #const level_paths := {
 	#LevelData.Level_t.TUTORIAL: "res://Scenes/Levels/level_Tutorial.tscn",
 #}
@@ -32,7 +32,11 @@ func goto_selecao():
 
 func goto_level(level_id : Level_id):
 	if LEVEIS_REF.has(level_id):
+		current_level_id = level_id
 		change_scene(LEVEIS_REF[level_id])
+
+func restart_level() -> void:
+	goto_level(current_level_id)
 
 # ------  ---------
 func change_scene(path: String):

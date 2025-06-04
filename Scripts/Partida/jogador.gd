@@ -2,9 +2,13 @@ extends CharacterBody2D
 
 @export var player_id := InputManager.PlayerId.P1
 
+## velocidade do jogador
 @export var speed: float = 250.0
+## porcentagem de slowdown no lodo
+@export var slowdown_lodo: float = 0.75
 
 @export var ferramentas_mgmt : Node2D
+@export var tilemap_lodo : TileMapDual
 
 @onready var area_interacao : Area2D = $AreaInteracao
 #@onready var sprite := $Sprite2DJogador
@@ -13,6 +17,8 @@ extends CharacterBody2D
 var segurando : Ferramenta = null
 
 var ferramenta_collision_mask : int
+
+var speed_modifier : float = 1.0
 
 # -- Input --
 var move_left: StringName
@@ -25,7 +31,7 @@ var drop: StringName
 func _ready() -> void:
 	_ajustar_input_map()
 	# ajusta o nome
-	set_name('Jogador_id_' + str(player_id))
+	set_name('Jogador_' + "P1" if player_id == InputManager.PlayerId.P1 else "P2")
 	# ajeita o sprite
 	anim_idle()
 
@@ -40,10 +46,24 @@ func _ajustar_input_map() -> void:
 	interact   = actionMap["interact"]
 	drop       = actionMap["drop"]
 
+func _physics_process(_delta: float) -> void:
+	# pega o slow_speed do tilemap lodo
+	var tile_pos = tilemap_lodo.local_to_map(global_position / tilemap_lodo.scale.x)
+	var tile = tilemap_lodo.get_cell_tile_data(tile_pos)
+	
+	if tile != null:
+		var slow_speed : float = tile.get_custom_data("slow_speed")
+		speed_modifier = slow_speed * slowdown_lodo
+		print('speed_modifier lodo ', speed_modifier)
+	else:
+		speed_modifier = 1.0
+		print('speed_modifier ', speed_modifier)
+		
+
 func _process(_delta: float) -> void:
 	var move_dir = Input.get_vector(move_left, move_right, move_up, move_down)
 	
-	velocity = move_dir * speed
+	velocity = move_dir * speed * speed_modifier
 	move_and_slide()
 	
 	if Input.is_action_just_pressed(interact):

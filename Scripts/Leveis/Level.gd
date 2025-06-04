@@ -1,7 +1,7 @@
 class_name Level
 extends Node
 
-@export var arvores_colecao : Node
+@export var arvores_colecao : ArvoresColecao
 @export var lixos_colecao : Node
 @export var locais_plantar_colecao : LocalPlantarColecao
 @export var ferramenta_mgmt : FerramentaMgmt
@@ -16,13 +16,16 @@ var qtd_arvores_nativas : int = 0
 
 var qtd_lixo : int = 0
 
+var is_fim_partida : bool = false
+
 const local_plantar_ref := preload("res://Cenas/Partida/local_plantar.tscn")
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		SceneManager.goto_menu()
+	if event.is_action_pressed("ui_cancel") and (not is_fim_partida):
+		hud.toggle_pausar()
 
 func _ready() -> void:
+	ajustar_pause()
 	# ferramentas
 	locais_plantar_colecao.esconder()
 	ferramenta_mgmt.level = self
@@ -33,9 +36,15 @@ func _ready() -> void:
 	ajustar_locais_plantar()
 	# 
 	temporizador.fim_tempo.connect(_fim_partida)
+	# contagem inicial para comecar o jogo
+	hud.comecar_contar()
 
 # ----- Fim de Jogo -----
 func _fim_partida() -> void:
+	# marca que o jogo acabou
+	is_fim_partida = true
+	
+	# muda a imagem dependendo das condicoes de final
 	if qtd_arvores_nativas < qtd_mudas_para_plantar:
 		hud.show_tela_fim(Hud.Tipo_fim.DERROTA_TEMPO)
 	else: # quantidade suficiente de mudas plantadas
@@ -43,9 +52,21 @@ func _fim_partida() -> void:
 			hud.show_tela_fim(Hud.Tipo_fim.VITORIA_SUJO)
 		else: # limpou tudo
 			hud.show_tela_fim(Hud.Tipo_fim.VITORIA_LIMPO)
+	
+	# pausa o jogo
+	get_tree().set_pause(true)
 
 func update_hud_mudas() -> void:
 	hud.update_mudas(qtd_mudas_para_plantar - qtd_arvores_nativas)
+
+func ajustar_pause() -> void:
+	# set o node Nivel (pai da cena) como processar sempre
+	set_process_mode(Node.PROCESS_MODE_ALWAYS)
+	# set todos os outros nodes como processar exceto no pause
+	for node : Node in get_children():
+		node.set_process_mode(Node.PROCESS_MODE_PAUSABLE)
+	# set HUD (e filhos) como processar sempre
+	hud.set_process_mode(Node.PROCESS_MODE_ALWAYS)
 
 # ----- Locais para plantar Mudas -----
 func ajustar_locais_plantar() -> void:
@@ -64,13 +85,18 @@ func ajustar_arvores() -> void:
 			#qtd_arvores_nativas += 1
 			arvore.cortada.connect(_cortada_arvore_nativa)
 			arvore.cortada.connect(_update_arvore_cortada.bind(arvore))
+	# 
+	arvores_colecao.update_arvores()
 
 func plantada_arvore_nativa(arvore : Arvore) -> void:
 	arvores_colecao.add_child(arvore)
 	qtd_arvores_nativas += 1
 	arvore.cortada.connect(_cortada_arvore_nativa)
 	arvore.cortada.connect(_update_arvore_cortada.bind(arvore))
+	# 
 	update_hud_mudas()
+	# 
+	arvores_colecao.update_arvores()
 
 func _cortada_arvore_invasora() -> void:
 	qtd_arvores_invasoras -= 1
@@ -83,6 +109,8 @@ func _update_arvore_cortada(arvore : Arvore) -> void:
 	update_hud_mudas()
 	# spawn local de plantar no local da arvore cortada
 	spawn_local_plantar(arvore.global_position) 
+	# 
+	arvores_colecao.update_arvores()
 
 func spawn_local_plantar(global_pos : Vector2) -> void:
 	var local_plantar = local_plantar_ref.instantiate()
