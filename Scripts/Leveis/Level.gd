@@ -51,7 +51,7 @@ func _fim_partida() -> void:
 	
 	# -- muda a imagem dependendo das condicoes de final --
 	
-	if qtd_mudas_necessitam_plantar() <= 0: # nao plantou tudo
+	if qtd_mudas_necessitam_plantar() > 0: # nao plantou tudo
 		hud.show_tela_fim(Hud.Tipo_fim.DERROTA_TEMPO)
 	else: # quantidade suficiente de mudas plantadas
 		if qtd_lixo > 0: # deixou lixo
