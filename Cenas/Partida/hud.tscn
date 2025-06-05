@@ -171,7 +171,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ImagemFim" type="Sprite2D" parent="GameOverMenu"]
-scale = Vector2(0.672527, 0.682795)
+scale = Vector2(0.67, 0.67)
 texture = ExtResource("4_k3s11")
 centered = false
 

@@ -97,17 +97,32 @@ func show_tela_fim(tipo : Tipo_fim) -> void:
 	# mostra o menu de fim de jogo
 	game_over_menu.show()
 	game_over_btn_replay.grab_focus()
+	
 	# ajusta a imagem dependendo do tipo de fim de jogo
 	game_over_sprite.texture = imagens_fim_jogo[tipo]
 	
+	# salva o tamanho da sprite e diminui ela
+	var scale_final : Vector2 = game_over_sprite.scale 
+	game_over_sprite.scale = game_over_sprite.scale * 0.01
+	
+	# animacao de aumentar a sprite
+	var tween := create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(
+		game_over_sprite, "scale",
+		scale_final,
+		1.5 # seg
+	).from_current()
+	
 	# TODO: fazer algo especial para cada tela ?
-	match tipo:
-		Tipo_fim.DERROTA_TEMPO:
-			pass
-		Tipo_fim.VITORIA_SUJO:
-			pass
-		Tipo_fim.VITORIA_LIMPO:
-			pass
+	#match tipo:
+		#Tipo_fim.DERROTA_TEMPO:
+			#pass
+		#Tipo_fim.VITORIA_SUJO:
+			#pass
+		#Tipo_fim.VITORIA_LIMPO:
+			#pass
 
 func _on_button_replay_pressed() -> void:
 	_replay()

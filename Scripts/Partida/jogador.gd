@@ -19,7 +19,8 @@ var segurando : Ferramenta = null
 
 var ferramenta_collision_mask : int
 
-var speed_modifier : float = 1.0
+var speed_modifier_terreno : float = 1.0
+var speed_modifier_cooldown : float = 1.0
 
 # -- Input --
 var move_left: StringName
@@ -54,14 +55,14 @@ func _physics_process(_delta: float) -> void:
 	
 	if tile != null: # se setiver emcima de um tile existente no tilemap
 		var slow_speed : float = tile.get_custom_data("slow_speed")
-		speed_modifier = slow_speed * slowdown_lodo
+		speed_modifier_terreno = slow_speed * slowdown_lodo
 	else:
-		speed_modifier = 1.0
+		speed_modifier_terreno = 1.0
 
 func _process(_delta: float) -> void:
 	var move_dir = Input.get_vector(move_left, move_right, move_up, move_down)
 	
-	velocity = move_dir * speed * speed_modifier
+	velocity = move_dir * speed * speed_modifier_terreno * speed_modifier_cooldown
 	move_and_slide()
 	
 	if Input.is_action_just_pressed(interact):
@@ -111,7 +112,7 @@ func usar_ferramenta(body : Node2D) -> void:
 	# usar a ferramenta
 	segurando.usar_ferramenta(body)
 	# aplica o cooldown na ferramenta e mostra no player
-	visual_cooldown(segurando)
+	cooldown_jogador(segurando)
 
 func balancar_ferramenta() -> void:
 	# se nao tiver segurando uma ferramenta
@@ -159,24 +160,34 @@ func drop_ferramenta() -> void:
 @onready var cor_cooldown_base : Color = modulate
 var ja_tem_anim_cooldown : bool = false
 
-func visual_cooldown(ferramenta : Ferramenta) -> void:
+func cooldown_jogador(ferramenta : Ferramenta) -> void:
 	# se ja tiver rodando o cooldown
 	if ja_tem_anim_cooldown: return
 	# marca que esta aplicando o cooldown
 	ja_tem_anim_cooldown = true
 	
+	# slow 
+	speed_modifier_cooldown = 0.2
+	
 	# rodar animacao de piscar transparente
 	var duracao := ferramenta.cooldown/2
 	var tween := create_tween()
-	tween.set_ease(Tween.EASE_IN)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(self, "modulate", cor_cooldown, duracao).from_current()
 	tween.finished.connect( func():
 		var tween2 := create_tween()
-		tween2.set_ease(Tween.EASE_OUT)
+		tween2.set_ease(Tween.EASE_IN)
+		tween2.set_trans(Tween.TRANS_CUBIC)
 		tween2.tween_property(self, "modulate", cor_cooldown_base, duracao).from_current()
 		# marca o fim do cooldown
-		tween2.finished.connect(func(): ja_tem_anim_cooldown = false )
+		tween2.finished.connect( _fim_cooldown_jogador )
 	)
+
+func _fim_cooldown_jogador() -> void:
+	ja_tem_anim_cooldown = false
+	speed_modifier_cooldown = 1.0
+	
 # ------ Animacao -------
 func anim_segurar_ferramenta(ferramenta : Ferramenta) -> void:
 	var tipo_ferramenta : Ferramenta.Ferramenta_tipo = ferramenta.tipo_ferramenta
