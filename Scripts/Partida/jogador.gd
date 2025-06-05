@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Jogador
 
 @export var player_id := InputManager.PlayerId.P1
 

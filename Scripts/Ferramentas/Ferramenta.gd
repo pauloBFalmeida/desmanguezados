@@ -37,6 +37,9 @@ func show_ferramenta() -> void:
 	set_process(true)
 	collison.disabled = false
 
+func set_ferramenta_mgmt(fer_mgmt : FerramentaMgmt) -> void:
+	ferramenta_mgmt = fer_mgmt
+
 # -- som --
 func tocar_som(tipo_som : Som_tipo) -> void:
 	audio_player.set_stream(sons[tipo_som])
