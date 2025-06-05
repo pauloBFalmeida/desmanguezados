@@ -3,16 +3,18 @@ extends Node
 const MENU_PRINCIPAL_PATH := "res://Cenas/Menus/menuPrincipal.tscn"
 const MENU_SELECAO_PATH := "res://Cenas/Menus/menuSelecao.tscn"
 
-enum Level_id {TUTORIAL, LEVEL_1, LEVEL_2}
+enum Level_id {TUTORIAL, LEVEL_1, LEVEL_3}
 
 const LEVEIS_REF  : Dictionary[Level_id, String] = {
 	Level_id.TUTORIAL: "res://Cenas/Leveis/level_0_tutorial.tscn",
 	Level_id.LEVEL_1: "res://Cenas/Leveis/level_1.tscn",
+	Level_id.LEVEL_3: "res://Cenas/Leveis/level_3.tscn",
 }
 
 const LEVEIS_NOME : Dictionary[Level_id, String] = {
 	Level_id.TUTORIAL: "Tutorial",
 	Level_id.LEVEL_1: "Level 1",
+	Level_id.LEVEL_3: "Level Maré",
 }
 
 const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
