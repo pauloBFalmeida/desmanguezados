@@ -105,12 +105,18 @@ func acao() -> void:
 
 # ------ Usar -------
 func usar_ferramenta(body : Node2D) -> void:
-	if segurando and is_instance_valid(segurando):
-		segurando.usar_ferramenta(body)
+	# se nao tiver segurando uma ferramenta
+	if (not segurando) or (not is_instance_valid(segurando)): return
+	# usar a ferramenta
+	segurando.usar_ferramenta(body)
+	# aplica o cooldown na ferramenta e mostra no player
+	visual_cooldown(segurando)
 
 func balancar_ferramenta() -> void:
-	if segurando and is_instance_valid(segurando):
-		segurando.balancar_ferramenta()
+	# se nao tiver segurando uma ferramenta
+	if (not segurando) or (not is_instance_valid(segurando)): return
+	# balancar a ferramenta
+	segurando.balancar_ferramenta()
 
 # ------ Pegar -------
 func pegar_ferramenta(ferramenta : Ferramenta) -> void:
@@ -146,6 +152,30 @@ func drop_ferramenta() -> void:
 	
 	anim_idle()	
 
+# ---- Cooldown da ferramenta ----
+# TODO: melhorar essa parte de animacao
+@export var cor_cooldown : Color
+@onready var cor_cooldown_base : Color = modulate
+var ja_tem_anim_cooldown : bool = false
+
+func visual_cooldown(ferramenta : Ferramenta) -> void:
+	# se ja tiver rodando o cooldown
+	if ja_tem_anim_cooldown: return
+	# marca que esta aplicando o cooldown
+	ja_tem_anim_cooldown = true
+	
+	# rodar animacao de piscar transparente
+	var duracao := ferramenta.cooldown/2
+	var tween := create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property(self, "modulate", cor_cooldown, duracao).from_current()
+	tween.finished.connect( func():
+		var tween2 := create_tween()
+		tween2.set_ease(Tween.EASE_OUT)
+		tween2.tween_property(self, "modulate", cor_cooldown_base, duracao).from_current()
+		# marca o fim do cooldown
+		tween2.finished.connect(func(): ja_tem_anim_cooldown = false )
+	)
 # ------ Animacao -------
 func anim_segurar_ferramenta(ferramenta : Ferramenta) -> void:
 	var tipo_ferramenta : Ferramenta.Ferramenta_tipo = ferramenta.tipo_ferramenta

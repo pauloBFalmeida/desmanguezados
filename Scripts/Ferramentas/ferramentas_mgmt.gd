@@ -6,9 +6,13 @@ var level : Level
 
 @export var mudas_referencias : Array[PackedScene]
 
+func _ready() -> void:
+	# passa a referencia do FerramentaMgmt para todas as ferramentas
+	for ferramenta : Ferramenta in get_children():
+		ferramenta.ferramenta_mgmt = self
+
 func jogador_pegar(jogador : Node2D, ferramenta : Ferramenta) -> void:
 	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
-		ferramenta.ferramenta_mgmt = self
 		locais_plantar_colecao.mostrar()
 	
 	ferramenta.hide_ferramenta()
