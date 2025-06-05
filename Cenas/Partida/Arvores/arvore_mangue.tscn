@@ -173,10 +173,9 @@ radius = 4.7619
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wngaa"]
 size = Vector2(73.6667, 79.3334)
 
-[node name="ArvoreMangue" type="RigidBody2D" node_paths=PackedStringArray("sprites_idade", "collisions_idade") groups=["Arvore", "Marcador"]]
+[node name="ArvoreMangue" type="StaticBody2D" node_paths=PackedStringArray("sprites_idade", "collisions_idade") groups=["Arvore", "Marcador"]]
 collision_layer = 9
 collision_mask = 0
-gravity_scale = 0.0
 script = ExtResource("1_63al1")
 sprites_idade = {
 0: NodePath("scaled/MangueBebe"),
@@ -262,7 +261,6 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DMostrarBuraco"]
 position = Vector2(5.5, 33.6667)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_wngaa")
 debug_color = Color(0.53208, 0.54, 0.4806, 0.203922)
 

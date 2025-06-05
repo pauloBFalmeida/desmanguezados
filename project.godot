@@ -208,6 +208,10 @@ contr_drop={
 2d_physics/layer_5="Mudas"
 2d_physics/layer_6="Lixo"
 
+[physics]
+
+2d/default_gravity=0.0
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

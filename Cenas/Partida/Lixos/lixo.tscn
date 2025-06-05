@@ -6,10 +6,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_2s7b8"]
 radius = 22.0227
 
-[node name="Lixo" type="RigidBody2D" groups=["Lixo", "Marcador"]]
+[node name="Lixo" type="StaticBody2D" groups=["Lixo", "Marcador"]]
 collision_layer = 33
 collision_mask = 35
-gravity_scale = 0.0
 script = ExtResource("1_l4y5y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

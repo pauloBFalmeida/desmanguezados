@@ -1,5 +1,5 @@
 class_name Arvore
-extends RigidBody2D
+extends StaticBody2D
 
 signal cortada
 

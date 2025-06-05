@@ -6,10 +6,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7e778"]
 size = Vector2(29, 20)
 
-[node name="LixoLata" type="RigidBody2D" groups=["Lixo", "Marcador"]]
+[node name="LixoLata" type="StaticBody2D" groups=["Lixo", "Marcador"]]
 collision_layer = 33
 collision_mask = 35
-gravity_scale = 0.0
 script = ExtResource("1_7e778")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

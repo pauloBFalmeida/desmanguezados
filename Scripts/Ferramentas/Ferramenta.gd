@@ -42,7 +42,9 @@ func set_ferramenta_mgmt(fer_mgmt : FerramentaMgmt) -> void:
 
 # -- som --
 func tocar_som(tipo_som : Som_tipo) -> void:
-	audio_player.set_stream(sons[tipo_som])
+	pass
+	#audio_player.set_stream(sons[tipo_som])
+	
 	#audio_player.play()
 	
 	#match tipo_som:

@@ -23,7 +23,6 @@ shader_parameter/thickness = 1.0
 z_index = 2
 collision_layer = 4
 collision_mask = 0
-gravity_scale = 0.0
 script = ExtResource("1_2fq4k")
 layer_acao = 16
 tipo_ferramenta = 1
