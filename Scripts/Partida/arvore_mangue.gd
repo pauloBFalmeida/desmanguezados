@@ -81,10 +81,10 @@ func _verificar_preso_dentro(body: Node2D) -> void:
 	
 	# direcao que vamos empurrar o corpo
 	var direcao : Vector2 = body.global_position - collision_area_preso.global_position
-	direcao = direcao.normalized() * 12
+	direcao = direcao.normalized() * 13
 	
 	# quantide de tentativas
-	const tentativas_max := 6
+	const tentativas_max := 4
 	var tentativas : int = 0
 	var rodar_rad : float = 0.61 * PI # roda em +- 110 graus 
 	# enquanto estiver preso, empurre para fora
@@ -102,11 +102,11 @@ func _verificar_preso_dentro(body: Node2D) -> void:
 		# smooth
 		var tween = create_tween()
 		tween.set_ease(Tween.EASE_IN_OUT)
-		tween.tween_property(body, "global_position", posicao, 0.1)
-		# a gente libera o processamento com esse await (o await bota o resta da funcao em "espera")
+		tween.tween_property(body, "global_position", posicao, 0.2)
+		# libera o processamento do programa com esse await (o await bota o resto da funcao em "espera" -> yield)
 		#	para a area2D poder chamar a funcao de body_exited
 		# 	que eh o que estamos verificando nesse while
-		await get_tree().create_timer(0.1).timeout
+		await tween.finished
 
 
 # --- mostrar atras ---

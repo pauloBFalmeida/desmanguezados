@@ -51,7 +51,7 @@ func _fim_partida() -> void:
 	
 	# -- muda a imagem dependendo das condicoes de final --
 	
-	if qtd_alvo_arvores_nativas < qtd_arvores_nativas: # nao plantou tudo
+	if qtd_mudas_necessitam_plantar() <= 0: # nao plantou tudo
 		hud.show_tela_fim(Hud.Tipo_fim.DERROTA_TEMPO)
 	else: # quantidade suficiente de mudas plantadas
 		if qtd_lixo > 0: # deixou lixo
@@ -61,22 +61,22 @@ func _fim_partida() -> void:
 	
 
 func verificar_fim() -> void:
-	print("_calcular_qtd_mudas_necessitam_plantar() ", _calcular_qtd_mudas_necessitam_plantar())
+	print("qtd_mudas_necessitam_plantar() ", qtd_mudas_necessitam_plantar())
 	print("qtd_lixo <= 0 ", qtd_lixo)
 	# plantou tudo e recolheu todo o lixo
-	if _calcular_qtd_mudas_necessitam_plantar() <= 0 and qtd_lixo <= 0:
+	if qtd_mudas_necessitam_plantar() <= 0 and qtd_lixo <= 0:
 		print("tudo feito")
 		# espera 1 segundo
 		await get_tree().create_timer(1.0).timeout
 		# acaba a partida
 		_fim_partida()
 
-func _calcular_qtd_mudas_necessitam_plantar() -> int:
+func qtd_mudas_necessitam_plantar() -> int:
 	return qtd_alvo_arvores_nativas - qtd_arvores_nativas
 
 # ----- HUD -----
 func update_hud_mudas() -> void:
-	hud.update_mudas(_calcular_qtd_mudas_necessitam_plantar())
+	hud.update_mudas(qtd_mudas_necessitam_plantar())
 
 func ajustar_pause() -> void:
 	# set o node Nivel (pai da cena) como processar sempre
