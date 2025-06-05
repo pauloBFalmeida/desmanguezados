@@ -1,7 +1,7 @@
 extends Arvore
 
 @onready var timer_crescer := $TimerCrescer
-@onready var anim_player := $AnimationPlayer
+@onready var anim_player := $scaled/AnimationPlayer
 @onready var collision_area_preso := $Area2DPresoDentro/CollisionShape2D
 
 @export var sprites_idade : Dictionary[Crescimento, Sprite2D] = {}

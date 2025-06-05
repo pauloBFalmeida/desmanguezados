@@ -21,7 +21,6 @@ collision_layer = 2
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_hjt1h")
-speed = 350.0
 cor_cooldown = Color(0.245, 0.245, 0.245, 0.867)
 
 [node name="Sprite2DJogador" type="Sprite2D" parent="."]

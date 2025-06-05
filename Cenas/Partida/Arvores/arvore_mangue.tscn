@@ -1,161 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://cedrrktxte7k6"]
+[gd_scene load_steps=10 format=3 uid="uid://cedrrktxte7k6"]
 
 [ext_resource type="Script" uid="uid://dbq0k02hr2o0m" path="res://Scripts/Partida/arvore_mangue.gd" id="1_63al1"]
 [ext_resource type="Texture2D" uid="uid://e14uxly4awj8" path="res://Assets/Cenario/Arvores/ArvoresMangue.png" id="1_yyjcj"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5uk8w"]
-radius = 17.0
-height = 50.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wngaa"]
-radius = 22.0
-height = 76.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8l0ih"]
-radius = 32.0
-height = 100.0
-
-[sub_resource type="Animation" id="Animation_5uk8w"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MangueBebe:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MangueBebe:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2.38419e-07, -8.00001)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("MangueBebe:region_rect")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Rect2(0, 17, 15, 20)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("MangueJovem:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("MangueJovem:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("MangueJovem:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(11, -4)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("MangueJovem:region_rect")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Rect2(16, 9, 20, 28)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("MangueAdulta:modulate")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("MangueAdulta:region_rect")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Rect2(38, 0, 27, 37)]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("MangueAdulta:rotation")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("MangueAdulta:position")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-21, -6)]
-}
 
 [sub_resource type="Animation" id="Animation_wngaa"]
 resource_name = "cortar"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MangueBebe:rotation")
+tracks/0/path = NodePath("scaled/MangueBebe:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -167,7 +20,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MangueBebe:modulate")
+tracks/1/path = NodePath("scaled/MangueBebe:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -179,19 +32,19 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("MangueBebe:position")
+tracks/2/path = NodePath("scaled/MangueBebe:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0.7, 1),
 "transitions": PackedFloat32Array(1, 3.03143),
 "update": 0,
-"values": [Vector2(2.38419e-07, -8.00001), Vector2(0, -25.95)]
+"values": [Vector2(0, -1.6), Vector2(0, -5.19)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("MangueBebe:region_rect")
+tracks/3/path = NodePath("scaled/MangueBebe:region_rect")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -203,7 +56,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("MangueJovem:rotation")
+tracks/4/path = NodePath("scaled/MangueJovem:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -215,7 +68,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("MangueJovem:modulate")
+tracks/5/path = NodePath("scaled/MangueJovem:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -227,19 +80,19 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("MangueJovem:position")
+tracks/6/path = NodePath("scaled/MangueJovem:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0.7, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(8, -5), Vector2(8, -23.695)]
+"values": [Vector2(1.6, -1), Vector2(1.6, -4.739)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("MangueJovem:region_rect")
+tracks/7/path = NodePath("scaled/MangueJovem:region_rect")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -251,7 +104,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("MangueAdulta:rotation")
+tracks/8/path = NodePath("scaled/MangueAdulta:rotation")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -263,11 +116,11 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("MangueAdulta:modulate")
+tracks/9/path = NodePath("scaled/MangueAdulta:modulate")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0.133333, 0.733333, 1),
+"times": PackedFloat32Array(0.133333, 0.6, 1),
 "transitions": PackedFloat32Array(1, 1, 2.07053),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(0.5, 0.5, 0.5, 0.470588), Color(0.12, 0.12, 0.12, 0)]
@@ -275,38 +128,50 @@ tracks/9/keys = {
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("MangueAdulta:position")
+tracks/10/path = NodePath("scaled/MangueAdulta:position")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0.3, 0.6, 1),
+"times": PackedFloat32Array(0.2, 0.566667, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(-21, -6), Vector2(-16.59, -6), Vector2(3.725, -50.485)]
+"values": [Vector2(-4.2, -1.2), Vector2(0.805, -6.245), Vector2(8.63, -11.943)]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("MangueAdulta:region_rect")
+tracks/11/path = NodePath("scaled/MangueAdulta:region_rect")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0.6, 1),
+"times": PackedFloat32Array(0.766667, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Rect2(38, 0, 27, 37), Rect2(38, 0, 11.955, 37)]
+"values": [Rect2(38, 0, 27, 37), Rect2(38, 0, 15.76, 37)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8l0ih"]
 _data = {
-&"RESET": SubResource("Animation_5uk8w"),
 &"cortar": SubResource("Animation_wngaa")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5uk8w"]
+radius = 9.21
+height = 34.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wngaa"]
+radius = 13.2
+height = 45.6
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8l0ih"]
+radius = 18.0
+height = 63.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_wngaa"]
+radius = 4.7619
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wngaa"]
-size = Vector2(128, 132)
+size = Vector2(73.6667, 79.3334)
 
 [node name="ArvoreMangue" type="RigidBody2D" node_paths=PackedStringArray("sprites_idade", "collisions_idade") groups=["Arvore", "Marcador"]]
 collision_layer = 9
@@ -314,9 +179,9 @@ collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("1_63al1")
 sprites_idade = {
-0: NodePath("MangueBebe"),
-1: NodePath("MangueJovem"),
-2: NodePath("MangueAdulta")
+0: NodePath("scaled/MangueBebe"),
+1: NodePath("scaled/MangueJovem"),
+2: NodePath("scaled/MangueAdulta")
 }
 collisions_idade = {
 0: NodePath("CollisionBebe"),
@@ -325,59 +190,60 @@ collisions_idade = {
 }
 crescimento_time = 0.0
 
-[node name="MangueBebe" type="Sprite2D" parent="."]
-position = Vector2(2.38419e-07, -8.00001)
-scale = Vector2(5, 5)
+[node name="scaled" type="Node2D" parent="."]
+scale = Vector2(3, 3)
+
+[node name="MangueBebe" type="Sprite2D" parent="scaled"]
+position = Vector2(0, -1.6)
 texture = ExtResource("1_yyjcj")
 offset = Vector2(0.81, -6.67)
 region_enabled = true
 region_rect = Rect2(0, 17, 15, 20)
 
-[node name="CollisionBebe" type="CollisionShape2D" parent="."]
-position = Vector2(1, -11)
-rotation = 1.57079
-shape = SubResource("CapsuleShape2D_5uk8w")
-debug_color = Color(0.27673, 0.533623, 0.318494, 0.25098)
-
-[node name="MangueJovem" type="Sprite2D" parent="."]
+[node name="MangueJovem" type="Sprite2D" parent="scaled"]
 visible = false
-position = Vector2(11, -4)
-scale = Vector2(5, 5)
+position = Vector2(1.6, -1)
 texture = ExtResource("1_yyjcj")
 offset = Vector2(-1.585, -10.585)
 region_enabled = true
 region_rect = Rect2(16, 9, 20, 28)
 
+[node name="MangueAdulta" type="Sprite2D" parent="scaled"]
+visible = false
+position = Vector2(-4.2, -1.2)
+texture = ExtResource("1_yyjcj")
+offset = Vector2(5.605, -10.665)
+region_enabled = true
+region_rect = Rect2(38, 0, 27, 37)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="scaled"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_8l0ih")
+}
+
+[node name="CollisionBebe" type="CollisionShape2D" parent="."]
+position = Vector2(1, -5)
+rotation = 1.57079
+shape = SubResource("CapsuleShape2D_5uk8w")
+debug_color = Color(0.27673, 0.533623, 0.318494, 0.25098)
+
 [node name="CollisionJovem" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(0, -13)
+position = Vector2(0, -7.33333)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_wngaa")
 debug_color = Color(0.278431, 0.533333, 0.317647, 0.25098)
 
-[node name="MangueAdulta" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(-21, -6)
-scale = Vector2(5, 5)
-texture = ExtResource("1_yyjcj")
-offset = Vector2(4.315, -12.175)
-region_enabled = true
-region_rect = Rect2(38, 0, 27, 37)
-
 [node name="CollisionAdulta" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2(-1, -11)
+position = Vector2(3, -1.66667)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_8l0ih")
 debug_color = Color(0.278431, 0.533333, 0.317647, 0.25098)
 
 [node name="TimerCrescer" type="Timer" parent="."]
 process_callback = 0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_8l0ih")
-}
 
 [node name="Area2DPresoDentro" type="Area2D" parent="."]
 scale = Vector2(0.9, 0.9)
@@ -395,7 +261,8 @@ collision_mask = 54
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DMostrarBuraco"]
-position = Vector2(0, -13)
+position = Vector2(5.5, 33.6667)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_wngaa")
 debug_color = Color(0.53208, 0.54, 0.4806, 0.203922)
 
