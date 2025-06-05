@@ -55,6 +55,38 @@ collisions_idade = {
 }
 idade = 1
 
+[node name="ArvoreMangue" parent="ArvoresColecao/ArvoreMangue" node_paths=PackedStringArray("sprites_idade", "collisions_idade") instance=ExtResource("4_iqq2a")]
+position = Vector2(461, -20)
+sprites_idade = {
+0: NodePath("../MangueBebe"),
+1: NodePath("../MangueJovem"),
+2: NodePath("../MangueAdulta")
+}
+collisions_idade = {
+0: NodePath("../CollisionBebe"),
+1: NodePath("../CollisionJovem"),
+2: NodePath("../CollisionAdulta")
+}
+idade = 1
+
+[node name="ArvorePinos2" parent="ArvoresColecao" instance=ExtResource("3_thw6l")]
+position = Vector2(88, 365)
+
+[node name="ArvorePinos3" parent="ArvoresColecao" instance=ExtResource("3_thw6l")]
+position = Vector2(351, 583)
+
+[node name="ArvorePinos4" parent="ArvoresColecao" instance=ExtResource("3_thw6l")]
+position = Vector2(505, 624)
+
+[node name="ArvorePinos5" parent="ArvoresColecao" instance=ExtResource("3_thw6l")]
+position = Vector2(1041, 633)
+
+[node name="ArvorePinos6" parent="ArvoresColecao" instance=ExtResource("3_thw6l")]
+position = Vector2(1103, 589)
+
+[node name="ArvorePinos7" parent="ArvoresColecao" instance=ExtResource("3_thw6l")]
+position = Vector2(1177, 326)
+
 [node name="SpawnJogadores" parent="." instance=ExtResource("1_w1eyt")]
 position = Vector2(518, 343)
 
@@ -71,27 +103,93 @@ script = ExtResource("6_q0w2f")
 mudas_referencias = Array[PackedScene]([ExtResource("4_iqq2a")])
 
 [node name="Corte" parent="FerramentasMgmt" groups=["Ferramentas"] instance=ExtResource("3_o11j3")]
-position = Vector2(401, 522)
+position = Vector2(784, 425)
 
 [node name="Plantar" parent="FerramentasMgmt" instance=ExtResource("14_7uol4")]
-position = Vector2(755, 611)
+position = Vector2(1202, 435)
 
 [node name="Recolhe" parent="FerramentasMgmt" instance=ExtResource("11_00t72")]
-position = Vector2(935, 465)
+position = Vector2(746, 162)
 
 [node name="LixosColecao" type="CanvasGroup" parent="."]
 
-[node name="LixoGarrafa" parent="LixosColecao" instance=ExtResource("5_ycy2s")]
-position = Vector2(145, 121)
-
 [node name="LixoLata" parent="LixosColecao" instance=ExtResource("6_00t72")]
-position = Vector2(83, 143)
+position = Vector2(115, 83)
+
+[node name="LixoEmbalagem5" parent="LixosColecao" instance=ExtResource("13_poegd")]
+position = Vector2(983, 475)
+
+[node name="LixoEmbalagem4" parent="LixosColecao" instance=ExtResource("13_poegd")]
+position = Vector2(78, 285)
+
+[node name="LixoEmbalagem3" parent="LixosColecao" instance=ExtResource("13_poegd")]
+position = Vector2(534, 507)
+
+[node name="LixoEmbalagem2" parent="LixosColecao" instance=ExtResource("13_poegd")]
+position = Vector2(868, 614)
+
+[node name="LixoEmbalagem" parent="LixosColecao" instance=ExtResource("13_poegd")]
+position = Vector2(639, 501)
 
 [node name="LixoSaco" parent="LixosColecao" instance=ExtResource("7_poegd")]
 position = Vector2(200, 75)
 
-[node name="LixoEmbalagem" parent="LixosColecao" instance=ExtResource("13_poegd")]
-position = Vector2(639, 501)
+[node name="LixoGarrafa" parent="LixosColecao" instance=ExtResource("5_ycy2s")]
+position = Vector2(145, 121)
+
+[node name="LixoSaco2" parent="LixosColecao" instance=ExtResource("7_poegd")]
+position = Vector2(956, 580)
+
+[node name="LixoGarrafa2" parent="LixosColecao" instance=ExtResource("5_ycy2s")]
+position = Vector2(1013, 537)
+
+[node name="LixoGarrafa3" parent="LixosColecao" instance=ExtResource("5_ycy2s")]
+position = Vector2(1095, 355)
+
+[node name="LixoSaco3" parent="LixosColecao" instance=ExtResource("7_poegd")]
+position = Vector2(383, 512)
+
+[node name="LixoSaco4" parent="LixosColecao" instance=ExtResource("7_poegd")]
+position = Vector2(1009, 302)
+
+[node name="LixoGarrafa4" parent="LixosColecao" instance=ExtResource("5_ycy2s")]
+position = Vector2(432, 500)
+
+[node name="LixoGarrafa5" parent="LixosColecao" instance=ExtResource("5_ycy2s")]
+position = Vector2(564, 213)
+
+[node name="LixoSaco5" parent="LixosColecao" instance=ExtResource("7_poegd")]
+position = Vector2(172, 466)
+
+[node name="LixoGarrafa7" parent="LixosColecao" instance=ExtResource("5_ycy2s")]
+position = Vector2(574, 574)
+
+[node name="LixoLata9" parent="LixosColecao" instance=ExtResource("6_00t72")]
+position = Vector2(150, 300)
+
+[node name="LixoLata8" parent="LixosColecao" instance=ExtResource("6_00t72")]
+position = Vector2(459, 542)
+
+[node name="LixoLata10" parent="LixosColecao" instance=ExtResource("6_00t72")]
+position = Vector2(1173, 508)
+
+[node name="LixoLata6" parent="LixosColecao" instance=ExtResource("6_00t72")]
+position = Vector2(1068, 435)
+
+[node name="LixoLata7" parent="LixosColecao" instance=ExtResource("6_00t72")]
+position = Vector2(589, 641)
+
+[node name="LixoLata5" parent="LixosColecao" instance=ExtResource("6_00t72")]
+position = Vector2(1124, 402)
+
+[node name="LixoLata4" parent="LixosColecao" instance=ExtResource("6_00t72")]
+position = Vector2(949, 649)
+
+[node name="LixoLata3" parent="LixosColecao" instance=ExtResource("6_00t72")]
+position = Vector2(261, 479)
+
+[node name="LixoLata2" parent="LixosColecao" instance=ExtResource("6_00t72")]
+position = Vector2(146, 396)
 
 [node name="LocaisPlantarColecao" type="Node2D" parent="."]
 script = ExtResource("9_xeic4")
