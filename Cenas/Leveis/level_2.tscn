@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://cyi5a20c6vvr1"]
+[gd_scene load_steps=17 format=4 uid="uid://cgi2i01c5xetu"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_eixhn"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps.tscn" id="2_7f1nr"]
@@ -25,7 +25,7 @@ locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
 temporizador = NodePath("HUD/Temporizador")
 hud = NodePath("HUD")
-duracao_partida_segundos = 40
+duracao_partida_segundos = 50
 
 [node name="TileMaps" parent="." instance=ExtResource("2_7f1nr")]
 

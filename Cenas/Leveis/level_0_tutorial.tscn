@@ -28,6 +28,7 @@ locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
 temporizador = NodePath("HUD/Temporizador")
 hud = NodePath("HUD")
+duracao_partida_segundos = 80
 
 [node name="TileMaps" parent="." instance=ExtResource("2_1v1o2")]
 
