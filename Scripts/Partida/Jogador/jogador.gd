@@ -16,6 +16,10 @@ class_name Jogador
 @onready var anim_sprite := $AnimatedSprite2D
 @onready var indicador_direcao := $IndicadorDirecao
 
+@onready var instrucoes := $Intrucoes
+@onready var instrucoes_label := $Intrucoes/LabelInstrucoes
+var mostrar_instrucoes := false
+
 const collision_layer_ferramentas : int = 3
 
 var segurando : Ferramenta = null
@@ -46,6 +50,8 @@ func _ready() -> void:
 	set_name('Jogador_' + "P1" if player_id == InputManager.PlayerId.P1 else "P2")
 	# ajeita o sprite
 	anim_idle()
+	# 
+	instrucoes.hide()
 
 func _ajustar_input_map() -> void:
 	# ajusta o action map do player
@@ -105,11 +111,81 @@ func acao() -> void:
 	var body : Node2D = body_mais_desejado_interacao()
 	# fazemos a acao sobre o corpo
 	if body.is_in_group("Ferramentas"):
+		mostrar_instrucoes_pegar()
 		pegar_ferramenta(body)
 	elif body.is_in_group("Marcador"):
+		mostrar_instrucoes_usar()
 		usar_ferramenta(body)
 	else:
 		print('body escolhido: ', body)
+
+# ==== ?????
+var primeira_vez : bool = true
+
+func mostrar_instrucoes_pegar() -> void:
+	if not mostrar_instrucoes: return
+	
+	
+	instrucoes.show()
+	get_tree().create_timer(2.0).timeout.connect(
+		func(): instrucoes.hide()
+	)
+	
+	if primeira_vez:
+		primeira_vez = false
+		get_tree().create_timer(3.0).timeout.connect(
+			mostrar_instrucoes_drop
+		)
+	
+	
+	var txt_botao : String
+	if no_controle:
+		if player_id == InputManager.PlayerId.P1:
+			txt_botao = Configuracoes.string_pegar_controle_P1
+		else:
+			txt_botao = Configuracoes.string_pegar_controle_P2
+	else:
+		txt_botao = "Espaço"
+		
+	instrucoes_label.text = txt_botao + " para pegar"
+
+func mostrar_instrucoes_usar() -> void:
+	if not mostrar_instrucoes: return
+	
+	instrucoes.show()
+	get_tree().create_timer(2.0).timeout.connect(
+		func(): instrucoes.hide()
+	)
+	
+	var txt_botao : String
+	if no_controle:
+		if player_id == InputManager.PlayerId.P1:
+			txt_botao = Configuracoes.string_pegar_controle_P1
+		else:
+			txt_botao = Configuracoes.string_pegar_controle_P2
+	else:
+		txt_botao = "Espaço"
+		
+	instrucoes_label.text = txt_botao + " para usar"
+
+func mostrar_instrucoes_drop() -> void:
+	if not mostrar_instrucoes: return
+	
+	instrucoes.show()
+	get_tree().create_timer(2.0).timeout.connect(
+		func(): instrucoes.hide()
+	)
+	
+	var txt_botao : String
+	if no_controle:
+		if player_id == InputManager.PlayerId.P1:
+			txt_botao = Configuracoes.string_pegar_controle_P1
+		else:
+			txt_botao = Configuracoes.string_pegar_controle_P2
+	else:
+		txt_botao = "Espaço"
+		
+	instrucoes_label.text = txt_botao + " para largar"
 
 func body_mais_desejado_interacao() -> Node2D:
 	# so 1 body dentro -> pega esse
