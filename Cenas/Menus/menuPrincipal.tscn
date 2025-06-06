@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://e0hvhpdu6hbn"]
+[gd_scene load_steps=3 format=3 uid="uid://e0hvhpdu6hbn"]
 
 [ext_resource type="Script" uid="uid://b365074iebc74" path="res://Scripts/Menus/menu_principal.gd" id="1_ntrab"]
+[ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/Cartaz desmangezados.png" id="2_givc0"]
 
 [node name="MenuPrincipal" type="Control"]
 layout_mode = 3
@@ -20,14 +21,21 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(3.60981e-06, 0.639244, 0.320975, 1)
 
+[node name="CartazDesmangezados" type="Sprite2D" parent="."]
+modulate = Color(0.54, 0.54, 0.54, 1)
+position = Vector2(639, 362)
+scale = Vector2(0.598611, 0.461728)
+texture = ExtResource("2_givc0")
+
 [node name="LabelTitulo" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 23.0
+offset_left = -73.0
+offset_top = 29.0
+offset_right = 608.0
+offset_bottom = 139.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 80
 text = "Desmanguezados"
@@ -39,23 +47,34 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -50.5
-offset_right = 24.0
-offset_bottom = 50.5
+offset_left = -364.0
+offset_top = 262.0
+offset_right = 437.0
+offset_bottom = 662.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/v_separation = 50
+columns = 5
 
 [node name="ButtonJogar" type="Button" parent="GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Jogar"
 
+[node name="HSeparator" type="HSeparator" parent="GridContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
 [node name="ButtonConfig" type="Button" parent="GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Configurações"
+
+[node name="HSeparator2" type="HSeparator" parent="GridContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(100, 1)
+layout_mode = 2
 
 [node name="ButtonSair" type="Button" parent="GridContainer"]
 layout_mode = 2

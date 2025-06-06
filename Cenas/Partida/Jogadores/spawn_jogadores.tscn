@@ -6,15 +6,10 @@
 [node name="SpawnJogadores" type="Node2D"]
 
 [node name="Jogador1" parent="." instance=ExtResource("2_j1fy2")]
-player_id = null
-speed = null
-slowdown_lodo = null
 
 [node name="Jogador2" parent="." instance=ExtResource("2_j1fy2")]
 position = Vector2(147, 0)
 player_id = 1
-speed = null
-slowdown_lodo = null
 
 [node name="Sprite2DJogador" parent="Jogador2" index="0"]
 texture = ExtResource("2_gigb0")
