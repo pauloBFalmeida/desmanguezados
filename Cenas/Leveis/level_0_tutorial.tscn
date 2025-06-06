@@ -17,8 +17,11 @@
 [ext_resource type="PackedScene" uid="uid://bxemk6uv78eif" path="res://Cenas/Partida/local_plantar.tscn" id="14_nsusp"]
 [ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Partida/hud.tscn" id="16_lsuie"]
 
-[node name="Level_Tutorial" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
+[node name="Level_Tutorial" type="Node" node_paths=PackedStringArray("divisor_meio_mapa", "jogador_emcima", "jogador_embaixo", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
 script = ExtResource("1_f55y0")
+divisor_meio_mapa = NodePath("Node2DDivisorMeioMapa")
+jogador_emcima = NodePath("SpawnJogadores/Jogador1")
+jogador_embaixo = NodePath("SpawnJogadores/Jogador2")
 arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
@@ -126,6 +129,9 @@ position = Vector2(263, 495)
 
 [node name="HUD" parent="." instance=ExtResource("16_lsuie")]
 metadata/_edit_lock_ = true
+
+[node name="Node2DDivisorMeioMapa" type="Node2D" parent="."]
+position = Vector2(15, 369)
 
 [editable path="TileMaps"]
 [editable path="SpawnJogadores"]

@@ -1,6 +1,8 @@
 extends Node2D
 class_name LocalPlantarColecao
 
+signal comecou_mostrar
+
 var is_mostrando : bool = false
 
 var animation_nodes : Array[AnimatedSprite2D]
@@ -24,13 +26,14 @@ func remove_local_plantar(local_plantar : Node2D) -> void:
 	local_plantar.hide()
 	local_plantar.queue_free()
 
-
 func esconder() -> void:
 	is_mostrando = false
 	_update_anim()
+
 func mostrar() -> void:
 	is_mostrando = true
 	_update_anim()
+	emit_signal("comecou_mostrar") 
 
 func _update_anim() -> void:
 	if is_mostrando:

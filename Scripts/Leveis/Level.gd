@@ -65,11 +65,8 @@ func _fim_partida() -> void:
 	
 
 func verificar_fim() -> void:
-	print("qtd_mudas_necessitam_plantar() ", qtd_mudas_necessitam_plantar())
-	print("qtd_lixo <= 0 ", qtd_lixo)
 	# plantou tudo e recolheu todo o lixo
 	if qtd_mudas_necessitam_plantar() <= 0 and qtd_lixo <= 0:
-		print("tudo feito")
 		# espera 1 segundo
 		await get_tree().create_timer(1.0).timeout
 		# acaba a partida
