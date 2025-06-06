@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Configuracoes="*res://Scripts/Autoloads/configuracoes.gd"
 SceneManager="*res://Scripts/Autoloads/sceneManager.gd"
 InputManager="*res://Scripts/Autoloads/inputManager.gd"
 

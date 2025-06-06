@@ -1,0 +1,80 @@
+[gd_scene load_steps=3 format=3 uid="uid://dl22uju6ygrp0"]
+
+[ext_resource type="Script" uid="uid://bt6txdh0jok31" path="res://Scripts/Menus/menu_configuracao.gd" id="1_ojjoo"]
+[ext_resource type="Script" uid="uid://sj5rgpesy5f8" path="res://Scripts/Menus/UsadosMenus/controles_manager.gd" id="2_uy6x4"]
+
+[node name="MenuConfiguracao" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ojjoo")
+
+[node name="ControlesManager" type="Node" parent="."]
+script = ExtResource("2_uy6x4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.37488, 0.3692, 0.71, 1)
+
+[node name="LabelTitulo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 80
+text = "Configurações"
+
+[node name="ButtonVoltar" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -77.0
+offset_top = -77.0
+offset_right = 77.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Voltar"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -20.0
+offset_right = 22.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="JoystickOverride" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "Joystick Direito controla indicador de direção"
+
+[node name="TrackingColor" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "Indicador de direção fica transparente fora do tracking"
+
+[connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]
+[connection signal="toggled" from="VBoxContainer/JoystickOverride" to="." method="_on_joystick_override_toggled"]
+[connection signal="toggled" from="VBoxContainer/TrackingColor" to="." method="_on_tracking_color_toggled"]

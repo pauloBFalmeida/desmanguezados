@@ -1,4 +1,4 @@
-extends Control
+extends Menu
 
 @onready var label_status_P1 := $ControlesConectados/LabelStatusP1
 @onready var label_status_P2 := $ControlesConectados/LabelStatusP2
@@ -16,7 +16,7 @@ func _ready() -> void:
 
 # --- Voltar ---
 func _on_button_voltar_pressed() -> void:
-	SceneManager.goto_menu()
+	voltar_menu_principal()
 
 # --- Leveis ---
 func _criar_level_itens() -> void:

@@ -2,6 +2,7 @@ extends Node
 
 const MENU_PRINCIPAL_PATH := "res://Cenas/Menus/menuPrincipal.tscn"
 const MENU_SELECAO_PATH := "res://Cenas/Menus/menuSelecao.tscn"
+const MENU_CONFIGURACAO_PATH := "res://Cenas/Menus/menuConfiguracao.tscn"
 
 enum Level_id {TUTORIAL, LEVEL_1, LEVEL_3}
 
@@ -31,6 +32,9 @@ func goto_menu():
 
 func goto_selecao():
 	change_scene(MENU_SELECAO_PATH)
+
+func goto_configuracoes():
+	change_scene(MENU_CONFIGURACAO_PATH)
 
 func goto_level(level_id : Level_id):
 	if LEVEIS_REF.has(level_id):
