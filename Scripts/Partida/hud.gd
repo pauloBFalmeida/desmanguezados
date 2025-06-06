@@ -22,6 +22,12 @@ enum Tipo_fim {DERROTA_TEMPO, VITORIA_SUJO, VITORIA_LIMPO}
 
 @export var imagens_fim_jogo : Dictionary[Tipo_fim, CompressedTexture2D]
 
+var despausado_recente : bool = false
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_back") and get_tree().paused:
+		despausar()
+
 func _ready() -> void:
 	# esconde as telas
 	start_menu.hide()
@@ -46,6 +52,16 @@ func _replay() -> void:
 	SceneManager.restart_level()
 
 # ---- Menu Pause ----
+func pausar() -> void:
+	if is_comecando_contar: return # nao pausar se estiver na contagem inicial
+	if not get_tree().paused: # nao esta pausado
+		_pausar()
+
+func despausar() -> void:
+	if is_comecando_contar: return # nao pausar se estiver na contagem inicial
+	if get_tree().paused: # esta pausado
+		_despausar()
+
 func toggle_pausar() -> void:
 	# nao pausar se estiver na contagem inicial
 	if is_comecando_contar: return
@@ -57,6 +73,7 @@ func toggle_pausar() -> void:
 		_despausar()
 
 func _pausar() -> void:
+	if despausado_recente: return # se tiver despausado recente -> nao pause
 	get_tree().paused = true
 	pause_menu.show()
 	pause_menu_btn_jogo.grab_focus()
@@ -64,6 +81,9 @@ func _pausar() -> void:
 func _despausar() -> void:
 	pause_menu.hide()
 	get_tree().paused = false
+	# se foi despausado recentemente
+	despausado_recente = true
+	get_tree().create_timer(0.5, true).timeout.connect(func(): despausado_recente = false )
 
 func _on_button_jogo_pressed() -> void:
 	_despausar()

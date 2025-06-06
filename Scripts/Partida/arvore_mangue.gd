@@ -66,14 +66,10 @@ var body_presos_dentro : Dictionary[Node2D, Node2D]
 func _on_area_2d_preso_dentro_body_entered(body: Node2D) -> void:
 	body_presos_dentro[body] = body
 	get_tree().create_timer(0.5).timeout.connect(_verificar_preso_dentro.bind(body))
-	
-	print(body, " dentro arvore")
 
 func _on_area_2d_preso_dentro_body_exited(body: Node2D) -> void:
 	if body_presos_dentro.has(body):
 		body_presos_dentro.erase(body)
-	
-	print(body, " fora arvore")
 
 func _verificar_preso_dentro(body: Node2D) -> void:
 	if not body_presos_dentro.has(body): return

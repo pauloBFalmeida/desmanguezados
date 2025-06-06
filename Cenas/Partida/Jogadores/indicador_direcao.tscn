@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://cb5x2dl7n7ywu"]
+
+[ext_resource type="Texture2D" uid="uid://5ukm5iyblkw5" path="res://Assets/Ferramentas/DirectionalIndicator.png" id="1_d4ugd"]
+[ext_resource type="Script" uid="uid://cn5tsqujmnua2" path="res://Scripts/Partida/Jogador/indicador_direcao.gd" id="1_iof8t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iof8t"]
+atlas = ExtResource("1_d4ugd")
+region = Rect2(3, 2, 6, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5260"]
+atlas = ExtResource("1_d4ugd")
+region = Rect2(15, 2, 6, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fown"]
+atlas = ExtResource("1_d4ugd")
+region = Rect2(27, 2, 6, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c42hd"]
+atlas = ExtResource("1_d4ugd")
+region = Rect2(3, 23, 6, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntdsu"]
+atlas = ExtResource("1_d4ugd")
+region = Rect2(15, 23, 6, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7g28w"]
+atlas = ExtResource("1_d4ugd")
+region = Rect2(27, 23, 6, 19)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jf2l7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iof8t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_o5260")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_4fown")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c42hd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntdsu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7g28w")
+}],
+"loop": false,
+"name": &"usar",
+"speed": 1.0
+}]
+
+[node name="IndicadorPivot" type="Node2D"]
+script = ExtResource("1_iof8t")
+cor_fora_tracking = Color(0.777882, 0.777882, 0.777882, 0.65)
+
+[node name="AnimatedSpriteIndicador" type="AnimatedSprite2D" parent="."]
+position = Vector2(60, 0)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_jf2l7")
+animation = &"usar"

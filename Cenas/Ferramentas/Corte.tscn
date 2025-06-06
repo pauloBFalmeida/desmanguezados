@@ -19,7 +19,7 @@ collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_m88eb")
 layer_acao = 8
-cooldown = 1.0
+duracao_cooldown = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_m88eb")

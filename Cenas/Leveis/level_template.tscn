@@ -105,3 +105,4 @@ metadata/_edit_lock_ = true
 [editable path="ArvoresColecao/ArvoreMangue"]
 [editable path="SpawnJogadores"]
 [editable path="SpawnJogadores/Jogador2"]
+[editable path="SpawnJogadores/Jogador2/IndicadorDirecao"]

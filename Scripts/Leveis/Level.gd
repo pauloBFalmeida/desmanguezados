@@ -23,7 +23,8 @@ const local_plantar_ref := preload("res://Cenas/Partida/local_plantar.tscn")
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and (not is_fim_partida):
-		hud.toggle_pausar()
+		if not get_tree().paused:
+			hud.pausar()
 
 func _ready() -> void:
 	ajustar_pause()
@@ -43,6 +44,9 @@ func _ready() -> void:
 
 # ----- Fim de Jogo -----
 func _fim_partida() -> void:
+	# se ja acabou a partida -> nao faca nada
+	if is_fim_partida: return
+	
 	# marca que o jogo acabou
 	is_fim_partida = true
 	

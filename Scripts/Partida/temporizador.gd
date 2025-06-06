@@ -10,6 +10,10 @@ var cronometro_ativo: bool = false
 
 @onready var hud : Hud = get_parent()
 
+func _ready() -> void:
+	# pausa o cronometro enquanto get_tree().pause = true
+	set_process_mode(Node.PROCESS_MODE_PAUSABLE)
+
 func set_duracao(valor : int) -> void:
 	tempo_restante = float(valor)
 	atualizar_cronometro()

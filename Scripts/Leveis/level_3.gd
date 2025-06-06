@@ -23,7 +23,6 @@ func _ready() -> void:
 
 
 func _on_timer_agua_timeout() -> void:
-	print()
 	# fim da mare atual -> comecar a proxima fase da mare
 	match mare_atual:
 		Mare.CHEIA:
@@ -38,7 +37,6 @@ func _on_timer_agua_timeout() -> void:
 			_mare_subindo_block()
 		Mare.SUBINDO_BLOCK:
 			_mare_cheia()
-
 
 func _mare_cheia() -> void:
 	mare_atual = Mare.CHEIA

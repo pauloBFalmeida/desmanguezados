@@ -12,17 +12,23 @@ enum PlayerId {
 const action_names = [
 	"move_left",
 	"move_right",
-	"move_down",
 	"move_up",
+	"move_down",
 	"interact",
-	"drop"
+	"drop",
+	"aim_left",
+	"aim_right",
+	"aim_up",
+	"aim_down",
 ]
 
 # actionMap_players[player id] -> acoes[nome da acao (do action_names)] -> nome da acao pro player no InputMap
 var actionMap_players = {}
 
 # controles conectados [controle id] -> player id
-var controles_conectados = {}
+var controles_conectados : Dictionary[int, PlayerId] = {}
+
+var players_no_controle : Array[PlayerId]
 
 func _ready() -> void:
 	set_default_keyboard()
@@ -46,6 +52,7 @@ func add_keyboard(player_id: PlayerId):
 # ---- Adiciona as actionMap para controle ----
 func add_controller(player_id: PlayerId, device_id: int) -> void:
 	controles_conectados[device_id] = player_id
+	players_no_controle.append(player_id) # marca esse jogador como no controle
 	# se nao tiver mapa de acoes pro player -> crie
 	if not actionMap_players.has(player_id):
 		actionMap_players[player_id] = {}

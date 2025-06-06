@@ -130,4 +130,4 @@ metadata/_edit_lock_ = true
 [editable path="TileMaps"]
 [editable path="SpawnJogadores"]
 [editable path="SpawnJogadores/Jogador2"]
-[editable path="HUD"]
+[editable path="SpawnJogadores/Jogador2/IndicadorDirecao"]

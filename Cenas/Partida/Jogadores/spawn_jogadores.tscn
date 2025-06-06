@@ -15,3 +15,4 @@ player_id = 1
 texture = ExtResource("2_gigb0")
 
 [editable path="Jogador2"]
+[editable path="Jogador2/IndicadorDirecao"]

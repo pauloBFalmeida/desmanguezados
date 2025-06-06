@@ -14,6 +14,9 @@ class_name Jogador
 @onready var area_interacao : Area2D = $AreaInteracao
 #@onready var sprite := $Sprite2DJogador
 @onready var anim_sprite := $AnimatedSprite2D
+@onready var indicador_direcao := $IndicadorDirecao
+
+const collision_layer_ferramentas : int = 3
 
 var segurando : Ferramenta = null
 
@@ -21,6 +24,9 @@ var ferramenta_collision_mask : int
 
 var speed_modifier_terreno : float = 1.0
 var speed_modifier_cooldown : float = 1.0
+
+# ultima direcao que o jogador deu input de movimento
+var last_input_movimento := Vector2.RIGHT
 
 # -- Input --
 var move_left: StringName
@@ -30,8 +36,12 @@ var move_down: StringName
 var interact: StringName
 var drop: StringName
 
+var no_controle : bool = false
+
 func _ready() -> void:
 	_ajustar_input_map()
+	no_controle = InputManager.players_no_controle.has(player_id) # marca se o jogador esta no controle
+	indicador_direcao.set_joystick_override(no_controle)
 	# ajusta o nome
 	set_name('Jogador_' + "P1" if player_id == InputManager.PlayerId.P1 else "P2")
 	# ajeita o sprite
@@ -48,7 +58,13 @@ func _ajustar_input_map() -> void:
 	interact   = actionMap["interact"]
 	drop       = actionMap["drop"]
 
+var prev_pos := Vector2.ONE
 func _physics_process(_delta: float) -> void:
+	# ---- indicador de direcao ----
+	if indicador_direcao.is_tracking:
+		indicador_direcao.set_tracking_target(body_mais_desejado_interacao())
+	
+	# ---- slow down do terreno ----
 	# pega o slow_speed do tilemap lodo
 	var tile_pos = tilemap_lodo.local_to_map(global_position / tilemap_lodo.scale.x)
 	var tile = tilemap_lodo.get_cell_tile_data(tile_pos)
@@ -64,11 +80,19 @@ func _process(_delta: float) -> void:
 	
 	velocity = move_dir * speed * speed_modifier_terreno * speed_modifier_cooldown
 	move_and_slide()
-	
+		
 	if Input.is_action_just_pressed(interact):
 		acao()
 	if Input.is_action_just_pressed(drop):
 		drop_ferramenta()
+	
+	# update o indicador de direcao
+	if not move_dir.is_zero_approx(): # se o player deu input de mover
+		# salva essa direcao
+		last_input_movimento = move_dir
+		# update da direcao do jogador pro indicador de direcao
+		indicador_direcao.direcao_jogador( move_dir )
+			
 
 # ------ Acao -------
 func acao() -> void:	
@@ -77,15 +101,32 @@ func acao() -> void:
 		balancar_ferramenta()
 		return
 	
-	var body : Node2D
+	# pega o body dentro da area que eh o mais desejado
+	var body : Node2D = body_mais_desejado_interacao()
+	# fazemos a acao sobre o corpo
+	if body.is_in_group("Ferramentas"):
+		pegar_ferramenta(body)
+	elif body.is_in_group("Marcador"):
+		usar_ferramenta(body)
+	else:
+		print('body escolhido: ', body)
+
+func body_mais_desejado_interacao() -> Node2D:
 	# so 1 body dentro -> pega esse
 	if bodys_dentro_area.size() == 1:
 		for _body in bodys_dentro_area.values():
-			body = _body
+			return _body
 	# mais de 1 body dentro -> pega o mais proximo da direcao do movimento
 	else:
-		var direcao : Vector2 = (global_position - pos_inicio_interacao).normalized()
-		var prox_posicao = global_position + direcao # extrapolacao da posicao global que o jogador "esta" se movendo
+		var prox_posicao : Vector2
+		if indicador_direcao.joystick_override:
+			# se tiver o override do joystick -> pegar a posicao do indicador
+			prox_posicao = indicador_direcao.get_global_position_indicador()
+		else:
+			# extrapolacao da posicao global que o jogador "esta" se movendo
+			var direcao : Vector2 = last_input_movimento.normalized()
+			prox_posicao = global_position + direcao 
+		
 		# acha o body mais proximo de "prox_posicao"
 		var min_dist : float = INF
 		var min_body : Node2D = null
@@ -95,15 +136,9 @@ func acao() -> void:
 			if dist < min_dist:
 				min_dist = dist
 				min_body = _body
-		body = min_body
-	# fazemos a acao sobre o corpo
-	if body.is_in_group("Ferramentas"):
-		pegar_ferramenta(body)
-	elif body.is_in_group("Marcador"):
-		usar_ferramenta(body)
-	else:
-		print('body escolhido: ', body)
-
+		return min_body
+	# nao deve cair aqui :p
+	return null
 
 # ------ Usar -------
 func usar_ferramenta(body : Node2D) -> void:
@@ -131,6 +166,9 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	# ajusta para a area de interacao reconhecer o alvo da ferramenta
 	ferramenta_collision_mask = ferramenta.get_layer_acao()
 	area_interacao.set_collision_mask_value(ferramenta_collision_mask, true)
+	# remove a layer das ferramentas 
+	area_interacao.set_collision_mask_value(collision_layer_ferramentas, false)
+	
 	# anim pegar a ferramenta
 	anim_segurar_ferramenta(segurando)
 	
@@ -150,14 +188,13 @@ func drop_ferramenta() -> void:
 	
 	# area de interacao nao reconhece mais o alvo da ferramenta
 	area_interacao.set_collision_mask_value(ferramenta_collision_mask, false)
-	ferramenta_collision_mask = 32
+	ferramenta_collision_mask = 32 # ajusta pra outro valor
+	# retorna a layer das ferramentas 
+	area_interacao.set_collision_mask_value(collision_layer_ferramentas, true)
 	
 	anim_idle()	
 
 # ---- Cooldown da ferramenta ----
-# TODO: melhorar essa parte de animacao
-@export var cor_cooldown : Color
-@onready var cor_cooldown_base : Color = modulate
 var ja_tem_anim_cooldown : bool = false
 
 func cooldown_jogador(ferramenta : Ferramenta) -> void:
@@ -169,20 +206,10 @@ func cooldown_jogador(ferramenta : Ferramenta) -> void:
 	# slow 
 	speed_modifier_cooldown = 0.2
 	
-	# rodar animacao de piscar transparente
-	var duracao := ferramenta.cooldown/2
-	var tween := create_tween()
-	tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(self, "modulate", cor_cooldown, duracao).from_current()
-	tween.finished.connect( func():
-		var tween2 := create_tween()
-		tween2.set_ease(Tween.EASE_IN)
-		tween2.set_trans(Tween.TRANS_CUBIC)
-		tween2.tween_property(self, "modulate", cor_cooldown_base, duracao).from_current()
-		# marca o fim do cooldown
-		tween2.finished.connect( _fim_cooldown_jogador )
-	)
+	# animacao de cooldown
+	var duracao := ferramenta.duracao_cooldown
+	indicador_direcao.comecar_cooldown(duracao)
+	get_tree().create_timer(duracao).timeout.connect( _fim_cooldown_jogador )
 
 func _fim_cooldown_jogador() -> void:
 	ja_tem_anim_cooldown = false
@@ -196,13 +223,8 @@ func anim_segurar_ferramenta(ferramenta : Ferramenta) -> void:
 			# sprite com machado dependendo da cor
 			if player_id == InputManager.PlayerId.P1:
 				anim_sprite.play("blueCortar")
-				#sprite.texture = preload("res://Assets/Personagem/blue axe 1x.png")
 			else:
 				anim_sprite.play("redCortar")
-				#sprite.texture = preload("res://Assets/Personagem/Red axe x1.png")
-			# ajeita a posicao
-			#sprite.region_rect = Rect2(10, 17, 42, 27)
-			#sprite.offset = Vector2(0, 4)
 		Ferramenta.Ferramenta_tipo.PLANTAR:
 			if player_id == InputManager.PlayerId.P1:
 				anim_sprite.play("bluePlantar")
@@ -221,24 +243,22 @@ func anim_idle() -> void:
 		anim_sprite.play("blueIdle")
 	else:
 		anim_sprite.play("redIdle")
-	## sprite com machado dependendo da cor
-	#if player_id == InputManager.PlayerId.P1:
-		#sprite.texture = preload("res://Assets/Personagem/bluex1.png")
-	#else:
-		#sprite.texture = preload("res://Assets/Personagem/Redx1.png")
-	## ajeita a posicao
-	#sprite.region_rect = Rect2(10, 31, 42, 19)
-	#sprite.offset = Vector2.ZERO
+
+func _update_indicador_direcao_interacao() -> void:
+	if bodys_dentro_area.is_empty():
+		indicador_direcao.set_tracking(false)
+	else:
+		indicador_direcao.set_tracking(true)
+		indicador_direcao.set_tracking_target(body_mais_desejado_interacao())
 
 # ------ Area Interacao -------
 var bodys_dentro_area := {}
-var pos_inicio_interacao : Vector2
-
 func _on_area_interacao_body_entered(body: Node2D) -> void:
 	if not bodys_dentro_area.has(body):
 		bodys_dentro_area[body] = body
-	pos_inicio_interacao = global_position
+	_update_indicador_direcao_interacao()
 
 func _on_area_interacao_body_exited(body: Node2D) -> void:
 	if bodys_dentro_area.has(body):
 		bodys_dentro_area.erase(body)
+	_update_indicador_direcao_interacao()

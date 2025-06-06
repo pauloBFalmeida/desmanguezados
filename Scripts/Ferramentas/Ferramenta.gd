@@ -7,7 +7,7 @@ enum Som_tipo {ACERTO, ERRO, BALANCAR}
 @export_flags_2d_physics var layer_acao : int
 @export var tipo_ferramenta : Ferramenta_tipo
 ## em segundos
-@export var cooldown : float = 0.5
+@export var duracao_cooldown : float = 0.5
 @export var sons : Dictionary[Som_tipo, AudioStream]
 
 var collison : CollisionShape2D
@@ -59,7 +59,7 @@ func balancar_ferramenta() -> void:
 # -- Cooldown --
 func aplicar_cooldown() -> void:
 	is_on_cooldown = true
-	get_tree().create_timer(cooldown).timeout.connect(_terminar_cooldown)
+	get_tree().create_timer(duracao_cooldown).timeout.connect(_terminar_cooldown)
 
 func _terminar_cooldown() -> void:
 	is_on_cooldown = false
