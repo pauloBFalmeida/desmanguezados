@@ -133,7 +133,7 @@ func comecar_partida() -> void:
 
 # ---- Menu Game Over ----
 func show_tela_fim(tipo : Tipo_fim) -> void:
-	# para a musica
+	# para a musica (tb para restart do level n comecar tocando a musica)
 	audio_player_musica.stop()
 	
 	# mostra o menu de fim de jogo
