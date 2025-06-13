@@ -41,7 +41,7 @@ func set_ferramenta_mgmt(fer_mgmt : FerramentaMgmt) -> void:
 	ferramenta_mgmt = fer_mgmt
 
 # -- som --
-func tocar_som(tipo_som : Som_tipo) -> void:
+func tocar_som(tipo_som : Som_tipo) -> void:	
 	audio_player.set_stream(sons[tipo_som])
 	audio_player.play()
 	
@@ -51,6 +51,9 @@ func tocar_som(tipo_som : Som_tipo) -> void:
 		#Som_tipo.BALANCAR:
 
 func balancar_ferramenta() -> void:
+	# nao deixa spammar balancar (usar ferramenta sem ser em algo)
+	if audio_player.playing:
+		return
 	tocar_som(Som_tipo.BALANCAR)
 
 # -- Cooldown --

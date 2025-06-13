@@ -24,6 +24,9 @@ func jogador_pegar(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	# tira do ferramenta_mgmt e coloca como filho do jogador
 	remove_child(ferramenta)
 	jogador.add_child(ferramenta)
+	
+	# coloca colado no jogador, para ter o som no local certinho
+	ferramenta.position = Vector2.ZERO
 
 func jogador_soltar(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	# 
