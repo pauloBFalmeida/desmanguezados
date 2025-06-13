@@ -12,4 +12,7 @@ func usar_ferramenta(body : Node2D) -> void:
 	var lixo : Lixo = body
 	lixo.recolher()
 	
+	# tocar som
+	super.tocar_som(Ferramenta.Som_tipo.ACERTO)
+	
 	super.aplicar_cooldown()

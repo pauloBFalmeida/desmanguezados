@@ -1,14 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bcgkqnqdxu4g"]
+[gd_scene load_steps=8 format=3 uid="uid://bcgkqnqdxu4g"]
 
 [ext_resource type="Script" uid="uid://cktr1sno3fgax" path="res://Scripts/Ferramentas/recolher.gd" id="1_cft17"]
 [ext_resource type="Shader" uid="uid://cw712yn14yynr" path="res://Scripts/Shaders/outline.gdshader" id="2_3hrgq"]
+[ext_resource type="AudioStream" uid="uid://bhb8bxv86250i" path="res://Assets/Audio/efeitos/ferramentas/lixo_acerto.MP3" id="2_ginqs"]
+[ext_resource type="AudioStream" uid="uid://cgkw41vpt212o" path="res://Assets/Audio/efeitos/ferramentas/lixo_erro.MP3" id="3_073hx"]
 [ext_resource type="Texture2D" uid="uid://dtklk03ss12wj" path="res://Assets/Ferramentas/RecolherLixo.png" id="3_cft17"]
-
-[sub_resource type="AudioStream" id="AudioStream_cft17"]
-
-[sub_resource type="AudioStream" id="AudioStream_3hrgq"]
-
-[sub_resource type="AudioStream" id="AudioStream_ginqs"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m88eb"]
 radius = 25.0
@@ -27,9 +23,9 @@ script = ExtResource("1_cft17")
 layer_acao = 32
 tipo_ferramenta = 2
 sons = Dictionary[int, AudioStream]({
-0: SubResource("AudioStream_cft17"),
-1: SubResource("AudioStream_3hrgq"),
-2: SubResource("AudioStream_ginqs")
+0: ExtResource("2_ginqs"),
+1: ExtResource("3_073hx"),
+2: ExtResource("3_073hx")
 })
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -1,22 +1,31 @@
 extends Control
 class_name Hud
 
+# -- hud in game --
 @onready var label_qtd_mudas := $LabelMudas
 @onready var label_cronometro := $LabelTempo
 
+# -- fim de jogo --
 @onready var game_over_menu := $GameOverMenu
 @onready var game_over_sprite := $GameOverMenu/ImagemFim
-@onready var game_over_btn_replay := $GameOverMenu/ButtonReplay
+@onready var game_over_btns := $GameOverMenu/ControlBtns
+@onready var game_over_btn_replay := $GameOverMenu/ControlBtns/ButtonReplay
 
+# -- pause --
 @onready var pause_menu := $PauseMenu
 @onready var pause_menu_btn_jogo := $PauseMenu/VBoxContainer/ButtonJogo
 
+# -- contagem do comeco de partida --
 @onready var start_menu := $StartMenu
 @onready var start_label_count := $StartMenu/VBoxContainer/LabelStartCount
 @export var start_count_num : int = 3
 var is_comecando_contar : bool = false
 
 @onready var temporizador := $Temporizador
+
+# -- musica de fundo --
+@export var musica_level : AudioStream
+@onready var audio_player_musica := $AudioStreamPlayer
 
 enum Tipo_fim {DERROTA_TEMPO, VITORIA_SUJO, VITORIA_LIMPO}
 
@@ -29,6 +38,10 @@ func _input(event: InputEvent) -> void:
 		despausar()
 
 func _ready() -> void:
+	# ajusta o audio
+	audio_player_musica.stream = musica_level
+	audio_player_musica.stop()
+	audio_player_musica.process_mode = Node.PROCESS_MODE_PAUSABLE
 	# esconde as telas
 	start_menu.hide()
 	game_over_menu.hide()
@@ -109,14 +122,23 @@ func comecar_contar() -> void:
 	start_menu.hide()
 	get_tree().paused = false
 	is_comecando_contar = false
+	# comecar a partida
+	comecar_partida()
+
+func comecar_partida() -> void:
+	# toca a musica do level
+	audio_player_musica.play()
 	# comeca o temporizador
 	temporizador.comecar()
 
 # ---- Menu Game Over ----
 func show_tela_fim(tipo : Tipo_fim) -> void:
+	# para a musica
+	audio_player_musica.stop()
+	
 	# mostra o menu de fim de jogo
 	game_over_menu.show()
-	game_over_btn_replay.grab_focus()
+	game_over_btns.hide()
 	
 	# ajusta a imagem dependendo do tipo de fim de jogo
 	game_over_sprite.texture = imagens_fim_jogo[tipo]
@@ -134,6 +156,12 @@ func show_tela_fim(tipo : Tipo_fim) -> void:
 		scale_final,
 		1.5 # seg
 	).from_current()
+	
+	# espera um tempo para mostrar os botoes
+	await tween.finished
+	#await get_tree().create_timer(1.0, true).timeout
+	game_over_btns.show()
+	game_over_btn_replay.grab_focus()
 	
 	# TODO: fazer algo especial para cada tela ?
 	#match tipo:

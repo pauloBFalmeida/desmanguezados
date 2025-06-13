@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6sdx5v5l772m"]
+[gd_scene load_steps=7 format=3 uid="uid://b6sdx5v5l772m"]
 
 [ext_resource type="Script" uid="uid://brncsdifpd8ke" path="res://Scripts/Partida/hud.gd" id="1_toh8p"]
 [ext_resource type="Texture2D" uid="uid://clny3k8wxq5x1" path="res://Assets/Interface/GameOverImage.jpg" id="2_7b8ht"]
+[ext_resource type="AudioStream" uid="uid://cejno8tv42g36" path="res://Assets/Audio/musica/level_song.wav" id="2_ftljh"]
 [ext_resource type="Texture2D" uid="uid://bsiu6yvfgiroo" path="res://Assets/Interface/VitoriasSujo.jpg" id="3_ftljh"]
 [ext_resource type="Texture2D" uid="uid://b0eo0x4xcairy" path="res://Assets/Interface/VitoriaLimpo.jpg" id="4_k3s11"]
 [ext_resource type="Script" uid="uid://drk55k12qbjvp" path="res://Scripts/Partida/temporizador.gd" id="5_wa2qo"]
@@ -15,6 +16,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_toh8p")
+musica_level = ExtResource("2_ftljh")
 imagens_fim_jogo = Dictionary[int, CompressedTexture2D]({
 0: ExtResource("2_7b8ht"),
 1: ExtResource("3_ftljh"),
@@ -167,7 +169,6 @@ text = "0"
 horizontal_alignment = 1
 
 [node name="GameOverMenu" type="Control" parent="."]
-visible = false
 z_index = 99
 layout_mode = 1
 anchors_preset = 15
@@ -181,30 +182,23 @@ scale = Vector2(0.67, 0.67)
 texture = ExtResource("4_k3s11")
 centered = false
 
-[node name="ButtonReplay" type="Button" parent="GameOverMenu"]
+[node name="ControlBtns" type="Control" parent="GameOverMenu"]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 100.0
-offset_top = -70.0
-offset_right = 204.0
-offset_bottom = -39.0
-grow_vertical = 0
-theme_override_colors/font_hover_color = Color(1, 0.88, 0.1, 1)
-theme_override_colors/font_focus_color = Color(1, 0.878431, 0.101961, 1)
-theme_override_font_sizes/font_size = 30
-text = "Jogar de Novo"
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ButtonMenu" type="Button" parent="GameOverMenu"]
+[node name="ButtonMenu" type="Button" parent="GameOverMenu/ControlBtns"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -204.0
-offset_top = -70.0
+offset_left = -286.0
+offset_top = -89.0
 offset_right = -100.0
 offset_bottom = -39.0
 grow_horizontal = 0
@@ -214,8 +208,26 @@ theme_override_colors/font_focus_color = Color(1, 0.878431, 0.101961, 1)
 theme_override_font_sizes/font_size = 30
 text = "Voltar Menu"
 
+[node name="ButtonReplay" type="Button" parent="GameOverMenu/ControlBtns"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = -89.0
+offset_right = 310.0
+offset_bottom = -39.0
+grow_vertical = 0
+theme_override_colors/font_hover_color = Color(1, 0.88, 0.1, 1)
+theme_override_colors/font_focus_color = Color(1, 0.878431, 0.101961, 1)
+theme_override_font_sizes/font_size = 30
+text = "Jogar de Novo"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -25.0
+
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonJogo" to="." method="_on_button_jogo_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonRestart" to="." method="_on_button_restart_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonMenu" to="." method="_on_button_menu_pressed"]
-[connection signal="pressed" from="GameOverMenu/ButtonReplay" to="." method="_on_button_replay_pressed"]
-[connection signal="pressed" from="GameOverMenu/ButtonMenu" to="." method="_on_button_menu_gameover_pressed"]
+[connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonMenu" to="." method="_on_button_menu_gameover_pressed"]
+[connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonReplay" to="." method="_on_button_replay_pressed"]

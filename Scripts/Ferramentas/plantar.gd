@@ -13,6 +13,9 @@ func usar_ferramenta(body : Node2D) -> void:
 	# planta
 	plantar(local_plantar)
 	
+	# tocar som
+	super.tocar_som(Ferramenta.Som_tipo.ACERTO)
+	
 	super.aplicar_cooldown()
 
 func plantar(local_plantar : Node2D) -> void:

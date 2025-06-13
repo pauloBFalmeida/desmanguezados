@@ -25,9 +25,6 @@ const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
 }
 
 var current_level_id : Level_id
-#const level_paths := {
-	#LevelData.Level_t.TUTORIAL: "res://Scenes/Levels/level_Tutorial.tscn",
-#}
 
 func goto_menu():
 	change_scene(MENU_PRINCIPAL_PATH)

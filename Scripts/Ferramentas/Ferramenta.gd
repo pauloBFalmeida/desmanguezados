@@ -42,10 +42,8 @@ func set_ferramenta_mgmt(fer_mgmt : FerramentaMgmt) -> void:
 
 # -- som --
 func tocar_som(tipo_som : Som_tipo) -> void:
-	pass
-	#audio_player.set_stream(sons[tipo_som])
-	
-	#audio_player.play()
+	audio_player.set_stream(sons[tipo_som])
+	audio_player.play()
 	
 	#match tipo_som:
 		#Som_tipo.ACERTO:
@@ -53,8 +51,7 @@ func tocar_som(tipo_som : Som_tipo) -> void:
 		#Som_tipo.BALANCAR:
 
 func balancar_ferramenta() -> void:
-	#tocar_som(Som_tipo.BALANCAR)
-	pass
+	tocar_som(Som_tipo.BALANCAR)
 
 # -- Cooldown --
 func aplicar_cooldown() -> void:

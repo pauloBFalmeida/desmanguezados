@@ -47,7 +47,8 @@ func _ready() -> void:
 	no_controle = InputManager.players_no_controle.has(player_id) # marca se o jogador esta no controle
 	indicador_direcao.set_joystick_override(no_controle)
 	# ajusta o nome
-	set_name('Jogador_' + "P1" if player_id == InputManager.PlayerId.P1 else "P2")
+	var nome_id : String = "P1" if player_id == InputManager.PlayerId.P1 else "P2"
+	set_name('Jogador_' + nome_id)
 	# ajeita o sprite
 	anim_idle()
 	# 
