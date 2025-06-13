@@ -1,5 +1,6 @@
 extends Node
 
+const MENUS_PATH := "res://Cenas/Menus/mainMenus.tscn"
 const MENU_PRINCIPAL_PATH := "res://Cenas/Menus/menuPrincipal.tscn"
 const MENU_SELECAO_PATH := "res://Cenas/Menus/menuSelecao.tscn"
 const MENU_CONFIGURACAO_PATH := "res://Cenas/Menus/menuConfiguracao.tscn"
@@ -27,13 +28,16 @@ const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
 var current_level_id : Level_id
 
 func goto_menu():
-	change_scene(MENU_PRINCIPAL_PATH)
+	change_scene(MENUS_PATH)
+
+func goto_menu_principal():
+	change_menu(MENU_PRINCIPAL_PATH)
 
 func goto_selecao():
-	change_scene(MENU_SELECAO_PATH)
+	change_menu(MENU_SELECAO_PATH)
 
 func goto_configuracoes():
-	change_scene(MENU_CONFIGURACAO_PATH)
+	change_menu(MENU_CONFIGURACAO_PATH)
 
 func goto_level(level_id : Level_id):
 	if LEVEIS_REF.has(level_id):
@@ -55,3 +59,14 @@ func change_scene(path: String):
 	var new_scene = scene_ref.instantiate()
 	get_tree().root.add_child(new_scene)
 	get_tree().current_scene = new_scene
+
+func change_menu(path: String):
+	var main_menus = get_tree().root.get_node("MainMenus")
+	# Clean up current scene
+	for child in main_menus.get_children():
+		child.queue_free()
+	
+	# Load new scene
+	var scene_ref = load(path)
+	var new_scene = scene_ref.instantiate()
+	main_menus.add_child(new_scene)

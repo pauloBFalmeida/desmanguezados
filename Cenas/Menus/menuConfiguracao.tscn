@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dl22uju6ygrp0"]
+[gd_scene load_steps=2 format=3 uid="uid://dl22uju6ygrp0"]
 
 [ext_resource type="Script" uid="uid://bt6txdh0jok31" path="res://Scripts/Menus/menu_configuracao.gd" id="1_ojjoo"]
-[ext_resource type="Script" uid="uid://sj5rgpesy5f8" path="res://Scripts/Menus/UsadosMenus/controles_manager.gd" id="2_uy6x4"]
 
 [node name="MenuConfiguracao" type="Control"]
 layout_mode = 3
@@ -11,9 +10,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ojjoo")
-
-[node name="ControlesManager" type="Node" parent="."]
-script = ExtResource("2_uy6x4")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

@@ -59,16 +59,11 @@ position = Vector2(518, 343)
 
 [node name="Jogador1" parent="SpawnJogadores" index="0" node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo")]
 position = Vector2(-390, -161)
-player_id = 0
-speed = 250.0
-slowdown_lodo = 0.75
 ferramentas_mgmt = NodePath("../../FerramentasMgmt")
 tilemap_lodo = NodePath("../../TileMaps/TileMapDualLodo")
 
 [node name="Jogador2" parent="SpawnJogadores" index="1" node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo")]
 position = Vector2(617, 242)
-speed = 250.0
-slowdown_lodo = 0.75
 ferramentas_mgmt = NodePath("../../FerramentasMgmt")
 tilemap_lodo = NodePath("../../TileMaps/TileMapDualLodo")
 
@@ -141,5 +136,3 @@ position = Vector2(15, 369)
 
 [editable path="TileMaps"]
 [editable path="SpawnJogadores"]
-[editable path="SpawnJogadores/Jogador2"]
-[editable path="SpawnJogadores/Jogador2/IndicadorDirecao"]

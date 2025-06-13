@@ -6,4 +6,4 @@ func _input(event: InputEvent) -> void:
 		voltar_menu_principal()
 
 func voltar_menu_principal() -> void:
-	SceneManager.goto_menu()
+	SceneManager.goto_menu_principal()

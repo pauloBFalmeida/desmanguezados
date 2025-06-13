@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://cgi2i01c5xetu"]
+[gd_scene load_steps=17 format=4 uid="uid://cyi5a20c6vvr1"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_eixhn"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps.tscn" id="2_7f1nr"]
