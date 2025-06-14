@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://b22561nl1a3f8" path="res://Cenas/Partida/Lixos/lixo_garrafa.tscn" id="13_7ncl0"]
 [ext_resource type="Script" uid="uid://ymebirrcc0d3" path="res://Scripts/Partida/locais_plantar_colecao.gd" id="14_c65ts"]
 [ext_resource type="PackedScene" uid="uid://bxemk6uv78eif" path="res://Cenas/Partida/local_plantar.tscn" id="15_awc43"]
-[ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Partida/hud.tscn" id="16_vrx3h"]
+[ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Interface/hud.tscn" id="16_vrx3h"]
 
 [node name="Level_2" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
 script = ExtResource("1_eixhn")
