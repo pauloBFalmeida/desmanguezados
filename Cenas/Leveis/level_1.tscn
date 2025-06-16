@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://dhv3qjf6ytml5"]
+[gd_scene load_steps=18 format=4 uid="uid://dhv3qjf6ytml5"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_42x8c"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="1_w1eyt"]
@@ -16,6 +16,13 @@
 [ext_resource type="PackedScene" uid="uid://bnr6tp6k6p5mk" path="res://Cenas/Partida/Lixos/lixo_embalagem.tscn" id="13_poegd"]
 [ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Plantar.tscn" id="14_7uol4"]
 [ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Interface/hud.tscn" id="15_7uol4"]
+
+[sub_resource type="Curve" id="Curve_nne28"]
+_limits = [0.5, 1.5, 0.0, 1.0]
+_data = [Vector2(0, 1.25), 0.0, 0.0, 0, 0, Vector2(0.4, 0.8), 0.0, 0.0, 0, 0, Vector2(0.95, 1.4), 0.0, 0.0, 0, 0]
+point_count = 3
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
 
 [node name="Level_1" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
 script = ExtResource("1_42x8c")
@@ -105,6 +112,7 @@ tilemap_lodo = NodePath("../../TileMaps/TileMapDualLodo")
 [node name="FerramentasMgmt" type="Node2D" parent="."]
 script = ExtResource("6_q0w2f")
 mudas_referencias = Array[PackedScene]([ExtResource("4_iqq2a")])
+jogar_ferramenta_speed_curve = SubResource("Curve_nne28")
 
 [node name="Corte" parent="FerramentasMgmt" groups=["Ferramentas"] instance=ExtResource("3_o11j3")]
 position = Vector2(784, 425)

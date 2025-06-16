@@ -8,30 +8,27 @@ var is_usando_controle : bool = false
 @export var speed: float = 250.0
 ## porcentagem de slowdown no lodo
 @export var slowdown_lodo: float = 0.75
+var speed_modifier_terreno : float = 1.0
+var speed_modifier_cooldown : float = 1.0
 
-@export var ferramentas_mgmt : Node2D
+@export var ferramentas_mgmt : FerramentaMgmt
 @export var tilemap_lodo : TileMapDual
 
 @onready var area_interacao : Area2D = $AreaInteracao
-#@onready var sprite := $Sprite2DJogador
 @onready var anim_sprite := $AnimatedSprite2D
-@onready var indicador_direcao := $IndicadorDirecao
+
+@onready var indicador_direcao : IndicadorDirecao = $IndicadorDirecao
+# ultima direcao que o jogador deu input de movimento
+var last_input_movimento := Vector2.RIGHT
 
 @onready var instrucoes := $IntrucoesUI
 @onready var instrucoes_label := $IntrucoesUI/LabelInstrucoes
 var mostrar_instrucoes := false
 
 const collision_layer_ferramentas : int = 3
-
-var segurando : Ferramenta = null
-
 var ferramenta_collision_mask : int
 
-var speed_modifier_terreno : float = 1.0
-var speed_modifier_cooldown : float = 1.0
-
-# ultima direcao que o jogador deu input de movimento
-var last_input_movimento := Vector2.RIGHT
+var segurando : Ferramenta = null
 
 # -- Input --
 var move_left: StringName
@@ -56,6 +53,11 @@ func _ready() -> void:
 	anim_idle()
 	# 
 	#instrucoes.hide()
+	# ????
+	mostrador = preload("res://Cenas/Partida/local_plantar.tscn").instantiate()
+	add_child(mostrador)
+	mostrador.modulate.a = 0.5
+	mostrador.hide()
 
 func _ajustar_input_map() -> void:
 	# ajusta o action map do player
@@ -72,14 +74,9 @@ func _ajustar_input_map() -> void:
 
 var prev_pos := Vector2.ONE
 func _physics_process(_delta: float) -> void:
-	# ---- lidar com button presses ----
-	var pressed_pickup : bool = Input.is_action_just_pressed(pickup)
-	var pressed_drop   : bool = Input.is_action_just_pressed(drop)
-	if pressed_pickup or pressed_drop:
-		lidar_pickup_drop(pressed_pickup, pressed_drop)
-	
-	if Input.is_action_just_pressed(throw):
-		pass
+	# ---- lidar com button presses ----	
+	if Input.is_action_just_pressed(pickup):
+		lidar_pickup()
 	
 	# ---- indicador de direcao ----
 	if indicador_direcao.is_tracking:
@@ -132,31 +129,63 @@ func acao() -> void:
 		mostrar_instrucoes_usar()
 		usar_ferramenta(body)
 
+@export var throw_max_distance : float = 450.0
+@export var throw_distance : Curve
+var throw_min_hold_sec : float = 0.45
+@onready var throw_max_hold_sec : float = throw_distance.max_domain
 var throw_acumulado_sec : float = 0
-var throw_min_hold_sec : float = 0
-var throw_max_hold_sec : float = 0
+var is_throwing : bool = false
+var throwing_pos : Vector2
+var mostrador
+
 func jogar_ferramenta_segurando(delta : float) -> void:
+	if (not segurando) or (not is_instance_valid(segurando)):
+		return
+	
 	throw_acumulado_sec += delta
+	# limite no tamanho maximo
+	throw_acumulado_sec = min(throw_acumulado_sec, throw_max_hold_sec)
 	# menos do que o minimo -> nao mostre nada
 	if throw_acumulado_sec < throw_min_hold_sec:
 		return
-	# limite no tamanho maximo
-	throw_max_hold_sec = min(throw_max_hold_sec, throw_acumulado_sec)
+	
+	# comecou a mostrar agora
+	if not is_throwing:
+		mostrador.position = Vector2.ZERO
+		mostrador.show()
+	
+	is_throwing = true
 	# -- mostrar direcao --
-	pass
+	print(throw_acumulado_sec)
+	
+	var direcao := indicador_direcao.get_direcao()
+	var force := throw_max_distance * throw_distance.sample(throw_acumulado_sec)
+	throwing_pos = direcao * force
+	mostrador.position = throwing_pos
 	
 
 func jogar_ferramenta_released() -> void:
+	if (not segurando) or (not is_instance_valid(segurando)):
+		return
+	
 	# menos do que o minimo -> so largue
 	if throw_acumulado_sec < throw_min_hold_sec:
 		drop_ferramenta()
 		return
 	# -- joga a ferramenta --
-	pass
+	var glo_pos := global_position + throwing_pos
+	ferramentas_mgmt.jogador_jogar_ferramenta(self, segurando, glo_pos)
 	
+	_limpar_jogador_ferramenta(segurando)
+
+func _reset_jogar_ferramenta() -> void:
 	# reseta o contador
+	is_throwing = false
 	throw_acumulado_sec = 0
 
+# ----------------------------------------------
+# Instrucoes
+# ----------------------------------------------
 # ==== ?????
 var primeira_vez : bool = true
 
@@ -225,7 +254,177 @@ func mostrar_instrucoes_drop() -> void:
 		
 	instrucoes_label.text = txt_botao + " para largar"
 
-func body_mais_desejado_interacao(group_desejado : String = "") -> Node2D:	
+# ----------------------------------------------
+# Usar ferramenta
+# ----------------------------------------------
+# ------ Usar -------
+func usar_ferramenta(body : Node2D) -> void:
+	# se nao tiver segurando uma ferramenta
+	if (not segurando) or (not is_instance_valid(segurando)): return
+	# usar a ferramenta
+	segurando.usar_ferramenta(body)
+	# aplica o cooldown na ferramenta e mostra no player
+	cooldown_jogador(segurando)
+
+func balancar_ferramenta() -> void:
+	# se nao tiver segurando uma ferramenta
+	if (not segurando) or (not is_instance_valid(segurando)): return
+	# balancar a ferramenta
+	segurando.balancar_ferramenta()
+
+# ----------------------------------------------
+# Pegar, Largar e Jogar Ferramentas
+# ----------------------------------------------
+# ------ Lidar com o pickup -------
+func lidar_pickup() -> void:
+	_reset_jogar_ferramenta() # cancela jgogar ferramenta
+	# se n tem o que pegar dentro da area de interacao -> nao pode pegar nada
+	if bodys_dentro_area.is_empty(): return
+	
+	# pega uma ferramenta dentro do range de interacao
+	var body : Node2D = body_mais_desejado_interacao("Ferramentas")
+	# nao tem ferramenta dentro do range -> nao pode pegar nada
+	if not body.is_in_group("Ferramentas"): return
+	
+	var ferramenta : Ferramenta = body
+	
+	# se ja estiver segurando uma ferramenta
+	if segurando and is_instance_valid(segurando):
+		# se eu fiz um pickup recentemente -> chamado mt rapido, nao faca nada
+		if pickup_recente: return
+		# nao fiz um pickup recentemente -> drop a que esta segurando
+		drop_ferramenta()
+	
+	# mostrar intrucoes
+	mostrar_instrucoes_pegar()
+	
+	# pega a ferramenta do chao
+	pegar_ferramenta(ferramenta)
+	
+	
+	# ??????? verificar se ainda precisa disso dps do throw
+	# marca que pegou recentemente
+	pickup_recente = true
+	# espera um pouco para desmarcar que o pickup foi recente
+	get_tree().create_timer(0.2).timeout.connect(
+		func(): pickup_recente = false
+	)
+
+# ------ Pegar -------
+func pegar_ferramenta(ferramenta : Ferramenta) -> void:
+	# se ja estiver segurando uma ferramenta -> nao faca nada
+	if segurando and is_instance_valid(segurando): return
+	
+	segurando = ferramenta
+	ferramentas_mgmt.jogador_pegar(self, ferramenta)
+	
+	# ajusta para a area de interacao reconhecer o alvo da ferramenta
+	ferramenta_collision_mask = ferramenta.get_layer_acao()
+	area_interacao.set_collision_mask_value(ferramenta_collision_mask, true)
+	# remove a layer das ferramentas 
+	#area_interacao.set_collision_mask_value(collision_layer_ferramentas, false)
+	
+	# anim pegar a ferramenta
+	anim_segurar_ferramenta(segurando)
+	
+	# remove a ferramenta dos bodies dentro da area de interacao do jogador
+	bodys_dentro_area.erase(ferramenta)
+	
+	# atualiza o indicador de direcao
+	_update_indicador_direcao_interacao()
+
+# ------ Dropar -------
+func drop_ferramenta(pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
+	# se n tiver segurando nenhuma ferramenta -> nao faca nada
+	if (not segurando) or (not is_instance_valid(segurando)): return
+	# se pegou recentemente -> nao largue ????????
+	if pickup_recente: return
+	
+	var ferramenta : Ferramenta = segurando
+	
+	if pos_ferramenta.is_zero_approx():
+		# posiciona ferramenta no chao perto do jogador
+		pos_ferramenta = global_position + Vector2(-15, 40)
+	
+	ferramentas_mgmt.jogador_soltar(self, ferramenta, pos_ferramenta)
+	_limpar_jogador_ferramenta(ferramenta)
+
+func _limpar_jogador_ferramenta(ferramenta : Ferramenta) -> void:
+	# limpa a mao
+	segurando = null
+	
+	# area de interacao nao reconhece mais o alvo da ferramenta
+	area_interacao.set_collision_mask_value(ferramenta_collision_mask, false)
+	ferramenta_collision_mask = 32 # ajusta pra outro valor
+	# retorna a layer das ferramentas 
+	area_interacao.set_collision_mask_value(collision_layer_ferramentas, true)
+	
+	anim_idle()
+
+# ---- Jogar da ferramenta ----
+
+
+
+# ----------------------------------------------
+# Cooldown da ferramenta
+# ----------------------------------------------
+var ja_tem_anim_cooldown : bool = false
+
+func cooldown_jogador(ferramenta : Ferramenta) -> void:
+	# se ja tiver rodando o cooldown
+	if ja_tem_anim_cooldown: return
+	# marca que esta aplicando o cooldown
+	ja_tem_anim_cooldown = true
+	
+	# slow 
+	speed_modifier_cooldown = 0.2
+	
+	# animacao de cooldown
+	var duracao := ferramenta.duracao_cooldown
+	indicador_direcao.comecar_cooldown(duracao)
+	get_tree().create_timer(duracao).timeout.connect( _fim_cooldown_jogador )
+
+func _fim_cooldown_jogador() -> void:
+	ja_tem_anim_cooldown = false
+	speed_modifier_cooldown = 1.0
+	
+# ----------------------------------------------
+# Animacao
+# ----------------------------------------------
+func anim_segurar_ferramenta(ferramenta : Ferramenta) -> void:
+	var tipo_ferramenta : Ferramenta.Ferramenta_tipo = ferramenta.tipo_ferramenta
+	match tipo_ferramenta:
+		Ferramenta.Ferramenta_tipo.CORTAR:
+			# sprite com machado dependendo da cor
+			if player_id == InputManager.PlayerId.P1:
+				anim_sprite.play("blueCortar")
+			else:
+				anim_sprite.play("redCortar")
+		Ferramenta.Ferramenta_tipo.PLANTAR:
+			if player_id == InputManager.PlayerId.P1:
+				anim_sprite.play("bluePlantar")
+			else:
+				anim_sprite.play("redPlantar")
+		Ferramenta.Ferramenta_tipo.RECOLHER:
+			if player_id == InputManager.PlayerId.P1:
+				anim_sprite.play("blueRecolher")
+			else:
+				anim_sprite.play("redRecolher")
+		_: # default, caso nao de match com nenhuma das opcoes anteriores
+			anim_idle()
+
+func anim_idle() -> void:
+	if player_id == InputManager.PlayerId.P1:
+		anim_sprite.play("blueIdle")
+	else:
+		anim_sprite.play("redIdle")
+
+# ----------------------------------------------
+# indicador de direcao
+# ----------------------------------------------
+func body_mais_desejado_interacao(group_desejado : String = "") -> Node2D:
+	if bodys_dentro_area.is_empty(): return null
+	
 	# so 1 body dentro -> pega esse
 	if bodys_dentro_area.size() == 1:
 		for _body in bodys_dentro_area.values():
@@ -262,154 +461,6 @@ func body_mais_desejado_interacao(group_desejado : String = "") -> Node2D:
 	# nao deve cair aqui :p
 	return null
 
-# ------ Usar -------
-func usar_ferramenta(body : Node2D) -> void:
-	# se nao tiver segurando uma ferramenta
-	if (not segurando) or (not is_instance_valid(segurando)): return
-	# usar a ferramenta
-	segurando.usar_ferramenta(body)
-	# aplica o cooldown na ferramenta e mostra no player
-	cooldown_jogador(segurando)
-
-func balancar_ferramenta() -> void:
-	# se nao tiver segurando uma ferramenta
-	if (not segurando) or (not is_instance_valid(segurando)): return
-	# balancar a ferramenta
-	segurando.balancar_ferramenta()
-
-# ------ Lidar com o pickup-drop -------
-func lidar_pickup_drop(is_pickup : bool, is_drop : bool) -> void:
-	# se n tem o que pegar dentro da area de interacao -> nao pode ser pickup
-	if bodys_dentro_area.is_empty(): is_pickup = false
-	
-	# pega uma ferramenta dentro do range de interacao
-	var body : Node2D = body_mais_desejado_interacao("Ferramentas")
-	# nao tem ferramenta dentro do range -> nao pode ser pickup
-	if not body.is_in_group("Ferramentas"): is_pickup = false
-	
-	if is_drop:
-		# se nao fez um pickup recentemente -> nao foi chamado mt rapido, faca o drop
-		if not pickup_recente:
-			drop_ferramenta()
-	# se ainda for pickup -> pegue uma ferramenta
-	if is_pickup:
-		_lidar_pickup(body)
-
-func _lidar_pickup(ferramenta : Ferramenta) -> void:	
-	# se ja estiver segurando uma ferramenta
-	if segurando and is_instance_valid(segurando):
-		return
-		## se eu fiz um pickup recentemente -> chamado mt rapido, nao faca nada
-		#if pickup_recente: return
-		## nao fiz um pickup recentemente -> drop a que esta segurando
-		#drop_ferramenta()
-	
-	# mostrar intrucoes
-	mostrar_instrucoes_pegar()
-	# pega a ferramenta do chao
-	pegar_ferramenta(ferramenta)
-	
-	indicador_direcao.set_tracking(false)
-	# marca que pegou recentemente
-	pickup_recente = true
-	# espera um pouco para desmarcar que o pickup foi recente
-	get_tree().create_timer(0.2).timeout.connect(
-		func(): pickup_recente = false
-	)
-
-# ------ Pegar -------
-func pegar_ferramenta(ferramenta : Ferramenta) -> void:
-	# se ja estiver segurando uma ferramenta -> nao faca nada
-	if segurando and is_instance_valid(segurando): return
-	
-	segurando = ferramenta
-	ferramentas_mgmt.jogador_pegar(self, ferramenta)
-	
-	# ajusta para a area de interacao reconhecer o alvo da ferramenta
-	ferramenta_collision_mask = ferramenta.get_layer_acao()
-	area_interacao.set_collision_mask_value(ferramenta_collision_mask, true)
-	# remove a layer das ferramentas 
-	#area_interacao.set_collision_mask_value(collision_layer_ferramentas, false)
-	
-	# anim pegar a ferramenta
-	anim_segurar_ferramenta(segurando)
-	
-	# remove a ferramenta dos bodies dentro da area de interacao do jogador
-	bodys_dentro_area.erase(ferramenta)
-
-# ------ Dropar -------
-func drop_ferramenta() -> void:
-	# se n tiver segurando nenhuma ferramenta -> nao faca nada
-	if (not segurando) or (not is_instance_valid(segurando)): return
-	# se pegou recentemente -> nao largue
-	if pickup_recente: return
-	
-	var ferramenta = segurando
-	# limpa a mao
-	segurando = null
-	
-	ferramentas_mgmt.jogador_soltar(self, ferramenta)
-	
-	# area de interacao nao reconhece mais o alvo da ferramenta
-	area_interacao.set_collision_mask_value(ferramenta_collision_mask, false)
-	ferramenta_collision_mask = 32 # ajusta pra outro valor
-	# retorna a layer das ferramentas 
-	area_interacao.set_collision_mask_value(collision_layer_ferramentas, true)
-	
-	anim_idle()
-
-# ---- Jogar da ferramenta ----
-
-# ---- Cooldown da ferramenta ----
-var ja_tem_anim_cooldown : bool = false
-
-func cooldown_jogador(ferramenta : Ferramenta) -> void:
-	# se ja tiver rodando o cooldown
-	if ja_tem_anim_cooldown: return
-	# marca que esta aplicando o cooldown
-	ja_tem_anim_cooldown = true
-	
-	# slow 
-	speed_modifier_cooldown = 0.2
-	
-	# animacao de cooldown
-	var duracao := ferramenta.duracao_cooldown
-	indicador_direcao.comecar_cooldown(duracao)
-	get_tree().create_timer(duracao).timeout.connect( _fim_cooldown_jogador )
-
-func _fim_cooldown_jogador() -> void:
-	ja_tem_anim_cooldown = false
-	speed_modifier_cooldown = 1.0
-	
-# ------ Animacao -------
-func anim_segurar_ferramenta(ferramenta : Ferramenta) -> void:
-	var tipo_ferramenta : Ferramenta.Ferramenta_tipo = ferramenta.tipo_ferramenta
-	match tipo_ferramenta:
-		Ferramenta.Ferramenta_tipo.CORTAR:
-			# sprite com machado dependendo da cor
-			if player_id == InputManager.PlayerId.P1:
-				anim_sprite.play("blueCortar")
-			else:
-				anim_sprite.play("redCortar")
-		Ferramenta.Ferramenta_tipo.PLANTAR:
-			if player_id == InputManager.PlayerId.P1:
-				anim_sprite.play("bluePlantar")
-			else:
-				anim_sprite.play("redPlantar")
-		Ferramenta.Ferramenta_tipo.RECOLHER:
-			if player_id == InputManager.PlayerId.P1:
-				anim_sprite.play("blueRecolher")
-			else:
-				anim_sprite.play("redRecolher")
-		_: # default, caso nao de match com nenhuma das opcoes anteriores
-			anim_idle()
-
-func anim_idle() -> void:
-	if player_id == InputManager.PlayerId.P1:
-		anim_sprite.play("blueIdle")
-	else:
-		anim_sprite.play("redIdle")
-
 func _update_indicador_direcao_interacao() -> void:
 	if bodys_dentro_area.is_empty():
 		indicador_direcao.set_tracking(false)
@@ -417,7 +468,9 @@ func _update_indicador_direcao_interacao() -> void:
 		indicador_direcao.set_tracking(true)
 		indicador_direcao.set_tracking_target(body_mais_desejado_interacao())
 
-# ------ Area Interacao -------
+# ----------------------------------------------
+# Area Interacao
+# ----------------------------------------------
 var bodys_dentro_area := {}
 func _on_area_interacao_body_entered(body: Node2D) -> void:
 	if not bodys_dentro_area.has(body):

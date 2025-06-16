@@ -55,6 +55,10 @@ func direcao_jogador(dir : Vector2) -> void:
 	# apontar para a direcao do movimento do jogador
 	target_angle = dir.angle()
 
+func get_direcao() -> Vector2:
+	var dir := get_global_position_indicador() - jogador.global_position
+	return dir.normalized()
+
 func set_tracking(_is_tracking : bool) -> void:
 	is_tracking = _is_tracking
 	
