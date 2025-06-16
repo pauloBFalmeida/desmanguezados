@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cedrrktxte7k6"]
 
-[ext_resource type="Script" uid="uid://dbq0k02hr2o0m" path="res://Scripts/Partida/arvore_mangue.gd" id="1_63al1"]
+[ext_resource type="Script" uid="uid://dbq0k02hr2o0m" path="res://Scripts/Partida/Arvore/arvore_mangue.gd" id="1_63al1"]
 [ext_resource type="Texture2D" uid="uid://e14uxly4awj8" path="res://Assets/Cenario/Arvores/ArvoresMangue.png" id="1_yyjcj"]
 
 [sub_resource type="Animation" id="Animation_wngaa"]

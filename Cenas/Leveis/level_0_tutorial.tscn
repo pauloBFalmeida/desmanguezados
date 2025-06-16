@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://bnr6tp6k6p5mk" path="res://Cenas/Partida/Lixos/lixo_embalagem.tscn" id="13_g43a6"]
 [ext_resource type="Script" uid="uid://ymebirrcc0d3" path="res://Scripts/Partida/locais_plantar_colecao.gd" id="14_mtywf"]
 [ext_resource type="PackedScene" uid="uid://bxemk6uv78eif" path="res://Cenas/Partida/local_plantar.tscn" id="14_nsusp"]
-[ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Partida/hud.tscn" id="16_lsuie"]
+[ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Interface/hud.tscn" id="16_lsuie"]
 
 [node name="Level_Tutorial" type="Node" node_paths=PackedStringArray("divisor_meio_mapa", "jogador_emcima", "jogador_embaixo", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
 script = ExtResource("1_f55y0")

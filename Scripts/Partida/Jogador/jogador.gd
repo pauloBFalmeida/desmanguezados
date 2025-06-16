@@ -17,8 +17,8 @@ var is_usando_controle : bool = false
 @onready var anim_sprite := $AnimatedSprite2D
 @onready var indicador_direcao := $IndicadorDirecao
 
-@onready var instrucoes := $Intrucoes
-@onready var instrucoes_label := $Intrucoes/LabelInstrucoes
+@onready var instrucoes := $IntrucoesUI
+@onready var instrucoes_label := $IntrucoesUI/LabelInstrucoes
 var mostrar_instrucoes := false
 
 const collision_layer_ferramentas : int = 3
@@ -55,7 +55,7 @@ func _ready() -> void:
 	# ajeita o sprite
 	anim_idle()
 	# 
-	instrucoes.hide()
+	#instrucoes.hide()
 
 func _ajustar_input_map() -> void:
 	# ajusta o action map do player

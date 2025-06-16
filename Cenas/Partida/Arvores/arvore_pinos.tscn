@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://b6fqbdb1cd3kc"]
 
-[ext_resource type="Script" uid="uid://ecg0wp8e35w1" path="res://Scripts/Partida/arvore_pinos.gd" id="1_ik7rc"]
+[ext_resource type="Script" uid="uid://ecg0wp8e35w1" path="res://Scripts/Partida/Arvore/arvore_pinos.gd" id="1_ik7rc"]
 [ext_resource type="Texture2D" uid="uid://x7dqi6ggmsw0" path="res://Assets/Cenario/Arvores/Pinos.png" id="2_8f0k6"]
 [ext_resource type="Texture2D" uid="uid://bnsy7do16v8k5" path="res://Assets/Ferramentas/circle.png" id="2_q3uxc"]
 

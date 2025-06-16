@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="11_00t72"]
 [ext_resource type="PackedScene" uid="uid://bnr6tp6k6p5mk" path="res://Cenas/Partida/Lixos/lixo_embalagem.tscn" id="13_poegd"]
 [ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Plantar.tscn" id="14_7uol4"]
-[ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Partida/hud.tscn" id="15_7uol4"]
+[ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Interface/hud.tscn" id="15_7uol4"]
 
 [node name="Level_1" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
 script = ExtResource("1_42x8c")
@@ -211,4 +211,5 @@ metadata/_edit_lock_ = true
 [editable path="SpawnJogadores"]
 [editable path="SpawnJogadores/Jogador2"]
 [editable path="SpawnJogadores/Jogador2/IndicadorDirecao"]
+[editable path="SpawnJogadores/Jogador2/IntrucoesUI"]
 [editable path="HUD"]
