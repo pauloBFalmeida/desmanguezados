@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Jogador
 
 @export var player_id := InputManager.PlayerId.P1
+var is_usando_controle : bool = false
 
 ## velocidade do jogador
 @export var speed: float = 250.0
@@ -38,14 +39,16 @@ var move_right: StringName
 var move_up: StringName
 var move_down: StringName
 var interact: StringName
+var pickup: StringName
 var drop: StringName
+var throw: StringName
 
-var no_controle : bool = false
+var pickup_recente : bool = false
 
 func _ready() -> void:
 	_ajustar_input_map()
-	no_controle = InputManager.players_no_controle.has(player_id) # marca se o jogador esta no controle
-	indicador_direcao.set_joystick_override(no_controle)
+	is_usando_controle = InputManager.players_no_controle.has(player_id) # marca se o jogador esta no controle
+	indicador_direcao.set_joystick_override(is_usando_controle)
 	# ajusta o nome
 	var nome_id : String = "P1" if player_id == InputManager.PlayerId.P1 else "P2"
 	set_name('Jogador_' + nome_id)
@@ -63,10 +66,21 @@ func _ajustar_input_map() -> void:
 	move_up    = actionMap["move_up"]
 	move_down  = actionMap["move_down"]
 	interact   = actionMap["interact"]
+	pickup     = actionMap["pickup"]
 	drop       = actionMap["drop"]
+	throw      = actionMap["throw"]
 
 var prev_pos := Vector2.ONE
 func _physics_process(_delta: float) -> void:
+	# ---- lidar com button presses ----
+	var pressed_pickup : bool = Input.is_action_just_pressed(pickup)
+	var pressed_drop   : bool = Input.is_action_just_pressed(drop)
+	if pressed_pickup or pressed_drop:
+		lidar_pickup_drop(pressed_pickup, pressed_drop)
+	
+	if Input.is_action_just_pressed(throw):
+		pass
+	
 	# ---- indicador de direcao ----
 	if indicador_direcao.is_tracking:
 		indicador_direcao.set_tracking_target(body_mais_desejado_interacao())
@@ -90,8 +104,10 @@ func _process(_delta: float) -> void:
 		
 	if Input.is_action_just_pressed(interact):
 		acao()
-	if Input.is_action_just_pressed(drop):
-		drop_ferramenta()
+	if Input.is_action_pressed(drop):
+		jogar_ferramenta_segurando(_delta)
+	if Input.is_action_just_released(drop):
+		jogar_ferramenta_released()
 	
 	# update o indicador de direcao
 	if not move_dir.is_zero_approx(): # se o player deu input de mover
@@ -99,7 +115,7 @@ func _process(_delta: float) -> void:
 		last_input_movimento = move_dir
 		# update da direcao do jogador pro indicador de direcao
 		indicador_direcao.direcao_jogador( move_dir )
-			
+	
 
 # ------ Acao -------
 func acao() -> void:	
@@ -109,16 +125,37 @@ func acao() -> void:
 		return
 	
 	# pega o body dentro da area que eh o mais desejado
-	var body : Node2D = body_mais_desejado_interacao()
-	# fazemos a acao sobre o corpo
-	if body.is_in_group("Ferramentas"):
-		mostrar_instrucoes_pegar()
-		pegar_ferramenta(body)
-	elif body.is_in_group("Marcador"):
+	var body : Node2D = body_mais_desejado_interacao("Marcador")
+	# -- fazemos a acao sobre o corpo --
+	# se for alvo da ferramenta -> usar ferramenta
+	if body.is_in_group("Marcador"):
 		mostrar_instrucoes_usar()
 		usar_ferramenta(body)
-	else:
-		print('body escolhido: ', body)
+
+var throw_acumulado_sec : float = 0
+var throw_min_hold_sec : float = 0
+var throw_max_hold_sec : float = 0
+func jogar_ferramenta_segurando(delta : float) -> void:
+	throw_acumulado_sec += delta
+	# menos do que o minimo -> nao mostre nada
+	if throw_acumulado_sec < throw_min_hold_sec:
+		return
+	# limite no tamanho maximo
+	throw_max_hold_sec = min(throw_max_hold_sec, throw_acumulado_sec)
+	# -- mostrar direcao --
+	pass
+	
+
+func jogar_ferramenta_released() -> void:
+	# menos do que o minimo -> so largue
+	if throw_acumulado_sec < throw_min_hold_sec:
+		drop_ferramenta()
+		return
+	# -- joga a ferramenta --
+	pass
+	
+	# reseta o contador
+	throw_acumulado_sec = 0
 
 # ==== ?????
 var primeira_vez : bool = true
@@ -140,7 +177,7 @@ func mostrar_instrucoes_pegar() -> void:
 	
 	
 	var txt_botao : String
-	if no_controle:
+	if is_usando_controle:
 		if player_id == InputManager.PlayerId.P1:
 			txt_botao = Configuracoes.string_pegar_controle_P1
 		else:
@@ -159,7 +196,7 @@ func mostrar_instrucoes_usar() -> void:
 	)
 	
 	var txt_botao : String
-	if no_controle:
+	if is_usando_controle:
 		if player_id == InputManager.PlayerId.P1:
 			txt_botao = Configuracoes.string_pegar_controle_P1
 		else:
@@ -178,7 +215,7 @@ func mostrar_instrucoes_drop() -> void:
 	)
 	
 	var txt_botao : String
-	if no_controle:
+	if is_usando_controle:
 		if player_id == InputManager.PlayerId.P1:
 			txt_botao = Configuracoes.string_pegar_controle_P1
 		else:
@@ -188,7 +225,7 @@ func mostrar_instrucoes_drop() -> void:
 		
 	instrucoes_label.text = txt_botao + " para largar"
 
-func body_mais_desejado_interacao() -> Node2D:
+func body_mais_desejado_interacao(group_desejado : String = "") -> Node2D:	
 	# so 1 body dentro -> pega esse
 	if bodys_dentro_area.size() == 1:
 		for _body in bodys_dentro_area.values():
@@ -209,6 +246,14 @@ func body_mais_desejado_interacao() -> Node2D:
 		var min_body : Node2D = null
 		for _body : Node2D in bodys_dentro_area.values():
 			var dist = _body.global_position.distance_squared_to(prox_posicao)
+			# se tiver um grupo desejado and _body nao esta nesse grupo
+			if (not group_desejado.is_empty()) and (not _body.is_in_group(group_desejado)):
+				dist += 100000 # valor alto para deixar ele menos atrativo
+			# se grupo desejado nao for Ferramentas -> deixar ferramentas menos atrativas
+			if (_body.is_in_group("Ferramenta") and group_desejado != "Ferramenta"):
+				dist += 10000 # valor medio para deixar ele menos atrativo
+			
+			
 			# se atual for menor do q o temos marcado -> vira o marcado
 			if dist < min_dist:
 				min_dist = dist
@@ -232,9 +277,49 @@ func balancar_ferramenta() -> void:
 	# balancar a ferramenta
 	segurando.balancar_ferramenta()
 
+# ------ Lidar com o pickup-drop -------
+func lidar_pickup_drop(is_pickup : bool, is_drop : bool) -> void:
+	# se n tem o que pegar dentro da area de interacao -> nao pode ser pickup
+	if bodys_dentro_area.is_empty(): is_pickup = false
+	
+	# pega uma ferramenta dentro do range de interacao
+	var body : Node2D = body_mais_desejado_interacao("Ferramentas")
+	# nao tem ferramenta dentro do range -> nao pode ser pickup
+	if not body.is_in_group("Ferramentas"): is_pickup = false
+	
+	if is_drop:
+		# se nao fez um pickup recentemente -> nao foi chamado mt rapido, faca o drop
+		if not pickup_recente:
+			drop_ferramenta()
+	# se ainda for pickup -> pegue uma ferramenta
+	if is_pickup:
+		_lidar_pickup(body)
+
+func _lidar_pickup(ferramenta : Ferramenta) -> void:	
+	# se ja estiver segurando uma ferramenta
+	if segurando and is_instance_valid(segurando):
+		return
+		## se eu fiz um pickup recentemente -> chamado mt rapido, nao faca nada
+		#if pickup_recente: return
+		## nao fiz um pickup recentemente -> drop a que esta segurando
+		#drop_ferramenta()
+	
+	# mostrar intrucoes
+	mostrar_instrucoes_pegar()
+	# pega a ferramenta do chao
+	pegar_ferramenta(ferramenta)
+	
+	indicador_direcao.set_tracking(false)
+	# marca que pegou recentemente
+	pickup_recente = true
+	# espera um pouco para desmarcar que o pickup foi recente
+	get_tree().create_timer(0.2).timeout.connect(
+		func(): pickup_recente = false
+	)
+
 # ------ Pegar -------
 func pegar_ferramenta(ferramenta : Ferramenta) -> void:
-	# se ja estiver segurando uma ferramenta, nao faca nada
+	# se ja estiver segurando uma ferramenta -> nao faca nada
 	if segurando and is_instance_valid(segurando): return
 	
 	segurando = ferramenta
@@ -244,7 +329,7 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	ferramenta_collision_mask = ferramenta.get_layer_acao()
 	area_interacao.set_collision_mask_value(ferramenta_collision_mask, true)
 	# remove a layer das ferramentas 
-	area_interacao.set_collision_mask_value(collision_layer_ferramentas, false)
+	#area_interacao.set_collision_mask_value(collision_layer_ferramentas, false)
 	
 	# anim pegar a ferramenta
 	anim_segurar_ferramenta(segurando)
@@ -254,8 +339,10 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 
 # ------ Dropar -------
 func drop_ferramenta() -> void:
-	# se n tiver segurando nenhuma ferramenta, nao faca nada
+	# se n tiver segurando nenhuma ferramenta -> nao faca nada
 	if (not segurando) or (not is_instance_valid(segurando)): return
+	# se pegou recentemente -> nao largue
+	if pickup_recente: return
 	
 	var ferramenta = segurando
 	# limpa a mao
@@ -269,7 +356,9 @@ func drop_ferramenta() -> void:
 	# retorna a layer das ferramentas 
 	area_interacao.set_collision_mask_value(collision_layer_ferramentas, true)
 	
-	anim_idle()	
+	anim_idle()
+
+# ---- Jogar da ferramenta ----
 
 # ---- Cooldown da ferramenta ----
 var ja_tem_anim_cooldown : bool = false
