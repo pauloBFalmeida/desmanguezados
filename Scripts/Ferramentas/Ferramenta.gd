@@ -12,9 +12,13 @@ enum Som_tipo {ACERTO, ERRO, BALANCAR}
 
 var collison : CollisionShape2D
 var audio_player : AudioStreamPlayer2D
+var sprite : Sprite2D
 
 var ferramenta_mgmt : FerramentaMgmt
 var is_on_cooldown : bool = false
+
+var shader_mat : ShaderMaterial
+var base_thickness : float
 
 # int da layer [1, 32]
 func get_layer_acao() -> int:
@@ -24,6 +28,24 @@ func _ready() -> void:
 	add_to_group("Ferramentas")
 	collison = get_node("CollisionShape2D")
 	audio_player = get_node("AudioStreamPlayer2D")
+	sprite = get_node("Sprite2D")
+	# 
+	#_ajustar_outline()
+
+
+func _ajustar_outline() -> void:
+	# duplica o material
+	var original_material := sprite.material as ShaderMaterial
+	var new_material := original_material.duplicate() as ShaderMaterial
+	sprite.material = new_material
+	shader_mat = new_material
+	# salva a base thickness
+	base_thickness = new_material.get_shader_parameter("thickness")
+
+func outline_on() -> void:
+	shader_mat.set_shader_parameter("thickness", base_thickness)
+func outline_off() -> void:
+	shader_mat.set_shader_parameter("thickness", 0.0)
 
 func hide_ferramenta() -> void:
 	visible = false
