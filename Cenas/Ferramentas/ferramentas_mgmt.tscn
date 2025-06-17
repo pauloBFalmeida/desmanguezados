@@ -1,0 +1,35 @@
+[gd_scene load_steps=8 format=3 uid="uid://mvp5raoekisy"]
+
+[ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="1_iomgt"]
+[ext_resource type="PackedScene" uid="uid://cedrrktxte7k6" path="res://Cenas/Partida/Arvores/arvore_mangue.tscn" id="2_in2xe"]
+[ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Corte.tscn" id="3_b6hl8"]
+[ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Plantar.tscn" id="4_ty6u0"]
+[ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="5_7l7v4"]
+
+[sub_resource type="Curve" id="Curve_w3vga"]
+_data = [Vector2(0, 0), 0.0, 1.52934, 0, 0, Vector2(1, 1), 1.80653, 0.0, 0, 0]
+point_count = 2
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
+
+[sub_resource type="Curve" id="Curve_nne28"]
+_limits = [0.5, 1.5, 0.0, 1.0]
+_data = [Vector2(0, 1.25), 0.0, 0.0, 0, 0, Vector2(0.4, 0.8), 0.0, 0.0, 0, 0, Vector2(0.95, 1.4), 0.0, 0.0, 0, 0]
+point_count = 3
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
+
+[node name="FerramentasMgmt" type="Node2D"]
+script = ExtResource("1_iomgt")
+mudas_referencias = Array[PackedScene]([ExtResource("2_in2xe")])
+throw_distancia_por_tempo = SubResource("Curve_w3vga")
+throw_velocidade_ferramenta_na_curva = SubResource("Curve_nne28")
+
+[node name="Corte" parent="." groups=["Ferramentas"] instance=ExtResource("3_b6hl8")]
+position = Vector2(784, 425)
+
+[node name="Plantar" parent="." instance=ExtResource("4_ty6u0")]
+position = Vector2(1202, 435)
+
+[node name="Recolhe" parent="." instance=ExtResource("5_7l7v4")]
+position = Vector2(746, 162)

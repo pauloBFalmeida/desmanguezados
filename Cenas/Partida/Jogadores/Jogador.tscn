@@ -1,15 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://c38kt6bogw2mq"]
+[gd_scene load_steps=9 format=3 uid="uid://c38kt6bogw2mq"]
 
 [ext_resource type="Script" uid="uid://wmjg8xw6jhs4" path="res://Scripts/Partida/Jogador/jogador.gd" id="1_hjt1h"]
 [ext_resource type="SpriteFrames" uid="uid://jrc3bqgmf5t" path="res://Cenas/Partida/Jogadores/JogadorAnim.tres" id="3_801pi"]
 [ext_resource type="PackedScene" uid="uid://cb5x2dl7n7ywu" path="res://Cenas/Partida/Jogadores/indicador_direcao.tscn" id="4_t8i7p"]
 [ext_resource type="Texture2D" uid="uid://dyanf5fyuy83k" path="res://Assets/Personagem/Redx1.png" id="5_lws5r"]
 [ext_resource type="PackedScene" uid="uid://cspvbt5iyca1h" path="res://Cenas/Interface/intrucoes_ui.tscn" id="5_w3vga"]
-
-[sub_resource type="Curve" id="Curve_w3vga"]
-_limits = [0.0, 1.0, 0.0, 3.0]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1.16667, 0.589368), 0.450693, 0.450693, 0, 0, Vector2(2.9, 1), 0.0462248, 0.0, 0, 0]
-point_count = 3
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hjt1h"]
 radius = 76.0
@@ -28,7 +23,6 @@ collision_layer = 2
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_hjt1h")
-throw_distance = SubResource("Curve_w3vga")
 
 [node name="Sprite2DJogador" type="Sprite2D" parent="."]
 visible = false

@@ -15,7 +15,7 @@ shader_parameter/cor = Color(0, 1, 0, 1)
 shader_parameter/type = 1
 shader_parameter/thickness = 1.0
 
-[node name="Plantar" type="RigidBody2D" groups=["Ferramentas"]]
+[node name="Plantar" type="CharacterBody2D" groups=["Ferramentas"]]
 z_index = 2
 collision_layer = 4
 collision_mask = 0

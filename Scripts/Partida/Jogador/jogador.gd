@@ -30,6 +30,11 @@ var ferramenta_collision_mask : int
 
 var segurando : Ferramenta = null
 
+@export var throw_max_hold_sec : float = 3.0
+@export var throw_min_hold_sec : float = 0.45
+var throw_acumulado_sec : float = 0
+var is_throw_cancelado = false
+
 # -- Input --
 var move_left: StringName
 var move_right: StringName
@@ -38,7 +43,6 @@ var move_down: StringName
 var interact: StringName
 var pickup: StringName
 var drop: StringName
-var throw: StringName
 
 var pickup_recente : bool = false
 
@@ -53,11 +57,6 @@ func _ready() -> void:
 	anim_idle()
 	# 
 	#instrucoes.hide()
-	# ????
-	mostrador = preload("res://Cenas/Partida/local_plantar.tscn").instantiate()
-	add_child(mostrador)
-	mostrador.modulate.a = 0.5
-	mostrador.hide()
 
 func _ajustar_input_map() -> void:
 	# ajusta o action map do player
@@ -70,12 +69,16 @@ func _ajustar_input_map() -> void:
 	interact   = actionMap["interact"]
 	pickup     = actionMap["pickup"]
 	drop       = actionMap["drop"]
-	throw      = actionMap["throw"]
 
 var prev_pos := Vector2.ONE
 func _physics_process(_delta: float) -> void:
-	# ---- lidar com button presses ----	
+	# ---- lidar com button presses ----
+	if Input.is_action_just_pressed(interact):
+		_throw_ferramenta_cancelar() # cancela jogar ferramenta
+		fazer_acao()
+		print("siri global_pos ", global_position)
 	if Input.is_action_just_pressed(pickup):
+		_throw_ferramenta_cancelar() # cancela jogar ferramenta
 		lidar_pickup()
 	
 	# ---- indicador de direcao ----
@@ -98,13 +101,15 @@ func _process(_delta: float) -> void:
 	
 	velocity = move_dir * speed * speed_modifier_terreno * speed_modifier_cooldown
 	move_and_slide()
-		
-	if Input.is_action_just_pressed(interact):
-		acao()
-	if Input.is_action_pressed(drop):
-		jogar_ferramenta_segurando(_delta)
+	
 	if Input.is_action_just_released(drop):
-		jogar_ferramenta_released()
+		_throw_ferramenta_jogar()
+	
+	if Input.is_action_pressed(drop):
+		_throw_ferramenta_segurando(_delta)
+	else:
+		# largou o botao, reset o throw
+		is_throw_cancelado = false
 	
 	# update o indicador de direcao
 	if not move_dir.is_zero_approx(): # se o player deu input de mover
@@ -112,10 +117,9 @@ func _process(_delta: float) -> void:
 		last_input_movimento = move_dir
 		# update da direcao do jogador pro indicador de direcao
 		indicador_direcao.direcao_jogador( move_dir )
-	
 
 # ------ Acao -------
-func acao() -> void:	
+func fazer_acao() -> void:	
 	# se nao tiver nada na area -> nao faca nada
 	if bodys_dentro_area.is_empty():
 		balancar_ferramenta()
@@ -128,60 +132,6 @@ func acao() -> void:
 	if body.is_in_group("Marcador"):
 		mostrar_instrucoes_usar()
 		usar_ferramenta(body)
-
-@export var throw_max_distance : float = 450.0
-@export var throw_distance : Curve
-var throw_min_hold_sec : float = 0.45
-@onready var throw_max_hold_sec : float = throw_distance.max_domain
-var throw_acumulado_sec : float = 0
-var is_throwing : bool = false
-var throwing_pos : Vector2
-var mostrador
-
-func jogar_ferramenta_segurando(delta : float) -> void:
-	if (not segurando) or (not is_instance_valid(segurando)):
-		return
-	
-	throw_acumulado_sec += delta
-	# limite no tamanho maximo
-	throw_acumulado_sec = min(throw_acumulado_sec, throw_max_hold_sec)
-	# menos do que o minimo -> nao mostre nada
-	if throw_acumulado_sec < throw_min_hold_sec:
-		return
-	
-	# comecou a mostrar agora
-	if not is_throwing:
-		mostrador.position = Vector2.ZERO
-		mostrador.show()
-	
-	is_throwing = true
-	# -- mostrar direcao --
-	print(throw_acumulado_sec)
-	
-	var direcao := indicador_direcao.get_direcao()
-	var force := throw_max_distance * throw_distance.sample(throw_acumulado_sec)
-	throwing_pos = direcao * force
-	mostrador.position = throwing_pos
-	
-
-func jogar_ferramenta_released() -> void:
-	if (not segurando) or (not is_instance_valid(segurando)):
-		return
-	
-	# menos do que o minimo -> so largue
-	if throw_acumulado_sec < throw_min_hold_sec:
-		drop_ferramenta()
-		return
-	# -- joga a ferramenta --
-	var glo_pos := global_position + throwing_pos
-	ferramentas_mgmt.jogador_jogar_ferramenta(self, segurando, glo_pos)
-	
-	_limpar_jogador_ferramenta(segurando)
-
-func _reset_jogar_ferramenta() -> void:
-	# reseta o contador
-	is_throwing = false
-	throw_acumulado_sec = 0
 
 # ----------------------------------------------
 # Instrucoes
@@ -277,7 +227,6 @@ func balancar_ferramenta() -> void:
 # ----------------------------------------------
 # ------ Lidar com o pickup -------
 func lidar_pickup() -> void:
-	_reset_jogar_ferramenta() # cancela jgogar ferramenta
 	# se n tem o que pegar dentro da area de interacao -> nao pode pegar nada
 	if bodys_dentro_area.is_empty(): return
 	
@@ -362,7 +311,56 @@ func _limpar_jogador_ferramenta(ferramenta : Ferramenta) -> void:
 	anim_idle()
 
 # ---- Jogar da ferramenta ----
+func _throw_ferramenta_segurando(delta : float) -> void:
+	# se nao estiver segurando nada -> nao faca nada
+	if (not segurando) or (not is_instance_valid(segurando)): 
+		return
+	# se o throw foi cancelado, mas o botao ainda esta sendo segurado -> nao faca nada
+	if is_throw_cancelado:
+		return
+	
+	# adiciona o tempo do frame no acumulado
+	throw_acumulado_sec += delta
+	# limite no valor maximo
+	throw_acumulado_sec = min(throw_acumulado_sec, throw_max_hold_sec)
+	# menos do que o minimo -> nao mostre nada
+	if throw_acumulado_sec < throw_min_hold_sec:
+		return
+	
+	# direcao para jogar
+	var direcao := indicador_direcao.get_direcao()
+	# update a curva de jogar a ferramenta
+	ferramentas_mgmt.jogador_throw_ferramenta_segurando(self, direcao, throw_acumulado_sec)
 
+func _throw_ferramenta_jogar() -> void:
+	# se nao estiver segurando nada -> nao faca nada
+	if (not segurando) or (not is_instance_valid(segurando)): 
+		return
+	# se foi cancelado -> nao jogue a ferramenta
+	if is_throw_cancelado:
+		return
+	
+	# menos do que o minimo -> so largue
+	if throw_acumulado_sec < throw_min_hold_sec:
+		drop_ferramenta()
+		return
+	
+	# jogue a ferramenta
+	ferramentas_mgmt.jogador_throw_ferramenta_jogar(self, segurando)
+	# jogador parar de segurar ferramenta
+	_limpar_jogador_ferramenta(segurando)
+	
+	# reset dps de jogar
+	_throw_ferramenta_reset()
+
+func _throw_ferramenta_cancelar() -> void:
+	is_throw_cancelado = true
+	_throw_ferramenta_reset()
+	# limpa a curva prevista da memoria
+	ferramentas_mgmt.jogador_throw_ferramenta_limpar(self)
+
+func _throw_ferramenta_reset() -> void:
+	throw_acumulado_sec = 0
 
 
 # ----------------------------------------------

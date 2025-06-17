@@ -1,5 +1,5 @@
 class_name Ferramenta
-extends RigidBody2D
+extends CharacterBody2D
 
 enum Ferramenta_tipo {CORTAR, PLANTAR, RECOLHER}
 enum Som_tipo {ACERTO, ERRO, BALANCAR}
