@@ -1,6 +1,7 @@
-[gd_scene load_steps=15 format=4 uid="uid://db3rkmvcgmotf"]
+[gd_scene load_steps=16 format=4 uid="uid://db3rkmvcgmotf"]
 
 [ext_resource type="Texture2D" uid="uid://c0go1gb4ai66i" path="res://Assets/Cenario/Tiles/Agua_Final.png" id="1_e7ako"]
+[ext_resource type="Script" uid="uid://cl7ln0bk5tgde" path="res://Scripts/Partida/tile_maps_chao.gd" id="1_iyidk"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="2_57gvh"]
 [ext_resource type="Texture2D" uid="uid://b4rlhqxr88kr0" path="res://Assets/Cenario/Tiles/Areia.png" id="3_e7ako"]
 [ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/TileMapDual.gd" id="4_spnxe"]
@@ -12,41 +13,42 @@ resource_name = "Agua"
 texture = ExtResource("1_e7ako")
 texture_region_size = Vector2i(15, 15)
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+0:0/0/custom_data_0 = true
 1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+1:0/0/custom_data_0 = true
 2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+2:0/0/custom_data_0 = true
 3:0/0 = 0
-3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+3:0/0/custom_data_0 = true
 0:1/0 = 0
-0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+0:1/0/custom_data_0 = true
 1:1/0 = 0
-1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+1:1/0/custom_data_0 = true
 2:1/0 = 0
-2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+2:1/0/custom_data_0 = true
 3:1/0 = 0
-3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+3:1/0/custom_data_0 = true
 0:2/0 = 0
-0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+0:2/0/custom_data_0 = true
 1:2/0 = 0
-1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+1:2/0/custom_data_0 = true
 2:2/0 = 0
-2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+2:2/0/custom_data_0 = true
 3:2/0 = 0
-3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+3:2/0/custom_data_0 = true
 0:3/0 = 0
-0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+0:3/0/custom_data_0 = true
 1:3/0 = 0
-1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+1:3/0/custom_data_0 = true
 2:3/0 = 0
-2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+2:3/0/custom_data_0 = true
 3:3/0 = 0
-3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-7.5, -7.5, 7.5, -7.5, 7.5, 7.5, -7.5, 7.5)
+3:3/0/custom_data_0 = true
 
 [sub_resource type="TileSet" id="TileSet_57gvh"]
 tile_size = Vector2i(15, 15)
-physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "is_water"
+custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_e7ako")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_57gvh"]
@@ -408,7 +410,8 @@ custom_data_layer_0/name = "slow_speed"
 custom_data_layer_0/type = 3
 sources/2 = SubResource("TileSetAtlasSource_mey3w")
 
-[node name="TileMaps" type="Node2D"]
+[node name="TileMapsChao" type="Node2D"]
+script = ExtResource("1_iyidk")
 
 [node name="TileMapLayerAgua" type="TileMapLayer" parent="."]
 scale = Vector2(3, 3)

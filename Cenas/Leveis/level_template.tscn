@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=4 uid="uid://clxetruoknqa7"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_ji7gk"]
-[ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps.tscn" id="2_xs4qq"]
+[ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps_chao.tscn" id="2_xs4qq"]
 [ext_resource type="PackedScene" uid="uid://b6fqbdb1cd3kc" path="res://Cenas/Partida/Arvores/arvore_pinos.tscn" id="3_67x6l"]
 [ext_resource type="PackedScene" uid="uid://cedrrktxte7k6" path="res://Cenas/Partida/Arvores/arvore_mangue.tscn" id="4_r07tb"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="5_ievkk"]
@@ -56,14 +56,6 @@ idade = 1
 
 [node name="SpawnJogadores" parent="." instance=ExtResource("5_ievkk")]
 position = Vector2(518, 343)
-
-[node name="Jogador1" parent="SpawnJogadores" index="0" node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo")]
-ferramentas_mgmt = NodePath("../../FerramentasMgmt")
-tilemap_lodo = NodePath("../../TileMaps/TileMapDualLodo")
-
-[node name="Jogador2" parent="SpawnJogadores" index="1" node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo")]
-ferramentas_mgmt = NodePath("../../FerramentasMgmt")
-tilemap_lodo = NodePath("../../TileMaps/TileMapDualLodo")
 
 [node name="FerramentasMgmt" type="Node2D" parent="."]
 script = ExtResource("6_m8geq")

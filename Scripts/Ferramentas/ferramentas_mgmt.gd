@@ -26,14 +26,9 @@ func _ready() -> void:
 	for ferramenta : Ferramenta in get_children():
 		if ferramenta.is_in_group("Ferramentas"):
 			ferramenta.set_ferramenta_mgmt(self)
-	#temp = $Corte
-#
-#var temp : Ferramenta #??
 
 func _physics_process(delta: float) -> void:
 	_processar_ferramentas_jogadas(delta)
-	#if is_instance_valid(temp):
-		#print('cortar.global_pos ', temp.global_position)
 
 # -----------------------------------------------
 # Plantar Muda
@@ -226,68 +221,3 @@ func _ferramenta_fim_throw(ferramenta : Ferramenta, path_follow : Node2D) -> voi
 	# deleta a curva e os filhos
 	path.queue_free()
 	
-	## posiciona a ferramenta onde ela caiu
-	#var path : Path2D = path_follow.get_parent()
-	#var global_pos_ferramenta := path.global_position + path.curve.get_point_position(1)
-	#print('path.curve.get_point_position(1) ', path.curve.get_point_position(1))
-	#print('global_pos_ferramenta ', global_pos_ferramenta)
-	#_position_ferramenta(ferramenta, global_pos_ferramenta)
-	#print('ferramenta.global ', ferramenta.global_position)
-	## aparece de volta (visivel no chao)
-	#ferramenta.show_ferramenta()
-	#
-	## remove a curva de ferramenta jogada
-	#ferramentas_jogadas_followpaths.erase(ferramenta)
-	## deleta a curva e os filhos
-	#path.queue_free()
-	##print('ferramenta.global2 ', ferramenta.global_position)
-	##get_tree().create_timer(0.5).timeout.connect(_temp.bind(ferramenta, global_pos_ferramenta))
-
-#func _temp(ferramenta, global_pos_ferramenta) -> void:
-	#print('ferramenta.global_temp1 ', ferramenta.global_position)
-	#ferramenta.global_position = global_pos_ferramenta
-	#print('ferramenta.global_temp2 ', ferramenta.global_position)
-
-#func jogador_jogar_ferramenta(jogador: Jogador, ferramenta: Ferramenta, glob_pos_ferramenta: Vector2) -> void:
-	## esconde a ferramenta e reitra ela do jogador
-	#ferramenta.hide_ferramenta()
-	#_retirar_ferramenta_jogador(jogador, ferramenta)
-	## ja posiciona a ferramenta onde ela vai cair
-	#_position_ferramenta(ferramenta, glob_pos_ferramenta)
-	#
-	## cria o caminho para jogar a ferramenta
-	#var path := Path2D.new()
-	#path.curve = Curve2D.new()
-	#
-	## ajeita as posicoes referentes a posicao base da curva
-	## ponto inicial eh o jogador
-	#path.global_position = jogador.global_position
-	#var start_pos := Vector2.ZERO
-	## posicao final eh onde cai a ferramenta
-	#var final_pos := path.to_local(glob_pos_ferramenta)
-	## ponto auxiliar para dar a curvatura (out do ponto inicial)
-	#var aux_pos = final_pos * 0.7
-	#aux_pos = aux_pos.rotated(-PI/3)
-	## se esta indo para baixo do ponto inicial
-	#if aux_pos.y > start_pos.y:
-		## rotaciona pro outro lado, para ir para cima do ponto inicial
-		#aux_pos = aux_pos.rotated(2*PI/3)
-	#path.curve.add_point(start_pos, Vector2.ZERO, aux_pos)
-	#path.curve.add_point(final_pos)
-	#
-	## cria o que percorre a curva
-	#var pathFollow := PathFollow2D.new()
-	#pathFollow.loop = false
-	#
-	## duplica a sprite da ferramenta para colocar no que percorre a curva
-	#var ferram_sprite : Sprite2D = ferramenta.sprite.duplicate()
-	#ferram_sprite.material = null # remove a outline
-	#ferram_sprite.z_index = 20
-	#
-	## adiciona na cena
-	#add_child(path)
-	#path.add_child(pathFollow)
-	#pathFollow.add_child(ferram_sprite)
-	#
-	## salva o path e a ferramenta nesse dict
-	#ferramentas_jogadas_followpaths[pathFollow] = ferramenta

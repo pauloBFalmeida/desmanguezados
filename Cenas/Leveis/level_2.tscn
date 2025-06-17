@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=4 uid="uid://cyi5a20c6vvr1"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_eixhn"]
-[ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps.tscn" id="2_7f1nr"]
+[ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps_chao.tscn" id="2_7f1nr"]
 [ext_resource type="PackedScene" uid="uid://b6fqbdb1cd3kc" path="res://Cenas/Partida/Arvores/arvore_pinos.tscn" id="3_pm4qp"]
 [ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="5_b0h18"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="5_y18lx"]
@@ -61,10 +61,10 @@ position = Vector2(1189, 221)
 [node name="ArvorePinos2" parent="ArvoresColecao" instance=ExtResource("3_pm4qp")]
 position = Vector2(120, 535)
 
-[node name="SpawnJogadores" parent="." node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo") instance=ExtResource("5_y18lx")]
+[node name="SpawnJogadores" parent="." node_paths=PackedStringArray("ferramentas_mgmt", "tilemaps_chao") instance=ExtResource("5_y18lx")]
 position = Vector2(518, 343)
 ferramentas_mgmt = NodePath("../FerramentasMgmt")
-tilemap_lodo = NodePath("../TileMaps/TileMapDualLodo")
+tilemaps_chao = NodePath("../TileMaps")
 
 [node name="Jogador1" parent="SpawnJogadores" index="0"]
 position = Vector2(83, 7)

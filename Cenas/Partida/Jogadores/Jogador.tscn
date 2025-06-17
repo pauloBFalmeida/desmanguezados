@@ -23,6 +23,7 @@ collision_layer = 2
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_hjt1h")
+max_water_time = 0.4
 
 [node name="Sprite2DJogador" type="Sprite2D" parent="."]
 visible = false

@@ -11,6 +11,11 @@ var is_usando_controle : bool = false
 var speed_modifier_terreno : float = 1.0
 var speed_modifier_cooldown : float = 1.0
 
+## segundos que pode ficar na agua ate morrer
+@export var max_water_time := 0.8
+var curr_water_timer := 0.0 # tempo atual que esta dentro a agua
+var is_on_water : bool = false
+
 @onready var spawn_jogadores : SpawnJogadores = $".."
 var ferramentas_mgmt : FerramentaMgmt
 
@@ -89,7 +94,7 @@ func _physics_process(_delta: float) -> void:
 		indicador_direcao.set_tracking_target(body_mais_desejado_interacao())
 	
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	var move_dir = Input.get_vector(move_left, move_right, move_up, move_down)
 	
 	velocity = move_dir * speed * speed_modifier_terreno * speed_modifier_cooldown
@@ -99,10 +104,18 @@ func _process(_delta: float) -> void:
 		_throw_ferramenta_jogar()
 	
 	if Input.is_action_pressed(drop):
-		_throw_ferramenta_segurando(_delta)
+		_throw_ferramenta_segurando(delta)
 	else:
 		# largou o botao, reset o throw
 		is_throw_cancelado = false
+	
+	if is_on_water:
+		curr_water_timer += delta
+		lidar_agua()
+	else:
+		curr_water_timer = 0
+		lidar_agua()
+		
 	
 	# update o indicador de direcao
 	if not move_dir.is_zero_approx(): # se o player deu input de mover
@@ -418,6 +431,26 @@ func anim_idle() -> void:
 		anim_sprite.play("blueIdle")
 	else:
 		anim_sprite.play("redIdle")
+
+# ----------------------------------------------
+# Lidar com ficar dentro da agua
+# ----------------------------------------------
+func lidar_agua() -> void:
+	const color_base = Color.WHITE
+	var color_fade = Color.DARK_SLATE_GRAY
+	color_fade.a = 0.4
+	# se nao esta na agua
+	if is_zero_approx(curr_water_timer):
+		modulate = color_base
+		return
+	
+	if curr_water_timer >= max_water_time:
+		spawn_jogadores.respawn_jogador(self)
+	
+	# limite
+	var weight = curr_water_timer / max_water_time
+	# deixa mais transparente
+	modulate = lerp(color_base, color_fade, weight)
 
 # ----------------------------------------------
 # indicador de direcao

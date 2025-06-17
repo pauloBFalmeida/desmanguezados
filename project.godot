@@ -252,6 +252,7 @@ contr_pickup={
 
 [physics]
 
+common/physics_ticks_per_second=30
 2d/default_gravity=0.0
 
 [rendering]

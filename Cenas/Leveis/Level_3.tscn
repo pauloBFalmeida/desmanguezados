@@ -532,10 +532,9 @@ position = Vector2(1103, 589)
 [node name="ArvorePinos7" parent="ArvoresColecao" instance=ExtResource("3_mm0nf")]
 position = Vector2(1171, 334)
 
-[node name="SpawnJogadores" parent="." node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo") instance=ExtResource("5_un2h8")]
+[node name="SpawnJogadores" parent="." node_paths=PackedStringArray("ferramentas_mgmt") instance=ExtResource("5_un2h8")]
 position = Vector2(518, 343)
 ferramentas_mgmt = NodePath("../FerramentasMgmt")
-tilemap_lodo = NodePath("../TileMaps/TileMapDualLodo")
 
 [node name="Jogador1" parent="SpawnJogadores" index="0"]
 position = Vector2(-19, -5)
