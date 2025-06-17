@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=4 uid="uid://t458wis32ucp"]
+[gd_scene load_steps=16 format=4 uid="uid://t458wis32ucp"]
 
 [ext_resource type="Script" uid="uid://dpo20c4nlxx5w" path="res://Scripts/Leveis/level_0_tutorial.gd" id="1_f55y0"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps.tscn" id="2_1v1o2"]
 [ext_resource type="PackedScene" uid="uid://b6fqbdb1cd3kc" path="res://Cenas/Partida/Arvores/arvore_pinos.tscn" id="3_n343k"]
-[ext_resource type="PackedScene" uid="uid://cedrrktxte7k6" path="res://Cenas/Partida/Arvores/arvore_mangue.tscn" id="4_bycxc"]
+[ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="5_1v1o2"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="5_7tecl"]
-[ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="6_cf2uw"]
 [ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Corte.tscn" id="7_cgjfw"]
 [ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Plantar.tscn" id="8_jhk0h"]
 [ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="9_2qw7v"]
@@ -54,40 +53,36 @@ position = Vector2(982, 234)
 [node name="ArvorePinos3" parent="ArvoresColecao" instance=ExtResource("3_n343k")]
 position = Vector2(165, 572)
 
-[node name="SpawnJogadores" parent="." instance=ExtResource("5_7tecl")]
+[node name="SpawnJogadores" parent="." node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo") instance=ExtResource("5_7tecl")]
 position = Vector2(518, 343)
+ferramentas_mgmt = NodePath("../FerramentasMgmt")
+tilemap_lodo = NodePath("../TileMaps/TileMapDualLodo")
 
-[node name="Jogador1" parent="SpawnJogadores" index="0" node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo")]
+[node name="Jogador1" parent="SpawnJogadores" index="0"]
 position = Vector2(-390, -161)
-ferramentas_mgmt = NodePath("../../FerramentasMgmt")
-tilemap_lodo = NodePath("../../TileMaps/TileMapDualLodo")
 
-[node name="Jogador2" parent="SpawnJogadores" index="1" node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo")]
+[node name="Jogador2" parent="SpawnJogadores" index="1"]
 position = Vector2(617, 242)
-ferramentas_mgmt = NodePath("../../FerramentasMgmt")
-tilemap_lodo = NodePath("../../TileMaps/TileMapDualLodo")
 
-[node name="FerramentasMgmt" type="Node2D" parent="."]
-script = ExtResource("6_cf2uw")
-mudas_referencias = Array[PackedScene]([ExtResource("4_bycxc")])
+[node name="FerramentasMgmt" parent="." instance=ExtResource("5_1v1o2")]
 
-[node name="Corte" parent="FerramentasMgmt" groups=["Ferramentas"] instance=ExtResource("7_cgjfw")]
-position = Vector2(741, 180)
+[node name="Corte" parent="FerramentasMgmt" index="0"]
+position = Vector2(570, 539)
 
-[node name="Plantar" parent="FerramentasMgmt" instance=ExtResource("8_jhk0h")]
-position = Vector2(834, 216)
+[node name="Plantar" parent="FerramentasMgmt" index="1"]
+position = Vector2(483, 607)
 
-[node name="Recolhe" parent="FerramentasMgmt" instance=ExtResource("9_2qw7v")]
-position = Vector2(337, 203)
-
-[node name="Recolhe2" parent="FerramentasMgmt" instance=ExtResource("9_2qw7v")]
-position = Vector2(977, 558)
-
-[node name="Plantar2" parent="FerramentasMgmt" instance=ExtResource("8_jhk0h")]
-position = Vector2(481, 605)
+[node name="Recolhe" parent="FerramentasMgmt" index="2"]
+position = Vector2(977, 557)
 
 [node name="Corte2" parent="FerramentasMgmt" groups=["Ferramentas"] instance=ExtResource("7_cgjfw")]
-position = Vector2(572, 536)
+position = Vector2(742, 181)
+
+[node name="Plantar2" parent="FerramentasMgmt" instance=ExtResource("8_jhk0h")]
+position = Vector2(835, 215)
+
+[node name="Recolhe2" parent="FerramentasMgmt" instance=ExtResource("9_2qw7v")]
+position = Vector2(335, 205)
 
 [node name="LixosColecao" type="CanvasGroup" parent="."]
 position = Vector2(-66, -332)
@@ -136,3 +131,4 @@ position = Vector2(15, 369)
 
 [editable path="TileMaps"]
 [editable path="SpawnJogadores"]
+[editable path="FerramentasMgmt"]

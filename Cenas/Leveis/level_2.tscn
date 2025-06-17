@@ -1,14 +1,10 @@
-[gd_scene load_steps=17 format=4 uid="uid://cyi5a20c6vvr1"]
+[gd_scene load_steps=13 format=4 uid="uid://cyi5a20c6vvr1"]
 
 [ext_resource type="Script" uid="uid://dspkfadvtsdnp" path="res://Scripts/Leveis/level_1.gd" id="1_eixhn"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps.tscn" id="2_7f1nr"]
 [ext_resource type="PackedScene" uid="uid://b6fqbdb1cd3kc" path="res://Cenas/Partida/Arvores/arvore_pinos.tscn" id="3_pm4qp"]
-[ext_resource type="PackedScene" uid="uid://cedrrktxte7k6" path="res://Cenas/Partida/Arvores/arvore_mangue.tscn" id="4_q6xqp"]
+[ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="5_b0h18"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="5_y18lx"]
-[ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="6_w1qmw"]
-[ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Corte.tscn" id="7_gls1x"]
-[ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Plantar.tscn" id="8_wekfe"]
-[ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="9_10xy6"]
 [ext_resource type="PackedScene" uid="uid://c2nkskgbg1yd0" path="res://Cenas/Partida/Lixos/lixo_lata.tscn" id="10_04xy5"]
 [ext_resource type="PackedScene" uid="uid://bnr6tp6k6p5mk" path="res://Cenas/Partida/Lixos/lixo_embalagem.tscn" id="11_6etnn"]
 [ext_resource type="PackedScene" uid="uid://c1r8m1e25lai3" path="res://Cenas/Partida/Lixos/lixo_saco.tscn" id="12_11ta5"]
@@ -25,7 +21,7 @@ locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
 temporizador = NodePath("HUD/Temporizador")
 hud = NodePath("HUD")
-duracao_partida_segundos = 50
+duracao_partida_segundos = 150
 
 [node name="TileMaps" parent="." instance=ExtResource("2_7f1nr")]
 
@@ -65,34 +61,30 @@ position = Vector2(1189, 221)
 [node name="ArvorePinos2" parent="ArvoresColecao" instance=ExtResource("3_pm4qp")]
 position = Vector2(120, 535)
 
-[node name="SpawnJogadores" parent="." instance=ExtResource("5_y18lx")]
+[node name="SpawnJogadores" parent="." node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo") instance=ExtResource("5_y18lx")]
 position = Vector2(518, 343)
+ferramentas_mgmt = NodePath("../FerramentasMgmt")
+tilemap_lodo = NodePath("../TileMaps/TileMapDualLodo")
 
-[node name="Jogador1" parent="SpawnJogadores" index="0" node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo")]
+[node name="Jogador1" parent="SpawnJogadores" index="0"]
 position = Vector2(83, 7)
-ferramentas_mgmt = NodePath("../../FerramentasMgmt")
-tilemap_lodo = NodePath("../../TileMaps/TileMapDualLodo")
 
-[node name="Jogador2" parent="SpawnJogadores" index="1" node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo")]
+[node name="Jogador2" parent="SpawnJogadores" index="1"]
 position = Vector2(229, 5)
-ferramentas_mgmt = NodePath("../../FerramentasMgmt")
-tilemap_lodo = NodePath("../../TileMaps/TileMapDualLodo")
 
 [node name="CollisionCorpo" parent="SpawnJogadores/Jogador2" index="3"]
 position = Vector2(-3, -5)
 
-[node name="FerramentasMgmt" type="Node2D" parent="."]
-script = ExtResource("6_w1qmw")
-mudas_referencias = Array[PackedScene]([ExtResource("4_q6xqp")])
+[node name="FerramentasMgmt" parent="." instance=ExtResource("5_b0h18")]
 
-[node name="Corte" parent="FerramentasMgmt" groups=["Ferramentas"] instance=ExtResource("7_gls1x")]
-position = Vector2(324, 565)
+[node name="Corte" parent="FerramentasMgmt" index="0"]
+position = Vector2(323, 564)
 
-[node name="Plantar" parent="FerramentasMgmt" instance=ExtResource("8_wekfe")]
-position = Vector2(1004, 172)
+[node name="Plantar" parent="FerramentasMgmt" index="1"]
+position = Vector2(1004, 173)
 
-[node name="Recolhe" parent="FerramentasMgmt" instance=ExtResource("9_10xy6")]
-position = Vector2(643, 255)
+[node name="Recolhe" parent="FerramentasMgmt" index="2"]
+position = Vector2(641, 256)
 
 [node name="LixosColecao" type="CanvasGroup" parent="."]
 
@@ -184,4 +176,5 @@ metadata/_edit_lock_ = true
 [editable path="SpawnJogadores"]
 [editable path="SpawnJogadores/Jogador2"]
 [editable path="SpawnJogadores/Jogador2/IndicadorDirecao"]
+[editable path="FerramentasMgmt"]
 [editable path="HUD"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://3qqto06brekf"]
+[gd_scene load_steps=27 format=4 uid="uid://3qqto06brekf"]
 
 [ext_resource type="Script" uid="uid://5nd3aut83rw0" path="res://Scripts/Leveis/level_3.gd" id="1_uwwbq"]
 [ext_resource type="Texture2D" uid="uid://c0go1gb4ai66i" path="res://Assets/Cenario/Tiles/Agua_Final.png" id="2_1607t"]
@@ -9,12 +9,9 @@
 [ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/TileMapDual.gd" id="5_eo68n"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="5_un2h8"]
 [ext_resource type="Texture2D" uid="uid://buiwr3qhdeds3" path="res://Assets/Cenario/Tiles/Lodo.png" id="6_sv2wf"]
-[ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="6_uwwbq"]
 [ext_resource type="Texture2D" uid="uid://bbuyad0mhse1y" path="res://Assets/Cenario/Tiles/Solo_Raizes.png" id="7_16l8l"]
-[ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Corte.tscn" id="7_1607t"]
-[ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Plantar.tscn" id="8_51gne"]
-[ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="9_22o8t"]
 [ext_resource type="PackedScene" uid="uid://c2nkskgbg1yd0" path="res://Cenas/Partida/Lixos/lixo_lata.tscn" id="10_eo68n"]
+[ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="11_n0dus"]
 [ext_resource type="PackedScene" uid="uid://bnr6tp6k6p5mk" path="res://Cenas/Partida/Lixos/lixo_embalagem.tscn" id="11_sv2wf"]
 [ext_resource type="PackedScene" uid="uid://c1r8m1e25lai3" path="res://Cenas/Partida/Lixos/lixo_saco.tscn" id="12_16l8l"]
 [ext_resource type="PackedScene" uid="uid://b22561nl1a3f8" path="res://Cenas/Partida/Lixos/lixo_garrafa.tscn" id="13_5oxuu"]
@@ -435,7 +432,7 @@ locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
 temporizador = NodePath("HUD/Temporizador")
 hud = NodePath("HUD")
-duracao_partida_segundos = 45
+duracao_partida_segundos = 145
 
 [node name="TileMaps" type="Node2D" parent="."]
 
@@ -535,31 +532,27 @@ position = Vector2(1103, 589)
 [node name="ArvorePinos7" parent="ArvoresColecao" instance=ExtResource("3_mm0nf")]
 position = Vector2(1171, 334)
 
-[node name="SpawnJogadores" parent="." instance=ExtResource("5_un2h8")]
+[node name="SpawnJogadores" parent="." node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo") instance=ExtResource("5_un2h8")]
 position = Vector2(518, 343)
+ferramentas_mgmt = NodePath("../FerramentasMgmt")
+tilemap_lodo = NodePath("../TileMaps/TileMapDualLodo")
 
-[node name="Jogador1" parent="SpawnJogadores" index="0" node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo")]
+[node name="Jogador1" parent="SpawnJogadores" index="0"]
 position = Vector2(-19, -5)
-ferramentas_mgmt = NodePath("../../FerramentasMgmt")
-tilemap_lodo = NodePath("../../TileMaps/TileMapDualLodo")
 
-[node name="Jogador2" parent="SpawnJogadores" index="1" node_paths=PackedStringArray("ferramentas_mgmt", "tilemap_lodo")]
+[node name="Jogador2" parent="SpawnJogadores" index="1"]
 position = Vector2(269, -5)
-ferramentas_mgmt = NodePath("../../FerramentasMgmt")
-tilemap_lodo = NodePath("../../TileMaps/TileMapDualLodo")
 
-[node name="FerramentasMgmt" type="Node2D" parent="."]
-script = ExtResource("6_uwwbq")
-mudas_referencias = Array[PackedScene]([ExtResource("4_not3e")])
+[node name="FerramentasMgmt" parent="." instance=ExtResource("11_n0dus")]
 
-[node name="Corte" parent="FerramentasMgmt" groups=["Ferramentas"] instance=ExtResource("7_1607t")]
-position = Vector2(1196, 442)
+[node name="Corte" parent="FerramentasMgmt" index="0"]
+position = Vector2(1195, 443)
 
-[node name="Plantar" parent="FerramentasMgmt" instance=ExtResource("8_51gne")]
-position = Vector2(95, 92)
+[node name="Plantar" parent="FerramentasMgmt" index="1"]
+position = Vector2(96, 91)
 
-[node name="Recolhe" parent="FerramentasMgmt" instance=ExtResource("9_22o8t")]
-position = Vector2(551, 273)
+[node name="Recolhe" parent="FerramentasMgmt" index="2"]
+position = Vector2(553, 272)
 
 [node name="LixosColecao" type="CanvasGroup" parent="."]
 
@@ -643,3 +636,4 @@ debug_color = Color(0.063, 0.382, 0.767, 0.206)
 [editable path="SpawnJogadores"]
 [editable path="SpawnJogadores/Jogador2"]
 [editable path="SpawnJogadores/Jogador2/IndicadorDirecao"]
+[editable path="FerramentasMgmt"]

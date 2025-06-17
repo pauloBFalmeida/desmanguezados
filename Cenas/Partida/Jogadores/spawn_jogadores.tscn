@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1mtmyav5n0qq"]
+[gd_scene load_steps=3 format=3 uid="uid://b1mtmyav5n0qq"]
 
+[ext_resource type="Script" uid="uid://djuhheq01lwpc" path="res://Scripts/Partida/Jogador/spawn_jogadores.gd" id="1_vm0bu"]
 [ext_resource type="PackedScene" uid="uid://c38kt6bogw2mq" path="res://Cenas/Partida/Jogadores/Jogador.tscn" id="2_j1fy2"]
 
 [node name="SpawnJogadores" type="Node2D"]
+script = ExtResource("1_vm0bu")
 
 [node name="Jogador1" parent="." instance=ExtResource("2_j1fy2")]
 

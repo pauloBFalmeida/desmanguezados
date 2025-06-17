@@ -11,8 +11,8 @@ var is_usando_controle : bool = false
 var speed_modifier_terreno : float = 1.0
 var speed_modifier_cooldown : float = 1.0
 
-@export var ferramentas_mgmt : FerramentaMgmt
-@export var tilemap_lodo : TileMapDual
+@onready var spawn_jogadores : SpawnJogadores = $".."
+var ferramentas_mgmt : FerramentaMgmt
 
 @onready var area_interacao : Area2D = $AreaInteracao
 @onready var anim_sprite := $AnimatedSprite2D
@@ -47,6 +47,9 @@ var drop: StringName
 var pickup_recente : bool = false
 
 func _ready() -> void:
+	#
+	ferramentas_mgmt = spawn_jogadores.get_ferramentas_mgmt()
+	#
 	_ajustar_input_map()
 	is_usando_controle = InputManager.players_no_controle.has(player_id) # marca se o jogador esta no controle
 	indicador_direcao.set_joystick_override(is_usando_controle)
@@ -75,7 +78,7 @@ func _physics_process(_delta: float) -> void:
 	# ---- lidar com button presses ----
 	if Input.is_action_just_pressed(interact):
 		_throw_ferramenta_cancelar() # cancela jogar ferramenta
-		fazer_acao()
+		interagir()
 		print("siri global_pos ", global_position)
 	if Input.is_action_just_pressed(pickup):
 		_throw_ferramenta_cancelar() # cancela jogar ferramenta
@@ -85,16 +88,6 @@ func _physics_process(_delta: float) -> void:
 	if indicador_direcao.is_tracking:
 		indicador_direcao.set_tracking_target(body_mais_desejado_interacao())
 	
-	# ---- slow down do terreno ----
-	# pega o slow_speed do tilemap lodo
-	var tile_pos = tilemap_lodo.local_to_map(global_position / tilemap_lodo.scale.x)
-	var tile = tilemap_lodo.get_cell_tile_data(tile_pos)
-	
-	if tile != null: # se setiver emcima de um tile existente no tilemap
-		var slow_speed : float = tile.get_custom_data("slow_speed")
-		speed_modifier_terreno = slow_speed * slowdown_lodo
-	else:
-		speed_modifier_terreno = 1.0
 
 func _process(_delta: float) -> void:
 	var move_dir = Input.get_vector(move_left, move_right, move_up, move_down)
@@ -118,20 +111,12 @@ func _process(_delta: float) -> void:
 		# update da direcao do jogador pro indicador de direcao
 		indicador_direcao.direcao_jogador( move_dir )
 
-# ------ Acao -------
-func fazer_acao() -> void:	
-	# se nao tiver nada na area -> nao faca nada
-	if bodys_dentro_area.is_empty():
-		balancar_ferramenta()
-		return
-	
-	# pega o body dentro da area que eh o mais desejado
-	var body : Node2D = body_mais_desejado_interacao("Marcador")
-	# -- fazemos a acao sobre o corpo --
-	# se for alvo da ferramenta -> usar ferramenta
-	if body.is_in_group("Marcador"):
-		mostrar_instrucoes_usar()
-		usar_ferramenta(body)
+# ----------------------------------------------
+# Set de atributos
+# ----------------------------------------------
+func set_speed_modifier_terreno(_speed_modifier_lodo : float) -> void:
+	speed_modifier_terreno = slowdown_lodo * _speed_modifier_lodo
+
 
 # ----------------------------------------------
 # Instrucoes
@@ -203,6 +188,23 @@ func mostrar_instrucoes_drop() -> void:
 		txt_botao = "Espaço"
 		
 	instrucoes_label.text = txt_botao + " para largar"
+
+# ----------------------------------------------
+# Interagir
+# ----------------------------------------------
+func interagir() -> void:	
+	# se nao tiver nada na area -> nao faca nada
+	if bodys_dentro_area.is_empty():
+		balancar_ferramenta()
+		return
+	
+	# pega o body dentro da area que eh o mais desejado
+	var body : Node2D = body_mais_desejado_interacao("Marcador")
+	# -- fazemos a acao sobre o corpo --
+	# se for alvo da ferramenta -> usar ferramenta
+	if body.is_in_group("Marcador"):
+		mostrar_instrucoes_usar()
+		usar_ferramenta(body)
 
 # ----------------------------------------------
 # Usar ferramenta
