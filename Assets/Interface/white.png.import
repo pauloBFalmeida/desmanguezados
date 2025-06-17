@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkl6w1n0j51lm"
-path="res://.godot/imported/Cartaz desmangezados.png-667cc70eae98ef78217fedfdb9065167.ctex"
+uid="uid://bmvky7k2qcug2"
+path="res://.godot/imported/white.png-da3030599cad46c74de058f4d256a22a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Interface/Cartaz desmangezados.png"
-dest_files=["res://.godot/imported/Cartaz desmangezados.png-667cc70eae98ef78217fedfdb9065167.ctex"]
+source_file="res://Assets/Interface/white.png"
+dest_files=["res://.godot/imported/white.png-da3030599cad46c74de058f4d256a22a.ctex"]
 
 [params]
 
