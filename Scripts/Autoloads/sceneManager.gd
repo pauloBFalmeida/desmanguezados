@@ -5,9 +5,10 @@ const MENU_PRINCIPAL_PATH := "res://Cenas/Menus/menuPrincipal.tscn"
 const MENU_SELECAO_PATH := "res://Cenas/Menus/menuSelecao.tscn"
 const MENU_CONFIGURACAO_PATH := "res://Cenas/Menus/menuConfiguracao.tscn"
 
-enum Level_id {TUTORIAL, LEVEL_1, LEVEL_2, LEVEL_3}
+enum Level_id {ZEN, TUTORIAL, LEVEL_1, LEVEL_2, LEVEL_3}
 
 const LEVEIS_REF  : Dictionary[Level_id, String] = {
+	Level_id.ZEN: "res://Cenas/Leveis/level_zen.tscn",
 	Level_id.TUTORIAL: "res://Cenas/Leveis/level_0_tutorial.tscn",
 	Level_id.LEVEL_1: "res://Cenas/Leveis/level_1.tscn",
 	Level_id.LEVEL_2: "res://Cenas/Leveis/level_2.tscn",
@@ -15,6 +16,7 @@ const LEVEIS_REF  : Dictionary[Level_id, String] = {
 }
 
 const LEVEIS_NOME : Dictionary[Level_id, String] = {
+	Level_id.ZEN: "Zen",
 	Level_id.TUTORIAL: "Tutorial",
 	Level_id.LEVEL_1: "Level 1",
 	Level_id.LEVEL_2: "Level 2",

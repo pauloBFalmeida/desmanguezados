@@ -22,6 +22,9 @@ func comecar():
 	# Inicia o cronômetro
 	cronometro_ativo = true
 
+func parar():
+	cronometro_ativo = false
+
 func _process(delta):
 	# Se o tempo chegar a 0 - Fim do jogo
 	if cronometro_ativo:
