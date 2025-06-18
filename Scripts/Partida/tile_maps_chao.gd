@@ -1,8 +1,8 @@
 extends Node2D
 class_name TileMapsChao
 
-@onready var tilemap_agua := $TileMapLayerAgua
-@onready var tilemap_lodo := $TileMapDualLodo
+@export var tilemap_agua : TileMapLayer 
+@export var tilemap_lodo : TileMapLayer
 
 # eles tem que ter a scala em x e y igual para isso funcionar
 @onready var tilemap_agua_size_x = 1 / tilemap_agua.scale.x

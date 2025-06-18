@@ -410,8 +410,10 @@ custom_data_layer_0/name = "slow_speed"
 custom_data_layer_0/type = 3
 sources/2 = SubResource("TileSetAtlasSource_mey3w")
 
-[node name="TileMapsChao" type="Node2D"]
+[node name="TileMapsChao" type="Node2D" node_paths=PackedStringArray("tilemap_agua", "tilemap_lodo")]
 script = ExtResource("1_iyidk")
+tilemap_agua = NodePath("TileMapLayerAgua")
+tilemap_lodo = NodePath("TileMapDualLodo")
 
 [node name="TileMapLayerAgua" type="TileMapLayer" parent="."]
 scale = Vector2(3, 3)

@@ -24,8 +24,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	for jogador in jogadores:
 		# -- jogador na agua --
-		var is_on_water : bool = tilemaps_chao.jogador_pos_on_water(jogador.global_position)
-		jogador.is_on_water = is_on_water
+		var on_water : bool = tilemaps_chao.jogador_pos_on_water(jogador.global_position)
+		jogador.set_on_water(on_water)
 		
 		# -- jogador no lodo --
 		var speed_modifier : float = tilemaps_chao.jogador_pos_speed_lodo(jogador.global_position)
@@ -68,8 +68,8 @@ func _find_global_pos_mais_prox(lista_pos: Array, default_global_pos : Vector2) 
 	var closest_diff : float = INF
 	
 	for atras_pos in lista_pos:
-		var is_on_water : bool = tilemaps_chao.jogador_pos_on_water(atras_pos["global_pos"])
-		if is_on_water: # se estava na agua
+		var on_water : bool = tilemaps_chao.jogador_pos_on_water(atras_pos["global_pos"])
+		if on_water: # se estava na agua
 			continue # pula essa opcao
 		
 		var time_diff = target_time - atras_pos["time"]

@@ -91,6 +91,8 @@ func _physics_process(_delta: float) -> void:
 		_throw_ferramenta_cancelar() # cancela jogar ferramenta
 		lidar_pickup()
 	
+	# lidar com esta na agua queue se necessario
+	if use_set_on_water_queue: _lidar_set_on_water()
 	# sombra
 	sombra_sprite.visible = not is_on_water
 	
@@ -135,6 +137,22 @@ func _process(delta: float) -> void:
 func set_speed_modifier_terreno(_speed_modifier_lodo : float) -> void:
 	speed_modifier_terreno = slowdown_lodo * _speed_modifier_lodo
 
+var use_set_on_water_queue : bool = false # mais de um water source
+var _set_on_water_queue : Array[bool] = []
+func set_on_water(_on_water : bool) -> void:
+	if not use_set_on_water_queue:
+		is_on_water = _on_water
+		return
+	# se for para usar a queue
+	_set_on_water_queue.append(_on_water)
+	
+func _lidar_set_on_water() -> void:
+	is_on_water = false
+	for _on_water in _set_on_water_queue:
+		if _on_water:
+			is_on_water = true
+			break
+	#is_on_water = _set_on_water_queue.any(func(x): return x)
 
 # ----------------------------------------------
 # Instrucoes
