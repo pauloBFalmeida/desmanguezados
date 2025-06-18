@@ -14,13 +14,35 @@ extends Level
 @onready var timer_mare := $TimerMare
 @onready var area_2d_mare := $Area2DMare
 
+@export var spawn_jogadores : SpawnJogadores
+@export var tilemaps_sobre_chao : TileMapsChao
+
 enum Mare {CHEIA, DESCENDO_BLOCK, DESCENDO_ANDAVEL, VAZIA, SUBINDO_ANDAVEL, SUBINDO_BLOCK}
 var mare_atual : Mare = Mare.CHEIA
 
 func _ready() -> void:
 	super()
 	timer_mare.start(duracao_mare_cheia)
+	# ajusta para ter mais de 1 set_on_water
+	for jogador in spawn_jogadores.jogadores:
+		jogador.use_set_on_water_queue = true
 
+func _physics_process(delta: float) -> void:
+	match mare_atual:
+		Mare.CHEIA:
+			_verificar_jogadores_na_agua_mare()
+		Mare.DESCENDO_BLOCK:
+			_verificar_jogadores_na_agua_mare()
+		Mare.SUBINDO_BLOCK:
+			_verificar_jogadores_na_agua_mare()
+		_:
+			pass
+
+func _verificar_jogadores_na_agua_mare() -> void:
+	for jogador in spawn_jogadores.jogadores:
+		# -- jogador na agua da mare --
+		var on_water : bool = tilemaps_sobre_chao.jogador_pos_on_water(jogador.global_position)
+		jogador.set_on_water(on_water)
 
 func _on_timer_agua_timeout() -> void:
 	# fim da mare atual -> comecar a proxima fase da mare
@@ -57,7 +79,7 @@ func _mare_descendo_block() -> void:
 func _mare_descendo_andavel() -> void:
 	mare_atual = Mare.DESCENDO_ANDAVEL
 	timer_mare.start(duracao_mare_descer_andavel)
-	# desabilita a colisao
+	## desabilita a colisao
 	tile_mare.collision_enabled = false
 	area_2d_mare.monitoring = false
 	
@@ -90,7 +112,7 @@ func _mare_subindo_andavel() -> void:
 func _mare_subindo_block() -> void:
 	mare_atual = Mare.SUBINDO_BLOCK
 	timer_mare.start(duracao_mare_subir_block)
-	# colocar colisao
+	## colocar colisao
 	tile_mare.collision_enabled = true
 	area_2d_mare.monitoring = true
 	
@@ -118,12 +140,13 @@ func _verificar_preso_mare(body: Node2D) -> void:
 	if bodys_dentro_mare.has(body):
 		var direcao : Vector2 = area_2d_mare.to_local(body.global_position)
 		direcao.y = 0
-		direcao = direcao.normalized() * 15
+		direcao = direcao.normalized() * 25
 		# enquanto tiver, empurre pra fora
 		while bodys_dentro_mare.has(body):
 			#body.global_position += direcao
 			var tween := create_tween()
-			tween.set_ease(Tween.EASE_OUT)
-			tween.tween_property(body, "global_position", body.global_position + direcao, 0.25)
+			tween.set_ease(Tween.EASE_IN_OUT)
+			tween.set_trans(Tween.TRANS_CUBIC)
+			tween.tween_property(body, "global_position", body.global_position + direcao, 1.25)
 			# espera liberando o processamento
 			await tween.finished

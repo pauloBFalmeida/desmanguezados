@@ -72,7 +72,7 @@ position = Vector2(83, 7)
 [node name="Jogador2" parent="SpawnJogadores" index="1"]
 position = Vector2(229, 5)
 
-[node name="CollisionCorpo" parent="SpawnJogadores/Jogador2" index="3"]
+[node name="CollisionCorpo" parent="SpawnJogadores/Jogador2" index="4"]
 position = Vector2(-3, -5)
 
 [node name="FerramentasMgmt" parent="." instance=ExtResource("5_b0h18")]
