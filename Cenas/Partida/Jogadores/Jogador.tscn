@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://c38kt6bogw2mq"]
+[gd_scene load_steps=9 format=3 uid="uid://c38kt6bogw2mq"]
 
 [ext_resource type="Script" uid="uid://wmjg8xw6jhs4" path="res://Scripts/Partida/Jogador/jogador.gd" id="1_hjt1h"]
 [ext_resource type="Texture2D" uid="uid://bnsy7do16v8k5" path="res://Assets/Ferramentas/circle.png" id="2_lwruk"]
 [ext_resource type="SpriteFrames" uid="uid://jrc3bqgmf5t" path="res://Cenas/Partida/Jogadores/JogadorAnim.tres" id="3_801pi"]
 [ext_resource type="PackedScene" uid="uid://cb5x2dl7n7ywu" path="res://Cenas/Partida/Jogadores/indicador_direcao.tscn" id="4_t8i7p"]
-[ext_resource type="Texture2D" uid="uid://dyanf5fyuy83k" path="res://Assets/Personagem/Redx1.png" id="5_lws5r"]
 [ext_resource type="PackedScene" uid="uid://cspvbt5iyca1h" path="res://Cenas/Interface/intrucoes_ui.tscn" id="5_w3vga"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hjt1h"]
@@ -32,13 +31,6 @@ self_modulate = Color(0, 0, 0, 0.670588)
 position = Vector2(-1, 9)
 scale = Vector2(0.6, 0.3)
 texture = ExtResource("2_lwruk")
-
-[node name="Sprite2DJogador" type="Sprite2D" parent="."]
-visible = false
-scale = Vector2(3, 3)
-texture = ExtResource("5_lws5r")
-region_enabled = true
-region_rect = Rect2(10, 31, 42, 19)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -26)
