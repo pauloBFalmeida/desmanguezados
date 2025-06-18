@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="5_7l7v4"]
 
 [sub_resource type="Curve" id="Curve_w3vga"]
-_data = [Vector2(0, 0), 0.0, 1.52934, 0, 0, Vector2(1, 1), 1.80653, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0, 0), 0.0, 1.23748, 0, 0, Vector2(0.15, 0.3), 0.361138, 0.361138, 0, 0, Vector2(1, 1), 0.180505, 0.0, 0, 0]
+point_count = 3
 metadata/_snap_enabled = true
 metadata/_snap_count = 20
 

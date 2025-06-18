@@ -42,6 +42,7 @@ var segurando : Ferramenta = null
 @export var throw_min_hold_sec : float = 0.45
 var throw_acumulado_sec : float = 0
 var is_throw_cancelado = false
+@onready var throw_max_hold_sec_div : float = 1 / throw_max_hold_sec
 
 # -- Input --
 var move_left: StringName
@@ -365,7 +366,8 @@ func _throw_ferramenta_segurando(delta : float) -> void:
 	# direcao para jogar
 	var direcao := indicador_direcao.get_direcao()
 	# update a curva de jogar a ferramenta
-	ferramentas_mgmt.jogador_throw_ferramenta_segurando(self, direcao, throw_acumulado_sec)
+	var charge := throw_acumulado_sec * throw_max_hold_sec_div
+	ferramentas_mgmt.jogador_throw_ferramenta_segurando(self, direcao, charge)
 
 func _throw_ferramenta_jogar() -> void:
 	# se nao estiver segurando nada -> nao faca nada

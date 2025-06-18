@@ -104,10 +104,11 @@ func _posicionar_ferramenta(ferramenta : Ferramenta, global_pos : Vector2) -> vo
 # -----------------------------------------------
 # Jogar / Throw ferramenta
 # -----------------------------------------------
+# charge de [0.0, 1.0] para quanto porcento esta carregado 
 func jogador_throw_ferramenta_segurando(jogador : Jogador, 
 										direcao : Vector2, 
-										throw_acumulado_sec : float) -> void:
-	var distancia := throw_max_distancia * throw_distancia_por_tempo.sample(throw_acumulado_sec)
+										charge : float) -> void:
+	var distancia := throw_max_distancia * throw_distancia_por_tempo.sample(charge)
 	var global_end_pos := jogador.global_position + (direcao * distancia)
 	
 	# jogador nao tem uma curva de previsao ainda -> criar uma
