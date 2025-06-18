@@ -46,9 +46,8 @@ func salvar_posicao_jogador(jogador : Jogador) -> void:
 		lista_pos.pop_front()
 
 func respawn_jogador(jogador : Jogador) -> void:
-	#jogador.global_position = jogadores_spawns[jogador]
-	
-	var global_pos = _find_global_pos_mais_prox(jogadores_atras_pos[jogador])
+	var default_global_pos := jogadores_spawns[jogador] # local onde o jogador spawnou
+	var global_pos = _find_global_pos_mais_prox(jogadores_atras_pos[jogador], default_global_pos)
 	#
 	jogador.global_position = global_pos
 	# fade in de respawn 
@@ -61,11 +60,11 @@ func respawn_jogador(jogador : Jogador) -> void:
 		0.3 # duracao
 	).from_current()
 
-func _find_global_pos_mais_prox(lista_pos: Array) -> Vector2:
+func _find_global_pos_mais_prox(lista_pos: Array, default_global_pos : Vector2) -> Vector2:
 	var current_time = Time.get_ticks_msec()  # milisec da godot
 	var target_time = current_time - respawn_tempo_atras_ms # posicao alvo
 	
-	var closest_pos = null
+	var closest_pos = default_global_pos # se nao conseguir nada melhor, mandar o default
 	var closest_diff : float = INF
 	
 	for atras_pos in lista_pos:
