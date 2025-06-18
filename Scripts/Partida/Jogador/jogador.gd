@@ -65,7 +65,7 @@ func _ready() -> void:
 	# ajusta o nome
 	var nome_id : String = "P1" if player_id == InputManager.PlayerId.P1 else "P2"
 	set_name('Jogador_' + nome_id)
-	# ajeita o sprite
+	# coloca o personagem no idle -> para ajustar a cor
 	anim_idle()
 	# 
 	#instrucoes.hide()
@@ -117,13 +117,12 @@ func _process(delta: float) -> void:
 		# largou o botao, reset o throw
 		is_throw_cancelado = false
 	
+	# -- lidar com estar na agua --
 	if is_on_water:
 		curr_water_timer += delta
-		lidar_agua()
 	else:
 		curr_water_timer = 0
-		lidar_agua()
-		
+	lidar_agua()
 	
 	# update o indicador de direcao
 	if not move_dir.is_zero_approx(): # se o player deu input de mover
@@ -138,7 +137,11 @@ func _process(delta: float) -> void:
 func set_speed_modifier_terreno(_speed_modifier_lodo : float) -> void:
 	speed_modifier_terreno = slowdown_lodo * _speed_modifier_lodo
 
-var use_set_on_water_queue : bool = false # mais de um water source
+# ----------------------------------------------
+# Lidar com o contato com agua
+# ----------------------------------------------
+## so usar queue se tiver mais de um water source
+var use_set_on_water_queue : bool = false 
 var _set_on_water_queue : Array[bool] = []
 
 func set_on_water(_on_water : bool) -> void:
@@ -154,7 +157,23 @@ func _lidar_set_on_water() -> void:
 
 func clear_set_on_water_queue() -> void:
 	_set_on_water_queue.clear()
+
+func lidar_agua() -> void:
+	const color_base = Color.WHITE
+	var color_fade = Color.DARK_SLATE_GRAY
+	color_fade.a = 0.4
+	# se nao esta na agua
+	if is_zero_approx(curr_water_timer):
+		modulate = color_base
+		return
 	
+	if curr_water_timer >= max_water_time:
+		spawn_jogadores.respawn_jogador(self)
+	
+	# limite
+	var weight = curr_water_timer / max_water_time
+	# deixa mais transparente
+	modulate = lerp(color_base, color_fade, weight)
 
 # ----------------------------------------------
 # Instrucoes
@@ -245,7 +264,7 @@ func interagir() -> void:
 		usar_ferramenta(body)
 
 # ----------------------------------------------
-# Usar ferramenta
+# Usar, Balancar ferramenta
 # ----------------------------------------------
 # ------ Usar -------
 func usar_ferramenta(body : Node2D) -> void:
@@ -453,26 +472,6 @@ func anim_idle() -> void:
 		anim_sprite.play("blueIdle")
 	else:
 		anim_sprite.play("redIdle")
-
-# ----------------------------------------------
-# Lidar com ficar dentro da agua
-# ----------------------------------------------
-func lidar_agua() -> void:
-	const color_base = Color.WHITE
-	var color_fade = Color.DARK_SLATE_GRAY
-	color_fade.a = 0.4
-	# se nao esta na agua
-	if is_zero_approx(curr_water_timer):
-		modulate = color_base
-		return
-	
-	if curr_water_timer >= max_water_time:
-		spawn_jogadores.respawn_jogador(self)
-	
-	# limite
-	var weight = curr_water_timer / max_water_time
-	# deixa mais transparente
-	modulate = lerp(color_base, color_fade, weight)
 
 # ----------------------------------------------
 # indicador de direcao

@@ -4,7 +4,7 @@ class_name SpawnJogadores
 @export var ferramentas_mgmt : FerramentaMgmt
 @export var tilemaps_chao : TileMapsChao
 
-## segundos atras para respawnar o jogador
+## quanto segundos atras vai ser buscada a posicao para respawnar o jogador se ele morrer
 @export var respawn_tempo_atras : float = 1.0
 
 var jogadores : Array[Jogador]
