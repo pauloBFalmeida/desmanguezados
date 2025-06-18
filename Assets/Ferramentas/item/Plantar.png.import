@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtklk03ss12wj"
-path="res://.godot/imported/RecolherLixo.png-1b6d3412f982d8ec3c329700c589ad55.ctex"
+uid="uid://cjjidfmeq0017"
+path="res://.godot/imported/Plantar.png-9917bcd07f0e410f1de34e94e13a2d00.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Ferramentas/RecolherLixo.png"
-dest_files=["res://.godot/imported/RecolherLixo.png-1b6d3412f982d8ec3c329700c589ad55.ctex"]
+source_file="res://Assets/Ferramentas/item/Plantar.png"
+dest_files=["res://.godot/imported/Plantar.png-9917bcd07f0e410f1de34e94e13a2d00.ctex"]
 
 [params]
 

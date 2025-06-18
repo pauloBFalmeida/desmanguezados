@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c15kxpuovhqhi" path="res://Scripts/Ferramentas/plantar.gd" id="1_2fq4k"]
 [ext_resource type="AudioStream" uid="uid://ucwdr2nngyy2" path="res://Assets/Audio/efeitos/ferramentas/plantar_acerto.MP3" id="2_gso02"]
 [ext_resource type="Shader" uid="uid://cw712yn14yynr" path="res://Scripts/Shaders/outline.gdshader" id="2_ogw4p"]
-[ext_resource type="Texture2D" uid="uid://cjjidfmeq0017" path="res://Assets/Ferramentas/Plantar.png" id="3_2fq4k"]
+[ext_resource type="Texture2D" uid="uid://cjjidfmeq0017" path="res://Assets/Ferramentas/item/Plantar.png" id="3_2fq4k"]
 [ext_resource type="AudioStream" uid="uid://cpcxdbsmuwohc" path="res://Assets/Audio/efeitos/ferramentas/plantar_erro.MP3" id="3_mi7cb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m88eb"]
