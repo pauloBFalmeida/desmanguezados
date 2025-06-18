@@ -42,8 +42,10 @@ void fragment() {
 	float dist = distance(UV, rotation_pivot) * rotation_strength;
 	vec2 result_uvs = mix(UV, rotated_uvs, dist);
 
-	// output color
-	COLOR = texture(TEXTURE, result_uvs);
+	// output color with modulate alfa applied
+    vec4 tex_color = texture(TEXTURE, result_uvs);
+	tex_color.a = COLOR.a;
+    COLOR = tex_color;
 
 	// optional, preview noise texture for debugging
 	if (render_noise) {
