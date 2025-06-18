@@ -24,13 +24,16 @@ var ferramentas_mao_jogadores : Dictionary[Jogador, Ferramenta]
 var ferramentas_jogadas_followpaths : Dictionary[Ferramenta, PathFollow2D]
 var throw_previsao_paths : Dictionary[Jogador, Path2D]
 
+@export var linha_width : float = 4.0
+@export var linha_width_curve : Curve
+
 func _ready() -> void:
 	# passa a referencia do FerramentaMgmt para todas as ferramentas
 	for ferramenta : Ferramenta in get_children():
 		if ferramenta.is_in_group("Ferramentas"):
 			ferramenta.set_ferramenta_mgmt(self)
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	_processar_ferramentas_jogadas(delta)
 
 # -----------------------------------------------
@@ -112,6 +115,8 @@ func jogador_throw_ferramenta_segurando(jogador : Jogador,
 		var path = _criar_curva_throw()
 		jogador.add_child(path)
 		throw_previsao_paths[jogador] = path
+		# criar visual de jogar
+		_criar_visual_throw(path, jogador)
 	
 	# updata a curva
 	_update_curva_previsao(throw_previsao_paths[jogador], global_end_pos)
@@ -138,6 +143,7 @@ func jogador_throw_ferramenta_jogar(jogador : Jogador, ferramenta : Ferramenta) 
 	
 	# cria a imagem da ferramenta para percorrer a curva
 	var pathFollow = _criar_path_follow_ferramenta(ferramenta)
+	
 	# adiciona na cena
 	path.add_child(pathFollow)
 	# salva o pathFollow e a ferramenta nesse dict
@@ -164,7 +170,7 @@ func _criar_path_follow_ferramenta(ferramenta : Ferramenta) -> PathFollow2D:
 	
 	return pathFollow
 
-func _criar_curva_throw() -> Path2D:	
+func _criar_curva_throw() -> Path2D:
 	# cria o caminho para jogar a ferramenta
 	var path := Path2D.new()
 	path.curve = Curve2D.new()
@@ -195,6 +201,42 @@ func _update_curva_previsao(path : Path2D, global_pos_fim_curva : Vector2) -> vo
 	path.curve.set_point_out(0, aux_pos)
 	# posicao do ponto de fim de curva
 	path.curve.set_point_position(1, final_pos)
+	
+	# update visual
+	_update_visual_throw(path, path.get_child(0))
+
+func _criar_visual_throw(path : Path2D, jogador : Jogador):
+	# criar linha
+	var linha := Line2D.new()
+	path.add_child(linha)
+	
+	# grossura
+	linha.width = linha_width
+	linha.width_curve = linha_width_curve
+	# -- Cor --
+	var jogador_cor = jogador.theme_color
+	#linha.default_color = jogador.theme_color
+	# cria as cores
+	#var cor_comeco := Color(jogador_cor, 0.0)
+	#var cor_meio   := Color(jogador_cor, 0.7)
+	#var cor_final  := Color(jogador_cor, 0.1)
+	var cor_comeco := Color(jogador_cor)
+	var cor_meio   := Color(jogador_cor)
+	var cor_final  := Color(jogador_cor)
+	cor_comeco.a = 0.0
+	cor_meio.a   = 0.7
+	cor_final.a  = 0.3
+	# ajusta no gradiente
+	linha.gradient = Gradient.new()
+	linha.gradient.set_color(0, cor_comeco)
+	linha.gradient.set_color(1, cor_final)
+	linha.gradient.add_point(0.2, cor_meio) # add cor do meioem 20% do comeco
+
+func _update_visual_throw(path : Path2D, linha : Line2D):
+	var points = path.curve.get_baked_points()
+	linha.points = points
+	
+
 
 ## processar as ferramentas sendo jogadas
 func _processar_ferramentas_jogadas(delta : float) -> void:

@@ -95,6 +95,15 @@ tilemaps_chao = NodePath("../TileMaps")
 
 [node name="FerramentasMgmt" parent="." instance=ExtResource("6_poegd")]
 
+[node name="Corte" parent="FerramentasMgmt" index="0"]
+position = Vector2(783, 433)
+
+[node name="Plantar" parent="FerramentasMgmt" index="1"]
+position = Vector2(1203, 435)
+
+[node name="Recolhe" parent="FerramentasMgmt" index="2"]
+position = Vector2(749, 161)
+
 [node name="LixosColecao" type="CanvasGroup" parent="."]
 
 [node name="LixoLata" parent="LixosColecao" instance=ExtResource("6_00t72")]

@@ -4,6 +4,8 @@ class_name Jogador
 @export var player_id := InputManager.PlayerId.P1
 var is_usando_controle : bool = false
 
+@export var theme_color : Color
+
 ## velocidade do jogador
 @export var speed: float = 250.0
 ## porcentagem de slowdown no lodo
@@ -21,6 +23,7 @@ var ferramentas_mgmt : FerramentaMgmt
 
 @onready var area_interacao : Area2D = $AreaInteracao
 @onready var anim_sprite := $AnimatedSprite2D
+@onready var sombra_sprite := $SpriteSombra
 
 @onready var indicador_direcao : IndicadorDirecao = $IndicadorDirecao
 # ultima direcao que o jogador deu input de movimento
@@ -84,10 +87,12 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed(interact):
 		_throw_ferramenta_cancelar() # cancela jogar ferramenta
 		interagir()
-		print("siri global_pos ", global_position)
 	if Input.is_action_just_pressed(pickup):
 		_throw_ferramenta_cancelar() # cancela jogar ferramenta
 		lidar_pickup()
+	
+	# sombra
+	sombra_sprite.visible = not is_on_water
 	
 	# ---- indicador de direcao ----
 	if indicador_direcao.is_tracking:

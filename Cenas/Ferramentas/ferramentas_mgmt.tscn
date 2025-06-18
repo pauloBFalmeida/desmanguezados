@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://mvp5raoekisy"]
+[gd_scene load_steps=9 format=3 uid="uid://mvp5raoekisy"]
 
 [ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="1_iomgt"]
 [ext_resource type="PackedScene" uid="uid://cedrrktxte7k6" path="res://Cenas/Partida/Arvores/arvore_mangue.tscn" id="2_in2xe"]
@@ -19,17 +19,25 @@ point_count = 3
 metadata/_snap_enabled = true
 metadata/_snap_count = 20
 
+[sub_resource type="Curve" id="Curve_iomgt"]
+_data = [Vector2(0, 0.75), 0.0, 1.77699, 0, 0, Vector2(0.4, 1), -4.53732e-07, -4.53732e-07, 0, 0, Vector2(1, 0.5), -2.17705, 0.0, 0, 0]
+point_count = 3
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
+
 [node name="FerramentasMgmt" type="Node2D"]
 script = ExtResource("1_iomgt")
 mudas_referencias = Array[PackedScene]([ExtResource("2_in2xe")])
 throw_distancia_por_tempo = SubResource("Curve_w3vga")
 throw_velocidade_ferramenta_na_curva = SubResource("Curve_nne28")
+linha_width = 6.0
+linha_width_curve = SubResource("Curve_iomgt")
 
 [node name="Corte" parent="." groups=["Ferramentas"] instance=ExtResource("3_b6hl8")]
-position = Vector2(784, 425)
+position = Vector2(31, 44)
 
 [node name="Plantar" parent="." instance=ExtResource("4_ty6u0")]
-position = Vector2(1202, 435)
+position = Vector2(121, 46)
 
 [node name="Recolhe" parent="." instance=ExtResource("5_7l7v4")]
-position = Vector2(746, 162)
+position = Vector2(217, 33)

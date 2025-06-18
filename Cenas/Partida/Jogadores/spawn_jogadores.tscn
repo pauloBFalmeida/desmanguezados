@@ -7,7 +7,9 @@
 script = ExtResource("1_vm0bu")
 
 [node name="Jogador1" parent="." instance=ExtResource("2_j1fy2")]
+theme_color = Color(0.235294, 0.690196, 0.901961, 1)
 
 [node name="Jogador2" parent="." instance=ExtResource("2_j1fy2")]
 position = Vector2(147, 0)
 player_id = 1
+theme_color = Color(0.878431, 0.25098, 0.305882, 1)
