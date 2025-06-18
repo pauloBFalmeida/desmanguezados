@@ -36,7 +36,17 @@ As árvores (tanto nativas quanto invasoras) devem ser filhas do *ArvoresColecao
 Os lixos devem ser filhos do *LixosColecao*
 
 
-As ferramentass devem ser filhas do *FerramentasMgmt*
+As ferramentas devem ser filhas do *FerramentasMgmt*
+
+### Agua ao redor
+Colocar agua ao redor do mapa evita o jogador poder jogar a ferramenta para 
+fora do mapa (já que ela re-spawna se cair na agua)
+
+
+Para isso usar o tile transparente de agua e fazer 20 tiles de distancia 
+de fora da area visível (dá para usar o rect do tilemap para criar 
+um quadrado 20x20 nas 2 diagonais opostas da área visível, 
+e usar de guia para preencher todos os cantos)
 
 ### Adicionar o nível na seleção de níveis
 
