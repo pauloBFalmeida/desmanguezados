@@ -283,8 +283,8 @@ func _ferramenta_fim_throw(ferramenta : Ferramenta, path_follow : Node2D) -> voi
 	path.queue_free()
 
 func _is_global_pos_valida_ferramenta(global_pos_ferramenta : Vector2) -> bool:
-	var is_on_water : bool = tilemaps_chao.jogador_pos_on_water(global_pos_ferramenta)
-	if is_on_water:
+	var on_water : bool = tilemaps_chao.jogador_pos_on_water(global_pos_ferramenta)
+	if on_water:
 		return false
 	
 	# nenhum problema -> posicao eh valida

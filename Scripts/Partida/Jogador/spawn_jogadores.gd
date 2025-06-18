@@ -40,16 +40,20 @@ func _physics_process(delta: float) -> void:
 func salvar_posicao_jogador(jogador : Jogador) -> void:
 	var current_time = Time.get_ticks_msec()  # milisec da godot
 	var lista_pos = jogadores_atras_pos[jogador]
-	lista_pos.append({"time": current_time, "global_pos": jogador.global_position})
+	if not jogador.is_on_water:
+		lista_pos.append({"time": current_time, "global_pos": jogador.global_position})
 	# remove o primeiro item da lista se ele for mais antigo do max_respawn_tempo_atras_ms
-	if lista_pos.front()["time"] <= current_time - max_respawn_tempo_atras_ms:
+	if (not lista_pos.is_empty() and
+			lista_pos.front()["time"] <= current_time - max_respawn_tempo_atras_ms):
 		lista_pos.pop_front()
 
 func respawn_jogador(jogador : Jogador) -> void:
 	var default_global_pos := jogadores_spawns[jogador] # local onde o jogador spawnou
 	var global_pos = _find_global_pos_mais_prox(jogadores_atras_pos[jogador], default_global_pos)
+	
 	#
 	jogador.global_position = global_pos
+	jogador.clear_set_on_water_queue()
 	# fade in de respawn 
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT)

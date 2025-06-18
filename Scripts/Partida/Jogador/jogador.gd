@@ -139,6 +139,7 @@ func set_speed_modifier_terreno(_speed_modifier_lodo : float) -> void:
 
 var use_set_on_water_queue : bool = false # mais de um water source
 var _set_on_water_queue : Array[bool] = []
+
 func set_on_water(_on_water : bool) -> void:
 	if not use_set_on_water_queue:
 		is_on_water = _on_water
@@ -147,12 +148,12 @@ func set_on_water(_on_water : bool) -> void:
 	_set_on_water_queue.append(_on_water)
 	
 func _lidar_set_on_water() -> void:
-	is_on_water = false
-	for _on_water in _set_on_water_queue:
-		if _on_water:
-			is_on_water = true
-			break
-	#is_on_water = _set_on_water_queue.any(func(x): return x)
+	is_on_water = _set_on_water_queue.any(func(x): return x)
+	clear_set_on_water_queue()
+
+func clear_set_on_water_queue() -> void:
+	_set_on_water_queue.clear()
+	
 
 # ----------------------------------------------
 # Instrucoes
