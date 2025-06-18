@@ -1,7 +1,102 @@
-[gd_scene load_steps=10 format=3 uid="uid://cedrrktxte7k6"]
+[gd_scene load_steps=17 format=3 uid="uid://cedrrktxte7k6"]
 
 [ext_resource type="Script" uid="uid://dbq0k02hr2o0m" path="res://Scripts/Partida/Arvore/arvore_mangue.gd" id="1_63al1"]
 [ext_resource type="Texture2D" uid="uid://e14uxly4awj8" path="res://Assets/Cenario/Arvores/ArvoresMangue.png" id="1_yyjcj"]
+[ext_resource type="Shader" uid="uid://bgx5ojm5n4jm4" path="res://Scripts/Shaders/WindyFoliage.gdshader" id="3_5uk8w"]
+
+[sub_resource type="Shader" id="Shader_8l0ih"]
+code = "shader_type canvas_item;
+
+uniform bool render_noise = false;
+uniform sampler2D noise_texture : repeat_enable; // set in inspector
+uniform float amplitude : hint_range(0.0, 0.5, 0.01) = 0.2;
+uniform float time_scale : hint_range(0.0, 5.0, 0.01) = 0.04;
+uniform float noise_scale : hint_range(0.0, 2.0, 0.0001) = 0.001;
+uniform float rotation_strength : hint_range(0.0, 5.0, 0.1) = 1;
+uniform vec2 rotation_pivot = vec2(0.5, 1);
+varying vec2 world_position;
+
+void vertex(){
+    world_position = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
+}
+
+vec2 get_sample_pos(vec2 pos, float scale, float offset) {
+	pos *= scale;
+	pos += offset;
+	return pos;
+}
+
+vec2 rotate_vec(vec2 vec, vec2 pivot, float rotation) {
+	float cosa = cos(rotation);
+	float sina = sin(rotation);
+	vec -= pivot;
+	return vec2(
+		cosa * vec.x - sina * vec.y,
+		cosa * vec.y + sina * vec.x
+	) + pivot;
+}
+
+void fragment() {
+	// get noise from texture
+	vec2 noise_sample_pos = get_sample_pos(world_position, noise_scale, TIME * time_scale);
+	float noise_amount = texture(noise_texture, noise_sample_pos).r - 0.5f;
+
+	// get rotation position around a pivot
+	float rotation = amplitude * noise_amount;
+	vec2 rotated_uvs = rotate_vec(UV, rotation_pivot, rotation);
+
+	// blend original uvs and rotated uvs based on distance to pivot
+	float dist = distance(UV, rotation_pivot) * rotation_strength;
+	vec2 result_uvs = mix(UV, rotated_uvs, dist);
+
+	// output color
+	COLOR = texture(TEXTURE, result_uvs);
+
+	// optional, preview noise texture for debugging
+	if (render_noise) {
+		vec4 noise_color = texture(noise_texture, noise_sample_pos);
+		COLOR = noise_color;
+	}
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_187py"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7wa5r"]
+width = 1024
+height = 1024
+generate_mipmaps = false
+seamless = true
+noise = SubResource("FastNoiseLite_187py")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xfry4"]
+shader = SubResource("Shader_8l0ih")
+shader_parameter/render_noise = false
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_7wa5r")
+shader_parameter/amplitude = 0.11
+shader_parameter/time_scale = 0.04
+shader_parameter/noise_scale = 0.001
+shader_parameter/rotation_strength = 0.3
+shader_parameter/rotation_pivot = Vector2(0.62, 0.905)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fh1pd"]
+shader = SubResource("Shader_8l0ih")
+shader_parameter/render_noise = false
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_7wa5r")
+shader_parameter/amplitude = 0.1
+shader_parameter/time_scale = 0.04
+shader_parameter/noise_scale = 0.001
+shader_parameter/rotation_strength = 0.5
+shader_parameter/rotation_pivot = Vector2(0.63, 0.95)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sht8w"]
+shader = ExtResource("3_5uk8w")
+shader_parameter/render_noise = false
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_7wa5r")
+shader_parameter/amplitude = 0.15
+shader_parameter/time_scale = 0.04
+shader_parameter/noise_scale = 0.001
+shader_parameter/rotation_strength = 0.5
+shader_parameter/rotation_pivot = Vector2(0.755, 0.88)
 
 [sub_resource type="Animation" id="Animation_wngaa"]
 resource_name = "cortar"
@@ -193,6 +288,7 @@ crescimento_time = 0.0
 scale = Vector2(3, 3)
 
 [node name="MangueBebe" type="Sprite2D" parent="scaled"]
+material = SubResource("ShaderMaterial_xfry4")
 position = Vector2(0, -1.6)
 texture = ExtResource("1_yyjcj")
 offset = Vector2(0.81, -6.67)
@@ -201,6 +297,7 @@ region_rect = Rect2(0, 17, 15, 20)
 
 [node name="MangueJovem" type="Sprite2D" parent="scaled"]
 visible = false
+material = SubResource("ShaderMaterial_fh1pd")
 position = Vector2(1.6, -1)
 texture = ExtResource("1_yyjcj")
 offset = Vector2(-1.585, -10.585)
@@ -209,6 +306,7 @@ region_rect = Rect2(16, 9, 20, 28)
 
 [node name="MangueAdulta" type="Sprite2D" parent="scaled"]
 visible = false
+material = SubResource("ShaderMaterial_sht8w")
 position = Vector2(-4.2, -1.2)
 texture = ExtResource("1_yyjcj")
 offset = Vector2(5.605, -10.665)
