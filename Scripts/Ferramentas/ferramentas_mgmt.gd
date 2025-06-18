@@ -67,17 +67,18 @@ func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> voi
 	# coloca colado no jogador, para ter o som no local certinho
 	ferramenta.position = Vector2.ZERO
 
-func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta, pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
+func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta, 
+								global_pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
 	_retirar_ferramenta_jogador(jogador, ferramenta)
 	# aparece de volta (visivel no chao)
 	ferramenta.show_ferramenta()
 	
 	# se nao escolheu o lugar -> posiciona perto do jogador
-	if pos_ferramenta.is_zero_approx():
+	if global_pos_ferramenta.is_zero_approx():
 		# posiciona ferramenta no chao perto do jogador
-		pos_ferramenta = jogador.global_position + dropar_offset_jogador
+		global_pos_ferramenta = jogador.global_position + dropar_offset_jogador
 	# posiciona ferramenta no chao
-	_posicionar_ferramenta(ferramenta, pos_ferramenta)
+	_posicionar_ferramenta(ferramenta, global_pos_ferramenta)
 
 func _retirar_ferramenta_jogador(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	# 

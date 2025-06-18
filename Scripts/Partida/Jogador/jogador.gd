@@ -53,8 +53,6 @@ var interact: StringName
 var pickup: StringName
 var drop: StringName
 
-var pickup_recente : bool = false
-
 func _ready() -> void:
 	#
 	ferramentas_mgmt = spawn_jogadores.get_ferramentas_mgmt()
@@ -298,25 +296,14 @@ func lidar_pickup() -> void:
 	
 	# se ja estiver segurando uma ferramenta
 	if segurando and is_instance_valid(segurando):
-		# se eu fiz um pickup recentemente -> chamado mt rapido, nao faca nada
-		if pickup_recente: return
-		# nao fiz um pickup recentemente -> drop a que esta segurando
-		drop_ferramenta()
+		# drop a ferramenta que esta segurando, no local que estava a no chao
+		drop_ferramenta(ferramenta.global_position)
 	
 	# mostrar intrucoes
 	mostrar_instrucoes_pegar()
 	
 	# pega a ferramenta do chao
 	pegar_ferramenta(ferramenta)
-	
-	
-	# ??????? verificar se ainda precisa disso dps do throw
-	# marca que pegou recentemente
-	pickup_recente = true
-	# espera um pouco para desmarcar que o pickup foi recente
-	get_tree().create_timer(0.2).timeout.connect(
-		func(): pickup_recente = false
-	)
 
 # ------ Pegar -------
 func pegar_ferramenta(ferramenta : Ferramenta) -> void:
@@ -329,6 +316,7 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	# ajusta para a area de interacao reconhecer o alvo da ferramenta
 	ferramenta_collision_mask = ferramenta.get_layer_acao()
 	area_interacao.set_collision_mask_value(ferramenta_collision_mask, true)
+	# ==> versao atual da pra trocar de ferramenta sem dropar, entao essa parte esta off <==
 	# remove a layer das ferramentas 
 	#area_interacao.set_collision_mask_value(collision_layer_ferramentas, false)
 	
@@ -338,19 +326,17 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	# remove a ferramenta dos bodies dentro da area de interacao do jogador
 	bodys_dentro_area.erase(ferramenta)
 	
-	# atualiza o indicador de direcao
+	# atualiza o indicador de direcao (necessario)
 	_update_indicador_direcao_interacao()
 
 # ------ Dropar -------
-func drop_ferramenta() -> void:
+func drop_ferramenta(global_pos_ferramenta := Vector2.ZERO) -> void:
 	# se n tiver segurando nenhuma ferramenta -> nao faca nada
 	if (not segurando) or (not is_instance_valid(segurando)): return
-	# se pegou recentemente -> nao largue ????????
-	if pickup_recente: return
 	
 	var ferramenta : Ferramenta = segurando
 	
-	ferramentas_mgmt.jogador_dropar_ferramenta(self, ferramenta)
+	ferramentas_mgmt.jogador_dropar_ferramenta(self, ferramenta, global_pos_ferramenta)
 	_limpar_jogador_ferramenta(ferramenta)
 
 func _limpar_jogador_ferramenta(ferramenta : Ferramenta) -> void:
@@ -360,7 +346,7 @@ func _limpar_jogador_ferramenta(ferramenta : Ferramenta) -> void:
 	# area de interacao nao reconhece mais o alvo da ferramenta
 	area_interacao.set_collision_mask_value(ferramenta_collision_mask, false)
 	ferramenta_collision_mask = 32 # ajusta pra outro valor
-	# retorna a layer das ferramentas 
+	# ativa a layer das ferramentas 
 	area_interacao.set_collision_mask_value(collision_layer_ferramentas, true)
 	
 	anim_idle()
@@ -506,7 +492,6 @@ func body_mais_desejado_interacao(group_desejado : String = "") -> Node2D:
 			if (_body.is_in_group("Ferramenta") and group_desejado != "Ferramenta"):
 				dist += 10000 # valor medio para deixar ele menos atrativo
 			
-			
 			# se atual for menor do q o temos marcado -> vira o marcado
 			if dist < min_dist:
 				min_dist = dist
@@ -516,9 +501,12 @@ func body_mais_desejado_interacao(group_desejado : String = "") -> Node2D:
 	return null
 
 func _update_indicador_direcao_interacao() -> void:
+	# nao tem nada para interagir perto
 	if bodys_dentro_area.is_empty():
+		# desativa o tracking
 		indicador_direcao.set_tracking(false)
 	else:
+		# se tiver algo -> vira alvo do tracking 
 		indicador_direcao.set_tracking(true)
 		indicador_direcao.set_tracking_target(body_mais_desejado_interacao())
 
