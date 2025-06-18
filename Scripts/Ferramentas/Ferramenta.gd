@@ -30,7 +30,7 @@ func _ready() -> void:
 	audio_player = get_node("AudioStreamPlayer2D")
 	sprite = get_node("Sprite2D")
 	# 
-	#_ajustar_outline()
+	_ajustar_outline()
 
 
 func _ajustar_outline() -> void:

@@ -2,11 +2,14 @@ extends Node2D
 class_name FerramentaMgmt
 
 var locais_plantar_colecao : LocalPlantarColecao
+var tilemaps_chao : TileMapsChao
 var level : Level
 
 @export var mudas_referencias : Array[PackedScene]
+@export var dropar_offset_jogador := Vector2(-15, 40)
 
 var ferramentas_mao_jogadores : Dictionary[Jogador, Ferramenta]
+
 
 # ---------- lancar ferramentas ---------- 
 ## distancia maxima que a ferramenta via ser jogada
@@ -46,7 +49,7 @@ func plantar_muda(local_plantar : Node2D) -> void:
 # -----------------------------------------------
 # Pegar e Largar ferramenta
 # -----------------------------------------------
-func jogador_pegar(jogador : Jogador, ferramenta : Ferramenta) -> void:
+func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	ferramentas_mao_jogadores[jogador] = ferramenta
 	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
 		locais_plantar_colecao.mostrar()
@@ -61,12 +64,17 @@ func jogador_pegar(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	# coloca colado no jogador, para ter o som no local certinho
 	ferramenta.position = Vector2.ZERO
 
-func jogador_soltar(jogador : Jogador, ferramenta : Ferramenta, pos_ferramenta : Vector2) -> void:
+func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta, pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
 	_retirar_ferramenta_jogador(jogador, ferramenta)
 	# aparece de volta (visivel no chao)
 	ferramenta.show_ferramenta()
+	
+	# se nao escolheu o lugar -> posiciona perto do jogador
+	if pos_ferramenta.is_zero_approx():
+		# posiciona ferramenta no chao perto do jogador
+		pos_ferramenta = jogador.global_position + dropar_offset_jogador
 	# posiciona ferramenta no chao
-	_position_ferramenta(ferramenta, pos_ferramenta)
+	_posicionar_ferramenta(ferramenta, pos_ferramenta)
 
 func _retirar_ferramenta_jogador(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	# 
@@ -86,7 +94,7 @@ func _retirar_ferramenta_jogador(jogador : Jogador, ferramenta : Ferramenta) -> 
 	jogador.remove_child(ferramenta)
 	add_child(ferramenta)
 
-func _position_ferramenta(ferramenta : Ferramenta, global_pos : Vector2) -> void:
+func _posicionar_ferramenta(ferramenta : Ferramenta, global_pos : Vector2) -> void:
 	var ferramenta_inst : Node2D = ferramenta
 	ferramenta_inst.global_position = global_pos
 
@@ -193,7 +201,8 @@ func _processar_ferramentas_jogadas(delta : float) -> void:
 	# para cada followpath de ferramenta sendo jogada
 	for ferramenta: Ferramenta in ferramentas_jogadas_followpaths.keys():
 		var path_follow = ferramentas_jogadas_followpaths[ferramenta]
-		path_follow.progress += throw_velocidade_ferramenta * delta * throw_velocidade_ferramenta_na_curva.sample(path_follow.progress_ratio)
+		var prog = throw_velocidade_ferramenta * throw_velocidade_ferramenta_na_curva.sample(path_follow.progress_ratio)
+		path_follow.progress += prog * delta 
 		# se chegou no fim do percurso
 		if path_follow.progress_ratio >= 1.0:
 			path_follow.progress_ratio = 1.0
@@ -213,11 +222,41 @@ func _ferramenta_fim_throw(ferramenta : Ferramenta, path_follow : Node2D) -> voi
 	global_pos_ferramenta  = path.global_position
 	global_pos_ferramenta += path.curve.get_point_position(1)
 	
-	# posiciona no chao
-	_position_ferramenta(ferramenta, global_pos_ferramenta)
+	# se a posicao que caiu for invalida -> pega outra posicao
+	if not _is_global_pos_valida_ferramenta(global_pos_ferramenta):
+		# posiciona no comeco de onde foi lancada
+		global_pos_ferramenta  = path.global_position
+		#global_pos_ferramenta += path.curve.get_point_position(0) # primeiro ponto eh na origem
+		global_pos_ferramenta += dropar_offset_jogador
+		# fade in na ferramenta
+		fade_in_ferramenta(ferramenta, 0.8)
+	
+	# posiciona ferramenta no chao
+	_posicionar_ferramenta(ferramenta, global_pos_ferramenta)
+	
 	# aparece de volta (visivel no chao)
 	ferramenta.show_ferramenta()
 	
 	# deleta a curva e os filhos
 	path.queue_free()
+
+func _is_global_pos_valida_ferramenta(global_pos_ferramenta : Vector2) -> bool:
+	var is_on_water : bool = tilemaps_chao.jogador_pos_on_water(global_pos_ferramenta)
+	if is_on_water:
+		return false
 	
+	# nenhum problema -> posicao eh valida
+	return true
+
+func fade_in_ferramenta(ferramenta : Ferramenta, duracao : float) -> void:
+	# deixa transparente primeiro
+	ferramenta.modulate.a = 0.0
+	ferramenta.outline_off()
+	
+	# fade in
+	var tween := create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(ferramenta, "modulate:a", 1.0, duracao).from_current()
+	# liga a outline de novo
+	await tween.finished # espera o tween terminar
+	ferramenta.outline_on()

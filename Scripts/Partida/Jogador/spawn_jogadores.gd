@@ -14,6 +14,8 @@ var jogadores_atras_pos : Dictionary[Jogador, Array]
 @onready var max_respawn_tempo_atras_ms := int(1.5 * respawn_tempo_atras * 1000)
 
 func _ready() -> void:
+	ferramentas_mgmt.tilemaps_chao = tilemaps_chao
+	
 	for jogador : Jogador in get_children():
 		jogadores.append(jogador)
 		jogadores_spawns[jogador] = jogador.global_position

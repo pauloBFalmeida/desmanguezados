@@ -280,7 +280,7 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	if segurando and is_instance_valid(segurando): return
 	
 	segurando = ferramenta
-	ferramentas_mgmt.jogador_pegar(self, ferramenta)
+	ferramentas_mgmt.jogador_pegar_ferramenta(self, ferramenta)
 	
 	# ajusta para a area de interacao reconhecer o alvo da ferramenta
 	ferramenta_collision_mask = ferramenta.get_layer_acao()
@@ -298,7 +298,7 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	_update_indicador_direcao_interacao()
 
 # ------ Dropar -------
-func drop_ferramenta(pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
+func drop_ferramenta() -> void:
 	# se n tiver segurando nenhuma ferramenta -> nao faca nada
 	if (not segurando) or (not is_instance_valid(segurando)): return
 	# se pegou recentemente -> nao largue ????????
@@ -306,11 +306,7 @@ func drop_ferramenta(pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
 	
 	var ferramenta : Ferramenta = segurando
 	
-	if pos_ferramenta.is_zero_approx():
-		# posiciona ferramenta no chao perto do jogador
-		pos_ferramenta = global_position + Vector2(-15, 40)
-	
-	ferramentas_mgmt.jogador_soltar(self, ferramenta, pos_ferramenta)
+	ferramentas_mgmt.jogador_dropar_ferramenta(self, ferramenta)
 	_limpar_jogador_ferramenta(ferramenta)
 
 func _limpar_jogador_ferramenta(ferramenta : Ferramenta) -> void:
