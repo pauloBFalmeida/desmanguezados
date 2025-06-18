@@ -8,10 +8,13 @@ var is_usando_controle : bool = false
 
 ## velocidade do jogador
 @export var speed: float = 250.0
+## porcentagem de slowdown durante o cooldown de usar uma ferramenta
+@export var slowdown_cooldown: float = 0.2
 ## porcentagem de slowdown no lodo
 @export var slowdown_lodo: float = 0.75
 var speed_modifier_terreno : float = 1.0
 var speed_modifier_cooldown : float = 1.0
+
 
 ## segundos que pode ficar na agua ate morrer
 @export var max_water_time := 0.8
@@ -417,7 +420,7 @@ func cooldown_jogador(ferramenta : Ferramenta) -> void:
 	ja_tem_anim_cooldown = true
 	
 	# slow 
-	speed_modifier_cooldown = 0.2
+	speed_modifier_cooldown = slowdown_cooldown
 	
 	# animacao de cooldown
 	var duracao := ferramenta.duracao_cooldown
@@ -426,8 +429,8 @@ func cooldown_jogador(ferramenta : Ferramenta) -> void:
 
 func _fim_cooldown_jogador() -> void:
 	ja_tem_anim_cooldown = false
-	speed_modifier_cooldown = 1.0
-	
+	speed_modifier_cooldown = 1.0 # retira o slow do cooldown
+
 # ----------------------------------------------
 # Animacao
 # ----------------------------------------------
