@@ -8,9 +8,11 @@ uniform float noise_scale : hint_range(0.0, 2.0, 0.0001) = 0.001;
 uniform float rotation_strength : hint_range(0.0, 5.0, 0.1) = 1;
 uniform vec2 rotation_pivot = vec2(0.5, 1);
 varying vec2 world_position;
+varying vec4 vertex_color;
 
 void vertex(){
     world_position = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
+    vertex_color = COLOR; // save the modulate color
 }
 
 vec2 get_sample_pos(vec2 pos, float scale, float offset) {
@@ -43,9 +45,9 @@ void fragment() {
 	vec2 result_uvs = mix(UV, rotated_uvs, dist);
 
 	// output color with modulate alfa applied
-    vec4 tex_color = texture(TEXTURE, result_uvs);
-	tex_color.a = COLOR.a;
-    COLOR = tex_color;
+    vec4 tex_color = texture(TEXTURE, result_uvs);	
+    COLOR = tex_color * vertex_color;
+	
 
 	// optional, preview noise texture for debugging
 	if (render_noise) {

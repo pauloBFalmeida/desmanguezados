@@ -18,10 +18,10 @@ noise = SubResource("FastNoiseLite_187py")
 shader = ExtResource("3_k3s1f")
 shader_parameter/render_noise = false
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_7wa5r")
-shader_parameter/amplitude = 0.1
-shader_parameter/time_scale = 0.03
+shader_parameter/amplitude = 0.16
+shader_parameter/time_scale = 0.01
 shader_parameter/noise_scale = 0.001
-shader_parameter/rotation_strength = 0.6
+shader_parameter/rotation_strength = 1.0
 shader_parameter/rotation_pivot = Vector2(0.5, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bklhl"]
