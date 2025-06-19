@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://mvp5raoekisy"]
+[gd_scene load_steps=12 format=3 uid="uid://mvp5raoekisy"]
 
 [ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="1_iomgt"]
 [ext_resource type="PackedScene" uid="uid://cedrrktxte7k6" path="res://Cenas/Partida/Arvores/arvore_mangue.tscn" id="2_in2xe"]
 [ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Corte.tscn" id="3_b6hl8"]
+[ext_resource type="Script" uid="uid://bafl75t0hjvdc" path="res://Scripts/Ferramentas/jogar_ferramenta_mgmt.gd" id="3_in2xe"]
 [ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Plantar.tscn" id="4_ty6u0"]
 [ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="5_7l7v4"]
 
@@ -20,17 +21,32 @@ metadata/_snap_enabled = true
 metadata/_snap_count = 20
 
 [sub_resource type="Curve" id="Curve_iomgt"]
-_data = [Vector2(0, 0.75), 0.0, 1.77699, 0, 0, Vector2(0.4, 1), -4.53732e-07, -4.53732e-07, 0, 0, Vector2(1, 0.5), -2.17705, 0.0, 0, 0]
+_data = [Vector2(0, 0.525), 0.0, 1.77699, 0, 0, Vector2(0.35, 1), -4.53732e-07, -4.53732e-07, 0, 0, Vector2(1, 0.325), -2.62882, 0.0, 0, 0]
 point_count = 3
 metadata/_snap_enabled = true
-metadata/_snap_count = 20
+metadata/_snap_count = 40
+
+[sub_resource type="Curve2D" id="Curve2D_iomgt"]
+_data = {
+"points": PackedVector2Array(-0.573731, 134.724, 0, -134.724, 0, 0, 0, 0, 0, 0, 300, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_in2xe"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, -100, -100, 0, 0, 0, 100, 0, 0, -100, 0, 0, 0, 0, 100, 0)
+}
+point_count = 3
 
 [node name="FerramentasMgmt" type="Node2D"]
 script = ExtResource("1_iomgt")
 mudas_referencias = Array[PackedScene]([ExtResource("2_in2xe")])
+dropar_offset_jogador = null
+throw_max_distancia = null
 throw_distancia_por_tempo = SubResource("Curve_w3vga")
+throw_velocidade_ferramenta = null
 throw_velocidade_ferramenta_na_curva = SubResource("Curve_nne28")
-linha_width = 6.0
+linha_width = 8.0
 linha_width_curve = SubResource("Curve_iomgt")
 
 [node name="Corte" parent="." groups=["Ferramentas"] instance=ExtResource("3_b6hl8")]
@@ -41,3 +57,11 @@ position = Vector2(121, 46)
 
 [node name="Recolhe" parent="." instance=ExtResource("5_7l7v4")]
 position = Vector2(217, 33)
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_iomgt")
+
+[node name="Path2D" type="Path2D" parent="Path2D"]
+curve = SubResource("Curve2D_in2xe")
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D"]

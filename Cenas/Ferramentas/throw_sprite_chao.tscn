@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://crq88i8flamso"]
+
+[ext_resource type="Texture2D" uid="uid://04q5bunmvhug" path="res://Assets/Ferramentas/throw_x.png" id="1_kcnkx"]
+[ext_resource type="Script" uid="uid://fyopl01a57uh" path="res://Scripts/Ferramentas/throw_sprite_chao.gd" id="2_yjltw"]
+[ext_resource type="Texture2D" uid="uid://lm7bcd7tpi4" path="res://Assets/Ferramentas/throw_o.png" id="3_yjltw"]
+
+[node name="throw_sprite_chao" type="Sprite2D"]
+scale = Vector2(3, 3)
+texture = ExtResource("3_yjltw")
+script = ExtResource("2_yjltw")
+sprite_valido = ExtResource("3_yjltw")
+sprite_invalido = ExtResource("1_kcnkx")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(0.4, 0.4)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

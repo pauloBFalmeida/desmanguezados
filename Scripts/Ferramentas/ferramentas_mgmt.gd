@@ -10,6 +10,7 @@ var level : Level
 
 var ferramentas_mao_jogadores : Dictionary[Jogador, Ferramenta]
 
+var throw_sprite_chao_ref := "res://Cenas/Ferramentas/throw_sprite_chao.tscn"
 
 # ---------- lancar ferramentas ---------- 
 ## distancia maxima que a ferramenta via ser jogada
@@ -23,19 +24,25 @@ var ferramentas_mao_jogadores : Dictionary[Jogador, Ferramenta]
 # dict de followpaths para cada ferramenta com curva de voo
 var ferramentas_jogadas_followpaths : Dictionary[Ferramenta, PathFollow2D]
 var throw_previsao_paths : Dictionary[Jogador, Path2D]
+var throw_previsao_subitens : Dictionary[Path2D, Dictionary]
 
 @export var linha_width : float = 4.0
 @export var linha_width_curve : Curve
 
+@onready var jogar_ferramenta_mgmt := $JogarFerramentaMgmt
+
 func _ready() -> void:
 	# passa a referencia do FerramentaMgmt para todas as ferramentas
-	for ferramenta : Ferramenta in get_children():
-		if ferramenta.is_in_group("Ferramentas"):
+	for child in get_children():
+		if child.is_in_group("Ferramentas"):
+			var ferramenta : Ferramenta = child
 			ferramenta.set_ferramenta_mgmt(self)
 
 func _process(delta: float) -> void:
 	_processar_ferramentas_jogadas(delta)
 
+func set_tilemaps_chao(_tilemaps_chao : TileMapsChao) -> void:
+	tilemaps_chao = _tilemaps_chao
 # -----------------------------------------------
 # Plantar Muda
 # -----------------------------------------------
@@ -114,11 +121,7 @@ func jogador_throw_ferramenta_segurando(jogador : Jogador,
 	
 	# jogador nao tem uma curva de previsao ainda -> criar uma
 	if not throw_previsao_paths.has(jogador):
-		var path = _criar_curva_throw()
-		jogador.add_child(path)
-		throw_previsao_paths[jogador] = path
-		# criar visual de jogar
-		_criar_visual_throw(path, jogador)
+		_montar_previsao_throw(jogador)
 	
 	# updata a curva
 	_update_curva_previsao(throw_previsao_paths[jogador], global_end_pos)
@@ -155,8 +158,37 @@ func jogador_throw_ferramenta_jogar(jogador : Jogador, ferramenta : Ferramenta) 
 func jogador_throw_ferramenta_limpar(jogador : Jogador) -> void:
 	if throw_previsao_paths.has(jogador):
 		var path = throw_previsao_paths[jogador] # pega o path
+		# apaga os sub-itens
+		if throw_previsao_subitens.has(path):
+			throw_previsao_subitens.erase(path)
+		# apaga a curva de path
 		throw_previsao_paths.erase(jogador)
 		path.queue_free() # libera a memoria
+
+func _montar_previsao_throw(jogador : Jogador) -> void:
+	# criar o path da curva de jogar
+	var path = _criar_curva_throw()
+	jogador.add_child(path)
+	throw_previsao_paths[jogador] = path
+	# --- criar os subitens ---
+	throw_previsao_subitens[path] = {} # cria um dict novo
+	var subitens = throw_previsao_subitens[path]
+	# criar linha de arremesso
+	var linha = _criar_visual_throw(jogador)
+	path.add_child(linha)
+	subitens["linha"] = linha
+	# criar sprite do fim da curva 
+	var sprite_fim = _criar_visual_queda_throw(jogador)
+	path.add_child(sprite_fim)
+	subitens["sprite_fim"] = sprite_fim
+	# criar sprite de fora da tela, em cima do jogador
+	var sprite_fora = _criar_visual_queda_throw(jogador)
+	path.add_child(sprite_fora)
+	subitens["sprite_fora"] = sprite_fora
+	# posicao logo em cima do jogador
+	sprite_fora.position = path.curve.get_point_position(0) + Vector2(0, -60)
+	sprite_fora.mostrar_invalido()
+	sprite_fora.hide()
 
 func _criar_path_follow_ferramenta(ferramenta : Ferramenta) -> PathFollow2D:
 	# cria o que percorre a curva
@@ -176,6 +208,7 @@ func _criar_curva_throw() -> Path2D:
 	# cria o caminho para jogar a ferramenta
 	var path := Path2D.new()
 	path.curve = Curve2D.new()
+	path.z_index = 30 # bota na frente de tudo
 	
 	# ajeita as posicoes referentes a posicao base da curva
 	# ponto inicial eh a origem da curva
@@ -205,40 +238,67 @@ func _update_curva_previsao(path : Path2D, global_pos_fim_curva : Vector2) -> vo
 	path.curve.set_point_position(1, final_pos)
 	
 	# update visual
-	_update_visual_throw(path, path.get_child(0))
+	_update_visual_throw(path, 
+						throw_previsao_subitens[path]["linha"],
+						throw_previsao_subitens[path]["sprite_fim"],
+						throw_previsao_subitens[path]["sprite_fora"] )
 
-func _criar_visual_throw(path : Path2D, jogador : Jogador):
+func _criar_visual_throw(jogador : Jogador) -> Line2D:
 	# criar linha
 	var linha := Line2D.new()
-	path.add_child(linha)
-	
 	# grossura
 	linha.width = linha_width
 	linha.width_curve = linha_width_curve
 	# -- Cor --
 	var jogador_cor = jogador.theme_color
-	#linha.default_color = jogador.theme_color
 	# cria as cores
-	#var cor_comeco := Color(jogador_cor, 0.0)
-	#var cor_meio   := Color(jogador_cor, 0.7)
-	#var cor_final  := Color(jogador_cor, 0.1)
-	var cor_comeco := Color(jogador_cor)
-	var cor_meio   := Color(jogador_cor)
-	var cor_final  := Color(jogador_cor)
-	cor_comeco.a = 0.0
-	cor_meio.a   = 0.7
-	cor_final.a  = 0.3
+	var cor_comeco := Color(jogador_cor, 0.0)
+	var cor_meio   := Color(jogador_cor, 1.0)
+	var cor_final  := Color(jogador_cor, 0.8)
+	# mais escuro
+	cor_final.v  = 0.8
 	# ajusta no gradiente
 	linha.gradient = Gradient.new()
 	linha.gradient.set_color(0, cor_comeco)
 	linha.gradient.set_color(1, cor_final)
-	linha.gradient.add_point(0.2, cor_meio) # add cor do meioem 20% do comeco
+	# add cor do meio em 25% do comeco do grad 
+	linha.gradient.add_point(0.25, cor_meio)
+	
+	return linha
 
-func _update_visual_throw(path : Path2D, linha : Line2D):
+func _criar_visual_queda_throw(jogador : Jogador) -> ThrowSpriteChao:
+	# criar imagem
+	var throw_sprite_chao = load(throw_sprite_chao_ref)
+	var sprite : ThrowSpriteChao = throw_sprite_chao.instantiate()
+	# cor
+	sprite.modulate = jogador.theme_color
+	return sprite
+
+func _update_visual_throw(path : Path2D, linha : Line2D, 
+						sprite_fim : ThrowSpriteChao, 
+						sprite_fora : ThrowSpriteChao) -> void:
 	var points = path.curve.get_baked_points()
 	linha.points = points
 	
-
+	# se estiver fora da tela -> mostre X no jogador
+	if sprite_fim.is_fora_tela():
+		#print('fora')
+		print(sprite_fim.global_position)
+		sprite_fora.mostrar()
+		#return # para aqui, n precisa verificar se a queda eh valida
+	# se for visivel -> mostre no final da curva
+	#print('dentro')
+	sprite_fora.esconder()
+	
+	# posicao de queda (fim da curva)
+	var pos_queda = path.curve.get_point_position(1)
+	sprite_fim.position = pos_queda
+	# se a posicao que for cair for invalida -> mostra invalido
+	var global_pos_queda = path.global_position + pos_queda
+	if not _is_global_pos_valida_ferramenta(global_pos_queda):
+		sprite_fim.mostrar_invalido()
+	else: # se for valida -> mostrar valido
+		sprite_fim.mostrar_valido()
 
 ## processar as ferramentas sendo jogadas
 func _processar_ferramentas_jogadas(delta : float) -> void:
