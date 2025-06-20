@@ -269,6 +269,8 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 func drop_ferramenta(global_pos_ferramenta := Vector2.ZERO) -> void:
 	# se n tiver segurando nenhuma ferramenta -> nao faca nada
 	if (not segurando) or (not is_instance_valid(segurando)): return
+	# desliga a mira manual
+	_turn_off_manual_aim()
 	
 	var ferramenta : Ferramenta = segurando
 	
@@ -429,36 +431,35 @@ func body_mais_desejado_interacao(group_desejado : String = "") -> Node2D:
 	if bodys_dentro_area.size() == 1:
 		for _body in bodys_dentro_area.values():
 			return _body
+	
 	# mais de 1 body dentro -> pega o mais proximo da direcao do movimento
+	var prox_posicao : Vector2
+	if indicador_direcao.aim_all_time:
+		# se tiver o override do joystick -> pegar a posicao do indicador
+		prox_posicao = indicador_direcao.get_global_position_indicador()
 	else:
-		var prox_posicao : Vector2
-		if indicador_direcao.aim_all_time:
-			# se tiver o override do joystick -> pegar a posicao do indicador
-			prox_posicao = indicador_direcao.get_global_position_indicador()
-		else:
-			# extrapolacao da posicao global que o jogador "esta" se movendo
-			var direcao : Vector2 = last_input_movimento.normalized()
-			prox_posicao = global_position + direcao 
+		# extrapolacao da posicao global que o jogador "esta" se movendo
+		var direcao : Vector2 = last_input_movimento.normalized()
+		prox_posicao = global_position + direcao 
+	
+	# se nao tiver nenhum grupo em desejo, e esta segurando ferramenta -> foca nos Marcadores
+	if group_desejado.is_empty() and segurando and is_instance_valid(segurando):
+		group_desejado = "Marcador"
+	
+	# acha o body mais proximo de "prox_posicao"
+	var min_dist : float = INF
+	var min_body : Node2D = null
+	for _body : Node2D in bodys_dentro_area.values():
+		var dist = _body.global_position.distance_squared_to(prox_posicao)
+		# se tiver um grupo desejado and _body nao esta nesse grupo
+		if not _body.is_in_group(group_desejado):
+			dist += 9000 # valor alto para deixar ele menos atrativo
 		
-		# acha o body mais proximo de "prox_posicao"
-		var min_dist : float = INF
-		var min_body : Node2D = null
-		for _body : Node2D in bodys_dentro_area.values():
-			var dist = _body.global_position.distance_squared_to(prox_posicao)
-			# se tiver um grupo desejado and _body nao esta nesse grupo
-			if (not group_desejado.is_empty()) and (not _body.is_in_group(group_desejado)):
-				dist += 100000 # valor alto para deixar ele menos atrativo
-			# se grupo desejado nao for Ferramentas -> deixar ferramentas menos atrativas
-			if (_body.is_in_group("Ferramenta") and group_desejado != "Ferramenta"):
-				dist += 10000 # valor medio para deixar ele menos atrativo
-			
-			# se atual for menor do q o temos marcado -> vira o marcado
-			if dist < min_dist:
-				min_dist = dist
-				min_body = _body
-		return min_body
-	# nao deve cair aqui :p
-	return null
+		# se atual for menor do q o temos marcado -> vira o marcado
+		if dist < min_dist:
+			min_dist = dist
+			min_body = _body
+	return min_body
 
 func _update_indicador_direcao_interacao() -> void:
 	# nao tem nada para interagir perto
