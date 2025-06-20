@@ -39,10 +39,6 @@ tile_map_data = PackedByteArray("AAAEAAMAAQACAAEAAAADAAMAAQACAAEAAAADAAQAAQACAAE
 tile_map_data = PackedByteArray("AAANAAcAAgACAAEAAAANAAYAAgACAAEAAAANAAUAAgACAAEAAAAMAAUAAgACAAEAAAAMAAQAAgACAAEAAAAMAAMAAgACAAEAAAANAAMAAgACAAEAAAAOAAMAAgACAAEAAAAPAAMAAgACAAEAAAAQAAMAAgACAAEAAAAQAAQAAgACAAEAAAAPAAQAAgACAAEAAAAPAAUAAgACAAEAAAAOAAUAAgACAAEAAAANAAQAAgACAAEAAAAOAAQAAgACAAEAAAAPAAYAAgACAAEAAAAOAAYAAgACAAEAAAAOAAcAAgACAAEAAAAPAAcAAgACAAEAAAAQAAcAAgACAAEAAAAQAAYAAgACAAEAAAARAAYAAgACAAEAAAARAAUAAgACAAEAAAASAAUAAgACAAEAAAATAAUAAgACAAEAAAATAAQAAgACAAEAAAATAAMAAgACAAEAAAASAAMAAgACAAEAAAARAAMAAgACAAEAAAARAAQAAgACAAEAAAAQAAUAAgACAAEAAAASAAQAAgACAAEAAAAIAAYAAgACAAEAAAAHAAcAAgACAAEAAAAHAAYAAgACAAEAAAAGAAcAAgACAAEAAAAGAAgAAgACAAEAAAAIAAUAAgACAAEAAAAIAAcAAgACAAEAAAAJAAYAAgACAAEAAAA=")
 
 [node name="ArvoresColecao" type="CanvasGroup" parent="."]
-z_index = 10
-
-[node name="ArvorePinos" parent="ArvoresColecao" instance=ExtResource("3_thw6l")]
-position = Vector2(1081, 277)
 
 [node name="ArvoreMangue" parent="ArvoresColecao" node_paths=PackedStringArray("sprites_idade", "collisions_idade") instance=ExtResource("4_iqq2a")]
 position = Vector2(411, 160)
@@ -56,6 +52,7 @@ collisions_idade = {
 1: NodePath("CollisionJovem"),
 2: NodePath("CollisionAdulta")
 }
+idade = 1
 
 [node name="ArvoreMangue2" parent="ArvoresColecao" node_paths=PackedStringArray("sprites_idade", "collisions_idade") instance=ExtResource("4_iqq2a")]
 position = Vector2(872, 140)
@@ -69,6 +66,10 @@ collisions_idade = {
 1: NodePath("CollisionJovem"),
 2: NodePath("CollisionAdulta")
 }
+idade = 1
+
+[node name="ArvorePinos" parent="ArvoresColecao" instance=ExtResource("3_thw6l")]
+position = Vector2(1081, 277)
 
 [node name="ArvorePinos2" parent="ArvoresColecao" instance=ExtResource("3_thw6l")]
 position = Vector2(88, 365)
@@ -188,6 +189,7 @@ position = Vector2(261, 479)
 position = Vector2(146, 396)
 
 [node name="LocaisPlantarColecao" type="Node2D" parent="."]
+z_index = -1
 script = ExtResource("9_xeic4")
 
 [node name="LocalPlantar" parent="LocaisPlantarColecao" instance=ExtResource("9_hdr42")]
@@ -200,5 +202,4 @@ metadata/_edit_lock_ = true
 [editable path="SpawnJogadores"]
 [editable path="SpawnJogadores/Jogador2"]
 [editable path="SpawnJogadores/Jogador2/IndicadorDirecao"]
-[editable path="SpawnJogadores/Jogador2/IntrucoesUI"]
 [editable path="FerramentasMgmt"]

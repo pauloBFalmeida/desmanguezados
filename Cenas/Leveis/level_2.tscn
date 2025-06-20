@@ -38,7 +38,6 @@ tile_map_data = PackedByteArray("AAASAAcAAQACAAEAAAATAAcAAQACAAEAAAATAAgAAQACAAE
 tile_map_data = PackedByteArray("AAANAAcAAgACAAEAAAAPAAYAAgACAAEAAAAOAAYAAgACAAEAAAAOAAcAAgACAAEAAAAPAAcAAgACAAEAAAAQAAcAAgACAAEAAAAHAAQAAgACAAEAAAAGAAQAAgACAAEAAAAFAAQAAgACAAEAAAAEAAQAAgACAAEAAAAVAAsAAgACAAEAAAAWAAsAAgACAAEAAAAWAAwAAgACAAEAAAAXAAsAAgACAAEAAAAVAAMAAgACAAEAAAAVAAQAAgACAAEAAAAWAAQAAgACAAEAAAAWAAMAAgACAAEAAAAXAAMAAgACAAEAAAAXAAIAAgACAAEAAAABAAoAAgACAAEAAAABAAsAAgACAAEAAAABAAwAAgACAAEAAAACAAwAAgACAAEAAAACAA0AAgACAAEAAAAOAAgAAgACAAEAAAAPAAgAAgACAAEAAAAQAAgAAgACAAEAAAA=")
 
 [node name="ArvoresColecao" type="CanvasGroup" parent="."]
-z_index = 10
 
 [node name="ArvorePinos" parent="ArvoresColecao" instance=ExtResource("3_pm4qp")]
 position = Vector2(239, 629)
@@ -77,13 +76,13 @@ position = Vector2(-3, -5)
 
 [node name="FerramentasMgmt" parent="." instance=ExtResource("5_b0h18")]
 
-[node name="Corte" parent="FerramentasMgmt" index="0"]
+[node name="Corte" parent="FerramentasMgmt" index="1"]
 position = Vector2(323, 564)
 
-[node name="Plantar" parent="FerramentasMgmt" index="1"]
+[node name="Plantar" parent="FerramentasMgmt" index="2"]
 position = Vector2(1004, 173)
 
-[node name="Recolhe" parent="FerramentasMgmt" index="2"]
+[node name="Recolhe" parent="FerramentasMgmt" index="3"]
 position = Vector2(641, 256)
 
 [node name="LixosColecao" type="CanvasGroup" parent="."]
@@ -161,6 +160,7 @@ position = Vector2(188, 521)
 position = Vector2(1103, 427)
 
 [node name="LocaisPlantarColecao" type="Node2D" parent="."]
+z_index = -1
 script = ExtResource("14_c65ts")
 
 [node name="LocalPlantar2" parent="LocaisPlantarColecao" instance=ExtResource("15_awc43")]
