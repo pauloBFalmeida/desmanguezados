@@ -17,9 +17,6 @@ func _ready() -> void:
 	locais_plantar_colecao.comecou_mostrar.connect(ajeitar_locais_plantar_meio_mapa)
 	for arvore : Arvore in arvores_colecao.get_children():
 		arvore.cortada.connect(ajeitar_locais_plantar_meio_mapa)
-	# Jogadores:
-	jogador_emcima.mostrar_instrucoes = true
-	jogador_embaixo.mostrar_instrucoes = true
 
 func _process(delta: float) -> void:
 	if curr_status != Status_segurando.NENHUM:
