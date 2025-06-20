@@ -58,7 +58,7 @@ animations = [{
 "speed": 1.0
 }]
 
-[node name="IndicadorPivot" type="Node2D"]
+[node name="IndicadorDirecao" type="Node2D"]
 script = ExtResource("1_iof8t")
 cor_fora_tracking = Color(0.777882, 0.777882, 0.777882, 0.65)
 

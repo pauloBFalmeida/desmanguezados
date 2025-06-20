@@ -18,6 +18,7 @@ const action_names = [
 	"pickup",
 	"drop",
 	# controller only
+	"throw_force",
 	"aim_left",
 	"aim_right",
 	"aim_up",

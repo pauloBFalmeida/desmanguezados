@@ -51,6 +51,7 @@ var move_down: StringName
 var interact: StringName
 var pickup: StringName
 var drop: StringName
+var throw_force: StringName
 
 func _ready() -> void:
 	#
@@ -58,7 +59,7 @@ func _ready() -> void:
 	#
 	_ajustar_input_map()
 	is_usando_controle = InputManager.players_no_controle.has(player_id) # marca se o jogador esta no controle
-	indicador_direcao.set_joystick_override(is_usando_controle)
+	indicador_direcao.set_usando_joystick(is_usando_controle)
 	# ajusta o nome
 	var nome_id : String = "P1" if player_id == InputManager.PlayerId.P1 else "P2"
 	set_name('Jogador_' + nome_id)
@@ -78,6 +79,7 @@ func _ajustar_input_map() -> void:
 	interact   = actionMap["interact"]
 	pickup     = actionMap["pickup"]
 	drop       = actionMap["drop"]
+	throw_force= actionMap["throw_force"]
 
 var prev_pos := Vector2.ONE
 func _physics_process(_delta: float) -> void:
@@ -88,6 +90,16 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed(pickup):
 		_throw_ferramenta_cancelar() # cancela jogar ferramenta
 		lidar_pickup()
+	
+	if is_usando_controle:
+		var throw_charge : float = Input.get_action_strength(throw_force)
+		if not is_zero_approx(throw_charge):
+			_throw_ferramenta_segurando_charge(throw_charge)
+			throw_segurando_charge = true
+		else:
+			if throw_segurando_charge:
+				_throw_ferramenta_cancelar()
+			throw_segurando_charge = false
 	
 	# lidar com esta na agua queue se necessario
 	if use_set_on_water_queue: _lidar_set_on_water()
@@ -283,6 +295,8 @@ func _throw_ferramenta_segurando(delta : float) -> void:
 	# se o throw foi cancelado, mas o botao ainda esta sendo segurado -> nao faca nada
 	if is_throw_cancelado:
 		return
+	# deixa o controle da mira ser do jogador
+	indicador_direcao.set_manual_aim(true)
 	
 	# adiciona o tempo do frame no acumulado
 	throw_acumulado_sec += delta
@@ -292,10 +306,29 @@ func _throw_ferramenta_segurando(delta : float) -> void:
 	if throw_acumulado_sec < throw_min_hold_sec:
 		return
 	
-	# direcao para jogar
-	var direcao := indicador_direcao.get_direcao()
 	# update a curva de jogar a ferramenta
 	var charge := throw_acumulado_sec * throw_max_hold_sec_div
+	_mostrar_throw_ferramenta_previsao(charge)
+
+var throw_segurando_charge : bool = false
+func _throw_ferramenta_segurando_charge(charge_input : float) -> void:
+	# se nao estiver segurando nada -> nao faca nada
+	if (not segurando) or (not is_instance_valid(segurando)): return
+	# se o throw foi cancelado, mas o botao ainda esta sendo segurado -> nao faca nada
+	if is_throw_cancelado: return
+	# deixa o controle da mira ser do jogador
+	indicador_direcao.set_manual_aim(true)
+	
+	var charge = lerpf(0.25, 1.0, charge_input)
+	
+	throw_acumulado_sec = charge * throw_max_hold_sec
+	# update a curva de jogar a ferramenta
+	_mostrar_throw_ferramenta_previsao(charge)
+
+# charge de [0,1]
+func _mostrar_throw_ferramenta_previsao(charge : float) -> void:
+	# direcao para jogar
+	var direcao := indicador_direcao.get_direcao()
 	ferramentas_mgmt.jogador_throw_ferramenta_segurando(self, direcao, charge)
 
 func _throw_ferramenta_jogar() -> void:
@@ -321,12 +354,15 @@ func _throw_ferramenta_jogar() -> void:
 
 func _throw_ferramenta_cancelar() -> void:
 	is_throw_cancelado = true
+	# volta o controle da mira pro automatico
+	_turn_off_manual_aim()
+	# reseta o mostrador
 	_throw_ferramenta_reset()
-	# limpa a curva prevista da memoria
-	ferramentas_mgmt.jogador_throw_limpar_predicao(self)
 
 func _throw_ferramenta_reset() -> void:
 	throw_acumulado_sec = 0
+	# limpa a curva prevista da memoria
+	ferramentas_mgmt.jogador_throw_limpar_predicao(self)
 
 
 # ----------------------------------------------
@@ -433,6 +469,10 @@ func _update_indicador_direcao_interacao() -> void:
 		# se tiver algo -> vira alvo do tracking 
 		indicador_direcao.set_tracking(true)
 		indicador_direcao.set_tracking_target(body_mais_desejado_interacao())
+
+func _turn_off_manual_aim() -> void:
+	indicador_direcao.set_manual_aim(false)
+	_update_indicador_direcao_interacao()
 
 # ----------------------------------------------
 # Area Interacao
