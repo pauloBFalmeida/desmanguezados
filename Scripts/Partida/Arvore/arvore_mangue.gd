@@ -7,9 +7,12 @@ extends Arvore
 @export var sprites_idade : Dictionary[Crescimento, Sprite2D] = {}
 @export var collisions_idade : Dictionary[Crescimento, CollisionShape2D] = {}
 
+@onready var front_z_index := z_index
+@onready var behind_z_index := 0
+
 func _ready() -> void:
 	super() # chama _ready da classe Arvore
-	comecar_crescer()
+	#comecar_crescer()
 	# desligar as colisoes e sprites
 	for key in sprites_idade.keys():
 		sprites_idade[key].hide()
@@ -36,7 +39,15 @@ func _update_sprite(mostrar : bool) -> void:
 	if mostrar: # mostrar
 		sprites_idade[idade].show()
 		collisions_idade[idade].show()
-		collisions_idade[idade].disabled = false # habilita o collisor
+		# se for arvore bebe -> desabilita a colisao
+		if idade == Crescimento.BEBE:
+			collisions_idade[idade].disabled = true
+			front_z_index = 0
+			_update_buraco()
+		else:
+			collisions_idade[idade].disabled = false # habilita o collisor
+			front_z_index = 10
+			_update_buraco()
 		# update area2D stuck inside
 		collision_area_preso.shape = collisions_idade[idade].shape
 		collision_area_preso.transform = collisions_idade[idade].transform
@@ -109,10 +120,17 @@ func _verificar_preso_dentro(body: Node2D) -> void:
 var objs_dentro_buraco : Array[Node2D] = []
 func _on_area_2d_mostrar_buraco_body_entered(body: Node2D) -> void:
 	objs_dentro_buraco.append(body)
-	modulate.a = 0.7
+	_update_buraco()
 
 func _on_area_2d_mostrar_buraco_body_exited(body: Node2D) -> void:
 	if objs_dentro_buraco.has(body):
 		objs_dentro_buraco.erase(body)
+	_update_buraco()
+
+func _update_buraco() -> void:
 	if objs_dentro_buraco.is_empty():
-		modulate.a = 1.0
+			z_index = behind_z_index
+			modulate.a = 1.0
+	else:
+		z_index = front_z_index
+		modulate.a = 0.7

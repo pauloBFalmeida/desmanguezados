@@ -24,8 +24,9 @@ shader_parameter/noise_scale = 0.001
 shader_parameter/rotation_strength = 1.0
 shader_parameter/rotation_pivot = Vector2(0.5, 1)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_bklhl"]
-radius = 14.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k3s1f"]
+radius = 15.0
+height = 42.0
 
 [sub_resource type="Animation" id="Animation_q3uxc"]
 length = 0.001
@@ -136,9 +137,11 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q3uxc"]
-size = Vector2(60, 192)
+size = Vector2(100, 193)
 
 [node name="ArvorePinos" type="StaticBody2D" groups=["Arvore", "Marcador"]]
+z_index = 10
+z_as_relative = false
 collision_layer = 9
 collision_mask = 0
 script = ExtResource("1_ik7rc")
@@ -161,8 +164,9 @@ region_enabled = true
 region_rect = Rect2(2, 1, 15, 46)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 4)
-shape = SubResource("CircleShape2D_bklhl")
+z_index = 8
+position = Vector2(2, -5)
+shape = SubResource("CapsuleShape2D_k3s1f")
 debug_color = Color(0.27673, 0.533623, 0.318494, 0.25098)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -175,7 +179,7 @@ collision_layer = 0
 collision_mask = 54
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DMostrarBuraco"]
-position = Vector2(3, -114)
+position = Vector2(3, -117.5)
 shape = SubResource("RectangleShape2D_q3uxc")
 debug_color = Color(0.537853, 0.539163, 0.502104, 0.42)
 

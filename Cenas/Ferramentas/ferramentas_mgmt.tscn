@@ -12,6 +12,7 @@
 [ext_resource type="Curve" uid="uid://divy7561cwr15" path="res://Presets/Ferramentas/curvaCurvaturaJogar.tres" id="6_4sgsw"]
 
 [node name="FerramentasMgmt" type="Node2D"]
+z_index = 2
 script = ExtResource("1_iomgt")
 mudas_referencias = Array[PackedScene]([ExtResource("2_in2xe")])
 

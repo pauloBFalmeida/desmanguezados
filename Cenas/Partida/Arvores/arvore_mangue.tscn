@@ -17,11 +17,11 @@ noise = SubResource("FastNoiseLite_187py")
 shader = ExtResource("3_5uk8w")
 shader_parameter/render_noise = false
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_7wa5r")
-shader_parameter/amplitude = 0.11
+shader_parameter/amplitude = 0.15
 shader_parameter/time_scale = 0.03
 shader_parameter/noise_scale = 0.001
-shader_parameter/rotation_strength = 0.3
-shader_parameter/rotation_pivot = Vector2(0.62, 0.905)
+shader_parameter/rotation_strength = 1.0
+shader_parameter/rotation_pivot = Vector2(0.15, 0.995)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fh1pd"]
 shader = ExtResource("3_5uk8w")
@@ -196,8 +196,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5uk8w"]
-radius = 9.21
-height = 34.0
+radius = 8.0
+height = 22.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wngaa"]
 radius = 13.2
@@ -211,9 +211,11 @@ height = 63.0
 radius = 4.7619
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wngaa"]
-size = Vector2(73.6667, 79.3334)
+size = Vector2(99, 81.3334)
 
 [node name="ArvoreMangue" type="StaticBody2D" node_paths=PackedStringArray("sprites_idade", "collisions_idade") groups=["Arvore", "Marcador"]]
+z_index = 10
+z_as_relative = false
 collision_layer = 9
 collision_mask = 0
 script = ExtResource("1_63al1")
@@ -303,7 +305,7 @@ collision_mask = 54
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DMostrarBuraco"]
-position = Vector2(5.5, 33.6667)
+position = Vector2(5.5, 32.6667)
 shape = SubResource("RectangleShape2D_wngaa")
 debug_color = Color(0.53208, 0.54, 0.4806, 0.203922)
 

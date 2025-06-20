@@ -2,6 +2,10 @@ extends Arvore
 
 @onready var anim_player := $AnimationPlayer
 
+@onready var front_z_index := z_index
+@onready var behind_z_index := 0
+
+
 func _ready() -> void:
 	super() # chama _ready da classe Arvore
 	idade = Crescimento.ADULTA
@@ -22,9 +26,11 @@ var objs_dentro_buraco : Array[Node2D] = []
 func _on_area_2d_mostrar_buraco_body_entered(body: Node2D) -> void:
 	objs_dentro_buraco.append(body)
 	modulate.a = 0.7
+	z_index = front_z_index
 
 func _on_area_2d_mostrar_buraco_body_exited(body: Node2D) -> void:
 	if objs_dentro_buraco.has(body):
 		objs_dentro_buraco.erase(body)
 	if objs_dentro_buraco.is_empty():
 		modulate.a = 1.0
+		z_index = behind_z_index
