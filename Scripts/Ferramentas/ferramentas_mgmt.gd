@@ -1,6 +1,9 @@
 extends Node2D
 class_name FerramentaMgmt
 
+signal pegou_ferramenta
+signal jogou_ferramenta
+
 var locais_plantar_colecao : LocalPlantarColecao
 var tilemaps_chao : TileMapsChao
 var level : Level
@@ -41,6 +44,8 @@ func plantar_muda(local_plantar : Node2D) -> void:
 # Pegar e Largar ferramenta
 # -----------------------------------------------
 func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> void:
+	emit_signal("pegou_ferramenta", jogador, ferramenta)
+	
 	ferramentas_mao_jogadores[jogador] = ferramenta
 	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
 		locais_plantar_colecao.mostrar()
@@ -101,6 +106,7 @@ func jogador_throw_ferramenta_segurando(jogador : Jogador,
 	
 func jogador_throw_ferramenta_jogar(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	if not jogar_ferramenta_mgmt.previsao_exist(jogador): return 
+	emit_signal("jogou_ferramenta", jogador, ferramenta)
 	
 	# esconde a ferramenta e retira ela da mao do jogador
 	ferramenta.hide_ferramenta()

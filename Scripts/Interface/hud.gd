@@ -1,6 +1,8 @@
 extends Control
 class_name Hud
 
+signal partida_comecando
+
 # -- hud in game --
 @onready var label_qtd_mudas := $LabelMudas
 @onready var label_cronometro := $LabelTempo
@@ -126,6 +128,7 @@ func comecar_contar() -> void:
 	comecar_partida()
 
 func comecar_partida() -> void:
+	emit_signal("partida_comecando")
 	# toca a musica do level
 	audio_player_musica.play()
 	# comeca o temporizador
