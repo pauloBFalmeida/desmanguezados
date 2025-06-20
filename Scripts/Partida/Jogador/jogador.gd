@@ -432,7 +432,7 @@ func body_mais_desejado_interacao(group_desejado : String = "") -> Node2D:
 	# mais de 1 body dentro -> pega o mais proximo da direcao do movimento
 	else:
 		var prox_posicao : Vector2
-		if indicador_direcao.joystick_override:
+		if indicador_direcao.aim_all_time:
 			# se tiver o override do joystick -> pegar a posicao do indicador
 			prox_posicao = indicador_direcao.get_global_position_indicador()
 		else:

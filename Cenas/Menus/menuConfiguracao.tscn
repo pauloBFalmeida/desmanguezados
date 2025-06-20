@@ -61,7 +61,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="JoystickOverride" type="CheckButton" parent="VBoxContainer"]
+[node name="AimAllTime" type="CheckButton" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 23
 text = "Joystick Direito controla indicador de direção"
@@ -96,6 +96,6 @@ layout_mode = 2
 text = "Atualizar Texto botoes"
 
 [connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]
-[connection signal="toggled" from="VBoxContainer/JoystickOverride" to="." method="_on_joystick_override_toggled"]
+[connection signal="toggled" from="VBoxContainer/AimAllTime" to="." method="_on_aim_all_time_toggled"]
 [connection signal="toggled" from="VBoxContainer/TrackingColor" to="." method="_on_tracking_color_toggled"]
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

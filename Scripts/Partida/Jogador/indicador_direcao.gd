@@ -3,7 +3,7 @@ class_name IndicadorDirecao
 
 @export var lerp_speed: float = 5.0 
 @export var cor_fora_tracking : Color 
-var joystick_override : bool = false
+var aim_all_time : bool = false
 var is_manual_aim : bool = false
 
 @onready var jogador : Jogador = get_parent()
@@ -19,12 +19,14 @@ var target_angle : float = 0.0
 
 func _ready() -> void:
 	_ajustar_animacao()
-	# ajusta para a cor de fora de tracking
+	# pega a configuracao se eh de mira o tempo todo
+	aim_all_time = Configuracoes.possivel_aim_all_time
+	# ajusta para comecar com a cor de nao tracking
 	set_tracking(false)
 
 func _physics_process(_delta: float) -> void:
-	# se (for joystick override) ou (auto aim estiver off) -> pegar o input do player
-	if joystick_override or is_manual_aim:
+	# se (for mirar o tempo todo) ou (auto aim estiver off) -> pegar o input do player
+	if aim_all_time or is_manual_aim:
 		_get_player_aim()
 		return
 	
@@ -48,9 +50,6 @@ func set_manual_aim(is_manual : bool) -> void:
 func set_usando_joystick(is_usando : bool) -> void:
 	# se nao estiver usando controle -> nao mude nada
 	if not is_usando: return
-	
-	# pega a configuracao se eh full override
-	joystick_override = Configuracoes.possivel_joystick_override
 	
 	lerp_speed *= 3
 	# ajustar controles de aim
@@ -84,8 +83,8 @@ func get_direcao() -> Vector2:
 # ---------------------------
 func direcao_jogador(dir : Vector2) -> void:
 	# se estiver com objeto na area de interacao -> foque no objeto
-	# se estiver com full override, ou estiver com auto aim desligado
-	if is_manual_aim or is_tracking or joystick_override: return
+	# se estiver com mira o tempo todo, ou estiver com auto aim desligado
+	if is_manual_aim or is_tracking or aim_all_time: return
 	
 	# apontar para a direcao do movimento do jogador
 	target_angle = dir.angle()

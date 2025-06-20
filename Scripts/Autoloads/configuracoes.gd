@@ -1,6 +1,6 @@
 extends Node
 
-var possivel_joystick_override : bool = false
+var possivel_aim_all_time : bool = false
 var indicador_direcao_transparente_sem_target : bool = true
 
 var string_pegar_controle_P1 : String = "X"
