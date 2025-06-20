@@ -45,9 +45,6 @@ position_smoothing_speed = 1.0
 
 [node name="HUD" parent="Camera2D" instance=ExtResource("13_gupm4")]
 
-[node name="LabelMudas" parent="Camera2D/HUD" index="1"]
-visible = false
-
 [node name="LabelTempo" parent="Camera2D/HUD" index="2"]
 visible = false
 

@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Itens/Plantar.tscn" id="4_ty6u0"]
 [ext_resource type="Curve" uid="uid://cwa1fmwmf2yff" path="res://PreSets/Ferramentas/curvaThrowLinhaWidth.tres" id="5_4sgsw"]
 [ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Itens/Recolher.tscn" id="5_7l7v4"]
-[ext_resource type="Curve" uid="uid://divy7561cwr15" path="res://Presets/Ferramentas/curvaCurvaturaJogar.tres" id="6_4sgsw"]
+[ext_resource type="Curve" uid="uid://divy7561cwr15" path="res://PreSets/Ferramentas/curvaCurvaturaJogar.tres" id="6_4sgsw"]
 
 [node name="FerramentasMgmt" type="Node2D"]
 z_index = 2
