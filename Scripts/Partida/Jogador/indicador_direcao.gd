@@ -4,31 +4,45 @@ class_name IndicadorDirecao
 @export var lerp_speed: float = 5.0 
 @export var cor_fora_tracking : Color 
 var joystick_override : bool = false
+var is_manual_aim : bool = false
 
+@onready var jogador : Jogador = get_parent()
 @onready var anim : AnimatedSprite2D = $AnimatedSpriteIndicador
 
 var duracao_usar : float
 
 var is_tracking : bool = false
 var target_tracking : Node2D = null
-@onready var jogador : Jogador = get_parent()
+
 
 var target_angle : float = 0.0
 
-var is_manual_aim : bool = false
-
 func _ready() -> void:
-	# coloca a animacao padrao
-	pronto()
-	# ajusta o tempo q leva a animacao
-	_set_speed_scale_usar()
-	# ao acabar a animacao chama pronto()
-	anim.animation_finished.connect(pronto)
+	_ajustar_animacao()
 	# ajusta para a cor de fora de tracking
 	set_tracking(false)
 
+func _physics_process(_delta: float) -> void:
+	# se (for joystick override) ou (auto aim estiver off) -> pegar o input do player
+	if joystick_override or is_manual_aim:
+		_get_player_aim()
+		return
+	
+	# se nao tiver com objeto na area de interacao -> nao faca mais nada physics
+	if not is_tracking: return
+	
+	var direcao = (target_tracking.global_position - jogador.global_position).normalized()
+	target_angle = direcao.angle()
+
+func _process(delta: float) -> void:
+	# move o indicador gentilmente
+	if not is_zero_approx(target_angle - rotation):
+		rotation = lerp_angle(rotation, target_angle, lerp_speed * delta)
+
+# ---------------------------
+# Setters
+# ---------------------------
 func set_manual_aim(is_manual : bool) -> void:
-	# nao estava automatico e foi para automatico
 	is_manual_aim = is_manual
 
 func set_usando_joystick(is_usando : bool) -> void:
@@ -41,6 +55,40 @@ func set_usando_joystick(is_usando : bool) -> void:
 	lerp_speed *= 3
 	# ajustar controles de aim
 	_ajustar_aim_input_map()
+
+# --- Tracking ---
+func set_tracking(_is_tracking : bool) -> void:
+	is_tracking = _is_tracking
+	# muda a direcao se for necessario
+	if Configuracoes.indicador_direcao_transparente_sem_target:
+		if is_tracking:
+			modulate = Color.WHITE
+		else:
+			modulate = cor_fora_tracking
+
+func set_tracking_target(target : Node2D) -> void:
+	target_tracking = target
+
+# ---------------------------
+# Getters
+# ---------------------------
+func get_global_position_indicador() -> Vector2:
+	return anim.global_position
+
+func get_direcao() -> Vector2:
+	var dir := get_global_position_indicador() - jogador.global_position
+	return dir.normalized()
+
+# ---------------------------
+# Direcao do jogador
+# ---------------------------
+func direcao_jogador(dir : Vector2) -> void:
+	# se estiver com objeto na area de interacao -> foque no objeto
+	# se estiver com full override, ou estiver com auto aim desligado
+	if is_manual_aim or is_tracking or joystick_override: return
+	
+	# apontar para a direcao do movimento do jogador
+	target_angle = dir.angle()
 
 # ---------------------------
 # Input Map
@@ -56,48 +104,16 @@ func _ajustar_aim_input_map() -> void:
 	aim_up    = actionMap["aim_up"]
 	aim_down  = actionMap["aim_down"]
 
-func direcao_jogador(dir : Vector2) -> void:
-	# se estiver com objeto na area de interacao -> foque no objeto
-	# se estiver com full override, ou estiver com auto aim desligado
-	if is_manual_aim or is_tracking or joystick_override: return
-	
-	# apontar para a direcao do movimento do jogador
-	target_angle = dir.angle()
-
-func get_direcao() -> Vector2:
-	var dir := get_global_position_indicador() - jogador.global_position
-	return dir.normalized()
-
-func set_tracking(_is_tracking : bool) -> void:
-	is_tracking = _is_tracking
-	
-	if Configuracoes.indicador_direcao_transparente_sem_target:
-		if is_tracking:
-			modulate = Color.WHITE
-		else:
-			modulate = cor_fora_tracking
-
-func set_tracking_target(target : Node2D) -> void:
-	target_tracking = target
-	
-func get_global_position_indicador() -> Vector2:
-	return anim.global_position
-
-func _physics_process(_delta: float) -> void:
-	# se (for joystick override) ou (auto aim estiver off) -> pegar o input do player
-	if joystick_override or is_manual_aim:
-		_get_player_aim()
-		return
-	
-	# se nao tiver com objeto na area de interacao -> nao faca mais nada physics
-	if not is_tracking: return
-	
-	var direcao = (target_tracking.global_position - jogador.global_position).normalized()
-	target_angle = direcao.angle()
-
-func _process(delta: float) -> void:
-	if not is_zero_approx(target_angle - rotation):
-		rotation = lerp_angle(rotation, target_angle, lerp_speed * delta)
+# ---------------------------
+# Animacao
+# ---------------------------
+func _ajustar_animacao() -> void:
+	# coloca a animacao padrao
+	pronto()
+	# ajusta o tempo q leva a animacao
+	_set_speed_scale_usar()
+	# ao acabar a animacao chama pronto()
+	anim.animation_finished.connect(pronto)
 
 func _get_player_aim() -> void:
 	# jogador com controle
@@ -108,8 +124,11 @@ func _get_player_aim() -> void:
 			#rotation = target_angle
 	else: # mouse teclado
 		var mouse_pos := get_viewport().get_mouse_position()
-		var direcao : Vector2 = mouse_pos - jogador.global_position
-		target_angle = direcao.angle_to(direcao)
+		# direcao do jogador para o mouse
+		var direcao := mouse_pos - jogador.global_position
+		direcao = direcao.normalized()
+		var angulo : float = direcao.angle()
+		target_angle = angulo
 
 func _set_speed_scale_usar() -> void:
 	const animation_name := "usar"
