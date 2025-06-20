@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bcgkqnqdxu4g"]
 
-[ext_resource type="Script" uid="uid://cktr1sno3fgax" path="res://Scripts/Ferramentas/recolher.gd" id="1_cft17"]
+[ext_resource type="Script" uid="uid://cktr1sno3fgax" path="res://Scripts/Ferramentas/Itens/recolher.gd" id="1_cft17"]
 [ext_resource type="Shader" uid="uid://cw712yn14yynr" path="res://Scripts/Shaders/outline.gdshader" id="2_3hrgq"]
 [ext_resource type="AudioStream" uid="uid://bhb8bxv86250i" path="res://Assets/Audio/efeitos/ferramentas/lixo_acerto.MP3" id="2_ginqs"]
 [ext_resource type="AudioStream" uid="uid://cgkw41vpt212o" path="res://Assets/Audio/efeitos/ferramentas/lixo_erro.MP3" id="3_073hx"]

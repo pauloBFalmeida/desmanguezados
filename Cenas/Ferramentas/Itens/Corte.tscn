@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://wc8anpmb316x"]
 
-[ext_resource type="Script" uid="uid://gr6eecxca26c" path="res://Scripts/Ferramentas/cortar.gd" id="1_m88eb"]
+[ext_resource type="Script" uid="uid://gr6eecxca26c" path="res://Scripts/Ferramentas/Itens/cortar.gd" id="1_m88eb"]
 [ext_resource type="AudioStream" uid="uid://b3kryqq6aeblq" path="res://Assets/Audio/efeitos/ferramentas/corte_acerto.MP3" id="2_dd7e1"]
 [ext_resource type="Shader" uid="uid://cw712yn14yynr" path="res://Scripts/Shaders/outline.gdshader" id="2_tk8ln"]
 [ext_resource type="Texture2D" uid="uid://7bu15100afxn" path="res://Assets/Ferramentas/item/Cortar.png" id="3_clo20"]

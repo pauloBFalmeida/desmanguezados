@@ -3,12 +3,12 @@
 [ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="1_iomgt"]
 [ext_resource type="PackedScene" uid="uid://cedrrktxte7k6" path="res://Cenas/Partida/Arvores/arvore_mangue.tscn" id="2_in2xe"]
 [ext_resource type="Script" uid="uid://0euegvkcvelh" path="res://Scripts/Ferramentas/jogar_ferramenta_mgmt.gd" id="3_7l7v4"]
-[ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Corte.tscn" id="3_b6hl8"]
+[ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Itens/Corte.tscn" id="3_b6hl8"]
 [ext_resource type="Curve" uid="uid://fcgpc3ppw8c7" path="res://PreSets/Ferramentas/curvaThrowDistanciaTempo.tres" id="3_ty6u0"]
 [ext_resource type="Curve" uid="uid://c7takgjmnpfve" path="res://PreSets/Ferramentas/curvaThrowVelocidadeQueda.tres" id="4_7l7v4"]
-[ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Plantar.tscn" id="4_ty6u0"]
+[ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Itens/Plantar.tscn" id="4_ty6u0"]
 [ext_resource type="Curve" uid="uid://cwa1fmwmf2yff" path="res://PreSets/Ferramentas/curvaThrowLinhaWidth.tres" id="5_4sgsw"]
-[ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="5_7l7v4"]
+[ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Itens/Recolher.tscn" id="5_7l7v4"]
 
 [sub_resource type="Curve2D" id="Curve2D_iomgt"]
 _data = {
