@@ -402,7 +402,7 @@ func _throw_ferramenta_cancelar() -> void:
 	is_throw_cancelado = true
 	_throw_ferramenta_reset()
 	# limpa a curva prevista da memoria
-	ferramentas_mgmt.jogador_throw_ferramenta_limpar(self)
+	ferramentas_mgmt.jogador_throw_limpar_predicao(self)
 
 func _throw_ferramenta_reset() -> void:
 	throw_acumulado_sec = 0
