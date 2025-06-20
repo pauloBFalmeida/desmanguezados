@@ -27,6 +27,7 @@ imagens_fim_jogo = Dictionary[int, CompressedTexture2D]({
 script = ExtResource("5_wa2qo")
 
 [node name="LabelMudas" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
