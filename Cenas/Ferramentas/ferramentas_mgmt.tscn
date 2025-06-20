@@ -1,33 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://mvp5raoekisy"]
+[gd_scene load_steps=11 format=3 uid="uid://mvp5raoekisy"]
 
 [ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="1_iomgt"]
 [ext_resource type="PackedScene" uid="uid://cedrrktxte7k6" path="res://Cenas/Partida/Arvores/arvore_mangue.tscn" id="2_in2xe"]
 [ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Corte.tscn" id="3_b6hl8"]
-[ext_resource type="Script" uid="uid://bafl75t0hjvdc" path="res://Scripts/Ferramentas/jogar_ferramenta_mgmt.gd" id="3_in2xe"]
-[ext_resource type="Curve" uid="uid://fcgpc3ppw8c7" path="res://Presets/Ferramentas/curvaThrowDistanciaTempo.tres" id="3_ty6u0"]
-[ext_resource type="Curve" uid="uid://c7takgjmnpfve" path="res://Presets/Ferramentas/curvaThrowVelocidadeQueda.tres" id="4_7l7v4"]
+[ext_resource type="Curve" uid="uid://fcgpc3ppw8c7" path="res://PreSets/Ferramentas/curvaThrowDistanciaTempo.tres" id="3_ty6u0"]
+[ext_resource type="Curve" uid="uid://c7takgjmnpfve" path="res://PreSets/Ferramentas/curvaThrowVelocidadeQueda.tres" id="4_7l7v4"]
 [ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Plantar.tscn" id="4_ty6u0"]
-[ext_resource type="Curve" uid="uid://cwa1fmwmf2yff" path="res://Presets/Ferramentas/curvaThrowLinhaWidth.tres" id="5_4sgsw"]
+[ext_resource type="Curve" uid="uid://cwa1fmwmf2yff" path="res://PreSets/Ferramentas/curvaThrowLinhaWidth.tres" id="5_4sgsw"]
 [ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="5_7l7v4"]
-
-[sub_resource type="Curve" id="Curve_w3vga"]
-_data = [Vector2(0, 0), 0.0, 1.23748, 0, 0, Vector2(0.15, 0.3), 0.361138, 0.361138, 0, 0, Vector2(1, 1), 0.180505, 0.0, 0, 0]
-point_count = 3
-metadata/_snap_enabled = true
-metadata/_snap_count = 20
-
-[sub_resource type="Curve" id="Curve_nne28"]
-_limits = [0.5, 1.5, 0.0, 1.0]
-_data = [Vector2(0, 1.25), 0.0, 0.0, 0, 0, Vector2(0.4, 0.8), 0.0, 0.0, 0, 0, Vector2(0.95, 1.4), 0.0, 0.0, 0, 0]
-point_count = 3
-metadata/_snap_enabled = true
-metadata/_snap_count = 20
-
-[sub_resource type="Curve" id="Curve_iomgt"]
-_data = [Vector2(0, 0.525), 0.0, 1.77699, 0, 0, Vector2(0.35, 1), -4.53732e-07, -4.53732e-07, 0, 0, Vector2(1, 0.325), -2.62882, 0.0, 0, 0]
-point_count = 3
-metadata/_snap_enabled = true
-metadata/_snap_count = 40
 
 [sub_resource type="Curve2D" id="Curve2D_iomgt"]
 _data = {
@@ -46,6 +26,7 @@ script = ExtResource("1_iomgt")
 mudas_referencias = Array[PackedScene]([ExtResource("2_in2xe")])
 throw_distancia_por_tempo = ExtResource("3_ty6u0")
 throw_velocidade_ferramenta_na_curva = ExtResource("4_7l7v4")
+linha_width_curve = ExtResource("5_4sgsw")
 
 [node name="Corte" parent="." groups=["Ferramentas"] instance=ExtResource("3_b6hl8")]
 position = Vector2(31, 44)
