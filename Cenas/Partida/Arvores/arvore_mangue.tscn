@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dbq0k02hr2o0m" path="res://Scripts/Partida/Arvore/arvore_mangue.gd" id="1_63al1"]
 [ext_resource type="Texture2D" uid="uid://e14uxly4awj8" path="res://Assets/Cenario/Arvores/ArvoresMangue.png" id="1_yyjcj"]
-[ext_resource type="Shader" uid="uid://bgx5ojm5n4jm4" path="res://Scripts/Shaders/WindyFoliage.gdshader" id="3_5uk8w"]
+[ext_resource type="Shader" path="res://Scripts/Shaders/WindyFoliage.gdshader" id="3_5uk8w"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_187py"]
 

@@ -197,15 +197,18 @@ func _update_visual_throw(path : Path2D, linha : Line2D,
 	var points = path.curve.get_baked_points()
 	linha.points = points
 	
-	# se estiver fora da tela -> mostre X no jogador
-	if sprite_fim.is_fora_tela():
-		#print('fora')
-		print(sprite_fim.global_position)
-		sprite_fora.mostrar()
+	## ==> Essa parte n deu certo :/ <==
+		## TODO: arrumar essa parte de se a sprite_fim estiver fora da tela
+		## 		esconder sprite_fim, e mostrar a sprite_fora
+		##		senao: mostrar a sprite_fora, esconder sprite_fim
+		## 		
+		##		dps de arrumar: remover sprite_fora.mostrar() / esconder() do resto do codigo
+	## se estiver fora da tela -> mostre X no jogador
+	#if sprite_fim.is_fora_tela():
+		#sprite_fora.mostrar()
 		#return # para aqui, n precisa verificar se a queda eh valida
-	# se for visivel -> mostre no final da curva
-	#print('dentro')
-	sprite_fora.esconder()
+	## se for visivel -> mostre no final da curva
+	#sprite_fora.esconder()
 	
 	# posicao de queda (fim da curva)
 	var pos_queda = path.curve.get_point_position(1)
@@ -214,8 +217,10 @@ func _update_visual_throw(path : Path2D, linha : Line2D,
 	var global_pos_queda = path.global_position + pos_queda
 	if not ferramenta_mgmt.is_global_pos_valida_ferramenta(global_pos_queda):
 		sprite_fim.mostrar_invalido()
+		sprite_fora.mostrar()
 	else: # se for valida -> mostrar valido
 		sprite_fim.mostrar_valido()
+		sprite_fora.esconder()
 
 ## processar as ferramentas sendo jogadas
 func _processar_ferramentas_jogadas(delta : float) -> void:
@@ -223,7 +228,7 @@ func _processar_ferramentas_jogadas(delta : float) -> void:
 	for ferramenta: Ferramenta in ferramentas_jogadas_followpaths.keys():
 		var path_follow = ferramentas_jogadas_followpaths[ferramenta]
 		var prog = throw_velocidade_ferramenta * throw_velocidade_ferramenta_na_curva.sample(path_follow.progress_ratio)
-		path_follow.progress += prog * delta 
+		path_follow.progress += prog * delta
 		# se chegou no fim do percurso
 		if path_follow.progress_ratio >= 1.0:
 			path_follow.progress_ratio = 1.0

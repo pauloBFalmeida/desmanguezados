@@ -32,10 +32,6 @@ var ferramentas_mgmt : FerramentaMgmt
 # ultima direcao que o jogador deu input de movimento
 var last_input_movimento := Vector2.RIGHT
 
-@onready var instrucoes := $IntrucoesUI
-@onready var instrucoes_label := $IntrucoesUI/LabelInstrucoes
-var mostrar_instrucoes := false
-
 const collision_layer_ferramentas : int = 3
 var ferramenta_collision_mask : int
 
@@ -177,77 +173,6 @@ func lidar_agua() -> void:
 	modulate = lerp(color_base, color_fade, weight)
 
 # ----------------------------------------------
-# Instrucoes
-# ----------------------------------------------
-# ==== ?????
-var primeira_vez : bool = true
-
-func mostrar_instrucoes_pegar() -> void:
-	if not mostrar_instrucoes: return
-	
-	
-	instrucoes.show()
-	get_tree().create_timer(2.0).timeout.connect(
-		func(): instrucoes.hide()
-	)
-	
-	if primeira_vez:
-		primeira_vez = false
-		get_tree().create_timer(3.0).timeout.connect(
-			mostrar_instrucoes_drop
-		)
-	
-	
-	var txt_botao : String
-	if is_usando_controle:
-		if player_id == InputManager.PlayerId.P1:
-			txt_botao = Configuracoes.string_pegar_controle_P1
-		else:
-			txt_botao = Configuracoes.string_pegar_controle_P2
-	else:
-		txt_botao = "Espaço"
-		
-	instrucoes_label.text = txt_botao + " para pegar"
-
-func mostrar_instrucoes_usar() -> void:
-	if not mostrar_instrucoes: return
-	
-	instrucoes.show()
-	get_tree().create_timer(2.0).timeout.connect(
-		func(): instrucoes.hide()
-	)
-	
-	var txt_botao : String
-	if is_usando_controle:
-		if player_id == InputManager.PlayerId.P1:
-			txt_botao = Configuracoes.string_pegar_controle_P1
-		else:
-			txt_botao = Configuracoes.string_pegar_controle_P2
-	else:
-		txt_botao = "Espaço"
-		
-	instrucoes_label.text = txt_botao + " para usar"
-
-func mostrar_instrucoes_drop() -> void:
-	if not mostrar_instrucoes: return
-	
-	instrucoes.show()
-	get_tree().create_timer(2.0).timeout.connect(
-		func(): instrucoes.hide()
-	)
-	
-	var txt_botao : String
-	if is_usando_controle:
-		if player_id == InputManager.PlayerId.P1:
-			txt_botao = Configuracoes.string_pegar_controle_P1
-		else:
-			txt_botao = Configuracoes.string_pegar_controle_P2
-	else:
-		txt_botao = "Espaço"
-		
-	instrucoes_label.text = txt_botao + " para largar"
-
-# ----------------------------------------------
 # Interagir
 # ----------------------------------------------
 func interagir() -> void:	
@@ -261,7 +186,6 @@ func interagir() -> void:
 	# -- fazemos a acao sobre o corpo --
 	# se for alvo da ferramenta -> usar ferramenta
 	if body.is_in_group("Marcador"):
-		mostrar_instrucoes_usar()
 		usar_ferramenta(body)
 
 # ----------------------------------------------
@@ -301,9 +225,6 @@ func lidar_pickup() -> void:
 	if segurando and is_instance_valid(segurando):
 		# drop a ferramenta que esta segurando, no local que estava a no chao
 		drop_ferramenta(ferramenta.global_position)
-	
-	# mostrar intrucoes
-	mostrar_instrucoes_pegar()
 	
 	# pega a ferramenta do chao
 	pegar_ferramenta(ferramenta)

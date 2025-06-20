@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://mvp5raoekisy"]
+[gd_scene load_steps=10 format=3 uid="uid://mvp5raoekisy"]
 
 [ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="1_iomgt"]
 [ext_resource type="PackedScene" uid="uid://cedrrktxte7k6" path="res://Cenas/Partida/Arvores/arvore_mangue.tscn" id="2_in2xe"]
@@ -9,18 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Itens/Plantar.tscn" id="4_ty6u0"]
 [ext_resource type="Curve" uid="uid://cwa1fmwmf2yff" path="res://PreSets/Ferramentas/curvaThrowLinhaWidth.tres" id="5_4sgsw"]
 [ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Itens/Recolher.tscn" id="5_7l7v4"]
-
-[sub_resource type="Curve2D" id="Curve2D_iomgt"]
-_data = {
-"points": PackedVector2Array(-0.573731, 134.724, 0, -134.724, 0, 0, 0, 0, 0, 0, 300, 0)
-}
-point_count = 2
-
-[sub_resource type="Curve2D" id="Curve2D_in2xe"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, -100, -100, 0, 0, 0, 100, 0, 0, -100, 0, 0, 0, 0, 100, 0)
-}
-point_count = 3
 
 [node name="FerramentasMgmt" type="Node2D"]
 script = ExtResource("1_iomgt")
@@ -40,11 +28,3 @@ position = Vector2(121, 46)
 
 [node name="Recolhe" parent="." instance=ExtResource("5_7l7v4")]
 position = Vector2(217, 33)
-
-[node name="Path2D" type="Path2D" parent="."]
-curve = SubResource("Curve2D_iomgt")
-
-[node name="Path2D" type="Path2D" parent="Path2D"]
-curve = SubResource("Curve2D_in2xe")
-
-[node name="Sprite2D" type="Sprite2D" parent="Path2D"]

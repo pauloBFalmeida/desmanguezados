@@ -72,13 +72,13 @@ position = Vector2(-379, 207)
 
 [node name="FerramentasMgmt" parent="." instance=ExtResource("5_1v1o2")]
 
-[node name="Corte" parent="FerramentasMgmt" index="0"]
+[node name="Corte" parent="FerramentasMgmt" index="1"]
 position = Vector2(586, 198)
 
-[node name="Plantar" parent="FerramentasMgmt" index="1"]
+[node name="Plantar" parent="FerramentasMgmt" index="2"]
 position = Vector2(880, 562)
 
-[node name="Recolhe" parent="FerramentasMgmt" index="2"]
+[node name="Recolhe" parent="FerramentasMgmt" index="3"]
 position = Vector2(235, 441)
 
 [node name="LixosColecao" type="CanvasGroup" parent="."]
