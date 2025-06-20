@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://wmjg8xw6jhs4" path="res://Scripts/Partida/Jogador/jogador.gd" id="1_hjt1h"]
 [ext_resource type="Texture2D" uid="uid://bnsy7do16v8k5" path="res://Assets/Ferramentas/circle.png" id="2_lwruk"]
-[ext_resource type="SpriteFrames" uid="uid://jrc3bqgmf5t" path="res://Cenas/Partida/Jogadores/JogadorAnim.tres" id="3_801pi"]
+[ext_resource type="SpriteFrames" uid="uid://jrc3bqgmf5t" path="res://Presets/Jogador/JogadorAnim.tres" id="3_801pi"]
 [ext_resource type="PackedScene" uid="uid://cb5x2dl7n7ywu" path="res://Cenas/Partida/Jogadores/indicador_direcao.tscn" id="4_t8i7p"]
 [ext_resource type="PackedScene" uid="uid://cspvbt5iyca1h" path="res://Cenas/Interface/intrucoes_ui.tscn" id="5_w3vga"]
 

@@ -4,7 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://cedrrktxte7k6" path="res://Cenas/Partida/Arvores/arvore_mangue.tscn" id="2_in2xe"]
 [ext_resource type="PackedScene" uid="uid://wc8anpmb316x" path="res://Cenas/Ferramentas/Corte.tscn" id="3_b6hl8"]
 [ext_resource type="Script" uid="uid://bafl75t0hjvdc" path="res://Scripts/Ferramentas/jogar_ferramenta_mgmt.gd" id="3_in2xe"]
+[ext_resource type="Curve" uid="uid://fcgpc3ppw8c7" path="res://Presets/Ferramentas/curvaThrowDistanciaTempo.tres" id="3_ty6u0"]
+[ext_resource type="Curve" uid="uid://c7takgjmnpfve" path="res://Presets/Ferramentas/curvaThrowVelocidadeQueda.tres" id="4_7l7v4"]
 [ext_resource type="PackedScene" uid="uid://bqixktjfj4rqr" path="res://Cenas/Ferramentas/Plantar.tscn" id="4_ty6u0"]
+[ext_resource type="Curve" uid="uid://cwa1fmwmf2yff" path="res://Presets/Ferramentas/curvaThrowLinhaWidth.tres" id="5_4sgsw"]
 [ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Recolher.tscn" id="5_7l7v4"]
 
 [sub_resource type="Curve" id="Curve_w3vga"]
@@ -41,13 +44,8 @@ point_count = 3
 [node name="FerramentasMgmt" type="Node2D"]
 script = ExtResource("1_iomgt")
 mudas_referencias = Array[PackedScene]([ExtResource("2_in2xe")])
-dropar_offset_jogador = null
-throw_max_distancia = null
-throw_distancia_por_tempo = SubResource("Curve_w3vga")
-throw_velocidade_ferramenta = null
-throw_velocidade_ferramenta_na_curva = SubResource("Curve_nne28")
-linha_width = 8.0
-linha_width_curve = SubResource("Curve_iomgt")
+throw_distancia_por_tempo = ExtResource("3_ty6u0")
+throw_velocidade_ferramenta_na_curva = ExtResource("4_7l7v4")
 
 [node name="Corte" parent="." groups=["Ferramentas"] instance=ExtResource("3_b6hl8")]
 position = Vector2(31, 44)

@@ -38,6 +38,7 @@ enabled=PackedStringArray("res://addons/TileMapDual/plugin.cfg")
 folder_colors={
 "res://Assets/": "yellow",
 "res://Cenas/": "orange",
+"res://Presets/": "pink",
 "res://Scripts/": "purple",
 "res://addons/": "blue"
 }
