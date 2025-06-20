@@ -3,20 +3,22 @@ class_name JogarFerramentaMgmt
 
 var ferramenta_mgmt : FerramentaMgmt
 
-var throw_sprite_chao_ref := "res://Cenas/Ferramentas/throw_sprite_chao.tscn"
+var sprite_chao_ref := "res://Cenas/Ferramentas/throw_sprite_chao.tscn"
 
 ## distancia maxima que a ferramenta via ser jogada
-@export var throw_max_distancia : float = 450.0
+@export var max_distancia : float = 450.0
 ## curva de como crece a distancia ao segurar por segundo
-@export var throw_distancia_por_tempo : Curve
+@export var distancia_por_tempo : Curve
 ## velocidade da ferramenta enquanto voa
-@export var throw_velocidade_ferramenta : float = 350.0
+@export var velocidade_ferramenta : float = 350.0
 ## multiplicador de velocidade da ferramenta pelo progress_ratio curva de voo
-@export var throw_velocidade_ferramenta_na_curva : Curve
+@export var velocidade_ferramenta_na_curva : Curve
+## multiplicador de velocidade da ferramenta pelo progress_ratio curva de voo
+@export var curvatura_jogar_por_eixo : Curve
 # dict de followpaths para cada ferramenta com curva de voo
 var ferramentas_jogadas_followpaths : Dictionary[Ferramenta, PathFollow2D]
-var throw_previsao_paths : Dictionary[Jogador, Path2D]
-var throw_previsao_subitens : Dictionary[Path2D, Dictionary]
+var previsao_paths : Dictionary[Jogador, Path2D]
+var previsao_subitens : Dictionary[Path2D, Dictionary]
 
 @export var linha_width : float = 8.0
 @export var linha_width_curve : Curve
@@ -31,23 +33,23 @@ func set_ferramenta_mgmt(_ferram_mgmt : FerramentaMgmt) -> void:
 func segurando(jogador : Jogador, 
 					direcao : Vector2, 
 					charge : float) -> void:
-	var distancia := throw_max_distancia * throw_distancia_por_tempo.sample(charge)
+	var distancia := max_distancia * distancia_por_tempo.sample(charge)
 	var global_end_pos := jogador.global_position + (direcao * distancia)
 	
 	# jogador nao tem uma curva de previsao ainda -> criar uma
-	if not throw_previsao_paths.has(jogador):
+	if not previsao_paths.has(jogador):
 		_montar_previsao(jogador)
 	
 	# updata a curva
-	_update_curva_previsao(throw_previsao_paths[jogador], global_end_pos)
+	_update_curva_previsao(previsao_paths[jogador], global_end_pos)
 
 func previsao_exist(jogador : Jogador) -> bool:
-	return throw_previsao_paths.has(jogador)
+	return previsao_paths.has(jogador)
 
 func jogar(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	# curva de previsao do jogador -- vira --> curva de lancamento
-	var path = throw_previsao_paths[jogador]
-	throw_previsao_paths.erase(jogador) # remove da lista de previsao
+	var path = previsao_paths[jogador]
+	previsao_paths.erase(jogador) # remove da lista de previsao
 	# apaga os filhos
 	for child in path.get_children():
 		child.queue_free()
@@ -67,13 +69,13 @@ func jogar(jogador : Jogador, ferramenta : Ferramenta) -> void:
 
 ## libera a curva de previsao desse jogador
 func limpar_predicao(jogador : Jogador) -> void:
-	if throw_previsao_paths.has(jogador):
-		var path = throw_previsao_paths[jogador] # pega o path
+	if previsao_paths.has(jogador):
+		var path = previsao_paths[jogador] # pega o path
 		# apaga os sub-itens
-		if throw_previsao_subitens.has(path):
-			throw_previsao_subitens.erase(path)
+		if previsao_subitens.has(path):
+			previsao_subitens.erase(path)
 		# apaga a curva de path
-		throw_previsao_paths.erase(jogador)
+		previsao_paths.erase(jogador)
 		path.queue_free() # libera a memoria
 
 
@@ -83,22 +85,22 @@ func limpar_predicao(jogador : Jogador) -> void:
 
 func _montar_previsao(jogador : Jogador) -> void:
 	# criar o path da curva de jogar
-	var path = _criar_curva_throw()
+	var path = _criar_curva()
 	jogador.add_child(path)
-	throw_previsao_paths[jogador] = path
+	previsao_paths[jogador] = path
 	# --- criar os subitens ---
-	throw_previsao_subitens[path] = {} # cria um dict novo
-	var subitens = throw_previsao_subitens[path]
+	previsao_subitens[path] = {} # cria um dict novo
+	var subitens = previsao_subitens[path]
 	# criar linha de arremesso
-	var linha = _criar_visual_throw(jogador)
+	var linha = _criar_visual(jogador)
 	path.add_child(linha)
 	subitens["linha"] = linha
 	# criar sprite do fim da curva 
-	var sprite_fim = _criar_visual_queda_throw(jogador)
+	var sprite_fim = _criar_visual_queda(jogador)
 	path.add_child(sprite_fim)
 	subitens["sprite_fim"] = sprite_fim
 	# criar sprite de fora da tela, em cima do jogador
-	var sprite_fora = _criar_visual_queda_throw(jogador)
+	var sprite_fora = _criar_visual_queda(jogador)
 	path.add_child(sprite_fora)
 	subitens["sprite_fora"] = sprite_fora
 	# posicao logo em cima do jogador
@@ -121,7 +123,7 @@ func _criar_path_follow_ferramenta(ferramenta : Ferramenta) -> PathFollow2D:
 	
 	return pathFollow
 
-func _criar_curva_throw() -> Path2D:
+func _criar_curva() -> Path2D:
 	# cria o caminho para jogar a ferramenta
 	var path := Path2D.new()
 	path.curve = Curve2D.new()
@@ -140,8 +142,11 @@ func _criar_curva_throw() -> Path2D:
 func _update_curva_previsao(path : Path2D, global_pos_fim_curva : Vector2) -> void:
 	# posicao final eh onde cai a ferramenta
 	var final_pos := path.to_local(global_pos_fim_curva)
+	
 	# ponto auxiliar para dar a curvatura (out do ponto inicial)
-	var aux_pos = final_pos * 0.7
+	var aux_size = final_pos.x / final_pos.length() # quantidade no eixo horizontal
+	aux_size = abs(aux_size) * 0.7 # aux size comparado com o ponto final
+	var aux_pos = final_pos * aux_size
 	
 	# faz o ponto aux na curva sempre estar para cima da tela
 	if final_pos.x >= 0: # curva para direita
@@ -155,12 +160,12 @@ func _update_curva_previsao(path : Path2D, global_pos_fim_curva : Vector2) -> vo
 	path.curve.set_point_position(1, final_pos)
 	
 	# update visual
-	_update_visual_throw(path, 
-						throw_previsao_subitens[path]["linha"],
-						throw_previsao_subitens[path]["sprite_fim"],
-						throw_previsao_subitens[path]["sprite_fora"] )
+	_update_visual(path, 
+						previsao_subitens[path]["linha"],
+						previsao_subitens[path]["sprite_fim"],
+						previsao_subitens[path]["sprite_fora"] )
 
-func _criar_visual_throw(jogador : Jogador) -> Line2D:
+func _criar_visual(jogador : Jogador) -> Line2D:
 	# criar linha
 	var linha := Line2D.new()
 	# grossura
@@ -183,15 +188,15 @@ func _criar_visual_throw(jogador : Jogador) -> Line2D:
 	
 	return linha
 
-func _criar_visual_queda_throw(jogador : Jogador) -> ThrowSpriteChao:
+func _criar_visual_queda(jogador : Jogador) -> ThrowSpriteChao:
 	# criar imagem
-	var throw_sprite_chao = load(throw_sprite_chao_ref)
-	var sprite : ThrowSpriteChao = throw_sprite_chao.instantiate()
+	var sprite_chao = load(sprite_chao_ref)
+	var sprite : ThrowSpriteChao = sprite_chao.instantiate()
 	# cor
 	sprite.modulate = jogador.theme_color
 	return sprite
 
-func _update_visual_throw(path : Path2D, linha : Line2D, 
+func _update_visual(path : Path2D, linha : Line2D, 
 						sprite_fim : ThrowSpriteChao, 
 						sprite_fora : ThrowSpriteChao) -> void:
 	var points = path.curve.get_baked_points()
@@ -227,15 +232,15 @@ func _processar_ferramentas_jogadas(delta : float) -> void:
 	# para cada followpath de ferramenta sendo jogada
 	for ferramenta: Ferramenta in ferramentas_jogadas_followpaths.keys():
 		var path_follow = ferramentas_jogadas_followpaths[ferramenta]
-		var prog = throw_velocidade_ferramenta * throw_velocidade_ferramenta_na_curva.sample(path_follow.progress_ratio)
+		var prog = velocidade_ferramenta * velocidade_ferramenta_na_curva.sample_baked(path_follow.progress_ratio)
 		path_follow.progress += prog * delta
 		# se chegou no fim do percurso
 		if path_follow.progress_ratio >= 1.0:
 			path_follow.progress_ratio = 1.0
-			_ferramenta_fim_throw(ferramenta, path_follow)
+			_ferramenta_fim(ferramenta, path_follow)
 
 ## chamar quando a ferramenta cai no chao depois de ser jogada
-func _ferramenta_fim_throw(ferramenta : Ferramenta, path_follow : Node2D) -> void:
+func _ferramenta_fim(ferramenta : Ferramenta, path_follow : Node2D) -> void:
 	if not ferramentas_jogadas_followpaths.has(ferramenta):
 		return
 	
