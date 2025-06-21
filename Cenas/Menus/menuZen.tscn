@@ -98,18 +98,29 @@ size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 40
 text = "Controle Conectado"
 
+[node name="LabelComecar" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -281.5
+offset_top = 199.0
+offset_right = 281.5
+offset_bottom = 309.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 70
+text = "Começar Partida"
+
 [node name="GridContainer" type="GridContainer" parent="."]
-custom_minimum_size = Vector2(0, 200)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -22.5
-offset_top = -100.0
-offset_right = 22.5
-offset_bottom = 100.0
+offset_left = -337.0
+offset_right = 338.0
+offset_bottom = 137.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 150
@@ -140,4 +151,6 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 50
 text = "Voltar"
 
+[connection signal="pressed" from="GridContainer/Button1Jog" to="." method="_on_button_1_jog_pressed"]
+[connection signal="pressed" from="GridContainer/Button2Jog" to="." method="_on_button_2_jog_pressed"]
 [connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]

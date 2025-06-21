@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6sdx5v5l772m"]
+[gd_scene load_steps=10 format=3 uid="uid://b6sdx5v5l772m"]
 
 [ext_resource type="Script" uid="uid://brncsdifpd8ke" path="res://Scripts/Interface/hud.gd" id="1_toh8p"]
 [ext_resource type="Texture2D" uid="uid://clny3k8wxq5x1" path="res://Assets/Interface/GameOverImage.jpg" id="2_7b8ht"]
@@ -6,11 +6,18 @@
 [ext_resource type="Texture2D" uid="uid://bsiu6yvfgiroo" path="res://Assets/Interface/VitoriasSujo.jpg" id="3_ftljh"]
 [ext_resource type="Texture2D" uid="uid://b0eo0x4xcairy" path="res://Assets/Interface/VitoriaLimpo.jpg" id="4_k3s11"]
 [ext_resource type="Script" uid="uid://drk55k12qbjvp" path="res://Scripts/Interface/temporizador.gd" id="5_wa2qo"]
+[ext_resource type="Shader" uid="uid://c0wsmi65f3y7d" path="res://Scripts/Shaders/efeito_tela.gdshader" id="7_po4ji"]
+[ext_resource type="Texture2D" uid="uid://bmvky7k2qcug2" path="res://Assets/Interface/white.png" id="8_pqhgn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pqhgn"]
+shader = ExtResource("7_po4ji")
+shader_parameter/brightness = 1.1
+shader_parameter/contrast = 1.1
+shader_parameter/saturation = 1.1
 
 [node name="HUD" type="Control"]
 z_index = 199
 layout_mode = 3
-anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -25,6 +32,16 @@ imagens_fim_jogo = Dictionary[int, CompressedTexture2D]({
 
 [node name="Temporizador" type="Node" parent="."]
 script = ExtResource("5_wa2qo")
+
+[node name="ColorCorrectionEffect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_pqhgn")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_pqhgn")
 
 [node name="LabelMudas" type="Label" parent="."]
 visible = false

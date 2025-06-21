@@ -1,11 +1,9 @@
-[gd_scene load_steps=18 format=4 uid="uid://b56ieg085fppr"]
+[gd_scene load_steps=15 format=4 uid="uid://b56ieg085fppr"]
 
 [ext_resource type="Script" uid="uid://75r8mn8eb2nt" path="res://Scripts/Leveis/level_zen.gd" id="1_h16eq"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps_chao.tscn" id="2_levs5"]
-[ext_resource type="Shader" uid="uid://c0wsmi65f3y7d" path="res://Scripts/Shaders/efeito_tela.gdshader" id="3_bopnl"]
 [ext_resource type="PackedScene" uid="uid://b6fqbdb1cd3kc" path="res://Cenas/Partida/Arvores/arvore_pinos.tscn" id="3_j2kr6"]
 [ext_resource type="PackedScene" uid="uid://cedrrktxte7k6" path="res://Cenas/Partida/Arvores/arvore_mangue.tscn" id="4_bopnl"]
-[ext_resource type="Texture2D" uid="uid://bmvky7k2qcug2" path="res://Assets/Interface/white.png" id="4_c3vl7"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="5_c3vl7"]
 [ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="6_wohbw"]
 [ext_resource type="PackedScene" uid="uid://c2nkskgbg1yd0" path="res://Cenas/Partida/Lixos/lixo_lata.tscn" id="7_bucb6"]
@@ -21,13 +19,7 @@ _data = [Vector2(0, 0.2), 0.0, 0.484919, 0, 0, Vector2(0.741697, 1), 0.0, 0.0, 0
 point_count = 3
 metadata/_snap_enabled = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h16eq"]
-shader = ExtResource("3_bopnl")
-shader_parameter/brightness = 0.89
-shader_parameter/contrast = 1.2
-shader_parameter/saturation = 1.535
-
-[node name="Level_Zen" type="Node" node_paths=PackedStringArray("camera_target", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
+[node name="Level_Zen" type="Node" node_paths=PackedStringArray("camera_target", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt")]
 script = ExtResource("1_h16eq")
 camera_lerp_speed_curve = SubResource("Curve_h16eq")
 camera_target = NodePath("SpawnJogadores/Jogador2")
@@ -35,8 +27,6 @@ arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
-temporizador = NodePath("Camera2D/HUD/Temporizador")
-hud = NodePath("Camera2D/HUD")
 duracao_partida_segundos = 9999
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -44,45 +34,13 @@ position = Vector2(642, 361)
 position_smoothing_speed = 1.0
 
 [node name="HUD" parent="Camera2D" instance=ExtResource("13_gupm4")]
-
-[node name="LabelTempo" parent="Camera2D/HUD" index="2"]
-visible = false
-
-[node name="GameOverMenu" parent="Camera2D/HUD" index="5"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-offset_left = 13.0
-offset_top = 356.0
-offset_right = 13.0
-offset_bottom = 356.0
-grow_vertical = 0
-
-[node name="ImagemFim" parent="Camera2D/HUD/GameOverMenu" index="0"]
-position = Vector2(-659, -719)
-
-[node name="ControlBtns" parent="Camera2D/HUD/GameOverMenu" index="1"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-grow_vertical = 0
-
-[node name="TextureRect" type="TextureRect" parent="Camera2D/HUD"]
-material = SubResource("ShaderMaterial_h16eq")
-layout_mode = 1
 anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -656.0
-offset_top = -369.0
-offset_right = -592.0
-offset_bottom = -305.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(20.4645, 11.6987)
-texture = ExtResource("4_c3vl7")
+
+[node name="ColorCorrectionEffect" parent="Camera2D/HUD" index="1"]
+offset_left = -646.0
+offset_top = -367.0
+offset_right = 646.0
+offset_bottom = 367.0
 
 [node name="TileMaps" parent="." instance=ExtResource("2_levs5")]
 
