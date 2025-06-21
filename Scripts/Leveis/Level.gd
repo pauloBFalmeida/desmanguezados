@@ -22,7 +22,7 @@ var is_fim_partida : bool = false
 const local_plantar_ref := preload("res://Cenas/Partida/local_plantar.tscn")
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel") and (not is_fim_partida):
+	if event.is_action_pressed("pause") and (not is_fim_partida):
 		if not get_tree().paused:
 			hud.pausar()
 

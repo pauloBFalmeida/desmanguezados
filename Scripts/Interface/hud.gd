@@ -36,7 +36,7 @@ enum Tipo_fim {DERROTA_TEMPO, VITORIA_SUJO, VITORIA_LIMPO}
 var despausado_recente : bool = false
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_back") and get_tree().paused:
+	if (event.is_action_pressed("ui_back") or event.is_action_pressed("pause")) and get_tree().paused:
 		despausar()
 
 func _ready() -> void:
