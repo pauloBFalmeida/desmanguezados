@@ -170,6 +170,7 @@ position = Vector2(1108, 616)
 position = Vector2(1084, 156)
 
 [node name="HUD" parent="." instance=ExtResource("16_vrx3h")]
+anchors_preset = 15
 metadata/_edit_lock_ = true
 
 [editable path="TileMaps"]

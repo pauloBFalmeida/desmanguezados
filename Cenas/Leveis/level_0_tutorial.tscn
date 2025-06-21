@@ -436,7 +436,6 @@ position = Vector2(1127, 586)
 position = Vector2(1045, 550)
 
 [node name="HUD" parent="." instance=ExtResource("16_lsuie")]
-anchors_preset = 15
 metadata/_edit_lock_ = true
 
 [node name="Node2DDivisorMeioMapa" type="Node2D" parent="."]

@@ -19,7 +19,7 @@ _data = [Vector2(0, 0.2), 0.0, 0.484919, 0, 0, Vector2(0.741697, 1), 0.0, 0.0, 0
 point_count = 3
 metadata/_snap_enabled = true
 
-[node name="Level_Zen" type="Node" node_paths=PackedStringArray("camera_target", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt")]
+[node name="Level_Zen" type="Node" node_paths=PackedStringArray("camera_target", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
 script = ExtResource("1_h16eq")
 camera_lerp_speed_curve = SubResource("Curve_h16eq")
 camera_target = NodePath("SpawnJogadores/Jogador2")
@@ -27,6 +27,8 @@ arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
+temporizador = NodePath("Camera2D/HUD/Temporizador")
+hud = NodePath("Camera2D/HUD")
 duracao_partida_segundos = 9999
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -34,13 +36,22 @@ position = Vector2(642, 361)
 position_smoothing_speed = 1.0
 
 [node name="HUD" parent="Camera2D" instance=ExtResource("13_gupm4")]
-anchors_preset = 15
 
 [node name="ColorCorrectionEffect" parent="Camera2D/HUD" index="1"]
 offset_left = -646.0
 offset_top = -367.0
 offset_right = 646.0
 offset_bottom = 367.0
+
+[node name="LabelTempo" parent="Camera2D/HUD" index="3"]
+visible = false
+
+[node name="ImagemFim" parent="Camera2D/HUD/GameOverMenu" index="0"]
+position = Vector2(-646, -363)
+
+[node name="ControlBtns" parent="Camera2D/HUD/GameOverMenu" index="1"]
+offset_top = 354.0
+offset_bottom = 354.0
 
 [node name="TileMaps" parent="." instance=ExtResource("2_levs5")]
 
