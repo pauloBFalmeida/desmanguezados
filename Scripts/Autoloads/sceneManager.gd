@@ -24,6 +24,13 @@ const LEVEIS_NOME : Dictionary[Level_id, String] = {
 	Level_id.LEVEL_3: "Level 3 Maré",
 }
 
+const LEVEIS_SELECAO_ORDEM : Array[Level_id] = [
+	Level_id.TUTORIAL,
+	Level_id.LEVEL_1,
+	Level_id.LEVEL_2,
+	Level_id.LEVEL_3,
+]
+
 const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
 	#Level_id.TUTORIAL: preload()
 }

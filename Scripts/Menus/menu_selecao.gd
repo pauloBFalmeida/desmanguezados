@@ -21,7 +21,7 @@ func _on_button_voltar_pressed() -> void:
 # --- Leveis ---
 func _criar_level_itens() -> void:
 	var item_ref = preload("res://Cenas/Menus/SubItems/level_item.tscn")
-	for level_id in SceneManager.LEVEIS_REF.keys():
+	for level_id in SceneManager.LEVEIS_SELECAO_ORDEM:
 		var item = item_ref.instantiate()
 		leveis_itens.append(item)
 		container_leveis.add_child(item)

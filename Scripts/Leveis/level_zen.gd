@@ -6,6 +6,8 @@ extends Level
 @export var camera_target : Node2D
 @onready var camera := $Camera2D
 
+@onready var jogadores := $SpawnJogadores.get_children()
+
 @onready var screen_center : Vector2 = camera.global_position
 @onready var screen_center_length : float = screen_center.length()
 
@@ -13,6 +15,16 @@ func _ready() -> void:
 	super()
 	print("Level Zen")
 	temporizador.parar() # para de contar o tempo
+	# lidar com a quantidade de jogadores
+	if Configuracoes.modo_zen_ter_1_jogador:
+		for jog in jogadores:
+			if jog != camera_target:
+				jog.global_position = Vector2(-999, -999)
+				jog.hide()
+				jog.set_physics_process(false)
+				jog.set_process(false)
+				jog.set_process_input(false)
+	
 	#gerar_mapa_aleatorio()
 
 var position_target : Vector2 = Vector2.ZERO
