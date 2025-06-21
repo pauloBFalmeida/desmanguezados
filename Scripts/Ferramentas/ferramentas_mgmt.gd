@@ -11,6 +11,7 @@ var level : Level
 @export var mudas_referencias : Array[PackedScene]
 @export var dropar_offset_jogador := Vector2(-15, 40)
 
+var ferramentas_level : Array[Ferramenta]
 var ferramentas_mao_jogadores : Dictionary[Jogador, Ferramenta]
 
 @onready var jogar_ferramenta_mgmt := $JogarFerramentaMgmt
@@ -21,24 +22,37 @@ func _ready() -> void:
 		if child.is_in_group("Ferramentas"):
 			var ferramenta : Ferramenta = child
 			ferramenta.set_ferramenta_mgmt(self)
+			ferramentas_level.append(ferramenta)
 	# ajusta o jogar ferramenta mgmt
 	jogar_ferramenta_mgmt.set_ferramenta_mgmt(self)
 
 func set_tilemaps_chao(_tilemaps_chao : TileMapsChao) -> void:
 	tilemaps_chao = _tilemaps_chao
 
+func set_locais_plantar_colecao(_locais_plantar_colecao : LocalPlantarColecao) -> void:
+	locais_plantar_colecao = _locais_plantar_colecao
+	locais_plantar_colecao.plantar.connect(plantar_muda)
+
 # -----------------------------------------------
 # Plantar Muda
 # -----------------------------------------------
-func plantar_muda(local_plantar : Node2D) -> void:
+#func plantar_muda(local_plantar : Node2D) -> void:
+	## instancia uma muda
+	#var muda_ref = mudas_referencias.pick_random()
+	#var muda : Arvore = muda_ref.instantiate()
+	## ajustes para muda funcionar
+	#muda.global_position = local_plantar.global_position
+	#level.plantada_arvore_nativa(muda)
+	## retira o local de plantar para colocar a muda
+	#locais_plantar_colecao.remove_local_plantar(local_plantar)
+	
+func plantar_muda(global_pos : Vector2) -> void:
 	# instancia uma muda
 	var muda_ref = mudas_referencias.pick_random()
 	var muda : Arvore = muda_ref.instantiate()
 	# ajustes para muda funcionar
-	muda.global_position = local_plantar.global_position
+	muda.global_position = global_pos
 	level.plantada_arvore_nativa(muda)
-	# retira o local de plantar para colocar a muda
-	locais_plantar_colecao.remove_local_plantar(local_plantar)
 
 # -----------------------------------------------
 # Pegar e Largar ferramenta

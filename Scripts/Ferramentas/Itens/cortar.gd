@@ -7,7 +7,9 @@ func usar_ferramenta(body : Node2D) -> void:
 	# se estiver no cooldown -> nao faca nada
 	if is_on_cooldown: return
 	# se nao for uma arvore -> nao faca nada
-	if not body.is_in_group("Arvore"): return
+	if not body.is_in_group("Arvore"): 
+		usar_generico(body)
+		return
 	
 	var arvore : Arvore = body
 	

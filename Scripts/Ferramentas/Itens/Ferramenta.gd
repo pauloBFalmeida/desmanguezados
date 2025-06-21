@@ -1,6 +1,8 @@
 class_name Ferramenta
 extends CharacterBody2D
 
+signal usou
+
 enum Ferramenta_tipo {CORTAR, PLANTAR, RECOLHER}
 enum Som_tipo {ACERTO, ERRO, BALANCAR}
 
@@ -85,6 +87,12 @@ func aplicar_cooldown() -> void:
 
 func _terminar_cooldown() -> void:
 	is_on_cooldown = false
+
+# --- Generico para usar fora do que eh o item ---
+func usar_generico(body : Node2D) -> void:
+	if is_on_cooldown: return # nao faca nada durante cooldown
+	emit_signal("usou", body)
+	aplicar_cooldown()
 
 # --- Abstrato ---
 func usar_ferramenta(_body : Node2D) -> void:

@@ -7,7 +7,9 @@ func usar_ferramenta(body : Node2D) -> void:
 	# se estiver no cooldown -> nao faca nada
 	if is_on_cooldown: return
 	# se nao for local de plantar -> nao faca nada
-	if not body.is_in_group("LocalPlantar"): return
+	if not body.is_in_group("LocalPlantar"): 
+		usar_generico(body)
+		return
 	
 	var local_plantar : Node2D = body
 	# planta
@@ -19,4 +21,6 @@ func usar_ferramenta(body : Node2D) -> void:
 	super.aplicar_cooldown()
 
 func plantar(local_plantar : Node2D) -> void:
-	ferramenta_mgmt.plantar_muda(local_plantar)
+	var local_plantar_colecao : LocalPlantarColecao = local_plantar.get_parent()
+	local_plantar_colecao.plantar_muda(local_plantar)
+	#ferramenta_mgmt.plantar_muda(local_plantar)

@@ -31,7 +31,7 @@ func _ready() -> void:
 	# ferramentas
 	locais_plantar_colecao.esconder()
 	ferramenta_mgmt.level = self
-	ferramenta_mgmt.locais_plantar_colecao = locais_plantar_colecao
+	ferramenta_mgmt.set_locais_plantar_colecao(locais_plantar_colecao)
 	# 
 	ajustar_arvores()
 	ajustar_lixo()
