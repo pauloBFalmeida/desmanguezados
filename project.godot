@@ -265,6 +265,7 @@ pause={
 2d_physics/layer_4="Arvores"
 2d_physics/layer_5="Mudas"
 2d_physics/layer_6="Lixo"
+2d_physics/layer_8="Paredes"
 
 [physics]
 

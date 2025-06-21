@@ -5,6 +5,7 @@ const MENU_PRINCIPAL_PATH := "res://Cenas/Menus/menuPrincipal.tscn"
 const MENU_SELECAO_PATH := "res://Cenas/Menus/menuSelecao.tscn"
 const MENU_MENU_ZEN_PATH := "res://Cenas/Menus/menuZen.tscn"
 const MENU_CONFIGURACAO_PATH := "res://Cenas/Menus/menuConfiguracao.tscn"
+const MENU_CREDITOS_PATH := "res://Cenas/Menus/menuCreditos.tscn"
 
 enum Level_id {ZEN, TUTORIAL, LEVEL_1, LEVEL_2, LEVEL_3}
 
@@ -51,6 +52,9 @@ func goto_menu_zen():
 
 func goto_configuracoes():
 	change_menu(MENU_CONFIGURACAO_PATH)
+
+func goto_creditos():
+	change_menu(MENU_CREDITOS_PATH)
 
 func goto_level(level_id : Level_id):
 	if LEVEIS_REF.has(level_id):
