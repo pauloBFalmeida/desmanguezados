@@ -9,9 +9,10 @@ const texto_creditos_ref := preload("res://Cenas/Menus/SubItems/texto_creditos.t
 
 @onready var textos_creditos_pai := $Textos
 
-var local_plantar_pos_to_corpo : Dictionary[Vector2, String] = {}
+var plantar_dados_por_global_pos : Dictionary[Vector2, Dictionary] = {}
 
 func _ready() -> void:
+	textos_creditos_pai.get_child(0).get_dados()
 	_ajustar_plantar()
 	# ajusta cada ferramenta para ter um efeito
 	for ferramenta in ferramentas_mgmt.ferramentas_level:
@@ -30,7 +31,7 @@ func _ready() -> void:
 func _chamar_spawn_plantar(corpo : TextoCreditos) -> void:
 	var global_pos := corpo.start_global_pos
 	_spawn_plantar(global_pos)
-	local_plantar_pos_to_corpo[global_pos] = corpo.get_texto()
+	plantar_dados_por_global_pos[global_pos] = corpo.get_dados()
 
 func _ajustar_plantar() -> void:
 	ferramentas_mgmt.set_locais_plantar_colecao(locais_plantar_colecao)
@@ -81,24 +82,24 @@ func usar_recolher(body : Node2D, ferramenta : Ferramenta) -> void:
 	)
 
 func usar_plantar(global_pos : Vector2) -> void:
-	var texto := local_plantar_pos_to_corpo[global_pos]
+	var dados := plantar_dados_por_global_pos[global_pos]
 	
 	# remove da lista de locais para plantar
-	local_plantar_pos_to_corpo.erase(global_pos)
+	plantar_dados_por_global_pos.erase(global_pos)
 	# spawn texto creditos
-	_spawn_texto_credito(texto, global_pos)
+	_spawn_texto_credito(dados, global_pos)
 	
 	# fake wait, para ter certeza que fez essa func antes de free o texto_creditos antigo
 	await get_tree().create_timer(0.1).timeout
 
-func _spawn_texto_credito(texto : String, global_pos : Vector2) -> void:
+func _spawn_texto_credito(dados : Dictionary, global_pos : Vector2) -> void:
 	var tween = create_tween()
 	var texto_creditos = texto_creditos_ref.instantiate()
 	texto_creditos.global_position = global_pos # isso tem que ser feito antes do _ready
 	textos_creditos_pai.add_child(texto_creditos)
 	
 	texto_creditos.hit.connect(_chamar_spawn_plantar.bind(texto_creditos))
-	texto_creditos.set_texto(texto)
+	texto_creditos.set_dados(dados)
 	# fade in
 	texto_creditos.toggle_collision(false)
 	texto_creditos.get_label().modulate.a = 0.0

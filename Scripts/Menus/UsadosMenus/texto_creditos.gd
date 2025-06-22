@@ -35,10 +35,22 @@ func get_label() -> Label:
 func toggle_collision(_on : bool) -> void:
 	collision.disabled = not _on
 
-func colocar_global_pos(global_pos : Vector2) -> void:
-	#var body_state := PhysicsDirectBodyState2D.new()
-	#body_state.transform
-	pass
 
 func receber_hit(direcao : Vector2, forca : float) -> void:
 	apply_impulse(direcao * forca)
+
+
+func get_dados() -> Dictionary:
+	var dados : Dictionary = {
+		"texto": label_texto.text,
+		"peso" : mass,
+		"font_size" : label_texto.get_theme_font_size("normal_font_size"),
+		"font_color": label_texto.get_theme_color("normal_font_size"),
+	}
+	return dados
+
+func set_dados(dados : Dictionary) -> void:
+	label_texto.text = dados["texto"]
+	mass = dados["peso"]
+	label_texto.add_theme_font_size_override("normal_font_size", dados["font_size"])
+	label_texto.add_theme_color_override("normal_font_size", dados["font_color"])

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://but8w058vnhtw"]
+[gd_scene load_steps=16 format=4 uid="uid://but8w058vnhtw"]
 
 [ext_resource type="Script" uid="uid://yr3am146nus8" path="res://Scripts/Menus/menu_creditos.gd" id="1_8ooli"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="2_8ooli"]
@@ -9,6 +9,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mh1yw"]
 size = Vector2(175, 95)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g3wrx"]
+size = Vector2(321, 71)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hhl6k"]
 size = Vector2(109, 40)
@@ -57,7 +60,6 @@ tile_map_data = PackedByteArray()
 tile_map_data = PackedByteArray()
 
 [node name="ColorRect" type="ColorRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,58 +67,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.617928, 0.557354, 1)
-
-[node name="LabelTitulo" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -192.5
-offset_top = 48.0
-offset_right = 192.5
-offset_bottom = 158.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 80
-text = "Créditos"
-
-[node name="GridContainer" type="GridContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -355.0
-offset_top = -229.0
-offset_right = 356.0
-offset_bottom = 229.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/h_separation = 150
-columns = 2
-
-[node name="func1" type="Label" parent="GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Programador"
-
-[node name="nome2" type="Label" parent="GridContainer"]
-layout_mode = 2
-
-[node name="func2" type="Label" parent="GridContainer"]
-layout_mode = 2
-
-[node name="nome3" type="Label" parent="GridContainer"]
-layout_mode = 2
-
-[node name="func3" type="Label" parent="GridContainer"]
-layout_mode = 2
-
-[node name="nome4" type="Label" parent="GridContainer"]
-layout_mode = 2
-
-[node name="func4" type="Label" parent="GridContainer"]
-layout_mode = 2
 
 [node name="ButtonVoltar" type="Button" parent="."]
 layout_mode = 1
@@ -144,6 +94,21 @@ position = Vector2(77.5, 37.5)
 shape = SubResource("RectangleShape2D_mh1yw")
 
 [node name="Textos" type="Node" parent="."]
+
+[node name="Creditos" parent="Textos" instance=ExtResource("3_hhl6k")]
+position = Vector2(557, 59)
+mass = 25.0
+
+[node name="Label" parent="Textos/Creditos" index="0"]
+offset_left = -82.0
+offset_right = 79.0
+theme_override_font_sizes/font_size = 80
+text = "Créditos"
+horizontal_alignment = 1
+
+[node name="CollisionShape2D" parent="Textos/Creditos" index="1"]
+position = Vector2(79.5, 29.5)
+shape = SubResource("RectangleShape2D_g3wrx")
 
 [node name="Paulo" parent="Textos" instance=ExtResource("3_hhl6k")]
 position = Vector2(376, 240)
@@ -187,21 +152,21 @@ ferramentas_mgmt = NodePath("../FerramentasMgmt")
 tilemaps_chao = NodePath("../TileMapsChao")
 
 [node name="Jogador1" parent="SpawnJogadores" index="0"]
-position = Vector2(150, 480)
+position = Vector2(224, 595)
 
 [node name="Jogador2" parent="SpawnJogadores" index="1"]
-position = Vector2(1126, 489)
+position = Vector2(1056, 595)
 
 [node name="FerramentasMgmt" parent="." instance=ExtResource("4_63pwd")]
 
 [node name="Corte" parent="FerramentasMgmt" index="1"]
-position = Vector2(107, 297)
+position = Vector2(432, 520)
 
 [node name="Plantar" parent="FerramentasMgmt" index="2"]
-position = Vector2(1123, 186)
+position = Vector2(641, 512)
 
 [node name="Recolhe" parent="FerramentasMgmt" index="3"]
-position = Vector2(938, 113)
+position = Vector2(840, 520)
 
 [node name="LocaisPlantarColecao" type="Node2D" parent="."]
 script = ExtResource("6_neco8")
@@ -231,6 +196,7 @@ shape = SubResource("WorldBoundaryShape2D_g3wrx")
 [connection signal="body_exited" from="ButtonVoltar/Area2DVoltar" to="." method="_on_area_2d_voltar_body_exited"]
 
 [editable path="TileMapsChao"]
+[editable path="Textos/Creditos"]
 [editable path="Textos/Paulo"]
 [editable path="Textos/Programa"]
 [editable path="Textos/Isa"]

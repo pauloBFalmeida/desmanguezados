@@ -23,6 +23,9 @@ offset_left = -56.0
 offset_top = -29.0
 offset_right = 53.0
 offset_bottom = 26.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 3
 theme_override_font_sizes/font_size = 40
 text = "Paulo"
 
