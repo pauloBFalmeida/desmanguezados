@@ -13,13 +13,12 @@
 [ext_resource type="PackedScene" uid="uid://bxemk6uv78eif" path="res://Cenas/Partida/local_plantar.tscn" id="15_awc43"]
 [ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Interface/hud.tscn" id="16_vrx3h"]
 
-[node name="Level_2" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
+[node name="Level_2" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
 script = ExtResource("1_eixhn")
 arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
-temporizador = NodePath("HUD/Temporizador")
 hud = NodePath("HUD")
 duracao_partida_segundos = 150
 
@@ -71,7 +70,7 @@ position = Vector2(83, 7)
 [node name="Jogador2" parent="SpawnJogadores" index="1"]
 position = Vector2(229, 5)
 
-[node name="CollisionCorpo" parent="SpawnJogadores/Jogador2" index="3"]
+[node name="CollisionCorpo" parent="SpawnJogadores/Jogador2" index="2"]
 position = Vector2(-3, -5)
 
 [node name="FerramentasMgmt" parent="." instance=ExtResource("5_b0h18")]

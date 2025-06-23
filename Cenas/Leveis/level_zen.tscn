@@ -19,7 +19,7 @@ _data = [Vector2(0, 0.2), 0.0, 0.484919, 0, 0, Vector2(0.741697, 1), 0.0, 0.0, 0
 point_count = 3
 metadata/_snap_enabled = true
 
-[node name="Level_Zen" type="Node" node_paths=PackedStringArray("camera_target", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
+[node name="Level_Zen" type="Node" node_paths=PackedStringArray("camera_target", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
 script = ExtResource("1_h16eq")
 camera_lerp_speed_curve = SubResource("Curve_h16eq")
 camera_target = NodePath("SpawnJogadores/Jogador2")
@@ -27,7 +27,6 @@ arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
-temporizador = NodePath("Camera2D/HUD/Temporizador")
 hud = NodePath("Camera2D/HUD")
 duracao_partida_segundos = 9999
 

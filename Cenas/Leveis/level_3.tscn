@@ -310,7 +310,7 @@ sources/1 = SubResource("TileSetAtlasSource_spnxe")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uwwbq"]
 size = Vector2(54, 669)
 
-[node name="Level_3" type="Node" node_paths=PackedStringArray("tile_mare", "spawn_jogadores", "tilemaps_sobre_chao", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
+[node name="Level_3" type="Node" node_paths=PackedStringArray("tile_mare", "spawn_jogadores", "tilemaps_sobre_chao", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
 script = ExtResource("1_uwwbq")
 tile_mare = NodePath("TileMapsSobre/TileMapLayerMare")
 mare_andavel_min_color = Color(1, 1, 1, 0.4)
@@ -320,7 +320,6 @@ arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
-temporizador = NodePath("HUD/Temporizador")
 hud = NodePath("HUD")
 duracao_partida_segundos = 145
 

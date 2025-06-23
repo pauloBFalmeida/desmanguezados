@@ -57,6 +57,8 @@ func update_mudas(qtd_mudas : int) -> void:
 func update_tempo(texto : String) -> void:
 	label_cronometro.text = texto
 
+func get_temporizador() -> Temporizador:
+	return temporizador
 
 func _goto_menu() -> void:
 	get_tree().paused = false

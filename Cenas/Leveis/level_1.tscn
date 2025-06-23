@@ -14,13 +14,12 @@
 [ext_resource type="PackedScene" uid="uid://bnr6tp6k6p5mk" path="res://Cenas/Partida/Lixos/lixo_embalagem.tscn" id="13_poegd"]
 [ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Interface/hud.tscn" id="15_7uol4"]
 
-[node name="Level_1" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
+[node name="Level_1" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
 script = ExtResource("1_42x8c")
 arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
-temporizador = NodePath("HUD/Temporizador")
 hud = NodePath("HUD")
 duracao_partida_segundos = 140
 

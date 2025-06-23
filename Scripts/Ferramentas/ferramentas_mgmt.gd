@@ -4,8 +4,8 @@ class_name FerramentaMgmt
 signal pegou_ferramenta
 signal jogou_ferramenta
 
-var locais_plantar_colecao : LocalPlantarColecao
 var tilemaps_chao : TileMapsChao
+var locais_plantar_colecao : LocalPlantarColecao
 var level : Level
 
 @export var mudas_referencias : Array[PackedScene]

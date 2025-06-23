@@ -5,8 +5,8 @@ extends Node
 @export var lixos_colecao : CanvasGroup
 @export var locais_plantar_colecao : LocalPlantarColecao
 @export var ferramenta_mgmt : FerramentaMgmt
-@export var temporizador : Temporizador
 @export var hud : Hud
+@onready var temporizador : Temporizador = hud.get_temporizador()
 
 ## duracao da partida em segundos
 @export var duracao_partida_segundos : int = 60
