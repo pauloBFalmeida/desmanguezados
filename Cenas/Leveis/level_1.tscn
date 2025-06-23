@@ -196,7 +196,6 @@ script = ExtResource("9_xeic4")
 position = Vector2(210, 284)
 
 [node name="HUD" parent="." instance=ExtResource("15_7uol4")]
-anchors_preset = 15
 metadata/_edit_lock_ = true
 
 [editable path="TileMaps"]
