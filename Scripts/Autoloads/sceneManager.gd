@@ -7,36 +7,13 @@ const MENU_MENU_ZEN_PATH := "res://Cenas/Menus/menuZen.tscn"
 const MENU_CONFIGURACAO_PATH := "res://Cenas/Menus/menuConfiguracao.tscn"
 const MENU_CREDITOS_PATH := "res://Cenas/Menus/menuCreditos.tscn"
 
-enum Level_id {ZEN, TUTORIAL, LEVEL_1, LEVEL_2, LEVEL_3}
-
-const LEVEIS_REF  : Dictionary[Level_id, String] = {
-	Level_id.ZEN: "res://Cenas/Leveis/level_zen.tscn",
-	Level_id.TUTORIAL: "res://Cenas/Leveis/level_0_tutorial.tscn",
-	Level_id.LEVEL_1: "res://Cenas/Leveis/level_1.tscn",
-	Level_id.LEVEL_2: "res://Cenas/Leveis/level_2.tscn",
-	Level_id.LEVEL_3: "res://Cenas/Leveis/level_3.tscn",
+const LEVEIS_REF  : Dictionary[Globais.Level_id, String] = {
+	Globais.Level_id.ZEN: "res://Cenas/Leveis/level_zen.tscn",
+	Globais.Level_id.TUTORIAL: "res://Cenas/Leveis/level_0_tutorial.tscn",
+	Globais.Level_id.LEVEL_1: "res://Cenas/Leveis/level_1.tscn",
+	Globais.Level_id.LEVEL_2: "res://Cenas/Leveis/level_2.tscn",
+	Globais.Level_id.LEVEL_3: "res://Cenas/Leveis/level_3.tscn",
 }
-
-const LEVEIS_NOME : Dictionary[Level_id, String] = {
-	Level_id.ZEN: "Zen",
-	Level_id.TUTORIAL: "Tutorial",
-	Level_id.LEVEL_1: "Level 1",
-	Level_id.LEVEL_2: "Level 2",
-	Level_id.LEVEL_3: "Level 3 Maré",
-}
-
-const LEVEIS_SELECAO_ORDEM : Array[Level_id] = [
-	Level_id.TUTORIAL,
-	Level_id.LEVEL_1,
-	Level_id.LEVEL_2,
-	Level_id.LEVEL_3,
-]
-
-const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
-	#Level_id.TUTORIAL: preload()
-}
-
-var current_level_id : Level_id
 
 func goto_menu():
 	change_scene(MENUS_PATH)
@@ -56,13 +33,13 @@ func goto_configuracoes():
 func goto_creditos():
 	change_menu(MENU_CREDITOS_PATH)
 
-func goto_level(level_id : Level_id):
+func goto_level(level_id : Globais.Level_id):
 	if LEVEIS_REF.has(level_id):
-		current_level_id = level_id
+		Globais.current_level_id = level_id
 		change_scene(LEVEIS_REF[level_id])
 
 func restart_level() -> void:
-	goto_level(current_level_id)
+	goto_level(Globais.current_level_id)
 
 # ------  ---------
 func change_scene(path: String):

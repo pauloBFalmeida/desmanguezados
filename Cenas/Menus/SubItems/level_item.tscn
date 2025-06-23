@@ -1,22 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://cciukv0gmo85j"]
+[gd_scene load_steps=4 format=3 uid="uid://cciukv0gmo85j"]
 
 [ext_resource type="Script" uid="uid://cipaecfgi6vb2" path="res://Scripts/Menus/UsadosMenus/level_item.gd" id="1_ggp4t"]
+[ext_resource type="Texture2D" uid="uid://bmvky7k2qcug2" path="res://Assets/Interface/white.png" id="2_jmyqs"]
+[ext_resource type="Texture2D" uid="uid://d3yrel5hmuqne" path="res://Assets/Temp/concha.png" id="3_2e8ad"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8ekff"]
-load_path = "res://.godot/imported/black.png-b55a21a4fe4ea6060432afadc2d13d8b.ctex"
-
-[node name="LevelItem" type="Control"]
-custom_minimum_size = Vector2(350, 250)
-layout_mode = 3
+[node name="Level_Item" type="Button"]
+custom_minimum_size = Vector2(330, 270)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -640.0
-offset_right = -290.0
+offset_right = -310.0
 offset_bottom = 250.0
 grow_horizontal = 2
 size_flags_vertical = 0
+flat = true
 script = ExtResource("1_ggp4t")
+medalha_cor = Dictionary[int, Color]({
+0: Color(0.929412, 0.929412, 0, 1),
+1: Color(0.831373, 0.917647, 0.854902, 1),
+2: Color(0.760784, 0.454902, 0.203922, 1)
+})
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -24,25 +28,55 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -147.0
+offset_top = 8.0
 offset_right = 838.0
-offset_bottom = 492.0
+offset_bottom = 500.0
 grow_horizontal = 2
 scale = Vector2(0.3, 0.3)
-texture = SubResource("CompressedTexture2D_8ekff")
+texture = ExtResource("2_jmyqs")
 
-[node name="ButtonStart" type="Button" parent="."]
+[node name="Info" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 18.0
+offset_top = 170.0
+offset_right = 58.0
+offset_bottom = 210.0
+
+[node name="LabelTempo" type="Label" parent="Info"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -31.0
-offset_top = -31.0
-offset_right = 31.0
+offset_left = -10.0
+offset_top = -40.0
+offset_right = 142.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Melhor Tempo: "
+
+[node name="Medalha" type="Sprite2D" parent="Info"]
+position = Vector2(263, 17)
+scale = Vector2(0.144149, 0.144149)
+texture = ExtResource("3_2e8ad")
+
+[node name="LevelName" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -48.0
+offset_right = 58.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 30
 text = "Level 1"
 
-[connection signal="pressed" from="ButtonStart" to="." method="_on_button_start_pressed"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

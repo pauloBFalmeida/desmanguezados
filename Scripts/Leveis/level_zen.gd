@@ -16,7 +16,7 @@ func _ready() -> void:
 	print("Level Zen")
 	temporizador.parar() # para de contar o tempo
 	# lidar com a quantidade de jogadores
-	if Configuracoes.modo_zen_ter_1_jogador:
+	if Globais.modo_zen_ter_1_jogador:
 		for jog in jogadores:
 			if jog != camera_target:
 				jog.global_position = Vector2(-999, -999)

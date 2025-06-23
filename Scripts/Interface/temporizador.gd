@@ -18,6 +18,10 @@ func set_duracao(valor : int) -> void:
 	tempo_restante = float(valor)
 	atualizar_cronometro()
 
+## retorna o tempo do level, arredondando para cima (24.6 -> 25)
+func get_tempo() -> int:
+	return ceil(tempo_restante)
+
 func comecar():
 	# Inicia o cronômetro
 	cronometro_ativo = true

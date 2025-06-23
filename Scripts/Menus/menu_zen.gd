@@ -11,9 +11,9 @@ func _on_button_voltar_pressed() -> void:
 
 # --- Botoes quantidade de jogadores ---
 func _on_button_1_jog_pressed() -> void:
-	Configuracoes.modo_zen_ter_1_jogador = true
-	SceneManager.goto_level(SceneManager.Level_id.ZEN)
+	Globais.modo_zen_ter_1_jogador = true
+	SceneManager.goto_level(Globais.Level_id.ZEN)
 
 func _on_button_2_jog_pressed() -> void:
-	Configuracoes.modo_zen_ter_1_jogador = false
-	SceneManager.goto_level(SceneManager.Level_id.ZEN)
+	Globais.modo_zen_ter_1_jogador = false
+	SceneManager.goto_level(Globais.Level_id.ZEN)

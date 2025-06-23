@@ -20,7 +20,7 @@ var target_angle : float = 0.0
 func _ready() -> void:
 	_ajustar_animacao()
 	# pega a configuracao se eh de mira o tempo todo
-	aim_all_time = Configuracoes.possivel_aim_all_time
+	aim_all_time = Globais.possivel_aim_all_time
 	# ajusta para comecar com a cor de nao tracking
 	set_tracking(false)
 
@@ -59,7 +59,7 @@ func set_usando_joystick(is_usando : bool) -> void:
 func set_tracking(_is_tracking : bool) -> void:
 	is_tracking = _is_tracking
 	# muda a direcao se for necessario
-	if Configuracoes.indicador_direcao_transparente_sem_target:
+	if Globais.indicador_direcao_transparente_sem_target:
 		if is_tracking:
 			modulate = Color.WHITE
 		else:

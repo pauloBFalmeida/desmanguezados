@@ -17,9 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Configuracoes="*res://Scripts/Autoloads/configuracoes.gd"
+Globais="*res://Scripts/Autoloads/globais.gd"
 SceneManager="*res://Scripts/Autoloads/sceneManager.gd"
 InputManager="*res://Scripts/Autoloads/inputManager.gd"
+SaveManager="*res://Scripts/Autoloads/saveManager.gd"
 
 [display]
 

@@ -53,6 +53,9 @@ func _fim_partida() -> void:
 	# pausa o jogo
 	get_tree().set_pause(true)
 	
+	# salva o score (o tempo pode ter parado antes)
+	Globais.score_level(Globais.current_level_id, temporizador.get_tempo())
+	
 	# -- muda a imagem dependendo das condicoes de final --
 	
 	if qtd_mudas_necessitam_plantar() > 0: # nao plantou tudo
@@ -67,6 +70,8 @@ func _fim_partida() -> void:
 func verificar_fim() -> void:
 	# plantou tudo e recolheu todo o lixo
 	if qtd_mudas_necessitam_plantar() <= 0 and qtd_lixo <= 0:
+		temporizador.parar() # para de contar o tempo, antes da animacao de fim de jogo
+		
 		# espera 1 segundo
 		await get_tree().create_timer(1.0).timeout
 		# acaba a partida
