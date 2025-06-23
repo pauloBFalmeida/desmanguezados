@@ -5,9 +5,6 @@
 [ext_resource type="SpriteFrames" uid="uid://jrc3bqgmf5t" path="res://PreSets/Jogador/JogadorAnim.tres" id="3_801pi"]
 [ext_resource type="PackedScene" uid="uid://cb5x2dl7n7ywu" path="res://Cenas/Partida/Jogadores/indicador_direcao.tscn" id="4_t8i7p"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_hjt1h"]
-radius = 76.0
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qpddn"]
 radius = 17.0
 height = 58.0
@@ -15,6 +12,9 @@ height = 58.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_una1k"]
 radius = 12.0
 height = 46.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hjt1h"]
+radius = 75.0
 
 [node name="Jogador" type="CharacterBody2D"]
 z_index = 5
@@ -27,39 +27,38 @@ max_water_time = 0.5
 
 [node name="SpriteSombra" type="Sprite2D" parent="."]
 self_modulate = Color(0, 0, 0, 0.670588)
-position = Vector2(1, 0)
+position = Vector2(2, 0)
 scale = Vector2(0.6, 0.3)
 texture = ExtResource("2_lwruk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(2, -35)
+position = Vector2(3, -35)
 scale = Vector2(3, 3)
 sprite_frames = ExtResource("3_801pi")
 animation = &"redIdle"
-frame_progress = 0.416853
-
-[node name="AreaInteracao" type="Area2D" parent="."]
-position = Vector2(2, -9)
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaInteracao"]
-shape = SubResource("CircleShape2D_hjt1h")
-debug_color = Color(0.466667, 0.764706, 0.909804, 0.0509804)
 
 [node name="CollisionCorpo" type="CollisionShape2D" parent="."]
 z_index = 100
-position = Vector2(0, -18)
+position = Vector2(1, -18)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_qpddn")
 debug_color = Color(0.717647, 0.411765, 0.654902, 0.247059)
 
 [node name="CollisionGarra" type="CollisionShape2D" parent="."]
 z_index = 100
-position = Vector2(0, 4)
+position = Vector2(1, 4)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_una1k")
 debug_color = Color(0.670588, 0.419608, 0.74902, 0.137255)
+
+[node name="AreaInteracao" type="Area2D" parent="."]
+position = Vector2(0, -9)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaInteracao"]
+shape = SubResource("CircleShape2D_hjt1h")
+debug_color = Color(0.466667, 0.764706, 0.909804, 0.0509804)
 
 [node name="IndicadorDirecao" parent="." instance=ExtResource("4_t8i7p")]
 z_index = -1
