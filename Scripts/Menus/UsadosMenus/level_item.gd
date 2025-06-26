@@ -36,6 +36,7 @@ func ajust(_level_id : int) -> void:
 func _load_info() -> void:
 	var highscore : int = Globais.leveis_highscore[level_id]
 	
+	# se nao tem highscore (ou eh invalido) -> nao mostra
 	if highscore < 0:
 		label_info.hide()
 		medalha_image.hide()
@@ -48,4 +49,10 @@ func _load_info() -> void:
 	
 	# ajusta imagem
 	var medalha : Globais.Medalha_tipo = Globais.get_medalha_level(level_id, highscore)
+	
+	# se nao tiver medalha -> esconde a imagem da medalha
+	if medalha == Globais.Medalha_tipo.NENHUMA:
+		medalha_image.hide()
+		return
+	
 	medalha_image.modulate = medalha_cor[medalha]
