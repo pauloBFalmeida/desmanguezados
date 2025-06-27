@@ -40,6 +40,8 @@ folder_colors={
 "res://Assets/": "yellow",
 "res://Cenas/": "orange",
 "res://PreSets/": "pink",
+"res://PreSets/Siri/blue/": "blue",
+"res://PreSets/Siri/red/": "red",
 "res://Scripts/": "purple",
 "res://addons/": "blue"
 }

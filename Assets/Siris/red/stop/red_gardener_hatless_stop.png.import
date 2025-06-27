@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bl6jvgsop22ge"
-path="res://.godot/imported/redMuda.png-597c089b58bbce7097f3e57c9b166c32.ctex"
+uid="uid://ccs5k3bh84h0s"
+path="res://.godot/imported/red_gardener_hatless_stop.png-3b5a0d407e0f199cf0b2e33efa8618aa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Personagem/Red/redMuda.png"
-dest_files=["res://.godot/imported/redMuda.png-597c089b58bbce7097f3e57c9b166c32.ctex"]
+source_file="res://Assets/Siris/red/stop/red_gardener_hatless_stop.png"
+dest_files=["res://.godot/imported/red_gardener_hatless_stop.png-3b5a0d407e0f199cf0b2e33efa8618aa.ctex"]
 
 [params]
 

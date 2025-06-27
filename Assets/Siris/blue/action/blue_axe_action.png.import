@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgmmyhhphc853"
-path="res://.godot/imported/blueIdle.png-6945eb429f34ddb7be07d353c6e02a5d.ctex"
+uid="uid://p0dxr61onviu"
+path="res://.godot/imported/blue_axe_action.png-81e069f41c5dd890de43d876ae380f00.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Personagem/Blue/blueIdle.png"
-dest_files=["res://.godot/imported/blueIdle.png-6945eb429f34ddb7be07d353c6e02a5d.ctex"]
+source_file="res://Assets/Siris/blue/action/blue_axe_action.png"
+dest_files=["res://.godot/imported/blue_axe_action.png-81e069f41c5dd890de43d876ae380f00.ctex"]
 
 [params]
 

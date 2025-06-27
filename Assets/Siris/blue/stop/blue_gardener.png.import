@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bci6010retjxi"
-path="res://.godot/imported/blueMuda.png-37cfe99c15c19fe781646f443dd4d663.ctex"
+uid="uid://d0iyrklc5wr1d"
+path="res://.godot/imported/blue_gardener.png-870ad4f4a9a0a2df915f628193aea08f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Personagem/Blue/blueMuda.png"
-dest_files=["res://.godot/imported/blueMuda.png-37cfe99c15c19fe781646f443dd4d663.ctex"]
+source_file="res://Assets/Siris/blue/stop/blue_gardener.png"
+dest_files=["res://.godot/imported/blue_gardener.png-870ad4f4a9a0a2df915f628193aea08f.ctex"]
 
 [params]
 

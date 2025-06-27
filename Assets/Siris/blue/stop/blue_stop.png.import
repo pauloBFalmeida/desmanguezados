@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b73todij0d3om"
-path="res://.godot/imported/redAxe.png-9f59b98aa05dda5ce90fe2fe65fa137b.ctex"
+uid="uid://vpsxv4wmp1h7"
+path="res://.godot/imported/blue_stop.png-c38b6f06e0e99405b4fe14d9195a8d06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Personagem/Red/redAxe.png"
-dest_files=["res://.godot/imported/redAxe.png-9f59b98aa05dda5ce90fe2fe65fa137b.ctex"]
+source_file="res://Assets/Siris/blue/stop/blue_stop.png"
+dest_files=["res://.godot/imported/blue_stop.png-c38b6f06e0e99405b4fe14d9195a8d06.ctex"]
 
 [params]
 

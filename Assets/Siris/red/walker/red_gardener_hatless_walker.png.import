@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ch14dbiy2s4nn"
-path="res://.godot/imported/redIdle.png-60aa6444cd23430ba81efa216698d3a3.ctex"
+uid="uid://44oy8us6e8ss"
+path="res://.godot/imported/red_gardener_hatless_walker.png-3a5463ffc62d90908ab2140dc70e2d8a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Personagem/Red/redIdle.png"
-dest_files=["res://.godot/imported/redIdle.png-60aa6444cd23430ba81efa216698d3a3.ctex"]
+source_file="res://Assets/Siris/red/walker/red_gardener_hatless_walker.png"
+dest_files=["res://.godot/imported/red_gardener_hatless_walker.png-3a5463ffc62d90908ab2140dc70e2d8a.ctex"]
 
 [params]
 
