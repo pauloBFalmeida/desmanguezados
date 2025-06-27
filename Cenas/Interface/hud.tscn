@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6sdx5v5l772m"]
+[gd_scene load_steps=14 format=3 uid="uid://b6sdx5v5l772m"]
 
 [ext_resource type="Script" uid="uid://brncsdifpd8ke" path="res://Scripts/Interface/hud.gd" id="1_toh8p"]
 [ext_resource type="Texture2D" uid="uid://clny3k8wxq5x1" path="res://Assets/Interface/GameOverImage.jpg" id="2_7b8ht"]
@@ -9,6 +9,9 @@
 [ext_resource type="AudioStream" uid="uid://drinyxrprxaji" path="res://Assets/Audio/efeitos/time.wav" id="7_insla"]
 [ext_resource type="Shader" uid="uid://c0wsmi65f3y7d" path="res://Scripts/Shaders/efeito_tela.gdshader" id="7_po4ji"]
 [ext_resource type="Texture2D" uid="uid://bmvky7k2qcug2" path="res://Assets/Interface/white.png" id="8_pqhgn"]
+[ext_resource type="Script" uid="uid://b4twgrhsdpeiu" path="res://Scripts/Interface/barra_progresso.gd" id="10_uk2xs"]
+[ext_resource type="Texture2D" uid="uid://e14uxly4awj8" path="res://Assets/Cenario/Arvores/ArvoresMangue.png" id="11_42fxd"]
+[ext_resource type="Texture2D" uid="uid://cd7kpxvt7hc3i" path="res://Assets/Cenario/Lixos/Lixo.png" id="12_nmlv5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pqhgn"]
 shader = ExtResource("7_po4ji")
@@ -74,6 +77,54 @@ text = "02:00"
 horizontal_alignment = 1
 visible_characters = 6
 visible_ratio = 1.2
+
+[node name="BarraProgresso" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("10_uk2xs")
+
+[node name="ProgColorBase" type="ColorRect" parent="BarraProgresso"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.24, 0.24, 0.24, 1)
+
+[node name="ProgColorTop" type="ColorRect" parent="BarraProgresso"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="mostradores" type="Node2D" parent="BarraProgresso"]
+position = Vector2(1233, 17)
+
+[node name="ArvoresMangue" type="Sprite2D" parent="BarraProgresso/mostradores"]
+modulate = Color(0.35, 0.35, 0.35, 1)
+position = Vector2(35.25, -1.5)
+scale = Vector2(1.23334, 1.25)
+texture = ExtResource("11_42fxd")
+region_enabled = true
+region_rect = Rect2(0, 17, 15, 20)
+
+[node name="Lixo" type="Sprite2D" parent="BarraProgresso/mostradores"]
+modulate = Color(0.35, 0.35, 0.35, 1)
+position = Vector2(13, -1)
+scale = Vector2(1.18334, 1.17375)
+texture = ExtResource("12_nmlv5")
+region_enabled = true
+region_rect = Rect2(0, 0, 15, 19)
 
 [node name="PauseMenu" type="Control" parent="."]
 visible = false

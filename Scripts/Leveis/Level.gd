@@ -27,7 +27,7 @@ func _input(event: InputEvent) -> void:
 			hud.pausar()
 
 func _ready() -> void:
-	ajustar_pause()
+	_ajustar_pause()
 	# ferramentas
 	locais_plantar_colecao.esconder()
 	ferramenta_mgmt.level = self
@@ -36,6 +36,7 @@ func _ready() -> void:
 	ajustar_arvores()
 	ajustar_lixo()
 	ajustar_locais_plantar() # chamar dps de ajustar_arvores()
+	_ajustar_barra_progresso()
 	# 
 	temporizador.fim_tempo.connect(_fim_partida)
 	temporizador.set_duracao(duracao_partida_segundos)
@@ -78,13 +79,20 @@ func verificar_fim() -> void:
 		_fim_partida()
 
 func qtd_mudas_necessitam_plantar() -> int:
+	# quantidade de arvores nativas que queremos ter no mapa - qtd que tem atualmente
 	return qtd_alvo_arvores_nativas - qtd_arvores_nativas
 
 # ----- HUD -----
-func update_hud_mudas() -> void:
-	hud.update_mudas(qtd_mudas_necessitam_plantar())
+func _update_hud_mudas() -> void:
+	hud.update_mudas_faltando(qtd_mudas_necessitam_plantar())
 
-func ajustar_pause() -> void:
+func _update_hud_lixo() -> void:
+	hud.update_lixo_faltando(qtd_lixo)
+
+func _ajustar_barra_progresso() -> void:
+	hud.ajustar_faltando(qtd_mudas_necessitam_plantar(), qtd_lixo)
+
+func _ajustar_pause() -> void:
 	# set o node Nivel (pai da cena) como processar sempre
 	set_process_mode(Node.PROCESS_MODE_ALWAYS)
 	# set todos os outros nodes como processar exceto no pause
@@ -111,7 +119,7 @@ func plantada_arvore_nativa(arvore : Arvore) -> void:
 	arvore.cortada.connect(_cortada_arvore_nativa)
 	arvore.cortada.connect(_update_arvore_cortada.bind(arvore))
 	# update e hud
-	update_hud_mudas()
+	_update_hud_mudas()
 	# verifica se acabou o round
 	verificar_fim()
 
@@ -126,7 +134,7 @@ func _update_arvore_cortada(arvore : Arvore) -> void:
 	# spawn local de plantar no local da arvore cortada
 	spawn_local_plantar(arvore.global_position)
 	# update e hud
-	update_hud_mudas()
+	_update_hud_mudas()
 
 func spawn_local_plantar(global_pos : Vector2) -> void:
 	var local_plantar = local_plantar_ref.instantiate()
@@ -146,6 +154,8 @@ func colocado_lixo(lixo : Lixo) -> void:
 
 func _coletado_lixo() -> void:
 	qtd_lixo -= 1
+	# update a hud
+	_update_hud_lixo()
 	# verifica se acabou o round
 	verificar_fim()
 
@@ -157,4 +167,4 @@ func ajustar_locais_plantar() -> void:
 	# adiciona a quantidade de locais para plantar mudas
 	qtd_alvo_arvores_nativas += locais_plantar_colecao.get_children().size()
 	# update e hud
-	update_hud_mudas()
+	_update_hud_mudas()
