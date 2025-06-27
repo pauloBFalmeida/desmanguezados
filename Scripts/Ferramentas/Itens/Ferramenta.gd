@@ -10,6 +10,9 @@ enum Som_tipo {ACERTO, ERRO, BALANCAR}
 @export var tipo_ferramenta : Ferramenta_tipo
 ## em segundos
 @export var duracao_cooldown : float = 0.5
+## tempo em segundos depois de comecar a acao, para acontecer os sons e animacoes (aprox cooldown/2, so q menos para garantir)
+@export var acontecer_offset : float = 0.2
+
 @export var sons : Dictionary[Som_tipo, AudioStream]
 
 var collison : CollisionShape2D
@@ -78,6 +81,10 @@ func balancar_ferramenta() -> void:
 	# nao deixa spammar balancar (usar ferramenta sem ser em algo)
 	if audio_player.playing:
 		return
+	
+	# espera um pouco tocar o som
+	await get_tree().create_timer(acontecer_offset).timeout
+	
 	tocar_som(Som_tipo.BALANCAR)
 
 # -- Cooldown --

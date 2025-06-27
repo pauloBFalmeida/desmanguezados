@@ -11,14 +11,17 @@ func usar_ferramenta(body : Node2D) -> void:
 		usar_generico(body)
 		return
 	
+	super.aplicar_cooldown()
+	
+	# espera um pouco fazer as coisas acontecerem
+	await get_tree().create_timer(acontecer_offset).timeout
+	
 	var local_plantar : Node2D = body
 	# planta
 	plantar(local_plantar)
 	
 	# tocar som
 	super.tocar_som(Ferramenta.Som_tipo.ACERTO)
-	
-	super.aplicar_cooldown()
 
 func plantar(local_plantar : Node2D) -> void:
 	var local_plantar_colecao : LocalPlantarColecao = local_plantar.get_parent()

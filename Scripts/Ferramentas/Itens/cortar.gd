@@ -11,13 +11,15 @@ func usar_ferramenta(body : Node2D) -> void:
 		usar_generico(body)
 		return
 	
-	var arvore : Arvore = body
+	super.aplicar_cooldown()
 	
+	# espera um pouco fazer as coisas acontecerem
+	await get_tree().create_timer(acontecer_offset).timeout
+	
+	var arvore : Arvore = body
 	arvore.cortar()
 	
 	# tocar som
 	var tipo_som : Ferramenta.Som_tipo 
 	tipo_som = Ferramenta.Som_tipo.ACERTO if arvore.is_invasora else Ferramenta.Som_tipo.ERRO
 	super.tocar_som(tipo_som)
-	
-	super.aplicar_cooldown()

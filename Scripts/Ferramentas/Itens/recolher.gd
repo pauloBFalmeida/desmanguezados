@@ -11,10 +11,13 @@ func usar_ferramenta(body : Node2D) -> void:
 		usar_generico(body)
 		return
 	
+	super.aplicar_cooldown()
+	
+	# espera um pouco fazer as coisas acontecerem
+	await get_tree().create_timer(acontecer_offset).timeout
+
 	var lixo : Lixo = body
 	lixo.recolher()
 	
 	# tocar som
 	super.tocar_som(Ferramenta.Som_tipo.ACERTO)
-	
-	super.aplicar_cooldown()
