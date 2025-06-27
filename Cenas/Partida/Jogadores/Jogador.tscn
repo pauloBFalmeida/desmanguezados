@@ -1,9 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://c38kt6bogw2mq"]
+[gd_scene load_steps=18 format=3 uid="uid://c38kt6bogw2mq"]
 
 [ext_resource type="Script" uid="uid://wmjg8xw6jhs4" path="res://Scripts/Partida/Jogador/jogador.gd" id="1_hjt1h"]
 [ext_resource type="Texture2D" uid="uid://bnsy7do16v8k5" path="res://Assets/Ferramentas/circle.png" id="2_lwruk"]
-[ext_resource type="SpriteFrames" uid="uid://jrc3bqgmf5t" path="res://PreSets/Jogador/JogadorAnim.tres" id="3_801pi"]
+[ext_resource type="SpriteFrames" uid="uid://cwkg5jiumd2mg" path="res://PreSets/Siri/red/animRedNormal.tres" id="3_t8i7p"]
 [ext_resource type="PackedScene" uid="uid://cb5x2dl7n7ywu" path="res://Cenas/Partida/Jogadores/indicador_direcao.tscn" id="4_t8i7p"]
+[ext_resource type="Script" uid="uid://btvremqymtwl4" path="res://Scripts/Partida/Jogador/jogador_animation.gd" id="4_w3vga"]
+[ext_resource type="SpriteFrames" uid="uid://btjqiptymedg7" path="res://PreSets/Siri/blue/animBlueCortar.tres" id="5_icl4y"]
+[ext_resource type="SpriteFrames" uid="uid://pt376h7tm4qv" path="res://PreSets/Siri/blue/animBluePlantar.tres" id="6_5j7pe"]
+[ext_resource type="SpriteFrames" uid="uid://tiwiw5dalw3t" path="res://PreSets/Siri/blue/animBluePlantarHatless.tres" id="7_cmvfx"]
+[ext_resource type="SpriteFrames" uid="uid://bceyweymmhdih" path="res://PreSets/Siri/blue/animBlueRecolher.tres" id="8_w5yqb"]
+[ext_resource type="SpriteFrames" uid="uid://jnoa6d6fhquu" path="res://PreSets/Siri/blue/animBlueNormal.tres" id="9_5torq"]
+[ext_resource type="SpriteFrames" uid="uid://bh2hv0yi1icug" path="res://PreSets/Siri/red/animRedCortar.tres" id="10_q5v85"]
+[ext_resource type="SpriteFrames" uid="uid://cdexo8h6qc0w2" path="res://PreSets/Siri/red/animRedPlantar.tres" id="11_fcesn"]
+[ext_resource type="SpriteFrames" uid="uid://byblmr7crn60o" path="res://PreSets/Siri/red/animRedPlantarHatless.tres" id="12_bwm6k"]
+[ext_resource type="SpriteFrames" uid="uid://dqlyfypamxduq" path="res://PreSets/Siri/red/animRedRecolher.tres" id="13_rc2x6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qpddn"]
 radius = 17.0
@@ -31,11 +41,27 @@ position = Vector2(2, 0)
 scale = Vector2(0.6, 0.3)
 texture = ExtResource("2_lwruk")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(3, -35)
+[node name="JogadorAnimation" type="AnimatedSprite2D" parent="."]
+position = Vector2(-63, -63)
 scale = Vector2(3, 3)
-sprite_frames = ExtResource("3_801pi")
-animation = &"redIdle"
+sprite_frames = ExtResource("3_t8i7p")
+animation = &"parado"
+centered = false
+script = ExtResource("4_w3vga")
+anim_blue = Dictionary[int, SpriteFrames]({
+0: ExtResource("5_icl4y"),
+1: ExtResource("6_5j7pe"),
+2: ExtResource("7_cmvfx"),
+3: ExtResource("8_w5yqb"),
+4: ExtResource("9_5torq")
+})
+anim_red = Dictionary[int, SpriteFrames]({
+0: ExtResource("10_q5v85"),
+1: ExtResource("11_fcesn"),
+2: ExtResource("12_bwm6k"),
+3: ExtResource("13_rc2x6"),
+4: ExtResource("3_t8i7p")
+})
 
 [node name="CollisionCorpo" type="CollisionShape2D" parent="."]
 z_index = 100

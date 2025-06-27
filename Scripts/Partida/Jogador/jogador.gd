@@ -24,8 +24,11 @@ var is_on_water : bool = false
 @onready var spawn_jogadores : SpawnJogadores = $".."
 var ferramentas_mgmt : FerramentaMgmt
 
+enum Jogador_cor_id {BLUE, RED}
+var jogador_cor : Jogador_cor_id
+@onready var jogador_anim : JogadorAnimation = $JogadorAnimation
+
 @onready var area_interacao : Area2D = $AreaInteracao
-@onready var anim_sprite := $AnimatedSprite2D
 @onready var sombra_sprite := $SpriteSombra
 
 @onready var indicador_direcao : IndicadorDirecao = $IndicadorDirecao
@@ -42,6 +45,9 @@ var segurando : Ferramenta = null
 var throw_acumulado_sec : float = 0
 var is_throw_cancelado = false
 @onready var throw_max_hold_sec_div : float = 1 / throw_max_hold_sec
+
+## direcao do movimento do jogador
+var move_dir := Vector2.ZERO
 
 # -- Input --
 var move_left: StringName
@@ -63,10 +69,11 @@ func _ready() -> void:
 	# ajusta o nome
 	var nome_id : String = "P1" if player_id == InputManager.PlayerId.P1 else "P2"
 	set_name('Jogador_' + nome_id)
-	# coloca o personagem no idle -> para ajustar a cor
+	# ajustar a cor e coloca animacao idle
+	jogador_cor = Jogador_cor_id.BLUE if player_id == InputManager.PlayerId.P1 else Jogador_cor_id.RED
+	jogador_anim.set_cor(jogador_cor)
 	anim_idle()
-	# 
-	#instrucoes.hide()
+	jogador_anim.set_movimento(JogadorAnimation.Movimento_tipo.PARADO) # forca a animacao inicial ser parado
 
 func _ajustar_input_map() -> void:
 	# ajusta o action map do player
@@ -106,13 +113,28 @@ func _physics_process(_delta: float) -> void:
 	# sombra
 	sombra_sprite.visible = not is_on_water
 	
+	# ---- Lidar com movimento ----
+	# se o player deu input de mover
+	if not move_dir.is_zero_approx():
+		# -- update o indicador de direcao --
+		# salva essa direcao
+		last_input_movimento = move_dir
+		# update da direcao do jogador pro indicador de direcao
+		indicador_direcao.direcao_jogador( move_dir )
+		
+		# -- update animacao --
+		jogador_anim.mudar_movimento(JogadorAnimation.Movimento_tipo.ANDAR)
+	else: # se nao se moveu
+		# -- update animacao --
+		jogador_anim.mudar_movimento(JogadorAnimation.Movimento_tipo.PARADO)
+	
 	# ---- indicador de direcao ----
 	if indicador_direcao.is_tracking:
 		indicador_direcao.set_tracking_target(body_mais_desejado_interacao())
 	
 
 func _process(delta: float) -> void:
-	var move_dir = Input.get_vector(move_left, move_right, move_up, move_down)
+	move_dir = Input.get_vector(move_left, move_right, move_up, move_down)
 	
 	velocity = move_dir * speed * speed_modifier_terreno * speed_modifier_cooldown
 	move_and_slide()
@@ -132,13 +154,6 @@ func _process(delta: float) -> void:
 	else:
 		curr_water_timer = 0
 	lidar_agua()
-	
-	# update o indicador de direcao
-	if not move_dir.is_zero_approx(): # se o player deu input de mover
-		# salva essa direcao
-		last_input_movimento = move_dir
-		# update da direcao do jogador pro indicador de direcao
-		indicador_direcao.direcao_jogador( move_dir )
 
 # ----------------------------------------------
 # Set de atributos
@@ -209,14 +224,22 @@ func usar_ferramenta(body : Node2D) -> void:
 	if (not segurando) or (not is_instance_valid(segurando)): return
 	# usar a ferramenta
 	segurando.usar_ferramenta(body)
-	# aplica o cooldown na ferramenta e mostra no player
-	cooldown_jogador(segurando)
+	
+	var duracao_cooldown := segurando.duracao_cooldown
+	# animacao de usar ferramenta
+	jogador_anim.mudar_movimento(JogadorAnimation.Movimento_tipo.ACAO, duracao_cooldown)
+	# mostra o cooldown no player
+	cooldown_jogador(duracao_cooldown)
 
 func balancar_ferramenta() -> void:
 	# se nao tiver segurando uma ferramenta
 	if (not segurando) or (not is_instance_valid(segurando)): return
 	# balancar a ferramenta
 	segurando.balancar_ferramenta()
+	# animacao de usar ferramenta
+	var duracao_cooldown := segurando.duracao_cooldown
+	jogador_anim.mudar_movimento(JogadorAnimation.Movimento_tipo.ACAO, duracao_cooldown)
+	
 
 # ----------------------------------------------
 # Pegar, Largar e Jogar Ferramentas
@@ -372,7 +395,7 @@ func _throw_ferramenta_reset() -> void:
 # ----------------------------------------------
 var ja_tem_anim_cooldown : bool = false
 
-func cooldown_jogador(ferramenta : Ferramenta) -> void:
+func cooldown_jogador(duracao : float) -> void:
 	# se ja tiver rodando o cooldown
 	if ja_tem_anim_cooldown: return
 	# marca que esta aplicando o cooldown
@@ -382,7 +405,6 @@ func cooldown_jogador(ferramenta : Ferramenta) -> void:
 	speed_modifier_cooldown = slowdown_cooldown
 	
 	# animacao de cooldown
-	var duracao := ferramenta.duracao_cooldown
 	indicador_direcao.comecar_cooldown(duracao)
 	get_tree().create_timer(duracao).timeout.connect( _fim_cooldown_jogador )
 
@@ -397,29 +419,16 @@ func anim_segurar_ferramenta(ferramenta : Ferramenta) -> void:
 	var tipo_ferramenta : Ferramenta.Ferramenta_tipo = ferramenta.tipo_ferramenta
 	match tipo_ferramenta:
 		Ferramenta.Ferramenta_tipo.CORTAR:
-			# sprite com machado dependendo da cor
-			if player_id == InputManager.PlayerId.P1:
-				anim_sprite.play("blueCortar")
-			else:
-				anim_sprite.play("redCortar")
+			jogador_anim.mudar_skin(JogadorAnimation.Skin_tipo.CORTAR)
 		Ferramenta.Ferramenta_tipo.PLANTAR:
-			if player_id == InputManager.PlayerId.P1:
-				anim_sprite.play("bluePlantar")
-			else:
-				anim_sprite.play("redPlantar")
+			jogador_anim.mudar_skin(JogadorAnimation.Skin_tipo.PLANTAR)
 		Ferramenta.Ferramenta_tipo.RECOLHER:
-			if player_id == InputManager.PlayerId.P1:
-				anim_sprite.play("blueRecolher")
-			else:
-				anim_sprite.play("redRecolher")
+			jogador_anim.mudar_skin(JogadorAnimation.Skin_tipo.RECOLHER)
 		_: # default, caso nao de match com nenhuma das opcoes anteriores
 			anim_idle()
 
 func anim_idle() -> void:
-	if player_id == InputManager.PlayerId.P1:
-		anim_sprite.play("blueIdle")
-	else:
-		anim_sprite.play("redIdle")
+	jogador_anim.mudar_skin(JogadorAnimation.Skin_tipo.NORMAL)
 
 # ----------------------------------------------
 # indicador de direcao
