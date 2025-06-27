@@ -1,9 +1,9 @@
-[gd_scene load_steps=16 format=4 uid="uid://but8w058vnhtw"]
+[gd_scene load_steps=16 format=4 uid="uid://65vehrxtpinv"]
 
-[ext_resource type="Script" uid="uid://yr3am146nus8" path="res://Scripts/Menus/menu_creditos.gd" id="1_8ooli"]
+[ext_resource type="Script" path="res://Scripts/Menus/menu_creditos.gd" id="1_8ooli"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="2_8ooli"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps_chao.tscn" id="2_f3w1e"]
-[ext_resource type="PackedScene" uid="uid://due4c8k7gwgr6" path="res://Cenas/Menus/SubItems/texto_creditos.tscn" id="3_hhl6k"]
+[ext_resource type="PackedScene" uid="uid://b4tsgihkgcwlb" path="res://Cenas/Menus/SubItems/texto_creditos.tscn" id="3_hhl6k"]
 [ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="4_63pwd"]
 [ext_resource type="Script" uid="uid://ymebirrcc0d3" path="res://Scripts/Partida/locais_plantar_colecao.gd" id="6_neco8"]
 
@@ -202,4 +202,6 @@ shape = SubResource("WorldBoundaryShape2D_g3wrx")
 [editable path="Textos/Isa"]
 [editable path="Textos/GameDesign"]
 [editable path="SpawnJogadores"]
+[editable path="SpawnJogadores/Jogador1"]
+[editable path="SpawnJogadores/Jogador1/IndicadorDirecao"]
 [editable path="FerramentasMgmt"]
