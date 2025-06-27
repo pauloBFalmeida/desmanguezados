@@ -78,21 +78,21 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qwf7x")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_duod5")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": SubResource("AtlasTexture_oj68q")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0vnwi")
 }, {
-"duration": 1.0,
+"duration": 1.2,
 "texture": SubResource("AtlasTexture_d0mev")
 }],
 "loop": false,
 "name": &"acao",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
