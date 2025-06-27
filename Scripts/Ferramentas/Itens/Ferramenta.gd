@@ -33,6 +33,7 @@ func _ready() -> void:
 	add_to_group("Ferramentas")
 	collison = get_node("CollisionShape2D")
 	audio_player = get_node("AudioStreamPlayer2D")
+	audio_player.volume_db = Globais.volume_efeitos_partida
 	sprite = get_node("Sprite2D")
 	# 
 	_ajustar_outline()

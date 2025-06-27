@@ -9,11 +9,9 @@ extends Node
 var possivel_aim_all_time : bool = false
 var indicador_direcao_transparente_sem_target : bool = true
 
-var string_pegar_controle_P1 : String = "X"
-var string_pegar_controle_P2 : String = "X"
-
-var string_dropar_controle_P1 : String = "△"
-var string_dropar_controle_P2 : String = "△"
+var volume_musica_menu : float = -20.0
+var volume_musica_partida : float = -25.0
+var volume_efeitos_partida : float = 0.0
 
 # ---- Scores ----
 var leveis_highscore : Dictionary[Level_id, int] = {
@@ -97,7 +95,9 @@ func score_level(level_id : Level_id, tempo : int) -> void:
 		SaveManager.save_game()
 
 # ---- Durante a Execucao ----
+## jogo ja teve um load feito, i.e., ja foi carregado as Globais
+var jogo_ja_loaded : bool = false
 
 var modo_zen_ter_1_jogador : bool = true
 
-var current_level_id : Globais.Level_id
+var current_level_id : Level_id

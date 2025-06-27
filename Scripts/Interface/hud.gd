@@ -44,6 +44,7 @@ func _ready() -> void:
 	audio_player_musica.stream = musica_level
 	audio_player_musica.stop()
 	audio_player_musica.process_mode = Node.PROCESS_MODE_PAUSABLE
+	audio_player_musica.volume_db = Globais.volume_musica_partida
 	# esconde as telas
 	start_menu.hide()
 	game_over_menu.hide()
