@@ -13,6 +13,7 @@ class_name BarraProgresso
 var qtd_total_faltando : int = 1
 var qtd_mudas_faltando : int
 var qtd_lixo_faltando : int
+var qtd_pinos_faltando : int
 
 func _ready() -> void:
 	barra_prog_base.scale.x = 0
@@ -41,9 +42,10 @@ func comecar() -> void:
 	mostradores_pivot.position.x = 0
 
 func update_progresso() -> void:
-	var prog : float
-	prog = qtd_total_faltando - (qtd_mudas_faltando + qtd_lixo_faltando) 
-	prog = prog / qtd_total_faltando
+	var qtd : int
+	qtd  = qtd_total_faltando
+	qtd -= qtd_mudas_faltando + qtd_pinos_faltando + qtd_lixo_faltando
+	var prog : float = float(qtd) / qtd_total_faltando
 	barra_prog_top.scale.x = prog
 	
 	var posicao_x = barra_prog_top.size.x * barra_prog_top.scale.x
@@ -57,13 +59,19 @@ func update_progresso() -> void:
 		mostrador_lixo.position = pos_mostrador_1
 
 # ---------------------------- Receber updates dos valores
-func ajustar_faltando(qtd_mudas : int, qtd_lixo : int) -> void:
-	qtd_total_faltando = qtd_mudas + qtd_lixo
+func ajustar_faltando(qtd_mudas : int, qtd_pinos : int, qtd_lixo : int) -> void:
+	qtd_total_faltando = qtd_mudas + qtd_lixo + qtd_pinos
+	
 	qtd_mudas_faltando = qtd_mudas
 	qtd_lixo_faltando  = qtd_lixo
+	qtd_pinos_faltando = qtd_pinos
 
 func update_mudas_faltando(qtd_mudas : int) -> void:
 	qtd_mudas_faltando = qtd_mudas
+	update_progresso()
+
+func update_pinos_faltando(qtd_pinos : int) -> void:
+	qtd_pinos_faltando = qtd_pinos
 	update_progresso()
 
 func update_lixo_faltando(qtd_lixo : int) -> void:

@@ -89,8 +89,15 @@ func _update_hud_mudas() -> void:
 func _update_hud_lixo() -> void:
 	hud.update_lixo_faltando(qtd_lixo)
 
+func _update_hud_arvores_invasoras() -> void:
+	hud.update_arvores_invasoras_faltando(qtd_arvores_invasoras)
+
 func _ajustar_barra_progresso() -> void:
-	hud.ajustar_faltando(qtd_mudas_necessitam_plantar(), qtd_lixo)
+	hud.ajustar_faltando(
+		qtd_mudas_necessitam_plantar(),
+		qtd_arvores_invasoras,
+		qtd_lixo
+	)
 
 func _ajustar_pause() -> void:
 	# set o node Nivel (pai da cena) como processar sempre
@@ -125,6 +132,7 @@ func plantada_arvore_nativa(arvore : Arvore) -> void:
 
 func _cortada_arvore_invasora() -> void:
 	qtd_arvores_invasoras -= 1
+	_update_hud_arvores_invasoras()
 
 func _cortada_arvore_nativa() -> void:
 	qtd_arvores_nativas -= 1

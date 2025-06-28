@@ -56,12 +56,16 @@ func get_temporizador() -> Temporizador:
 # ---------------------------------
 # Updates Externos
 # ---------------------------------
-func ajustar_faltando(qtd_mudas : int, qtd_lixo : int) -> void:
-	barra_progresso.ajustar_faltando(qtd_mudas, qtd_lixo)
+func ajustar_faltando(qtd_mudas : int, qtd_pinos : int, qtd_lixo : int) -> void:
+	barra_progresso.ajustar_faltando(qtd_mudas, qtd_pinos, qtd_lixo)
 
 ## atualiza barra de progresso de quantas mudas tem que ser plantadas
 func update_mudas_faltando(qtd_mudas : int) -> void:
 	barra_progresso.update_mudas_faltando(qtd_mudas)
+
+## atualiza barra de progresso de quantas arvores tem que ser cortadas
+func update_arvores_invasoras_faltando(qtd_pinos : int) -> void:
+	barra_progresso.update_pinos_faltando(qtd_pinos)
 
 ## atualiza barra de progresso de quantos lixos tem que ser recolhidos
 func update_lixo_faltando(qtd_lixo : int) -> void:
