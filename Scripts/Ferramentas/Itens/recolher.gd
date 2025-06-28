@@ -3,7 +3,7 @@ extends Ferramenta
 func _ready() -> void:
 	super() # chama _ready da classe Ferramenta
 
-func usar_ferramenta(body : Node2D) -> void:
+func usar_ferramenta(body : Node2D, jog : Jogador) -> void:
 	# se estiver no cooldown -> nao faca nada
 	if is_on_cooldown: return
 	# se nao for lixo -> nao faca nada

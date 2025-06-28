@@ -38,5 +38,5 @@ func morrer() -> void:
 	queue_free()
 
 # --- Abstrato ---
-func cortar() -> void:
+func cortar(jog : Jogador) -> void:
 	pass

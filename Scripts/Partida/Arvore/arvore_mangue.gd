@@ -3,6 +3,7 @@ extends Arvore
 @onready var timer_crescer := $TimerCrescer
 @onready var anim_player := $scaled/AnimationPlayer
 @onready var collision_area_preso := $Area2DPresoDentro/CollisionShape2D
+@onready var particulas := $GPUParticles2D
 
 @export var sprites_idade : Dictionary[Crescimento, Sprite2D] = {}
 @export var collisions_idade : Dictionary[Crescimento, CollisionShape2D] = {}
@@ -61,13 +62,25 @@ func _update_sprite(mostrar : bool) -> void:
 func _on_timer_crescer_timeout() -> void:
 	crescer()
 
-func cortar() -> void:
+func cortar(jog : Jogador) -> void:
 	# nao faz nada se tiver sendo cortada
 	if not viva: return
 	viva = false
 	
+	# mostra as particular
+	mostrar_particulas(jog)
+	
 	anim_player.play("cortar")
 	anim_player.animation_finished.connect( _morrer )
+
+func mostrar_particulas(jog : Jogador) -> void:
+	# direcao do jogador para as particulas
+	var dir := jog.global_position.angle_to(particulas.global_position)
+	particulas.rotation = dir
+	print(dir)
+	
+	particulas.global_position.y = jog.global_position.y + 20
+	particulas.emitting = true
 
 func _morrer(_anim_name: String) -> void:
 	super.morrer()

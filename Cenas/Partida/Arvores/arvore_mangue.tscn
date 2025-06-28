@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://cedrrktxte7k6"]
+[gd_scene load_steps=17 format=3 uid="uid://cedrrktxte7k6"]
 
 [ext_resource type="Script" uid="uid://dbq0k02hr2o0m" path="res://Scripts/Partida/Arvore/arvore_mangue.gd" id="1_63al1"]
 [ext_resource type="Texture2D" uid="uid://e14uxly4awj8" path="res://Assets/Cenario/Arvores/ArvoresMangue.png" id="1_yyjcj"]
 [ext_resource type="Shader" uid="uid://bgx5ojm5n4jm4" path="res://Scripts/Shaders/WindyFoliage.gdshader" id="3_5uk8w"]
+[ext_resource type="Material" uid="uid://dhsnm6tqwl3ic" path="res://PreSets/Cenario/mangue_particle_pmat.tres" id="4_8l0ih"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_187py"]
 
@@ -308,6 +309,15 @@ monitorable = false
 position = Vector2(5.5, 32.6667)
 shape = SubResource("RectangleShape2D_wngaa")
 debug_color = Color(0.53208, 0.54, 0.4806, 0.203922)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(0, -4)
+emitting = false
+amount = 32
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.8
+process_material = ExtResource("4_8l0ih")
 
 [connection signal="timeout" from="TimerCrescer" to="." method="_on_timer_crescer_timeout"]
 [connection signal="body_entered" from="Area2DPresoDentro" to="." method="_on_area_2d_preso_dentro_body_entered"]

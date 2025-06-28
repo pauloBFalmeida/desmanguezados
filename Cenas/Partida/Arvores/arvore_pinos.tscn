@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://b6fqbdb1cd3kc"]
+[gd_scene load_steps=14 format=3 uid="uid://b6fqbdb1cd3kc"]
 
 [ext_resource type="Script" uid="uid://ecg0wp8e35w1" path="res://Scripts/Partida/Arvore/arvore_pinos.gd" id="1_ik7rc"]
 [ext_resource type="Texture2D" uid="uid://x7dqi6ggmsw0" path="res://Assets/Cenario/Arvores/Pinos.png" id="2_8f0k6"]
 [ext_resource type="Texture2D" uid="uid://bnsy7do16v8k5" path="res://Assets/Ferramentas/circle.png" id="2_q3uxc"]
 [ext_resource type="Shader" uid="uid://bgx5ojm5n4jm4" path="res://Scripts/Shaders/WindyFoliage.gdshader" id="3_k3s1f"]
+[ext_resource type="Material" uid="uid://ckq0hqw8ud7sn" path="res://PreSets/Cenario/pinos_particle_pmat.tres" id="5_cfg4d"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_187py"]
 
@@ -175,6 +176,7 @@ libraries = {
 }
 
 [node name="Area2DMostrarBuraco" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 54
 
@@ -182,6 +184,15 @@ collision_mask = 54
 position = Vector2(3, -117.5)
 shape = SubResource("RectangleShape2D_q3uxc")
 debug_color = Color(0.537853, 0.539163, 0.502104, 0.42)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(3, -9)
+emitting = false
+amount = 32
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.8
+process_material = ExtResource("5_cfg4d")
 
 [connection signal="body_entered" from="Area2DMostrarBuraco" to="." method="_on_area_2d_mostrar_buraco_body_entered"]
 [connection signal="body_exited" from="Area2DMostrarBuraco" to="." method="_on_area_2d_mostrar_buraco_body_exited"]

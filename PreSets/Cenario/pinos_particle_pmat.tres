@@ -1,0 +1,22 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://ckq0hqw8ud7sn"]
+
+[sub_resource type="Curve" id="Curve_cxfpx"]
+bake_resolution = 20
+_data = [Vector2(0.481481, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0599777), -4.40499, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_44kve"]
+curve = SubResource("Curve_cxfpx")
+
+[resource]
+particle_flag_disable_z = true
+spread = 30.0
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+scale_min = 4.0
+scale_max = 6.0
+scale_curve = SubResource("CurveTexture_44kve")
+color = Color(0.639216, 0.439216, 0.352941, 1)
+hue_variation_min = -0.03
+hue_variation_max = 0.03
