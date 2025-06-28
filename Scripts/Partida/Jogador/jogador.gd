@@ -36,6 +36,7 @@ var jogador_cor : Jogador_cor_id
 var last_input_movimento := Vector2.RIGHT
 
 const collision_layer_ferramentas : int = 3
+const collision_layer_ferramentas_unico : int = 7
 var ferramenta_collision_mask : int
 
 var segurando : Ferramenta = null
@@ -275,6 +276,9 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	# ajusta para a area de interacao reconhecer o alvo da ferramenta
 	ferramenta_collision_mask = ferramenta.get_layer_acao()
 	area_interacao.set_collision_mask_value(ferramenta_collision_mask, true)
+	# impede de pegar a propria ferramenta de plantar uso unico -> so o outro jogador pode pegar
+	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
+		area_interacao.set_collision_mask_value(collision_layer_ferramentas_unico, false)
 	# ==> versao atual da pra trocar de ferramenta sem dropar, entao essa parte esta off <==
 	# remove a layer das ferramentas 
 	#area_interacao.set_collision_mask_value(collision_layer_ferramentas, false)
@@ -309,6 +313,7 @@ func _limpar_jogador_ferramenta(ferramenta : Ferramenta) -> void:
 	ferramenta_collision_mask = 32 # ajusta pra outro valor
 	# ativa a layer das ferramentas 
 	area_interacao.set_collision_mask_value(collision_layer_ferramentas, true)
+	area_interacao.set_collision_mask_value(collision_layer_ferramentas_unico, true)
 	
 	anim_idle()
 
