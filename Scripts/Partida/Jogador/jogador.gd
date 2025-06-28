@@ -420,10 +420,12 @@ func anim_segurar_ferramenta(ferramenta : Ferramenta) -> void:
 	match tipo_ferramenta:
 		Ferramenta.Ferramenta_tipo.CORTAR:
 			jogador_anim.mudar_skin(JogadorAnimation.Skin_tipo.CORTAR)
-		Ferramenta.Ferramenta_tipo.PLANTAR:
-			jogador_anim.mudar_skin(JogadorAnimation.Skin_tipo.PLANTAR)
 		Ferramenta.Ferramenta_tipo.RECOLHER:
 			jogador_anim.mudar_skin(JogadorAnimation.Skin_tipo.RECOLHER)
+		Ferramenta.Ferramenta_tipo.PLANTAR:
+			jogador_anim.mudar_skin(JogadorAnimation.Skin_tipo.PLANTAR)
+		Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
+			jogador_anim.mudar_skin(JogadorAnimation.Skin_tipo.PLANTAR_HATLESS)
 		_: # default, caso nao de match com nenhuma das opcoes anteriores
 			anim_idle()
 
