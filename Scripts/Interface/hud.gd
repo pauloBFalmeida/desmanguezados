@@ -83,6 +83,8 @@ func comecar_contar() -> void:
 	is_comecando_contar = true
 	start_menu.show()
 	get_tree().paused = true
+	# comeca a barra de progresso
+	barra_progresso.comecar(start_count_num)
 	# -- contar --
 	while (start_count_num > 0):
 		start_label_count.text = str(start_count_num)
@@ -104,8 +106,6 @@ func comecar_partida() -> void:
 	audio_player_musica.play()
 	# comeca o temporizador
 	temporizador.comecar()
-	# comeca a barra de progresso
-	barra_progresso.comecar()
 
 # ---------------------------------
 # Menu de GameOver
