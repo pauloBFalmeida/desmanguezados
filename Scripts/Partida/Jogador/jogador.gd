@@ -270,8 +270,10 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	# se ja estiver segurando uma ferramenta -> nao faca nada
 	if segurando and is_instance_valid(segurando): return
 	
+	var pegou = ferramentas_mgmt.jogador_pegar_ferramenta(self, ferramenta)
+	if not pegou: return
+	
 	segurando = ferramenta
-	ferramentas_mgmt.jogador_pegar_ferramenta(self, ferramenta)
 	
 	# ajusta para a area de interacao reconhecer o alvo da ferramenta
 	ferramenta_collision_mask = ferramenta.get_layer_acao()

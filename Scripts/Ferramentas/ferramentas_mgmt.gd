@@ -60,10 +60,15 @@ func plantar_muda(global_pos : Vector2) -> void:
 # -----------------------------------------------
 # Pegar e Largar ferramenta
 # -----------------------------------------------
-func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> void:
+## retorna se o jogador conseguiu pegar a ferramenta
+func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> bool:
+	# ja tem alguem segurando essa ferramenta -> retorne false -> nao pegou
+	if jogadores_segurando_ferramenta.values().has(ferramenta):
+		return false
+	
 	emit_signal("pegou_ferramenta", jogador, ferramenta)
 	
-	jogadores_segurando_ferramenta [jogador] = ferramenta
+	jogadores_segurando_ferramenta[jogador] = ferramenta
 	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
 		locais_plantar_colecao.mostrar()
 		# cria a ferramenta de uso unico
@@ -78,6 +83,8 @@ func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> voi
 	
 	# coloca colado no jogador, para ter o som no local certinho
 	ferramenta.position = Vector2.ZERO
+	
+	return true # retorne que pegou a ferramenta
 
 func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta, 
 								global_pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
@@ -129,10 +136,7 @@ func _criar_ferramenta_plantar_unico(jogador : Jogador, ferramenta_plantar : Pla
 	if plantar_unico and is_instance_valid(plantar_unico) and plantar_unico.is_inside_tree():
 		# se for ser deletado -> entao crie outro
 		if not plantar_unico.is_queued_for_deletion():
-			print('nao criar ')
 			return
-		else:
-			print('criar - queued delete')
 	
 	plantar_unico = plantar_unico_ref.instantiate()
 	plantar_unico.iniciar(ferramenta_plantar)
@@ -146,10 +150,8 @@ func _deletar_ferramenta_plantar_unico(ferramenta : Ferramenta, criar_outra : bo
 	ferramenta.hide_ferramenta()
 	ferramenta.queue_free()
 	
-	# TODO: esse codigo crasha se os jogadores duplicarem a ferramenta,
-	# 		mas fora isso deveria funcionar
 	# se nao for para criar outra -> acabe
-	#if not criar_outra: return
+	if not criar_outra: return
 	
 	# -- criar outra ferramenta de plantar uso unico filho do jog com plantar --
 	# acha jogador com plantar
