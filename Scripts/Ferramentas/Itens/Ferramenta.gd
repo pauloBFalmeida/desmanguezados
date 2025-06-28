@@ -8,7 +8,7 @@ enum Ferramenta_tipo {CORTAR, PLANTAR, RECOLHER, PLANTAR_UNICO}
 enum Som_tipo {ACERTO, ERRO, BALANCAR}
 
 @export_flags_2d_physics var layer_acao : int
-@export var tipo_ferramenta : Ferramenta_tipo
+@export var tipo : Ferramenta_tipo
 ## em segundos
 @export var duracao_cooldown : float = 0.5
 ## tempo em segundos depois de comecar a acao, para acontecer os sons e animacoes (aprox cooldown/2, so q menos para garantir)

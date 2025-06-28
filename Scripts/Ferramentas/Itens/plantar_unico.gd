@@ -2,7 +2,7 @@ extends Plantar
 
 func iniciar(plantar : Plantar) -> void:
 	layer_acao = plantar.layer_acao
-	tipo_ferramenta = Ferramenta_tipo.PLANTAR_UNICO
+	tipo = Ferramenta_tipo.PLANTAR_UNICO
 	duracao_cooldown = plantar.duracao_cooldown
 	acontecer_offset = plantar.acontecer_offset
 	sons = plantar.sons.duplicate(true)

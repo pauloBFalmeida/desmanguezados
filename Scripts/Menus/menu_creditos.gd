@@ -16,7 +16,7 @@ func _ready() -> void:
 	_ajustar_plantar()
 	# ajusta cada ferramenta para ter um efeito
 	for ferramenta in ferramentas_mgmt.ferramentas_level:
-		match ferramenta.tipo_ferramenta:
+		match ferramenta.tipo:
 			Ferramenta.Ferramenta_tipo.CORTAR:
 				ferramenta.usou.connect(usar_cortar.bind(ferramenta))
 			Ferramenta.Ferramenta_tipo.RECOLHER:

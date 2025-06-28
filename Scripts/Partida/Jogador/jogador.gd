@@ -262,7 +262,11 @@ func lidar_pickup() -> void:
 	# se ja estiver segurando uma ferramenta
 	if segurando and is_instance_valid(segurando):
 		# drop a ferramenta que esta segurando, no local da que esta pegando estava a no chao
-		drop_ferramenta(ferramenta.global_position)
+		if ferramenta.tipo == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
+			# se ela for de uso unico, drop normal, pra n ficar em baixo do outro siri
+			drop_ferramenta()
+		else:
+			drop_ferramenta(ferramenta.global_position)
 	
 	# pega a ferramenta do chao
 	pegar_ferramenta(ferramenta)
@@ -281,7 +285,7 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	ferramenta_collision_mask = ferramenta.get_layer_acao()
 	area_interacao.set_collision_mask_value(ferramenta_collision_mask, true)
 	# impede de pegar a propria ferramenta de plantar uso unico -> so o outro jogador pode pegar
-	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
+	if ferramenta.tipo == Ferramenta.Ferramenta_tipo.PLANTAR:
 		area_interacao.set_collision_mask_value(collision_layer_ferramentas_unico, false)
 	# ==> versao atual da pra trocar de ferramenta sem dropar, entao essa parte esta off <==
 	# remove a layer das ferramentas 
@@ -425,8 +429,7 @@ func _fim_cooldown_jogador() -> void:
 # Animacao
 # ----------------------------------------------
 func anim_segurar_ferramenta(ferramenta : Ferramenta) -> void:
-	var tipo_ferramenta : Ferramenta.Ferramenta_tipo = ferramenta.tipo_ferramenta
-	match tipo_ferramenta:
+	match ferramenta.tipo:
 		Ferramenta.Ferramenta_tipo.CORTAR:
 			jogador_anim.mudar_skin(JogadorAnimation.Skin_tipo.CORTAR)
 		Ferramenta.Ferramenta_tipo.RECOLHER:

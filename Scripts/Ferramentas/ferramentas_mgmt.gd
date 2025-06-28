@@ -69,7 +69,7 @@ func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> boo
 	emit_signal("pegou_ferramenta", jogador, ferramenta)
 	
 	jogadores_segurando_ferramenta[jogador] = ferramenta
-	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
+	if ferramenta.tipo == Ferramenta.Ferramenta_tipo.PLANTAR:
 		locais_plantar_colecao.mostrar()
 		# cria a ferramenta de uso unico
 		_criar_ferramenta_plantar_unico(jogador, ferramenta)
@@ -108,12 +108,12 @@ func _retirar_ferramenta_jogador(jogador : Jogador, ferramenta : Ferramenta) -> 
 	jogadores_segurando_ferramenta.erase(jogador)
 	
 	# esconde as setas dos locais de plantar se ninguem estiver segurando plantar
-	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
+	if ferramenta.tipo == Ferramenta.Ferramenta_tipo.PLANTAR:
 		# se ainda tem algum jogador segurando uma ferramenta tipo PLANTAR
 		var ainda_segurando : bool = false 
 		for _ferram in jogadores_segurando_ferramenta .values():
-			if (_ferram.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR or 
-			_ferram.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO):
+			if (_ferram.tipo == Ferramenta.Ferramenta_tipo.PLANTAR or 
+			_ferram.tipo == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO):
 				ainda_segurando = true
 				break
 		# se nao tiver ninguem segurando -> esconda
@@ -158,17 +158,17 @@ func _deletar_ferramenta_plantar_unico(ferramenta : Ferramenta, criar_outra : bo
 	for jog in jogadores_segurando_ferramenta.keys():
 		var jog_segurando : Ferramenta = jogadores_segurando_ferramenta[jog]
 		# jog esta segurando plantar -> cria outro de uso unico e acabe
-		if jog_segurando.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
+		if jog_segurando.tipo == Ferramenta.Ferramenta_tipo.PLANTAR:
 			_criar_ferramenta_plantar_unico(jog, jog_segurando)
 			break
 
 ## retorna se o resto da funcao nao deve ser executado 
 func _lidar_dropar_plantar_unico(jogador : Jogador, ferramenta : Ferramenta) -> bool:
-	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
+	if ferramenta.tipo == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
 		_deletar_ferramenta_plantar_unico(ferramenta)
 		return true # nao continua a funcao principal (que fez a chamada dessa)
 	
-	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
+	if ferramenta.tipo == Ferramenta.Ferramenta_tipo.PLANTAR:
 		# nao pegaram a de plantar uso unico, continua com o jogador -> deleta uso unico
 		if plantar_unico.get_parent() == jogador:
 			_deletar_ferramenta_plantar_unico(plantar_unico, false)

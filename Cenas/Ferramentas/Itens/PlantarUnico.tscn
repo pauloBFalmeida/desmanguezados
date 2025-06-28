@@ -19,7 +19,7 @@ collision_layer = 64
 collision_mask = 0
 script = ExtResource("1_ado07")
 layer_acao = 16
-tipo_ferramenta = 3
+tipo = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_m88eb")

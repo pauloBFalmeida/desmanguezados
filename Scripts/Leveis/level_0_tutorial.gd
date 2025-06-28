@@ -156,9 +156,9 @@ func update_status() -> void:
 	var cima := false
 	var baixo := false
 	if is_instance_valid(jogador_top.segurando) and jogador_top.segurando != null:
-		cima = jogador_top.segurando.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR
+		cima = jogador_top.segurando.tipo == Ferramenta.Ferramenta_tipo.PLANTAR
 	if is_instance_valid(jogador_bot.segurando) and jogador_bot.segurando != null:
-		baixo = jogador_bot.segurando.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR
+		baixo = jogador_bot.segurando.tipo == Ferramenta.Ferramenta_tipo.PLANTAR
 	
 	if cima and baixo:
 		curr_status = Status_segurando.AMBOS
