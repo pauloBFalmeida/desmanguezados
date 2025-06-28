@@ -12,9 +12,11 @@ var level : Level
 @export var dropar_offset_jogador := Vector2(-15, 40)
 
 var ferramentas_level : Array[Ferramenta]
-var ferramentas_mao_jogadores : Dictionary[Jogador, Ferramenta]
+var jogadores_segurando_ferramenta : Dictionary[Jogador, Ferramenta]
 
 @onready var jogar_ferramenta_mgmt := $JogarFerramentaMgmt
+
+var plantar_unico_ref := preload("res://Cenas/Ferramentas/Itens/PlantarUnico.tscn")
 
 func _ready() -> void:
 	# passa a referencia do FerramentaMgmt para todas as ferramentas
@@ -60,15 +62,17 @@ func plantar_muda(global_pos : Vector2) -> void:
 func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	emit_signal("pegou_ferramenta", jogador, ferramenta)
 	
-	ferramentas_mao_jogadores[jogador] = ferramenta
+	jogadores_segurando_ferramenta [jogador] = ferramenta
 	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
 		locais_plantar_colecao.mostrar()
+		# cria a ferramenta de uso unico
+		_criar_ferramenta_plantar_unico(jogador, ferramenta)
 	
 	# esconde
 	ferramenta.hide_ferramenta()
 	
-	# tira do ferramenta_mgmt e coloca como filho do jogador
-	remove_child(ferramenta)
+	# coloca ferramenta como filho do jogador
+	ferramenta.get_parent().remove_child(ferramenta)
 	jogador.add_child(ferramenta)
 	
 	# coloca colado no jogador, para ter o som no local certinho
@@ -77,6 +81,12 @@ func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> voi
 func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta, 
 								global_pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
 	_retirar_ferramenta_jogador(jogador, ferramenta)
+	
+	# lidar com plantar uso unico
+	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
+		_deletar_ferramenta_plantar_unico(ferramenta)
+		return
+	
 	# aparece de volta (visivel no chao)
 	ferramenta.show_ferramenta()
 	
@@ -88,12 +98,13 @@ func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta,
 	posicionar_ferramenta(ferramenta, global_pos_ferramenta)
 
 func _retirar_ferramenta_jogador(jogador : Jogador, ferramenta : Ferramenta) -> void:
-	# 
-	ferramentas_mao_jogadores.erase(jogador)
+	jogadores_segurando_ferramenta.erase(jogador)
+	
+	# esconde as setas dos locais de plantar se ninguem estiver segurando plantar
 	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
 		# se ainda tem algum jogador segurando uma ferramenta tipo PLANTAR
 		var ainda_segurando : bool = false 
-		for _ferram in ferramentas_mao_jogadores.values():
+		for _ferram in jogadores_segurando_ferramenta .values():
 			if _ferram.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
 				ainda_segurando = true
 				break
@@ -110,6 +121,22 @@ func posicionar_ferramenta(ferramenta : Ferramenta, global_pos : Vector2) -> voi
 	ferramenta_inst.global_position = global_pos
 
 # -----------------------------------------------
+# Uso Unico
+# -----------------------------------------------
+func _criar_ferramenta_plantar_unico(jogador : Jogador, ferramenta_plantar : Plantar) -> void:
+	var plantar_unico : Plantar = plantar_unico_ref.instantiate()
+	plantar_unico.iniciar(ferramenta_plantar)
+	plantar_unico.set_ferramenta_mgmt(self) # necessario para funcionar
+	# esconde a ferramenta mas deixa que o outro jogador possa pegar
+	plantar_unico.hide_manter_pegavel_ferramenta()
+	# adiciona ao jogador
+	jogador.add_child(plantar_unico)
+
+func _deletar_ferramenta_plantar_unico(ferramenta : Ferramenta) -> void:
+	ferramenta.hide_ferramenta()
+	ferramenta.queue_free()
+
+# -----------------------------------------------
 # Jogar / Throw ferramenta
 # -----------------------------------------------
 # charge de [0.0, 1.0] para quanto porcento esta carregado 
@@ -119,7 +146,12 @@ func jogador_throw_ferramenta_segurando(jogador : Jogador,
 	jogar_ferramenta_mgmt.segurando(jogador, direcao, charge)
 	
 func jogador_throw_ferramenta_jogar(jogador : Jogador, ferramenta : Ferramenta) -> void:
-	if not jogar_ferramenta_mgmt.previsao_exist(jogador): return 
+	if not jogar_ferramenta_mgmt.previsao_exist(jogador): return
+	# lidar com plantar uso unico
+	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
+		_deletar_ferramenta_plantar_unico(ferramenta)
+		return
+	
 	emit_signal("jogou_ferramenta", jogador, ferramenta)
 	
 	# esconde a ferramenta e retira ela da mao do jogador
