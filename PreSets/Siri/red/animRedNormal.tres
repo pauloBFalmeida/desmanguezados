@@ -3,6 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://c86gfamgy4qfk" path="res://Assets/Siris/red/walker/red_walker.png" id="1_mtkvm"]
 [ext_resource type="Texture2D" uid="uid://ckrvj3utosjhx" path="res://Assets/Siris/red/stop/red_stop.png" id="2_wvbqy"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_j7ibh"]
+atlas = ExtResource("2_wvbqy")
+region = Rect2(10, 24, 43, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_p28xq"]
 atlas = ExtResource("1_mtkvm")
 region = Rect2(10, 23, 44, 30)
@@ -18,10 +22,6 @@ region = Rect2(10, 87, 44, 30)
 [sub_resource type="AtlasTexture" id="AtlasTexture_5nwwg"]
 atlas = ExtResource("1_mtkvm")
 region = Rect2(73, 87, 44, 30)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j7ibh"]
-atlas = ExtResource("2_wvbqy")
-region = Rect2(10, 24, 43, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7s55s"]
 atlas = ExtResource("2_wvbqy")
@@ -53,7 +53,10 @@ region = Rect2(74, 152, 43, 32)
 
 [resource]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j7ibh")
+}],
 "loop": true,
 "name": &"acao",
 "speed": 5.0
