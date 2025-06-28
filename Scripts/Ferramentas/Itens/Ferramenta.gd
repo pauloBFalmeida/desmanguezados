@@ -2,6 +2,7 @@ class_name Ferramenta
 extends CharacterBody2D
 
 signal usou
+signal cooldown_terminou
 
 enum Ferramenta_tipo {CORTAR, PLANTAR, RECOLHER, PLANTAR_UNICO}
 enum Som_tipo {ACERTO, ERRO, BALANCAR}
@@ -99,6 +100,7 @@ func aplicar_cooldown() -> void:
 
 func _terminar_cooldown() -> void:
 	is_on_cooldown = false
+	emit_signal("cooldown_terminou")
 
 # --- Desativar corpo ---
 func desativar(body : PhysicsBody2D) -> void:

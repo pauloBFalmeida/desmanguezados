@@ -15,3 +15,7 @@ func _ready() -> void:
 
 func usar_ferramenta(alvo : Node2D, jogador : Jogador) -> void:
 	super.usar_ferramenta(alvo, jogador)
+	# espera terminar de usar a ferramenta
+	await cooldown_terminou
+	# deletar a de uso unico (largando ela)
+	jogador.drop_ferramenta()

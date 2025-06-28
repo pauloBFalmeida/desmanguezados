@@ -65,7 +65,8 @@ func _ready() -> void:
 	ferramentas_mgmt = spawn_jogadores.get_ferramentas_mgmt()
 	#
 	_ajustar_input_map()
-	is_usando_controle = InputManager.players_no_controle.has(player_id) # marca se o jogador esta no controle
+	# marca se o jogador esta no controle
+	is_usando_controle = InputManager.players_no_controle.has(player_id)
 	indicador_direcao.set_usando_joystick(is_usando_controle)
 	# ajusta o nome
 	var nome_id : String = "P1" if player_id == InputManager.PlayerId.P1 else "P2"
@@ -74,7 +75,8 @@ func _ready() -> void:
 	jogador_cor = Jogador_cor_id.BLUE if player_id == InputManager.PlayerId.P1 else Jogador_cor_id.RED
 	jogador_anim.set_cor(jogador_cor)
 	anim_idle()
-	jogador_anim.set_movimento(JogadorAnimation.Movimento_tipo.PARADO) # forca a animacao inicial ser parado
+	# forca a animacao inicial ser parado
+	jogador_anim.set_movimento(JogadorAnimation.Movimento_tipo.PARADO)
 
 func _ajustar_input_map() -> void:
 	# ajusta o action map do player
@@ -259,7 +261,7 @@ func lidar_pickup() -> void:
 	
 	# se ja estiver segurando uma ferramenta
 	if segurando and is_instance_valid(segurando):
-		# drop a ferramenta que esta segurando, no local que estava a no chao
+		# drop a ferramenta que esta segurando, no local da que esta pegando estava a no chao
 		drop_ferramenta(ferramenta.global_position)
 	
 	# pega a ferramenta do chao
