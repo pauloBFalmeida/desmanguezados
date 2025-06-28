@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 signal usou
 
-enum Ferramenta_tipo {CORTAR, PLANTAR, RECOLHER}
+enum Ferramenta_tipo {CORTAR, PLANTAR, RECOLHER, PLANTAR_UNICO}
 enum Som_tipo {ACERTO, ERRO, BALANCAR}
 
 @export_flags_2d_physics var layer_acao : int
@@ -53,16 +53,20 @@ func outline_on() -> void:
 func outline_off() -> void:
 	shader_mat.set_shader_parameter("thickness", 0.0)
 
+func show_ferramenta() -> void:
+	visible = true
+	set_physics_process(true)
+	set_process(true)
+	collison.disabled = false
+
 func hide_ferramenta() -> void:
 	visible = false
 	set_physics_process(false)
 	set_process(false)
 	collison.disabled = true
 
-func show_ferramenta() -> void:
-	visible = true
-	set_physics_process(true)
-	set_process(true)
+func hide_manter_pegavel_ferramenta() -> void:
+	hide_ferramenta()
 	collison.disabled = false
 
 func set_ferramenta_mgmt(fer_mgmt : FerramentaMgmt) -> void:

@@ -1,4 +1,5 @@
 extends Ferramenta
+class_name Plantar
 
 func _ready() -> void:
 	super() # chama _ready da classe Ferramenta
