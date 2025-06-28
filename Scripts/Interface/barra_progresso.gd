@@ -25,8 +25,6 @@ var target_pos_x : float = 0
 @onready var cor_normal : Color = barra_prog_top.modulate
 
 func _ready() -> void:
-	# pausa enquanto get_tree().pause = true
-	set_process_mode(Node.PROCESS_MODE_PAUSABLE)
 	# prepara a barra de baixo pra animacao de comeco
 	barra_prog_base.scale.x = 0
 	# prepara a barra e os marcadores
@@ -63,8 +61,10 @@ func comecar(segundos_duracao : int) -> void:
 		1.0, 				# valor final
 		segundos_duracao	# duracao em seg
 	).from_current()
-	# espera acabar a animacao
+	# --- espera acabar a animacao ---
 	await tween.finished
+	# pausa enquanto get_tree().pause = true
+	set_process_mode(Node.PROCESS_MODE_PAUSABLE)
 	# mostra os icones
 	mostradores_pivot.show()
 	mostrador_lixo.show()
