@@ -13,5 +13,5 @@ func iniciar(plantar : Plantar) -> void:
 func _ready() -> void:
 	pass
 
-func usar_ferramenta(body : Node2D) -> void:
-	super.usar_ferramenta(body)
+func usar_ferramenta(alvo : Node2D, jogador : Jogador) -> void:
+	super.usar_ferramenta(alvo, jogador)

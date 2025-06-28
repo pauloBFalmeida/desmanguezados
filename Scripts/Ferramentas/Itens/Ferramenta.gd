@@ -111,5 +111,5 @@ func usar_generico(body : Node2D) -> void:
 	aplicar_cooldown()
 
 # --- Abstrato ---
-func usar_ferramenta(_body : Node2D) -> void:
+func usar_ferramenta(alvo : Node2D, jogador : Jogador) -> void:
 	pass
