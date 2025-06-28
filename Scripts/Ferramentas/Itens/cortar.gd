@@ -14,6 +14,7 @@ func usar_ferramenta(body : Node2D) -> void:
 	super.aplicar_cooldown()
 	
 	# espera um pouco fazer as coisas acontecerem
+	desativar(body)
 	await get_tree().create_timer(acontecer_offset).timeout
 	
 	var arvore : Arvore = body

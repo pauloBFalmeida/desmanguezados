@@ -96,6 +96,10 @@ func aplicar_cooldown() -> void:
 func _terminar_cooldown() -> void:
 	is_on_cooldown = false
 
+# --- Desativar corpo ---
+func desativar(body : PhysicsBody2D) -> void:
+	body.collision_layer = 0
+
 # --- Generico para usar fora do que eh o item ---
 func usar_generico(body : Node2D) -> void:
 	if is_on_cooldown: return # nao faca nada durante cooldown
