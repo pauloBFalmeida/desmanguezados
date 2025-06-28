@@ -145,9 +145,12 @@ func _criar_ferramenta_plantar_unico(jogador : Jogador, ferramenta_plantar : Pla
 func _deletar_ferramenta_plantar_unico(ferramenta : Ferramenta, criar_outra : bool = true) -> void:
 	ferramenta.hide_ferramenta()
 	ferramenta.queue_free()
-	print('criar_outra ', criar_outra)
+	
+	# TODO: esse codigo crasha se os jogadores duplicarem a ferramenta,
+	# 		mas fora isso deveria funcionar
 	# se nao for para criar outra -> acabe
 	#if not criar_outra: return
+	
 	# -- criar outra ferramenta de plantar uso unico filho do jog com plantar --
 	# acha jogador com plantar
 	for jog in jogadores_segurando_ferramenta.keys():
