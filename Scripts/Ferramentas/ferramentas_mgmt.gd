@@ -83,14 +83,9 @@ func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta,
 								global_pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
 	_retirar_ferramenta_jogador(jogador, ferramenta)
 	
-	# -- lidar com plantar uso unico --
-	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
-		_deletar_ferramenta_plantar_unico(ferramenta)
+	# lidar com plantar uso unico -> deve parar o resto da funcao
+	if _lidar_dropar_plantar_unico(jogador, ferramenta):
 		return
-	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
-		# nao pegaram a de plantar uso unico, continua com o jogador -> deleta uso unico
-		if plantar_unico.get_parent() == jogador:
-			_deletar_ferramenta_plantar_unico(plantar_unico, false)
 	
 	# aparece de volta (visivel no chao)
 	ferramenta.show_ferramenta()
@@ -110,7 +105,8 @@ func _retirar_ferramenta_jogador(jogador : Jogador, ferramenta : Ferramenta) -> 
 		# se ainda tem algum jogador segurando uma ferramenta tipo PLANTAR
 		var ainda_segurando : bool = false 
 		for _ferram in jogadores_segurando_ferramenta .values():
-			if _ferram.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
+			if (_ferram.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR or 
+			_ferram.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO):
 				ainda_segurando = true
 				break
 		# se nao tiver ninguem segurando -> esconda
@@ -133,7 +129,10 @@ func _criar_ferramenta_plantar_unico(jogador : Jogador, ferramenta_plantar : Pla
 	if plantar_unico and is_instance_valid(plantar_unico) and plantar_unico.is_inside_tree():
 		# se for ser deletado -> entao crie outro
 		if not plantar_unico.is_queued_for_deletion():
+			print('nao criar ')
 			return
+		else:
+			print('criar - queued delete')
 	
 	plantar_unico = plantar_unico_ref.instantiate()
 	plantar_unico.iniciar(ferramenta_plantar)
@@ -148,7 +147,7 @@ func _deletar_ferramenta_plantar_unico(ferramenta : Ferramenta, criar_outra : bo
 	ferramenta.queue_free()
 	print('criar_outra ', criar_outra)
 	# se nao for para criar outra -> acabe
-	if not criar_outra: return
+	#if not criar_outra: return
 	# -- criar outra ferramenta de plantar uso unico filho do jog com plantar --
 	# acha jogador com plantar
 	for jog in jogadores_segurando_ferramenta.keys():
@@ -157,7 +156,20 @@ func _deletar_ferramenta_plantar_unico(ferramenta : Ferramenta, criar_outra : bo
 		if jog_segurando.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
 			_criar_ferramenta_plantar_unico(jog, jog_segurando)
 			break
+
+## retorna se o resto da funcao nao deve ser executado 
+func _lidar_dropar_plantar_unico(jogador : Jogador, ferramenta : Ferramenta) -> bool:
+	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
+		_deletar_ferramenta_plantar_unico(ferramenta)
+		return true # nao continua a funcao principal (que fez a chamada dessa)
 	
+	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
+		# nao pegaram a de plantar uso unico, continua com o jogador -> deleta uso unico
+		if plantar_unico.get_parent() == jogador:
+			_deletar_ferramenta_plantar_unico(plantar_unico, false)
+	
+	# continua a funcao principal (que fez a chamada dessa)
+	return false
 
 # -----------------------------------------------
 # Jogar / Throw ferramenta
@@ -170,9 +182,8 @@ func jogador_throw_ferramenta_segurando(jogador : Jogador,
 	
 func jogador_throw_ferramenta_jogar(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	if not jogar_ferramenta_mgmt.previsao_exist(jogador): return
-	# lidar com plantar uso unico
-	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
-		_deletar_ferramenta_plantar_unico(ferramenta)
+	# lidar com plantar uso unico -> deve parar o resto da funcao
+	if _lidar_dropar_plantar_unico(jogador, ferramenta):
 		return
 	
 	emit_signal("jogou_ferramenta", jogador, ferramenta)
