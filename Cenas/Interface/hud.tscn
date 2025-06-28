@@ -108,23 +108,26 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="mostradores" type="Node2D" parent="BarraProgresso"]
-position = Vector2(1233, 17)
+position = Vector2(0, 15)
 
-[node name="ArvoresMangue" type="Sprite2D" parent="BarraProgresso/mostradores"]
-modulate = Color(0.35, 0.35, 0.35, 1)
-position = Vector2(35.25, -1.5)
-scale = Vector2(1.23334, 1.25)
-texture = ExtResource("11_42fxd")
-region_enabled = true
-region_rect = Rect2(0, 17, 15, 20)
+[node name="pivot" type="Node2D" parent="BarraProgresso/mostradores"]
+position = Vector2(1233, 0)
 
-[node name="Lixo" type="Sprite2D" parent="BarraProgresso/mostradores"]
+[node name="Lixo" type="Sprite2D" parent="BarraProgresso/mostradores/pivot"]
 modulate = Color(0.35, 0.35, 0.35, 1)
-position = Vector2(13, -1)
+position = Vector2(13, 0)
 scale = Vector2(1.18334, 1.17375)
 texture = ExtResource("12_nmlv5")
 region_enabled = true
 region_rect = Rect2(0, 0, 15, 19)
+
+[node name="ArvoresMangue" type="Sprite2D" parent="BarraProgresso/mostradores/pivot"]
+modulate = Color(0.35, 0.35, 0.35, 1)
+position = Vector2(35, 0)
+scale = Vector2(1.23334, 1.25)
+texture = ExtResource("11_42fxd")
+region_enabled = true
+region_rect = Rect2(0, 17, 15, 20)
 
 [node name="PauseMenu" type="Control" parent="."]
 visible = false

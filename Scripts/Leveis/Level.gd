@@ -166,5 +166,3 @@ func ajustar_locais_plantar() -> void:
 	qtd_alvo_arvores_nativas = qtd_arvores_invasoras + qtd_arvores_nativas
 	# adiciona a quantidade de locais para plantar mudas
 	qtd_alvo_arvores_nativas += locais_plantar_colecao.get_children().size()
-	# update e hud
-	_update_hud_mudas()
