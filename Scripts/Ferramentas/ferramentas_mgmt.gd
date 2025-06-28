@@ -17,6 +17,7 @@ var jogadores_segurando_ferramenta : Dictionary[Jogador, Ferramenta]
 @onready var jogar_ferramenta_mgmt := $JogarFerramentaMgmt
 
 var plantar_unico_ref := preload("res://Cenas/Ferramentas/Itens/PlantarUnico.tscn")
+var plantar_unico : Plantar
 
 func _ready() -> void:
 	# passa a referencia do FerramentaMgmt para todas as ferramentas
@@ -82,10 +83,14 @@ func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta,
 								global_pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
 	_retirar_ferramenta_jogador(jogador, ferramenta)
 	
-	# lidar com plantar uso unico
+	# -- lidar com plantar uso unico --
 	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
 		_deletar_ferramenta_plantar_unico(ferramenta)
 		return
+	if ferramenta.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
+		# nao pegaram a de plantar uso unico, continua com o jogador -> deleta uso unico
+		if plantar_unico.get_parent() == jogador:
+			_deletar_ferramenta_plantar_unico(plantar_unico, false)
 	
 	# aparece de volta (visivel no chao)
 	ferramenta.show_ferramenta()
@@ -124,7 +129,13 @@ func posicionar_ferramenta(ferramenta : Ferramenta, global_pos : Vector2) -> voi
 # Uso Unico
 # -----------------------------------------------
 func _criar_ferramenta_plantar_unico(jogador : Jogador, ferramenta_plantar : Plantar) -> void:
-	var plantar_unico : Plantar = plantar_unico_ref.instantiate()
+	# se ja existe uma ferramenta -> nao crie outra
+	if plantar_unico and is_instance_valid(plantar_unico) and plantar_unico.is_inside_tree():
+		# se for ser deletado -> entao crie outro
+		if not plantar_unico.is_queued_for_deletion():
+			return
+	
+	plantar_unico = plantar_unico_ref.instantiate()
 	plantar_unico.iniciar(ferramenta_plantar)
 	plantar_unico.set_ferramenta_mgmt(self) # necessario para funcionar
 	# esconde a ferramenta mas deixa que o outro jogador possa pegar
@@ -132,9 +143,21 @@ func _criar_ferramenta_plantar_unico(jogador : Jogador, ferramenta_plantar : Pla
 	# adiciona ao jogador
 	jogador.add_child(plantar_unico)
 
-func _deletar_ferramenta_plantar_unico(ferramenta : Ferramenta) -> void:
+func _deletar_ferramenta_plantar_unico(ferramenta : Ferramenta, criar_outra : bool = true) -> void:
 	ferramenta.hide_ferramenta()
 	ferramenta.queue_free()
+	print('criar_outra ', criar_outra)
+	# se nao for para criar outra -> acabe
+	if not criar_outra: return
+	# -- criar outra ferramenta de plantar uso unico filho do jog com plantar --
+	# acha jogador com plantar
+	for jog in jogadores_segurando_ferramenta.keys():
+		var jog_segurando : Ferramenta = jogadores_segurando_ferramenta[jog]
+		# jog esta segurando plantar -> cria outro de uso unico e acabe
+		if jog_segurando.tipo_ferramenta == Ferramenta.Ferramenta_tipo.PLANTAR:
+			_criar_ferramenta_plantar_unico(jog, jog_segurando)
+			break
+	
 
 # -----------------------------------------------
 # Jogar / Throw ferramenta
