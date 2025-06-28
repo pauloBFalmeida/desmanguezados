@@ -223,7 +223,7 @@ func usar_ferramenta(body : Node2D) -> void:
 	# se nao tiver segurando uma ferramenta
 	if (not segurando) or (not is_instance_valid(segurando)): return
 	# usar a ferramenta
-	segurando.usar_ferramenta(body)
+	segurando.usar_ferramenta(body, self)
 	
 	var duracao_cooldown := segurando.duracao_cooldown
 	# animacao de usar ferramenta
