@@ -8,6 +8,8 @@ func _ready() -> void:
 	ajustar_objetivos() # re ajusta as arvores e tals
 	# lidar com a quantidade de jogadores
 	lidar_qtd_jogadores_zen()
+	# camera zoom
+	camera_zoom_in()
 
 # --------------------------------------------- Qtd de jogadores
 @onready var jogadores := $SpawnJogadores.get_children()
@@ -44,6 +46,44 @@ func _process(delta: float) -> void:
 									camera_target.global_position, 
 									weight * delta)
 
+func camera_zoom_in() -> void:
+	# afasta a camera
+	camera.zoom = Vector2.ONE * 0.4
+	# esconde a hud (pq esta menor q a tela)
+	hud.hide()
+	# esconde arvores e lixo
+	var itens_list = arvores_colecao.get_children() + lixos_colecao.get_children()
+	for item in itens_list:
+		item.hide()
+	
+	# espera a cinematica
+	var duracao : float = 2.0
+	await show_cinematic(duracao, itens_list)
+	
+	# zoom in
+	var tween := create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_property(
+		camera,
+		"zoom",
+		Vector2.ONE,
+		2.5 			# duracao
+	).from_current()
+	
+	# espera o zoom chegar perto do fim para mostrar a hud e comecar a contar
+	await get_tree().create_timer(1.5, true).timeout
+	hud.show()
+	hud.comecar_contar()
+
+func show_cinematic(duracao: float, itens_list : Array) -> bool:
+	var tempo_item = duracao / itens_list.size()
+	
+	for item in itens_list:
+		item.show()
+		await get_tree().create_timer(tempo_item, true).timeout
+	
+	return true # para funcionar o await
 
 # --------------------------------------------- Gerar Mapa Aleatorio
 @export var map_size : Vector2i = Vector2i(50, 50)

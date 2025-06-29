@@ -86,10 +86,11 @@ func comecar_contar() -> void:
 	# comeca a barra de progresso
 	barra_progresso.comecar(start_count_num)
 	# -- contar --
-	while (start_count_num > 0):
-		start_label_count.text = str(start_count_num)
+	var numeros = start_count_num
+	while (numeros > 0):
+		start_label_count.text = str(numeros)
 		await get_tree().create_timer(1.0, true).timeout
-		start_count_num -= 1
+		numeros -= 1
 	# -- pos contar --
 	start_menu.hide()
 	get_tree().paused = false

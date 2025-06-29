@@ -46,6 +46,9 @@ func _process(delta: float) -> void:
 			barra_prog_top.modulate = cor_normal
 
 func comecar(segundos_duracao : int) -> void:
+	# prepara a barra de baixo pra animacao de comeco
+	barra_prog_base.scale.x = 0
+	barra_prog_top.scale.x = 0
 	mostradores_pivot.hide()
 	# espera um segundo
 	await get_tree().create_timer(1.0, true).timeout
