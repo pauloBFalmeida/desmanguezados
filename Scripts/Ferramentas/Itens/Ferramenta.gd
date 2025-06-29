@@ -109,8 +109,9 @@ func desativar(body : PhysicsBody2D) -> void:
 # --- Generico para usar fora do que eh o item ---
 func usar_generico(body : Node2D) -> void:
 	if is_on_cooldown: return # nao faca nada durante cooldown
-	emit_signal("usou", body)
 	aplicar_cooldown()
+	await get_tree().create_timer(acontecer_offset).timeout
+	emit_signal("usou", body)
 
 # --- Abstrato ---
 func usar_ferramenta(alvo : Node2D, jogador : Jogador) -> void:

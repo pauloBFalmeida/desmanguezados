@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=4 uid="uid://65vehrxtpinv"]
+[gd_scene load_steps=17 format=4 uid="uid://65vehrxtpinv"]
 
 [ext_resource type="Script" uid="uid://yr3am146nus8" path="res://Scripts/Menus/menu_creditos.gd" id="1_8ooli"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="2_8ooli"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps_chao.tscn" id="2_f3w1e"]
 [ext_resource type="PackedScene" uid="uid://b4tsgihkgcwlb" path="res://Cenas/Menus/SubItems/texto_creditos.tscn" id="3_hhl6k"]
+[ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/CartazDesmangezados.png" id="3_neco8"]
 [ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="4_63pwd"]
 [ext_resource type="Script" uid="uid://ymebirrcc0d3" path="res://Scripts/Partida/locais_plantar_colecao.gd" id="6_neco8"]
 
@@ -60,6 +61,7 @@ tile_map_data = PackedByteArray()
 tile_map_data = PackedByteArray()
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -67,6 +69,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.617928, 0.557354, 1)
+
+[node name="CartazDesmangezados" type="Sprite2D" parent="."]
+modulate = Color(0.3, 0.3, 0.3, 1)
+position = Vector2(641, 358.5)
+scale = Vector2(0.603704, 0.461111)
+texture = ExtResource("3_neco8")
 
 [node name="ButtonVoltar" type="Button" parent="."]
 layout_mode = 1
@@ -76,9 +84,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -77.0
-offset_top = -125.0
+offset_top = -111.0
 offset_right = 77.0
-offset_bottom = -48.0
+offset_bottom = -34.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 50
@@ -110,24 +118,48 @@ horizontal_alignment = 1
 position = Vector2(79.5, 29.5)
 shape = SubResource("RectangleShape2D_g3wrx")
 
-[node name="Paulo" parent="Textos" instance=ExtResource("3_hhl6k")]
-position = Vector2(376, 240)
+[node name="Davi" parent="Textos" instance=ExtResource("3_hhl6k")]
+position = Vector2(375, 168)
 
-[node name="CollisionShape2D" parent="Textos/Paulo" index="1"]
+[node name="Label" parent="Textos/Davi" index="0"]
+text = "Davi"
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" parent="Textos/Davi" index="1"]
 position = Vector2(-1.5, 0)
 shape = SubResource("RectangleShape2D_hhl6k")
 
-[node name="Programa" parent="Textos" instance=ExtResource("3_hhl6k")]
-position = Vector2(824, 240)
+[node name="ArteCenario" parent="Textos" instance=ExtResource("3_hhl6k")]
+position = Vector2(823, 168)
 
-[node name="Label" parent="Textos/Programa" index="0"]
-text = "Programador"
+[node name="Label" parent="Textos/ArteCenario" index="0"]
+text = "Cenários"
 
-[node name="CollisionShape2D" parent="Textos/Programa" index="1"]
+[node name="CollisionShape2D" parent="Textos/ArteCenario" index="1"]
+position = Vector2(75, 1)
+
+[node name="JeanLuc" parent="Textos" instance=ExtResource("3_hhl6k")]
+position = Vector2(374, 234)
+
+[node name="Label" parent="Textos/JeanLuc" index="0"]
+text = "JeanLuc"
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" parent="Textos/JeanLuc" index="1"]
+position = Vector2(-1.5, 0)
+shape = SubResource("RectangleShape2D_hhl6k")
+
+[node name="ArteSom" parent="Textos" instance=ExtResource("3_hhl6k")]
+position = Vector2(822, 234)
+
+[node name="Label" parent="Textos/ArteSom" index="0"]
+text = "Arte e Som"
+
+[node name="CollisionShape2D" parent="Textos/ArteSom" index="1"]
 position = Vector2(75, 1)
 
 [node name="Isa" parent="Textos" instance=ExtResource("3_hhl6k")]
-position = Vector2(375, 336)
+position = Vector2(375, 307)
 
 [node name="Label" parent="Textos/Isa" index="0"]
 text = "Isadora"
@@ -138,7 +170,7 @@ position = Vector2(17, 0)
 shape = SubResource("RectangleShape2D_neco8")
 
 [node name="GameDesign" parent="Textos" instance=ExtResource("3_hhl6k")]
-position = Vector2(823, 336)
+position = Vector2(823, 307)
 
 [node name="Label" parent="Textos/GameDesign" index="0"]
 text = "GameDesigner"
@@ -146,6 +178,45 @@ text = "GameDesigner"
 [node name="CollisionShape2D" parent="Textos/GameDesign" index="1"]
 position = Vector2(89, 4)
 shape = SubResource("RectangleShape2D_sd7ve")
+
+[node name="Paulo" parent="Textos" instance=ExtResource("3_hhl6k")]
+position = Vector2(376, 376)
+
+[node name="Label" parent="Textos/Paulo" index="0"]
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" parent="Textos/Paulo" index="1"]
+position = Vector2(-1.5, 0)
+shape = SubResource("RectangleShape2D_hhl6k")
+
+[node name="Programa" parent="Textos" instance=ExtResource("3_hhl6k")]
+position = Vector2(824, 376)
+
+[node name="Label" parent="Textos/Programa" index="0"]
+text = "Programador"
+
+[node name="CollisionShape2D" parent="Textos/Programa" index="1"]
+position = Vector2(75, 1)
+
+[node name="Rafa" parent="Textos" instance=ExtResource("3_hhl6k")]
+position = Vector2(376, 441)
+
+[node name="Label" parent="Textos/Rafa" index="0"]
+text = "Rafa"
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" parent="Textos/Rafa" index="1"]
+position = Vector2(-1.5, 0)
+shape = SubResource("RectangleShape2D_hhl6k")
+
+[node name="Marketing" parent="Textos" instance=ExtResource("3_hhl6k")]
+position = Vector2(824, 441)
+
+[node name="Label" parent="Textos/Marketing" index="0"]
+text = "Marketing"
+
+[node name="CollisionShape2D" parent="Textos/Marketing" index="1"]
+position = Vector2(75, 1)
 
 [node name="SpawnJogadores" parent="." node_paths=PackedStringArray("ferramentas_mgmt", "tilemaps_chao") instance=ExtResource("2_8ooli")]
 ferramentas_mgmt = NodePath("../FerramentasMgmt")
@@ -160,13 +231,13 @@ position = Vector2(1056, 595)
 [node name="FerramentasMgmt" parent="." instance=ExtResource("4_63pwd")]
 
 [node name="Corte" parent="FerramentasMgmt" index="1"]
-position = Vector2(432, 520)
+position = Vector2(432, 574)
 
 [node name="Plantar" parent="FerramentasMgmt" index="2"]
-position = Vector2(641, 512)
+position = Vector2(641, 543)
 
 [node name="Recolhe" parent="FerramentasMgmt" index="3"]
-position = Vector2(840, 520)
+position = Vector2(840, 574)
 
 [node name="LocaisPlantarColecao" type="Node2D" parent="."]
 script = ExtResource("6_neco8")
@@ -180,7 +251,7 @@ position = Vector2(118, 45)
 shape = SubResource("WorldBoundaryShape2D_neco8")
 
 [node name="CollisionBot" type="CollisionShape2D" parent="Walls"]
-position = Vector2(120, 675)
+position = Vector2(624, 604)
 shape = SubResource("WorldBoundaryShape2D_sd7ve")
 
 [node name="CollisionLeft" type="CollisionShape2D" parent="Walls"]
@@ -197,10 +268,16 @@ shape = SubResource("WorldBoundaryShape2D_g3wrx")
 
 [editable path="TileMapsChao"]
 [editable path="Textos/Creditos"]
-[editable path="Textos/Paulo"]
-[editable path="Textos/Programa"]
+[editable path="Textos/Davi"]
+[editable path="Textos/ArteCenario"]
+[editable path="Textos/JeanLuc"]
+[editable path="Textos/ArteSom"]
 [editable path="Textos/Isa"]
 [editable path="Textos/GameDesign"]
+[editable path="Textos/Paulo"]
+[editable path="Textos/Programa"]
+[editable path="Textos/Rafa"]
+[editable path="Textos/Marketing"]
 [editable path="SpawnJogadores"]
 [editable path="SpawnJogadores/Jogador1"]
 [editable path="SpawnJogadores/Jogador1/IndicadorDirecao"]

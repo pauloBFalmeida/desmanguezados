@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dl22uju6ygrp0"]
+[gd_scene load_steps=3 format=3 uid="uid://dl22uju6ygrp0"]
 
 [ext_resource type="Script" uid="uid://bt6txdh0jok31" path="res://Scripts/Menus/menu_configuracao.gd" id="1_ojjoo"]
+[ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/CartazDesmangezados.png" id="2_gnunr"]
 
 [node name="MenuConfiguracao" type="Control"]
 layout_mode = 3
@@ -19,6 +20,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.37488, 0.3692, 0.71, 1)
+
+[node name="CartazDesmangezados" type="Sprite2D" parent="."]
+modulate = Color(0.15, 0.15, 0.15, 1)
+position = Vector2(641, 361.5)
+scale = Vector2(0.597222, 0.452469)
+texture = ExtResource("2_gnunr")
 
 [node name="LabelTitulo" type="Label" parent="."]
 layout_mode = 1

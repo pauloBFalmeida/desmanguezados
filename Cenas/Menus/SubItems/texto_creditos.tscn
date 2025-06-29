@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://due4c8k7gwgr6"]
+[gd_scene load_steps=4 format=3 uid="uid://b4tsgihkgcwlb"]
 
-[ext_resource type="Script" uid="uid://ndlf2gg0guqt" path="res://Scripts/Menus/UsadosMenus/texto_creditos.gd" id="1_no0t3"]
+[ext_resource type="Script" path="res://Scripts/Menus/UsadosMenus/texto_creditos.gd" id="1_no0t3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_neco8"]
 friction = 0.3
@@ -30,5 +30,6 @@ theme_override_font_sizes/font_size = 40
 text = "Paulo"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_5itep")
