@@ -192,5 +192,6 @@ func _ajustar_arvores_z_index() -> void:
 	# maior y, maior index_z, mais na frented
 	var curr_z : int = arvore_order.size()
 	for arvore in arvore_order:
+		arvore.z_as_relative = false
 		arvore.z_index = curr_z
 		curr_z -= 1

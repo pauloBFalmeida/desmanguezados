@@ -75,6 +75,9 @@ const LEVEIS_MEDALHAS : Dictionary[Level_id, Dictionary] = {
 }
 
 func get_medalha_level(level_id : Level_id, tempo : int) -> Medalha_tipo:
+	# nao esta na lista de leveis para jogar
+	if not LEVEIS_SELECAO_ORDEM.has(level_id): return Medalha_tipo.NENHUMA
+	# tempo invalido
 	if tempo < 0: return Medalha_tipo.NENHUMA
 	
 	var medalhas_tempos := LEVEIS_MEDALHAS[level_id]
@@ -89,6 +92,9 @@ func get_medalha_level(level_id : Level_id, tempo : int) -> Medalha_tipo:
 	return Medalha_tipo.NENHUMA
 
 func score_level(level_id : Level_id, tempo : int) -> void:
+	# nao esta na lista de leveis para jogar -> nao faca nada
+	if not LEVEIS_SELECAO_ORDEM.has(level_id): return
+	
 	# novo highscore
 	if tempo > leveis_highscore[level_id]:
 		leveis_highscore[level_id] = tempo
@@ -98,7 +104,7 @@ func score_level(level_id : Level_id, tempo : int) -> void:
 ## jogo ja teve um load feito, i.e., ja foi carregado as Globais
 var jogo_ja_loaded : bool = false
 
-var modo_zen_ter_1_jogador : bool = true
+var modo_zen_ter_1_jogador : bool = false
 var modo_zen_mapa_seed : int = 42
 
 var current_level_id : Level_id
