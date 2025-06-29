@@ -122,9 +122,8 @@ func _get_player_aim() -> void:
 			target_angle = aim_dir.angle()
 			#rotation = target_angle
 	else: # mouse teclado
-		var mouse_pos := get_viewport().get_mouse_position()
 		# direcao do jogador para o mouse
-		var direcao := mouse_pos - jogador.global_position
+		var direcao := jogador.get_local_mouse_position()
 		direcao = direcao.normalized()
 		var angulo : float = direcao.angle()
 		target_angle = angulo
