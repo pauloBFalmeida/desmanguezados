@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dg81uk7hqaldu"]
+[gd_scene load_steps=3 format=3 uid="uid://c5wshuf5fpmi2"]
 
 [ext_resource type="Script" uid="uid://du0101q457t5t" path="res://Scripts/Menus/menu_zen.gd" id="1_k88im"]
 [ext_resource type="Script" uid="uid://sj5rgpesy5f8" path="res://Scripts/Menus/UsadosMenus/controles_manager.gd" id="2_mktyj"]
@@ -98,15 +98,53 @@ size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 40
 text = "Controle Conectado"
 
+[node name="LabelSeed" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -602.0
+offset_top = 172.0
+offset_right = -175.0
+offset_bottom = 214.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Seed de geração do mapa:"
+horizontal_alignment = 2
+
+[node name="TextEditSeed" type="TextEdit" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -154.0
+offset_top = -195.0
+offset_right = 121.0
+offset_bottom = -127.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_left = NodePath("../GridContainer/Button1Jog")
+focus_neighbor_top = NodePath("../GridContainer/Button2Jog")
+focus_neighbor_bottom = NodePath("../GridContainer/Button1Jog")
+theme_override_font_sizes/font_size = 25
+placeholder_text = "Número"
+emoji_menu_enabled = false
+autowrap_mode = 1
+caret_multiple = false
+use_default_word_separators = false
+text_direction = 2
+
 [node name="LabelComecar" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -281.5
-offset_top = 199.0
+offset_top = 236.0
 offset_right = 281.5
-offset_bottom = 309.0
+offset_bottom = 346.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 70
 text = "Começar Partida"
@@ -119,8 +157,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -337.0
+offset_top = 18.0
 offset_right = 338.0
-offset_bottom = 137.0
+offset_bottom = 155.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 150
@@ -128,11 +167,23 @@ columns = 2
 
 [node name="Button1Jog" type="Button" parent="GridContainer"]
 layout_mode = 2
+focus_neighbor_left = NodePath("../../ButtonVoltar")
+focus_neighbor_top = NodePath("../../TextEditSeed")
+focus_neighbor_right = NodePath("../Button2Jog")
+focus_neighbor_bottom = NodePath("../../ButtonVoltar")
+focus_next = NodePath("../Button2Jog")
+focus_previous = NodePath("../../ButtonVoltar")
 theme_override_font_sizes/font_size = 50
 text = "1 Jogador"
 
 [node name="Button2Jog" type="Button" parent="GridContainer"]
 layout_mode = 2
+focus_neighbor_left = NodePath("../Button1Jog")
+focus_neighbor_top = NodePath("../../TextEditSeed")
+focus_neighbor_right = NodePath("../../ButtonVoltar")
+focus_neighbor_bottom = NodePath("../../ButtonVoltar")
+focus_next = NodePath("../../ButtonVoltar")
+focus_previous = NodePath("../Button1Jog")
 theme_override_font_sizes/font_size = 50
 text = "2 Jogadores"
 
@@ -148,6 +199,9 @@ offset_top = -77.0
 offset_right = 77.0
 grow_horizontal = 2
 grow_vertical = 0
+focus_neighbor_left = NodePath("../GridContainer/Button1Jog")
+focus_neighbor_top = NodePath("../GridContainer/Button1Jog")
+focus_neighbor_right = NodePath("../GridContainer/Button2Jog")
 theme_override_font_sizes/font_size = 50
 text = "Voltar"
 
