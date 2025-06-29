@@ -171,10 +171,8 @@ func gerar_mapa_aleatorio() -> void:
 	# gerar agua em volta
 	gerar_agua(is_jogavel_coods) # is jogavel, prevenir jogar ferramentas nos ilhotas
 	
-	# === Spawn - posiciona o jogador e ferramentas ===
-	var tamanho_spawn = 4
-	var centro_spawn = encontrar_bloco(tamanho_spawn) # acha um bloco de tamanho_spawn x tamanho_spawn
-	gerar_spawn(centro_spawn, tamanho_spawn)
+	# === Spawn -> posiciona o jogador e ferramentas ===
+	gerar_spawn()
 	
 	# === gera o lixo e as arvores ===
 	gerar_objetivos(coords_jogavel, is_jogavel_coods)
@@ -197,7 +195,7 @@ func gerar_objetivos(coords_jogavel : Array, is_jogavel_coods : Array) -> void:
 	coords_lixo.shuffle()
 	
 	# Spawn Arvores Pinos
-	for t in range(qtd_pinos):
+	while qtd_pinos > 0:
 		# posicao que vai spawnar (ja removendo as 3x3 posicoes ao redor)
 		var pos = _calc_coord_remover_redor(coords_arvores, coords_lixo)
 		if pos == Vector2i.MIN: break #caso acabe as posicoes
@@ -210,7 +208,7 @@ func gerar_objetivos(coords_jogavel : Array, is_jogavel_coods : Array) -> void:
 		qtd_pinos -= 1
 	
 	# Spawn Arvores Mangue
-	for t in range(qtd_mangue):
+	while qtd_mangue > 0:
 		# posicao que vai spawnar (ja removendo as 3x3 posicoes ao redor)
 		var pos = _calc_coord_remover_redor(coords_arvores, coords_lixo)
 		if pos == Vector2i.MIN: break #caso acabe as posicoes
@@ -228,7 +226,7 @@ func gerar_objetivos(coords_jogavel : Array, is_jogavel_coods : Array) -> void:
 	#		para evitar o lixo spawnar no exato msm tile da arvore
 	
 	# Spawn Lixo
-	for t in range(qtd_lixo):
+	while qtd_lixo > 0:
 		# posicao que vai spawnar (ja removendo as 3x3 posicoes ao redor)
 		var pos = _calc_coord_remover_redor(coords_lixo)
 		if pos == Vector2i.MIN: break #caso acabe as posicoes
@@ -275,7 +273,16 @@ func _calc_coord_remover_redor(coords_list : Array, coords_list_2 : Array = []) 
 	return pos
 
 # cria a area de spawn (posiciona os jogadores e ferramentas e retira dos locais jogaveis)
-func gerar_spawn(centro_coord : Vector2i, tamanho_spawn : int) -> void:
+func gerar_spawn() -> void:
+	# dimensoes do bloco do spawn 
+	var tam_up    : int = 2 # -y
+	var tam_down  : int = 4 #  y
+	var tam_left  : int = 2 # -x
+	var tam_right : int = 2 #  x
+	# encontra esse bloco
+	var centro_coord : Vector2i 
+	centro_coord = encontrar_bloco(tam_up, tam_down, tam_left, tam_right)
+	
 	# posiciona os jogadores
 	var pos_jog1 = _coord_to_global_pos(Vector2i(centro_coord.x-1, centro_coord.y-1))
 	var pos_jog2 = _coord_to_global_pos(Vector2i(centro_coord.x+1, centro_coord.y+1))
@@ -284,35 +291,52 @@ func gerar_spawn(centro_coord : Vector2i, tamanho_spawn : int) -> void:
 	
 	# ferramentas
 	var pos_fer = [
-		_coord_to_global_pos(Vector2i(centro_coord.x-3, centro_coord.y-3)),
-		_coord_to_global_pos(Vector2i(centro_coord.x+3, centro_coord.y-3)),
-		_coord_to_global_pos(Vector2i(centro_coord.x,   centro_coord.y-4))
+		_coord_to_global_pos(centro_coord + Vector2i(-2,-2)) + Vector2(-.5, -.5) * tile_size,
+		_coord_to_global_pos(centro_coord + Vector2i( 2,-2)) + Vector2( .5, -.5) * tile_size,
+		_coord_to_global_pos(centro_coord + Vector2i( 0,-3)),
 	]
 	for ferram in ferramenta_mgmt.ferramentas_level:
 		ferram.global_position = pos_fer.pop_front()
 	
-	# remove o spawn da area jogavel -> para impedir spawnar coisas dentro
-	for y_off in range(-tamanho_spawn, tamanho_spawn+1):
+	# remove da area jogavel -> para impedir spawnar coisas dentro
+	for y_off in range(-tam_down, tam_up+1):
 		var y = centro_coord.y + y_off
-		for x_off in range(-tamanho_spawn, tamanho_spawn+1):
+		for x_off in range(-tam_left, tam_right+1):
 			var x = centro_coord.x + x_off
 			# remove bloco tamanho_spawn x tamanho_spawn
 			is_jogavel_coods[y][x] = false
 			coords_jogavel.erase(Vector2i(x,y))
 
 ## retorna o centro do bloco
-func encontrar_bloco(tam : int) -> Vector2i:
-	var coord : Vector2i
+func encontrar_bloco(up, down, left, right) -> Vector2i:
+	# fim recursao -> caso nao tinha mais como buscar pq nenhum candidato era valido 
+	if up + down + left + right == 4: return Vector2i.ZERO
+	
+	# cria umas copia das coordenadas da area jogavel
+	var coords_busca = coords_jogavel.duplicate(true) 
+	coords_busca.shuffle()
+	# busca uma bloco de tam x tam
 	var buscando := true
+	var coord : Vector2i
 	while buscando:
-		coord = coords_jogavel.pick_random()
+		# nao tem mais como buscar -> nao tinha nenhum candidato valido
+		if coords_busca.is_empty():
+			# diminua o bloco nessa ordem ( ate virar 3x3)
+			if down > 1: down -= 1
+			elif left > 1: left -= 1
+			elif right > 1: right -= 1
+			elif up > 1: up -= 1
+			return encontrar_bloco(up, down, left, right)
+		
+		coord = coords_busca.pop_front() # retiramos a base para nao buscar de novo
 		var x = coord.x
 		var y = coord.y
-		if x > tam and y > tam and x < map_size.x-tam and y < map_size.y-tam:
+		if x > left and y > up and x < map_size.x-right and y < map_size.y-down:
+			# dizemos que existe e tentamos provar o contrario
 			var tem_bloco = true
-			for y_off in range(-tam, tam+1):
-				for x_off in range(-tam, tam+1):
-					# nao tem a posicao
+			for y_off in range(-down, up+1):
+				for x_off in range(-left, right+1):
+					# nao tem a posicao -> entao bloco nao existe
 					if not is_jogavel_coods[y + y_off][x + x_off]:
 						tem_bloco = false
 						break
