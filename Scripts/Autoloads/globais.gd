@@ -99,5 +99,6 @@ func score_level(level_id : Level_id, tempo : int) -> void:
 var jogo_ja_loaded : bool = false
 
 var modo_zen_ter_1_jogador : bool = true
+var modo_zen_mapa_seed : int = 42
 
 var current_level_id : Level_id

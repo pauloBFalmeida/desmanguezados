@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://b56ieg085fppr"]
+[gd_scene load_steps=15 format=3 uid="uid://b56ieg085fppr"]
 
 [ext_resource type="Script" uid="uid://75r8mn8eb2nt" path="res://Scripts/Leveis/level_zen.gd" id="1_h16eq"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps_chao.tscn" id="2_levs5"]
@@ -44,6 +44,12 @@ offset_bottom = 367.0
 
 [node name="LabelTempo" parent="Camera2D/HUD" index="3"]
 visible = false
+
+[node name="BarraProgresso" parent="Camera2D/HUD" index="4"]
+offset_left = -640.0
+offset_top = 329.0
+offset_right = 640.0
+offset_bottom = 360.0
 
 [node name="ImagemFim" parent="Camera2D/HUD/GameOverMenu" index="0"]
 position = Vector2(-646, -363)
