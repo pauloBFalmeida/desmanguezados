@@ -157,6 +157,8 @@ func gerar_mapa_aleatorio() -> void:
 	noise.frequency = noise_scale_ilha
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
 	
+	if map_seed == easter_egg_seed: map_size = Vector2i(70, 70)
+	
 	_criar_matriz_bool(is_jogavel_coods)
 	_criar_matriz_bool(is_land_map)
 	# crio o que vai ser o mapa do chao
@@ -384,6 +386,8 @@ func gerar_terrenos(tilemap_1 : TileMapDual, tilemap_2 : TileMapDual,
 
 
 func generate_island_chao(land_map):
+	if map_seed == easter_egg_seed: return easter_egg(land_map)
+	
 	var map_sizef : Vector2 = map_size
 	var center = map_sizef / 2
 
@@ -450,3 +454,40 @@ func _criar_matriz_bool(matriz : Array, start_state : bool = false) -> void:
 func _coord_to_global_pos(coord : Vector2i) -> Vector2:
 	var pos = tilemap_areia.map_to_local(coord)
 	return tilemap_areia.to_global(pos)
+
+# ------------------------------------------------------------ Easter Egg Map
+const easter_egg_seed = 40725
+
+func easter_egg(land_map) -> Array:
+	return draw_filled_heart(land_map)
+
+func draw_filled_heart(land_map):
+	var scale = 15  # Size of the heart
+	const offset = Vector2i(32, 32)  # Center of the heart in tile coordinates
+
+	var div_scale : float = 1/float(scale) # for fast math
+	
+	# Define the bounding box in tile coordinates
+	var min_x = -2.0
+	var max_x = 2.0
+	var min_y = -2.0
+	var max_y = 2.0
+	
+	var tile_coords : Vector2i
+	for y in range(int(min_y * scale), int(max_y * scale)):
+		for x in range(int(min_x * scale), int(max_x * scale)):
+			var fx = float(x) * div_scale
+			var fy = float(y) * div_scale
+			if heart_formula(fx, fy):
+				# coordenada do tile com o offset
+				tile_coords = Vector2i(x, -y) + offset  # Flip y
+				# marca no mapa do chao  e  cria o tile
+				land_map[tile_coords.y][tile_coords.x] = true
+				tilemap_areia.set_cell(tile_coords, 1, Vector2i(2,1), 0)
+				
+	return land_map
+
+func heart_formula(x: float, y: float) -> bool:
+	# Normalize to heart-space [-1, 1]
+	var value = pow(x * x + y * y - 1, 3) - x * x * pow(y, 3)
+	return value <= 0
