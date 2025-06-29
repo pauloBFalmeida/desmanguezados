@@ -32,16 +32,19 @@ func _ready() -> void:
 	locais_plantar_colecao.esconder()
 	ferramenta_mgmt.level = self
 	ferramenta_mgmt.set_locais_plantar_colecao(locais_plantar_colecao)
-	# 
-	ajustar_arvores()
-	ajustar_lixo()
-	ajustar_locais_plantar() # chamar dps de ajustar_arvores()
-	_ajustar_barra_progresso()
+	#
+	ajustar_objetivos()
 	# 
 	temporizador.fim_tempo.connect(_fim_partida)
 	temporizador.set_duracao(duracao_partida_segundos)
 	# contagem inicial para comecar o jogo
 	hud.comecar_contar()
+
+func ajustar_objetivos() -> void:
+	ajustar_arvores()
+	ajustar_lixo()
+	ajustar_locais_plantar() # chamar dps de ajustar_arvores()
+	ajustar_barra_progresso()
 
 # ----- Fim de Jogo -----
 func _fim_partida() -> void:
@@ -92,7 +95,7 @@ func _update_hud_lixo() -> void:
 func _update_hud_arvores_invasoras() -> void:
 	hud.update_arvores_invasoras_faltando(qtd_arvores_invasoras)
 
-func _ajustar_barra_progresso() -> void:
+func ajustar_barra_progresso() -> void:
 	hud.ajustar_faltando(
 		qtd_mudas_necessitam_plantar(),
 		qtd_arvores_invasoras,
@@ -119,6 +122,7 @@ func ajustar_arvores() -> void:
 			qtd_arvores_nativas += 1
 			arvore.cortada.connect(_cortada_arvore_nativa)
 			arvore.cortada.connect(_update_arvore_cortada.bind(arvore))
+	_ajustar_arvores_z_index()
 
 func plantada_arvore_nativa(arvore : Arvore) -> void:
 	arvores_colecao.add_child(arvore)
@@ -174,3 +178,19 @@ func ajustar_locais_plantar() -> void:
 	qtd_alvo_arvores_nativas = qtd_arvores_invasoras + qtd_arvores_nativas
 	# adiciona a quantidade de locais para plantar mudas
 	qtd_alvo_arvores_nativas += locais_plantar_colecao.get_children().size()
+
+
+# ----- ajustar arvores z index -----
+func _ajustar_arvores_z_index() -> void:
+	var arvore_order : Array[Arvore] = []
+	for arvore : Arvore in arvores_colecao.get_children():
+		arvore_order.append(arvore)
+	# sort decrescente por posicao y no mapa
+	# 	ou seja, primeiras posicoes da lista sao com maior y
+	arvore_order.sort_custom(func(a, b): return a.global_position.y > b.global_position.y)
+	
+	# maior y, maior index_z, mais na frented
+	var curr_z : int = arvore_order.size()
+	for arvore in arvore_order:
+		arvore.z_index = curr_z
+		curr_z -= 1

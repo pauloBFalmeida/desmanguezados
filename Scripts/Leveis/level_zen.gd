@@ -5,6 +5,7 @@ func _ready() -> void:
 	temporizador.parar() # para de contar o tempo
 	# gera o mapa aleatoriamente
 	gerar_mapa_aleatorio()
+	ajustar_objetivos() # re ajusta as arvores e tals
 	# lidar com a quantidade de jogadores
 	lidar_qtd_jogadores_zen()
 
@@ -58,6 +59,17 @@ func _process(delta: float) -> void:
 @onready var tilemap_lodo := $TileMaps/TileMapDualLodo
 @onready var tilemap_agua := $TileMaps/TileMapLayerAgua
 
+@export var tile_size : float = 15.0 * 3
+
+const pinos_ref := preload("res://Cenas/Partida/Arvores/arvore_pinos.tscn")
+const mangue_ref := preload("res://Cenas/Partida/Arvores/arvore_mangue.tscn")
+const lixos_ref := [
+	preload("res://Cenas/Partida/Lixos/lixo_embalagem.tscn"),
+	preload("res://Cenas/Partida/Lixos/lixo_garrafa.tscn"),
+	preload("res://Cenas/Partida/Lixos/lixo_lata.tscn"),
+	preload("res://Cenas/Partida/Lixos/lixo_saco.tscn"),
+]
+
 ## matrix[y][x] de bool, que marca o que eh chao no mapa inteiro
 var is_land_map : Array[Array] = []
 ## lista de Vector2i de coordenas do chao jogavel do mapa
@@ -86,9 +98,8 @@ func gerar_mapa_aleatorio() -> void:
 	# gerar agua em volta
 	gerar_agua(is_land_map)
 	
-	# === posiciona o jogador ===
-	
-	var tamanho_spawn = 5
+	# === Spawn - posiciona o jogador e ferramentas ===
+	var tamanho_spawn = 4
 	var centro_spawn = encontrar_bloco(tamanho_spawn) # acha um bloco de tamanho_spawn x tamanho_spawn
 	gerar_spawn(centro_spawn, tamanho_spawn)
 	
@@ -97,11 +108,77 @@ func gerar_mapa_aleatorio() -> void:
 
 func gerar_objetivos(coords_jogavel : Array, is_jogavel_coods : Array) -> void:
 	var tamanho_mapa = coords_jogavel.size()
-	var qtd_arvores : int = tamanho_mapa / 3
-	var qtd_lixo : int = tamanho_mapa / 2
+	# pinos + mangue nao podem maior que 1/9 = 0.11 (pq cada spawn tira 3x3 de coords)
+	var qtd_pinos : int = tamanho_mapa * 0.07 
+	var qtd_mangue : int = tamanho_mapa * 0.01
+	# lixo nao podem maior que 1/9 = 0.11 (pq cada spawn tira 3x3 de coords)
+	var qtd_lixo : int = tamanho_mapa * 0.09
 	
-	#while (qtd_arvores > 0):
-		
+	# ajusta as listas de coordenadas de spawn
+	var coords_arvores = coords_jogavel.duplicate(true)
+	var coords_lixo = coords_jogavel.duplicate(true)
+	coords_arvores.shuffle()
+	coords_lixo.shuffle()
+	
+	# Spawn Arvores Pinos
+	while (qtd_pinos > 0):
+		var pinos = pinos_ref.instantiate()
+		var pos = _calc_coord_remover_redor(coords_arvores, coords_lixo)
+		pinos.global_position = pos
+		arvores_colecao.add_child(pinos)
+		# conta que add uma arvore
+		qtd_pinos -= 1
+	
+	# Spawn Arvores Mangue
+	while (qtd_mangue > 0):
+		var mangue : Arvore = mangue_ref.instantiate()
+		var pos = _calc_coord_remover_redor(coords_arvores, coords_lixo)
+		mangue.global_position = pos
+		mangue.idade = Arvore.Crescimento.JOVEM # spawn meia idade
+		arvores_colecao.add_child(mangue)
+		# conta que add uma arvore
+		qtd_mangue -= 1
+	
+	# Spawn Lixo
+	while (qtd_lixo > 0):
+		var lixo = lixos_ref.pick_random().instantiate()
+		var pos = _calc_coord_remover_redor(coords_lixo)
+		lixo.global_position = pos
+		lixos_colecao.add_child(lixo)
+		# conta que add um lixo ao mapa
+		qtd_lixo -= 1
+
+
+func _calc_coord_remover_redor(coords_list : Array, coords_lixo_ : Array = []) -> Vector2i:
+	var coord = coords_list.pop_front()
+	# verifica os offset
+	var x = coord.x
+	var y = coord.y
+	var cantos = [0, 0, 0, 0] # cima, esq, baixo, dir
+	if is_jogavel_coods[y-1][x]:
+		cantos[0] = -tile_size/2
+	if is_jogavel_coods[y][x-1]:
+		cantos[1] = -tile_size/2
+	if is_jogavel_coods[y+1][x]:
+		cantos[2] =  tile_size/2
+	if is_jogavel_coods[y][x+1]:
+		cantos[3] =  tile_size/2
+	# calcula a pos global
+	var pos = _coord_to_global_pos(coord)
+	#	adiciona os offsets
+	var x_off = randf_range(cantos[1], cantos[3])
+	var y_off = randf_range(cantos[0], cantos[2])
+	# ajeita a posicao 
+	pos = pos + Vector2(x_off, y_off)
+	# impede de crescer arvore dos lados
+	for y_ in range(-1, 2):
+		for x_ in range(-1, 2):
+			coords_list.erase( Vector2i(x + x_, y + y_) )
+	# impede o lixo de spawnar no exato msm da arvore
+	coords_lixo_.erase( Vector2i(x, y) )
+	# retorna
+	return pos
+
 
 func gerar_spawn(centro_coord : Vector2i, tamanho_spawn : int) -> void:
 	# posiciona os jogadores
@@ -109,6 +186,23 @@ func gerar_spawn(centro_coord : Vector2i, tamanho_spawn : int) -> void:
 	var pos_jog2 = _coord_to_global_pos(Vector2i(centro_coord.x+1, centro_coord.y+1))
 	jogadores[0].global_position = pos_jog1
 	jogadores[1].global_position = pos_jog2
+	
+	# ferramentas
+	var pos_fer = [
+		_coord_to_global_pos(Vector2i(centro_coord.x-3, centro_coord.y-3)),
+		_coord_to_global_pos(Vector2i(centro_coord.x+3, centro_coord.y-3)),
+		_coord_to_global_pos(Vector2i(centro_coord.x,   centro_coord.y-4))
+	]
+	for ferram in ferramenta_mgmt.ferramentas_level:
+		ferram.global_position = pos_fer.pop_front()
+	
+	# remove o spawn da area jogavel -> para impedir spawnar coisas dentro
+	for y_off in range(-tamanho_spawn, tamanho_spawn+1):
+		var y = centro_coord.y + y_off
+		for x_off in range(-tamanho_spawn, tamanho_spawn+1):
+			var x = centro_coord.x + x_off
+			is_jogavel_coods[y][x] = false
+			coords_jogavel.erase(Vector2i(x,y))
 
 ## retorna o centro do bloco
 func encontrar_bloco(tam : int) -> Vector2i:
