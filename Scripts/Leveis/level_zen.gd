@@ -136,7 +136,7 @@ func gerar_mapa_aleatorio() -> void:
 	# gera os terrenos de raizes e lodo por cima do chao do mapa inteiro
 	gerar_terrenos(tilemap_raizes, tilemap_lodo, terreno_threshold_raizes, -terreno_threshold_lodo)
 	# gerar agua em volta
-	gerar_agua(is_land_map)
+	gerar_agua(is_jogavel_coods) # is jogavel, prevenir jogar ferramentas nos ilhotas
 	
 	# === Spawn - posiciona o jogador e ferramentas ===
 	var tamanho_spawn = 4
@@ -264,10 +264,10 @@ func encontrar_bloco(tam : int) -> Vector2i:
 				buscando = false
 	return coord
 
-func gerar_agua(is_land_map : Array) -> void:
+func gerar_agua(isnt_water_matrix : Array) -> void:
 	for y in map_size.y:
 		for x in map_size.x:
-			if not is_land_map[y][x]:
+			if not isnt_water_matrix[y][x]:
 				tilemap_agua.set_cell(Vector2i(x,y) , 0, Vector2i(0,0), 0)
 	var coords : Vector2i
 	# lateral verticalmente
