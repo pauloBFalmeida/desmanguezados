@@ -4,6 +4,7 @@ func _ready() -> void:
 	super()
 	temporizador.parar() # para de contar o tempo
 	# gera o mapa aleatoriamente
+	ler_globais_ajustes()
 	gerar_mapa_aleatorio()
 	ajustar_objetivos() # re ajusta as arvores e tals
 	# lidar com a quantidade de jogadores
@@ -16,19 +17,26 @@ func _ready() -> void:
 
 func lidar_qtd_jogadores_zen() -> void:
 	if Globais.modo_zen_ter_1_jogador:
+		# se o alvo nao esta no controle -> trocar o target para o outro jogador
+		if not camera_target.is_usando_controle:
+			for jog in jogadores:
+				if jog != camera_target:
+					camera_target = jog
+					break
+		# move o outro jogador para longe e desativa ele
 		for jog in jogadores:
 			if jog != camera_target:
-				jog.global_position = Vector2(-999, -999)
 				jog.hide()
 				jog.set_physics_process(false)
 				jog.set_process(false)
 				jog.set_process_input(false)
+				jog.global_position = Vector2(-999, -999)
 
 # --------------------------------------------- Camera seguir jogador
 @export var max_distance_target : float = 50.0
 @export var camera_lerp_speed_curve: Curve
 @export var camera_lerp_speed: float = 3.0
-@export var camera_target : Node2D
+@export var camera_target : Jogador
 @onready var camera := $Camera2D
 
 @onready var screen_center : Vector2 = camera.global_position
@@ -86,6 +94,7 @@ func show_cinematic(duracao: float, itens_list : Array) -> bool:
 	return true # para funcionar o await
 
 # --------------------------------------------- Gerar Mapa Aleatorio
+@export var map_seed : int = 0
 @export var map_size : Vector2i = Vector2i(50, 50)
 @export var noise_scale_ilha : float = 0.05
 @export var noise_scale_terreno : float = 0.1
@@ -100,6 +109,30 @@ func show_cinematic(duracao: float, itens_list : Array) -> bool:
 @onready var tilemap_agua := $TileMaps/TileMapLayerAgua
 
 @export var tile_size : float = 15.0 * 3
+
+## pinos + mangue nao podem maior que 100/9 = 11 (pq cada spawn tira 3x3 de coords)
+@export var porcentagem_pinos : float = 7.0
+@export var porcentagem_mangue : float = 1.5
+## lixo nao podem maior que 100/10 = 10 (pq cada spawn tira 3x3 de coords, e cada arvore tira 1 tile do lixo)
+@export var porcentagem_lixo : float = 9.0
+# o calculo de 100/(9 + 1) nao eh exatamente veridico mas eh bom o suficiente
+# 	seria algo mais como (100 - (pinos+mangue)) / 9 --aprox--> (100-9)/9 = 100/10 
+
+func ler_globais_ajustes() -> void:
+	Globais.modo_zen_mapa_size = max(40, Globais.modo_zen_mapa_size) # valor min 40
+	map_size = Vector2.ONE * Globais.modo_zen_mapa_size
+	# lixo
+	porcentagem_lixo = Globais.modo_zen_porcent_lixo
+	porcentagem_lixo = min(porcentagem_lixo, 10) # valor maximo 10
+	# arvores pinos
+	porcentagem_pinos = Globais.modo_zen_porcent_pinos
+	porcentagem_pinos = min(porcentagem_pinos, 11) # valor maximo 11
+	# arvores mangue
+	porcentagem_mangue = Globais.modo_zen_porcent_mangue
+	porcentagem_mangue = min(porcentagem_mangue, 11) # valor maximo 11
+	# se as arvores juntas passarem de 11 -> faz a soma dar 11
+	if porcentagem_pinos + porcentagem_mangue > 11:
+		porcentagem_mangue = 11 - porcentagem_pinos
 
 const pinos_ref := preload("res://Cenas/Partida/Arvores/arvore_pinos.tscn")
 const mangue_ref := preload("res://Cenas/Partida/Arvores/arvore_mangue.tscn")
@@ -120,7 +153,7 @@ var is_jogavel_coods : Array[Array] = []
 var noise := FastNoiseLite.new()
 
 func gerar_mapa_aleatorio() -> void:
-	noise.seed = Globais.modo_zen_mapa_seed
+	noise.seed = map_seed
 	noise.frequency = noise_scale_ilha
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
 	
@@ -146,55 +179,77 @@ func gerar_mapa_aleatorio() -> void:
 	# === gera o lixo e as arvores ===
 	gerar_objetivos(coords_jogavel, is_jogavel_coods)
 
+# gera e posiciona as arvores e lixo
 func gerar_objetivos(coords_jogavel : Array, is_jogavel_coods : Array) -> void:
 	var tamanho_mapa = coords_jogavel.size()
-	# pinos + mangue nao podem maior que 1/9 = 0.11 (pq cada spawn tira 3x3 de coords)
-	var qtd_pinos : int = tamanho_mapa * 0.07 
-	var qtd_mangue : int = tamanho_mapa * 0.01
-	# lixo nao podem maior que 1/9 = 0.11 (pq cada spawn tira 3x3 de coords)
-	var qtd_lixo : int = tamanho_mapa * 0.09
+	var qtd_pinos  : int = ceil( (tamanho_mapa * porcentagem_pinos)  / 100)
+	var qtd_mangue : int = ceil( (tamanho_mapa * porcentagem_mangue) / 100)
+	var qtd_lixo   : int = ceil( (tamanho_mapa * porcentagem_lixo)   / 100)
 	
 	# ajusta as listas de coordenadas de spawn
+	# 		pega as coordenadas que sao jogaveis (ja excluindo o spawn)
+	#		copia elas para poder usar para spawnar os objetivos no mapa
+	#		precisamos da copia pois vamos removendo coordenadas conforme 
+	#		spawnamos cada item (o local do item + 3x3 em volta)
 	var coords_arvores = coords_jogavel.duplicate(true)
 	var coords_lixo = coords_jogavel.duplicate(true)
 	coords_arvores.shuffle()
 	coords_lixo.shuffle()
 	
 	# Spawn Arvores Pinos
-	while (qtd_pinos > 0):
-		var pinos = pinos_ref.instantiate()
+	for t in range(qtd_pinos):
+		# posicao que vai spawnar (ja removendo as 3x3 posicoes ao redor)
 		var pos = _calc_coord_remover_redor(coords_arvores, coords_lixo)
+		if pos == Vector2i.MIN: break #caso acabe as posicoes
+		# cria e posiciona as arvores
+		var pinos = pinos_ref.instantiate()
 		pinos.global_position = pos
+		# adiciona a colecao para o level funcionar
 		arvores_colecao.add_child(pinos)
 		# conta que add uma arvore
 		qtd_pinos -= 1
 	
 	# Spawn Arvores Mangue
-	while (qtd_mangue > 0):
-		var mangue : Arvore = mangue_ref.instantiate()
+	for t in range(qtd_mangue):
+		# posicao que vai spawnar (ja removendo as 3x3 posicoes ao redor)
 		var pos = _calc_coord_remover_redor(coords_arvores, coords_lixo)
+		if pos == Vector2i.MIN: break #caso acabe as posicoes
+		# cria e posiciona as arvores
+		var mangue : Arvore = mangue_ref.instantiate()
 		mangue.global_position = pos
-		mangue.idade = Arvore.Crescimento.JOVEM # spawn meia idade
+		# spawn meia idade
+		mangue.idade = Arvore.Crescimento.JOVEM
+		# adiciona a colecao para o level funcionar
 		arvores_colecao.add_child(mangue)
 		# conta que add uma arvore
 		qtd_mangue -= 1
 	
+	# Os spawns das arvores ja retiram do locais de spawn do lixo
+	#		para evitar o lixo spawnar no exato msm tile da arvore
+	
 	# Spawn Lixo
-	while (qtd_lixo > 0):
-		var lixo = lixos_ref.pick_random().instantiate()
+	for t in range(qtd_lixo):
+		# posicao que vai spawnar (ja removendo as 3x3 posicoes ao redor)
 		var pos = _calc_coord_remover_redor(coords_lixo)
+		if pos == Vector2i.MIN: break #caso acabe as posicoes
+		# cria e posiciona as arvores
+		var lixo = lixos_ref.pick_random().instantiate()
 		lixo.global_position = pos
+		# adiciona a colecao para o level funcionar
 		lixos_colecao.add_child(lixo)
 		# conta que add um lixo ao mapa
 		qtd_lixo -= 1
 
-
-func _calc_coord_remover_redor(coords_list : Array, coords_lixo_ : Array = []) -> Vector2i:
+# pega uma coordenada da lista, remove da lista de coords, e retorna a coordenada do mapa
+func _calc_coord_remover_redor(coords_list : Array, coords_list_2 : Array = []) -> Vector2i:
+	if coords_list.is_empty(): return Vector2i.MIN
+	
 	var coord = coords_list.pop_front()
 	# verifica os offset
 	var x = coord.x
 	var y = coord.y
-	var cantos = [0, 0, 0, 0] # cima, esq, baixo, dir
+	# se nao for na borda, pode ir o offset de meio tile para os lados do tile
+	var cantos = [0, 0, 0, 0] # [cima, esq, baixo, dir]
 	if is_jogavel_coods[y-1][x]:
 		cantos[0] = -tile_size/2
 	if is_jogavel_coods[y][x-1]:
@@ -214,12 +269,12 @@ func _calc_coord_remover_redor(coords_list : Array, coords_lixo_ : Array = []) -
 	for y_ in range(-1, 2):
 		for x_ in range(-1, 2):
 			coords_list.erase( Vector2i(x + x_, y + y_) )
-	# impede o lixo de spawnar no exato msm da arvore
-	coords_lixo_.erase( Vector2i(x, y) )
+	# impede o lixo de spawnar no exato msm tile da arvore
+	coords_list_2.erase( Vector2i(x, y) )
 	# retorna
 	return pos
 
-
+# cria a area de spawn (posiciona os jogadores e ferramentas e retira dos locais jogaveis)
 func gerar_spawn(centro_coord : Vector2i, tamanho_spawn : int) -> void:
 	# posiciona os jogadores
 	var pos_jog1 = _coord_to_global_pos(Vector2i(centro_coord.x-1, centro_coord.y-1))
@@ -241,6 +296,7 @@ func gerar_spawn(centro_coord : Vector2i, tamanho_spawn : int) -> void:
 		var y = centro_coord.y + y_off
 		for x_off in range(-tamanho_spawn, tamanho_spawn+1):
 			var x = centro_coord.x + x_off
+			# remove bloco tamanho_spawn x tamanho_spawn
 			is_jogavel_coods[y][x] = false
 			coords_jogavel.erase(Vector2i(x,y))
 
@@ -337,16 +393,17 @@ func find_largest_region(land_map) -> Array:
 					largest_region = region
 	return largest_region
 
+## Retorna a regiao dada por coordenadas conectados (1 bloco vertical ou horizontalmente
 # 4-way flood fill
 func flood_fill(map_data: Array, start: Vector2i, visited: Dictionary) -> Array:
 	var region := []
 	var queue := [start]
 	visited[start] = true
-
+	
 	while queue.size() > 0:
 		var pos = queue.pop_front()
 		region.append(pos)
-
+		
 		for offset in [Vector2i(0, -1), Vector2i(0, 1), Vector2i(-1, 0), Vector2i(1, 0)]:
 			var neighbor = pos + offset
 			if neighbor.x < 0 or neighbor.y < 0 or neighbor.x >= map_size.x or neighbor.y >= map_size.y:

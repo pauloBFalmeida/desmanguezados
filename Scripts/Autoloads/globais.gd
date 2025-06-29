@@ -106,5 +106,9 @@ var jogo_ja_loaded : bool = false
 
 var modo_zen_ter_1_jogador : bool = false
 var modo_zen_mapa_seed : int = 42
+var modo_zen_mapa_size : int = 50
+var modo_zen_porcent_pinos  : float = 7.0
+var modo_zen_porcent_mangue : float = 1.5
+var modo_zen_porcent_lixo   : float = 9.0
 
 var current_level_id : Level_id
