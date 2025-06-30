@@ -15,13 +15,13 @@ height = 60.0
 
 [node name="Level_Tutorial_pt2" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
 script = ExtResource("1_3aa0c")
+duracao_partida_segundos = 300
 arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
 temporizador = NodePath("HUD/Temporizador")
 hud = NodePath("HUD")
-duracao_partida_segundos = 300
 
 [node name="TileMaps" parent="." instance=ExtResource("2_72oij")]
 
@@ -36,7 +36,7 @@ tile_map_data = PackedByteArray("AAACAAEAAQACAAEAAAADAAEAAQACAAEAAAAEAAEAAQACAAE
 tile_map_data = PackedByteArray("AAANAAYAAQACAAEAAAAOAAYAAQACAAEAAAANAAcAAQACAAEAAAAOAAcAAQACAAEAAAAPAAYAAQACAAEAAAAPAAUAAQACAAEAAAAMAAYAAQACAAEAAAANAAUAAQACAAEAAAAOAAUAAQACAAEAAAAQAAkAAQACAAEAAAARAAkAAQACAAEAAAARAAgAAQACAAEAAAASAAkAAQACAAEAAAASAAoAAQACAAEAAAATAAoAAQACAAEAAAATAAkAAQACAAEAAAAJAAsAAQACAAEAAAAKAAsAAQACAAEAAAAJAAwAAQACAAEAAAA=")
 
 [node name="TileMapDualLodo" parent="TileMaps" index="3"]
-tile_map_data = PackedByteArray("AAAIAAQAAgACAAEAAAAJAAQAAgACAAEAAAAKAAQAAgACAAEAAAAJAAUAAgACAAEAAAAKAAUAAgACAAEAAAALAAUAAgACAAEAAAAFAAwAAgACAAEAAAAGAAwAAgACAAEAAAAGAA0AAgACAAEAAAAHAA0AAgACAAEAAAAHAA4AAgACAAEAAAAIAA4AAgACAAEAAAAZAAoAAgACAAEAAAAZAAsAAgACAAEAAAAaAAsAAgACAAEAAAAaAAwAAgACAAEAAAAYAAoAAgACAAEAAAAZAAwAAgACAAEAAAAZAA0AAgACAAEAAAA=")
+tile_map_data = PackedByteArray("AAAIAAQAAQACAAEAAAAJAAQAAQACAAEAAAAKAAQAAQACAAEAAAAJAAUAAQACAAEAAAAKAAUAAQACAAEAAAALAAUAAQACAAEAAAAFAAwAAQACAAEAAAAGAAwAAQACAAEAAAAGAA0AAQACAAEAAAAHAA0AAQACAAEAAAAHAA4AAQACAAEAAAAIAA4AAQACAAEAAAAZAAoAAQACAAEAAAAZAAsAAQACAAEAAAAaAAsAAQACAAEAAAAaAAwAAQACAAEAAAAYAAoAAQACAAEAAAAZAAwAAQACAAEAAAAZAA0AAQACAAEAAAA=")
 
 [node name="ArvoresColecao" type="CanvasGroup" parent="."]
 
@@ -138,5 +138,7 @@ metadata/_edit_lock_ = true
 [editable path="ArvoresColecao/ArvorePinos2"]
 [editable path="ArvoresColecao/ArvorePinos"]
 [editable path="SpawnJogadores"]
+[editable path="SpawnJogadores/Jogador1"]
+[editable path="SpawnJogadores/Jogador1/IndicadorDirecao"]
 [editable path="FerramentasMgmt"]
 [editable path="HUD"]
