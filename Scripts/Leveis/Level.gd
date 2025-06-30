@@ -122,7 +122,7 @@ func ajustar_arvores() -> void:
 			qtd_arvores_nativas += 1
 			arvore.cortada.connect(_cortada_arvore_nativa)
 			arvore.cortada.connect(_update_arvore_cortada.bind(arvore))
-	_ajustar_arvores_z_index()
+	_ajustar_arvores_ordem_tela()
 
 func plantada_arvore_nativa(arvore : Arvore) -> void:
 	arvores_colecao.add_child(arvore)
@@ -180,8 +180,8 @@ func ajustar_locais_plantar() -> void:
 	qtd_alvo_arvores_nativas += locais_plantar_colecao.get_children().size()
 
 
-# ----- ajustar arvores z index -----
-func _ajustar_arvores_z_index() -> void:
+# ----- ajustar arvores ordem de quem aparece na frente na tela -----
+func _ajustar_arvores_ordem_tela() -> void:
 	var arvore_order : Array[Arvore] = []
 	for arvore : Arvore in arvores_colecao.get_children():
 		arvore_order.append(arvore)
@@ -190,8 +190,6 @@ func _ajustar_arvores_z_index() -> void:
 	arvore_order.sort_custom(func(a, b): return a.global_position.y > b.global_position.y)
 	
 	# maior y, maior index_z, mais na frented
-	var curr_z : int = arvore_order.size()
+	var curr_order : int = 0
 	for arvore in arvore_order:
-		arvore.z_as_relative = false
-		arvore.z_index = curr_z
-		curr_z -= 1
+		arvores_colecao.move_child(arvore, curr_order)
