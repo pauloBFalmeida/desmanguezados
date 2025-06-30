@@ -12,6 +12,27 @@ func _ready() -> void:
 	# camera zoom
 	camera_zoom_in()
 
+# --------------------------------------------- Respawn Ferramentas
+func _on_button_respawn_ferramentas_pressed() -> void:
+	# pego as ferramentas que estao no chao, ou seja, nenhum jogador esta segurando
+	var ferramentas_chao := ferramenta_mgmt.ferramentas_level.duplicate(true)
+	for fer_ in ferramenta_mgmt.jogadores_segurando_ferramenta.values():
+		ferramentas_chao.erase(fer_)
+	
+	# spawn ferramentas do chao, proximas do jogador alvo da camera
+	# crio um offset da posicao, como inicial para spawnar as ferramentas
+	var offset_pos := Vector2.RIGHT * 80
+	offset_pos = offset_pos.rotated(randf_range(-PI, PI))
+	# posicao do jogador que vai receber as ferramentas
+	var jogador_pos = camera_target.global_position
+	for fer_ in ferramenta_mgmt.ferramentas_level:
+		# posiciono ao redor do jogador
+		fer_.global_position = jogador_pos + offset_pos
+		offset_pos = offset_pos.rotated(2.094) # roda 360/3 graus
+	
+	# sai do menu de pause
+	hud.despausar()
+
 # --------------------------------------------- Qtd de jogadores
 @onready var jogadores := $SpawnJogadores.get_children()
 
@@ -119,7 +140,10 @@ func show_cinematic(duracao: float, itens_list : Array) -> bool:
 # 	seria algo mais como (100 - (pinos+mangue)) / 9 --aprox--> (100-9)/9 = 100/10 
 
 func ler_globais_ajustes() -> void:
-	Globais.modo_zen_mapa_size = max(40, Globais.modo_zen_mapa_size) # valor min 40
+	# seed geracao do mapa
+	map_seed = Globais.modo_zen_mapa_seed
+	# tamanho mapa
+	Globais.modo_zen_mapa_size = max(30, Globais.modo_zen_mapa_size) # valor min 40
 	map_size = Vector2.ONE * Globais.modo_zen_mapa_size
 	# lixo
 	porcentagem_lixo = Globais.modo_zen_porcent_lixo

@@ -104,7 +104,8 @@ func score_level(level_id : Level_id, tempo : int) -> void:
 ## jogo ja teve um load feito, i.e., ja foi carregado as Globais
 var jogo_ja_loaded : bool = false
 
-var modo_zen_ter_1_jogador : bool = false
+# configuracoes do modo zen
+var modo_zen_ter_1_jogador : bool = true
 var modo_zen_mapa_seed : int = 42
 var modo_zen_mapa_size : int = 50
 var modo_zen_porcent_pinos  : float = 7.0
