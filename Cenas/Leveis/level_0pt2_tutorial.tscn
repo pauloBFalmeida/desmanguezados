@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=4 uid="uid://brsap2uvu30a2"]
+[gd_scene load_steps=10 format=4 uid="uid://brsap2uvu30a2"]
 
-[ext_resource type="Script" uid="uid://dpo20c4nlxx5w" path="res://Scripts/Leveis/level_0_tutorial.gd" id="1_15dv8"]
+[ext_resource type="Script" uid="uid://dhcjgvplgc3c2" path="res://Scripts/Leveis/Level.gd" id="1_3aa0c"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps_chao.tscn" id="2_72oij"]
 [ext_resource type="PackedScene" uid="uid://b6fqbdb1cd3kc" path="res://Cenas/Partida/Arvores/arvore_pinos.tscn" id="3_7rcnc"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="4_p6oeo"]
@@ -9,44 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://bxemk6uv78eif" path="res://Cenas/Partida/local_plantar.tscn" id="12_0vvff"]
 [ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Interface/hud.tscn" id="13_1vs18"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bfkrr"]
-size = Vector2(363, 690)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nsusp"]
 radius = 13.0
 height = 60.0
 
-[node name="Level_Tutorial_pt2" type="Node" node_paths=PackedStringArray("divisor_meio_mapa", "jogador_top", "jogador_bot", "intrucao_jog_top", "intrucao_jog_bot", "primeira_ferramenta_jog", "primeira_usar_jog", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
-script = ExtResource("1_15dv8")
-divisor_meio_mapa = NodePath("Node2DDivisorMeioMapa")
-jogador_top = NodePath("SpawnJogadores/Jogador1")
-jogador_bot = NodePath("SpawnJogadores/Jogador2")
-intrucao_jog_top = {
-0: NodePath("Instrucoes/JogadorTop/PegarCatadorTop"),
-1: NodePath("Instrucoes/JogadorTop/UsarCatadorTop"),
-2: NodePath("Instrucoes/JogadorTop/JogarTop"),
-3: NodePath("Instrucoes/JogadorTop/PegarNovaTop"),
-4: NodePath("Instrucoes/JogadorTop/ChegouCantoTop"),
-5: NodePath("Instrucoes/JogadorTop/TrocarTop"),
-6: NodePath("Instrucoes/JogadorTop/FimTop")
-}
-intrucao_jog_bot = {
-0: NodePath("Instrucoes/JogadorBot/PegarCortaBot"),
-1: NodePath("Instrucoes/JogadorBot/UsarCatadorBot"),
-2: NodePath("Instrucoes/JogadorBot/JogarBot"),
-3: NodePath("Instrucoes/JogadorBot/PegarNovaBot"),
-4: NodePath("Instrucoes/JogadorBot/ChegouCantoBot"),
-5: NodePath("Instrucoes/JogadorBot/TrocarBot"),
-6: NodePath("Instrucoes/JogadorBot/FimBot")
-}
-primeira_ferramenta_jog = {
-NodePath("SpawnJogadores/Jogador1"): NodePath("FerramentasMgmt/Recolhe"),
-NodePath("SpawnJogadores/Jogador2"): NodePath("FerramentasMgmt/Corte")
-}
-primeira_usar_jog = {
-NodePath("SpawnJogadores/Jogador1"): NodePath(""),
-NodePath("SpawnJogadores/Jogador2"): NodePath("ArvoresColecao/ArvorePinos")
-}
+[node name="Level_Tutorial_pt2" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
+script = ExtResource("1_3aa0c")
 arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
@@ -54,256 +22,6 @@ ferramenta_mgmt = NodePath("FerramentasMgmt")
 temporizador = NodePath("HUD/Temporizador")
 hud = NodePath("HUD")
 duracao_partida_segundos = 300
-
-[node name="Instrucoes" type="Node2D" parent="."]
-z_index = 50
-
-[node name="CantoFinal" type="Area2D" parent="Instrucoes"]
-position = Vector2(896, 2)
-collision_layer = 0
-collision_mask = 2
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Instrucoes/CantoFinal"]
-position = Vector2(180.5, 345)
-shape = SubResource("RectangleShape2D_bfkrr")
-debug_color = Color(0.7, 0.688333, 0, 0.0705882)
-
-[node name="JogadorTop" type="Node2D" parent="Instrucoes"]
-
-[node name="PegarCatadorTop" type="Control" parent="Instrucoes/JogadorTop"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 281.0
-offset_top = 177.0
-offset_right = 281.0
-offset_bottom = 177.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="Instrucoes/JogadorTop/PegarCatadorTop"]
-modulate = Color(2.575e-06, 0.649894, 0.0851071, 1)
-layout_mode = 0
-offset_left = -42.0
-offset_top = -83.0
-offset_right = 49.0
-offset_bottom = -48.0
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 25
-text = "Q Pegar"
-
-[node name="UsarCatadorTop" type="Control" parent="Instrucoes/JogadorTop"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 414.0
-offset_top = 173.0
-offset_right = 414.0
-offset_bottom = 173.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="Instrucoes/JogadorTop/UsarCatadorTop"]
-modulate = Color(0.974935, 0.371516, 0.425735, 1)
-layout_mode = 0
-offset_left = -62.0
-offset_top = -84.0
-offset_right = 82.0
-offset_bottom = -49.0
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 25
-text = "Espaço usar"
-
-[node name="JogarTop" type="Control" parent="Instrucoes/JogadorTop"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 414.0
-offset_top = 173.0
-offset_right = 414.0
-offset_bottom = 173.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="Instrucoes/JogadorTop/JogarTop"]
-modulate = Color(0.944833, 0.125695, 0.998905, 1)
-layout_mode = 0
-offset_left = 102.0
-offset_top = -124.0
-offset_right = 325.0
-offset_bottom = -13.0
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 25
-text = "Segure E
-Para Jogar
-Mire com o mouse"
-horizontal_alignment = 1
-
-[node name="PegarNovaTop" type="Control" parent="Instrucoes/JogadorTop"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="ChegouCantoTop" type="Control" parent="Instrucoes/JogadorTop"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TrocarTop" type="Control" parent="Instrucoes/JogadorTop"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1125.0
-offset_top = 298.0
-offset_right = 1125.0
-offset_bottom = 298.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="Instrucoes/JogadorTop/TrocarTop"]
-modulate = Color(0.87, 0.7105, 0, 1)
-layout_mode = 0
-offset_left = -88.0
-offset_top = -172.0
-offset_right = 135.0
-offset_bottom = -61.0
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 25
-text = "Troque usando Q
-Ou largue
-clicando E"
-horizontal_alignment = 1
-
-[node name="FimTop" type="Control" parent="Instrucoes/JogadorTop"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="JogadorBot" type="Node2D" parent="Instrucoes"]
-
-[node name="PegarCortaBot" type="Control" parent="Instrucoes/JogadorBot"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 284.0
-offset_top = 554.0
-offset_right = 284.0
-offset_bottom = 554.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="Instrucoes/JogadorBot/PegarCortaBot"]
-modulate = Color(2.575e-06, 0.649894, 0.0851071, 1)
-layout_mode = 0
-offset_left = -42.0
-offset_top = -83.0
-offset_right = 49.0
-offset_bottom = -48.0
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 25
-text = "X Pegar"
-
-[node name="UsarCatadorBot" type="Control" parent="Instrucoes/JogadorBot"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 409.0
-offset_top = 548.0
-offset_right = 409.0
-offset_bottom = 548.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="Instrucoes/JogadorBot/UsarCatadorBot"]
-modulate = Color(0.974935, 0.371516, 0.425735, 1)
-layout_mode = 0
-offset_left = -62.0
-offset_top = -84.0
-offset_right = 82.0
-offset_bottom = -49.0
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 25
-text = "Espaço usar"
-
-[node name="JogarBot" type="Control" parent="Instrucoes/JogadorBot"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 393.0
-offset_top = 695.0
-offset_right = 393.0
-offset_bottom = 695.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="Instrucoes/JogadorBot/JogarBot"]
-modulate = Color(0.944833, 0.125695, 0.998905, 1)
-layout_mode = 0
-offset_left = 102.0
-offset_top = -124.0
-offset_right = 325.0
-offset_bottom = -13.0
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 25
-text = "Segure E
-Para Jogar
-Mire com o mouse"
-horizontal_alignment = 1
-
-[node name="PegarNovaBot" type="Control" parent="Instrucoes/JogadorBot"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="ChegouCantoBot" type="Control" parent="Instrucoes/JogadorBot"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TrocarBot" type="Control" parent="Instrucoes/JogadorBot"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1111.0
-offset_top = 738.0
-offset_right = 1111.0
-offset_bottom = 738.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="Instrucoes/JogadorBot/TrocarBot"]
-modulate = Color(0.87, 0.7105, 0, 1)
-layout_mode = 0
-offset_left = -88.0
-offset_top = -172.0
-offset_right = 135.0
-offset_bottom = -61.0
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 25
-text = "Troque usando Q
-Ou largue
-clicando E"
-horizontal_alignment = 1
-
-[node name="FimBot" type="Control" parent="Instrucoes/JogadorBot"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="TileMaps" parent="." instance=ExtResource("2_72oij")]
 
@@ -379,11 +97,9 @@ position = Vector2(1013, 617)
 position = Vector2(130, 224)
 
 [node name="Recolhe" parent="FerramentasMgmt" index="3"]
-visible = false
-position = Vector2(85, 865)
+position = Vector2(134, 852)
 
 [node name="LixosColecao" type="CanvasGroup" parent="."]
-visible = false
 
 [node name="LocaisPlantarColecao" type="Node2D" parent="."]
 z_index = -1
@@ -416,9 +132,6 @@ position = Vector2(412, 210)
 [node name="HUD" parent="." instance=ExtResource("13_1vs18")]
 metadata/_edit_lock_ = true
 
-[node name="Node2DDivisorMeioMapa" type="Node2D" parent="."]
-position = Vector2(15, 369)
-
 [editable path="TileMaps"]
 [editable path="ArvoresColecao/ArvorePinos4"]
 [editable path="ArvoresColecao/ArvorePinos3"]
@@ -426,3 +139,4 @@ position = Vector2(15, 369)
 [editable path="ArvoresColecao/ArvorePinos"]
 [editable path="SpawnJogadores"]
 [editable path="FerramentasMgmt"]
+[editable path="HUD"]
