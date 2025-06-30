@@ -43,39 +43,34 @@ text = "Desmanguezados"
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -364.0
-offset_top = 262.0
-offset_right = 437.0
-offset_bottom = 662.0
-grow_horizontal = 2
+offset_top = -276.5
+offset_right = 801.0
+offset_bottom = 276.5
 grow_vertical = 2
-theme_override_constants/v_separation = 50
-columns = 5
+theme_override_constants/v_separation = 30
 
 [node name="ButtonJogar" type="Button" parent="GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Jogar"
 
-[node name="HSeparator" type="HSeparator" parent="GridContainer"]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(100, 0)
+[node name="ButtonZen" type="Button" parent="GridContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Modo Zen"
 
 [node name="ButtonConfig" type="Button" parent="GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Configurações"
 
-[node name="HSeparator2" type="HSeparator" parent="GridContainer"]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(100, 1)
+[node name="ButtonCreditos" type="Button" parent="GridContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Créditos"
 
 [node name="ButtonSair" type="Button" parent="GridContainer"]
 layout_mode = 2
@@ -83,5 +78,7 @@ theme_override_font_sizes/font_size = 50
 text = "Sair"
 
 [connection signal="pressed" from="GridContainer/ButtonJogar" to="." method="_on_button_jogar_pressed"]
+[connection signal="pressed" from="GridContainer/ButtonZen" to="." method="_on_button_zen_pressed"]
 [connection signal="pressed" from="GridContainer/ButtonConfig" to="." method="_on_button_config_pressed"]
+[connection signal="pressed" from="GridContainer/ButtonCreditos" to="." method="_on_button_creditos_pressed"]
 [connection signal="pressed" from="GridContainer/ButtonSair" to="." method="_on_button_sair_pressed"]

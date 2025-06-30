@@ -22,6 +22,7 @@ collision_mask = 0
 script = ExtResource("1_m88eb")
 layer_acao = 8
 duracao_cooldown = 1.0
+acontecer_offset = 0.4
 sons = Dictionary[int, AudioStream]({
 0: ExtResource("2_dd7e1"),
 1: ExtResource("3_jnuwe"),

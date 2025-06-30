@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dl22uju6ygrp0"]
+[gd_scene load_steps=3 format=3 uid="uid://dl22uju6ygrp0"]
 
 [ext_resource type="Script" uid="uid://bt6txdh0jok31" path="res://Scripts/Menus/menu_configuracao.gd" id="1_ojjoo"]
+[ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/CartazDesmangezados.png" id="2_gnunr"]
 
 [node name="MenuConfiguracao" type="Control"]
 layout_mode = 3
@@ -19,6 +20,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.37488, 0.3692, 0.71, 1)
+
+[node name="CartazDesmangezados" type="Sprite2D" parent="."]
+modulate = Color(0.15, 0.15, 0.15, 1)
+position = Vector2(641, 361.5)
+scale = Vector2(0.597222, 0.452469)
+texture = ExtResource("2_gnunr")
 
 [node name="LabelTitulo" type="Label" parent="."]
 layout_mode = 1
@@ -61,41 +68,74 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="LabelGameplay" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Gameplay"
+horizontal_alignment = 1
+
 [node name="AimAllTime" type="CheckButton" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 23
-text = "Joystick Direito controla indicador de direção"
+text = "Controlar o indicador de direção tempo todo"
 
 [node name="TrackingColor" type="CheckButton" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 23
-text = "Indicador de direção fica transparente fora do tracking"
+text = "Desativar transparência do Indicador de direção "
 
-[node name="TextEditUsarP1" type="TextEdit" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="LabelAudio" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-placeholder_text = "Pegar P1"
+theme_override_font_sizes/font_size = 30
+text = "Audio"
+horizontal_alignment = 1
 
-[node name="TextEditUsarP2" type="TextEdit" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
 layout_mode = 2
-placeholder_text = "Pegar P2"
+theme_override_constants/h_separation = 50
+columns = 2
 
-[node name="TextEditDropP1" type="TextEdit" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="LabelMusicaMenu" type="Label" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
-placeholder_text = "Dropar P1"
+theme_override_font_sizes/font_size = 23
+text = "Volume Música Menu"
 
-[node name="TextEditDropP2" type="TextEdit" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="HSliderMusicaMenu" type="HSlider" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
-placeholder_text = "Dropar P2"
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -30.0
+max_value = 0.0
+value = -20.0
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="LabelMusicaPartida" type="Label" parent="VBoxContainer/GridContainer"]
 layout_mode = 2
-text = "Atualizar Texto botoes"
+theme_override_font_sizes/font_size = 23
+text = "Volume Música Partida"
+
+[node name="HSliderMusicaPartida" type="HSlider" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -35.0
+max_value = -10.0
+value = -25.0
+
+[node name="LabelEffects" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "Volume Efeitos Sonoros"
+
+[node name="HSliderEffects" type="HSlider" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -20.0
+max_value = 20.0
 
 [connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]
 [connection signal="toggled" from="VBoxContainer/AimAllTime" to="." method="_on_aim_all_time_toggled"]
 [connection signal="toggled" from="VBoxContainer/TrackingColor" to="." method="_on_tracking_color_toggled"]
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="drag_ended" from="VBoxContainer/GridContainer/HSliderMusicaMenu" to="." method="_on_h_slider_musica_menu_drag_ended"]
+[connection signal="drag_ended" from="VBoxContainer/GridContainer/HSliderMusicaPartida" to="." method="_on_h_slider_musica_partida_drag_ended"]
+[connection signal="drag_ended" from="VBoxContainer/GridContainer/HSliderEffects" to="." method="_on_h_slider_effects_drag_ended"]

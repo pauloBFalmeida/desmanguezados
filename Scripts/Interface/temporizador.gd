@@ -9,14 +9,22 @@ var tempo_restante: float = 60.0
 var cronometro_ativo: bool = false
 
 @onready var hud : Hud = get_parent()
+@onready var audio_player_final_tempo := $AudioPlayerFinalTempo
 
 func _ready() -> void:
 	# pausa o cronometro enquanto get_tree().pause = true
 	set_process_mode(Node.PROCESS_MODE_PAUSABLE)
+	# audio do final da partida
+	audio_player_final_tempo.stop() # ter certeza que nao esteja tocando
+	audio_player_final_tempo.volume_db = Globais.volume_efeitos_partida
 
 func set_duracao(valor : int) -> void:
 	tempo_restante = float(valor)
 	atualizar_cronometro()
+
+## retorna o tempo do level, arredondando para cima (24.6 -> 25)
+func get_tempo() -> int:
+	return ceil(tempo_restante)
 
 func comecar():
 	# Inicia o cronômetro
@@ -35,6 +43,8 @@ func _process(delta):
 			
 		else:
 			atualizar_cronometro()
+			if tempo_restante < 11:
+				tocar_audio_final_tempo()
 
 func atualizar_cronometro():
 	var minutos: int = int(tempo_restante) / 60
@@ -44,5 +54,13 @@ func atualizar_cronometro():
 
 func acabar_tempo():
 	cronometro_ativo = false
+	audio_player_final_tempo.stop() # parar o audio
 	# emite signal de fim do tempo
 	emit_signal("fim_tempo")
+
+func tocar_audio_final_tempo() -> void:
+	# se ja estiver tocando, nao faca nada
+	if audio_player_final_tempo.playing: return
+	
+	# comece a tocar o audio
+	audio_player_final_tempo.play()

@@ -20,7 +20,7 @@ var target_angle : float = 0.0
 func _ready() -> void:
 	_ajustar_animacao()
 	# pega a configuracao se eh de mira o tempo todo
-	aim_all_time = Configuracoes.possivel_aim_all_time
+	aim_all_time = Globais.possivel_aim_all_time
 	# ajusta para comecar com a cor de nao tracking
 	set_tracking(false)
 
@@ -59,7 +59,7 @@ func set_usando_joystick(is_usando : bool) -> void:
 func set_tracking(_is_tracking : bool) -> void:
 	is_tracking = _is_tracking
 	# muda a direcao se for necessario
-	if Configuracoes.indicador_direcao_transparente_sem_target:
+	if Globais.indicador_direcao_transparente_sem_target:
 		if is_tracking:
 			modulate = Color.WHITE
 		else:
@@ -122,9 +122,8 @@ func _get_player_aim() -> void:
 			target_angle = aim_dir.angle()
 			#rotation = target_angle
 	else: # mouse teclado
-		var mouse_pos := get_viewport().get_mouse_position()
 		# direcao do jogador para o mouse
-		var direcao := mouse_pos - jogador.global_position
+		var direcao := jogador.get_local_mouse_position()
 		direcao = direcao.normalized()
 		var angulo : float = direcao.angle()
 		target_angle = angulo

@@ -10,6 +10,7 @@ size = Vector2(29, 20)
 collision_layer = 33
 collision_mask = 35
 script = ExtResource("1_7e778")
+possivel_virar_90 = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 0.537386

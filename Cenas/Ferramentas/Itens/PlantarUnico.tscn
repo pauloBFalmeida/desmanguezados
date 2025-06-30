@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://yowio7owqi8y"]
+
+[ext_resource type="Script" uid="uid://ct0am5h841cm4" path="res://Scripts/Ferramentas/Itens/plantar_unico.gd" id="1_ado07"]
+[ext_resource type="Shader" uid="uid://cw712yn14yynr" path="res://Scripts/Shaders/outline.gdshader" id="4_3kntg"]
+[ext_resource type="Texture2D" uid="uid://cjjidfmeq0017" path="res://Assets/Ferramentas/item/Plantar.png" id="5_x7uec"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m88eb"]
+radius = 25.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6e2qi"]
+shader = ExtResource("4_3kntg")
+shader_parameter/cor = Color(0, 1, 0, 1)
+shader_parameter/type = 1
+shader_parameter/thickness = 1.0
+
+[node name="PlantarUnico" type="CharacterBody2D" groups=["Ferramentas"]]
+z_index = 2
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("1_ado07")
+layer_acao = 16
+tipo = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m88eb")
+debug_color = Color(0.645027, 0.373631, 0.922552, 0.42)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0.813074, 0.737432, 1)
+material = SubResource("ShaderMaterial_6e2qi")
+position = Vector2(0, 10)
+scale = Vector2(3, 3)
+texture = ExtResource("5_x7uec")
+region_enabled = true
+region_rect = Rect2(14, 31, 35, 35)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

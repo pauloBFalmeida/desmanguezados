@@ -4,8 +4,8 @@ class_name Hud
 signal partida_comecando
 
 # -- hud in game --
-@onready var label_qtd_mudas := $LabelMudas
 @onready var label_cronometro := $LabelTempo
+@onready var barra_progresso := $BarraProgresso
 
 # -- fim de jogo --
 @onready var game_over_menu := $GameOverMenu
@@ -36,7 +36,7 @@ enum Tipo_fim {DERROTA_TEMPO, VITORIA_SUJO, VITORIA_LIMPO}
 var despausado_recente : bool = false
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_back") and get_tree().paused:
+	if (event.is_action_pressed("ui_back") or event.is_action_pressed("pause")) and get_tree().paused:
 		despausar()
 
 func _ready() -> void:
@@ -44,82 +44,53 @@ func _ready() -> void:
 	audio_player_musica.stream = musica_level
 	audio_player_musica.stop()
 	audio_player_musica.process_mode = Node.PROCESS_MODE_PAUSABLE
+	audio_player_musica.volume_db = Globais.volume_musica_partida
 	# esconde as telas
 	start_menu.hide()
 	game_over_menu.hide()
 	_despausar()
 
-## atualiza a label que conta quantas mudas tem que ser plantadas
-func update_mudas(qtd_mudas : int) -> void:
-	label_qtd_mudas.text = "Quantidade de Árvores a serem plantadas: " + str(qtd_mudas)
+func get_temporizador() -> Temporizador:
+	return temporizador
+
+# ---------------------------------
+# Updates Externos
+# ---------------------------------
+func ajustar_faltando(qtd_mudas : int, qtd_pinos : int, qtd_lixo : int) -> void:
+	barra_progresso.ajustar_faltando(qtd_mudas, qtd_pinos, qtd_lixo)
+
+## atualiza barra de progresso de quantas mudas tem que ser plantadas
+func update_mudas_faltando(qtd_mudas : int) -> void:
+	barra_progresso.update_mudas_faltando(qtd_mudas)
+
+## atualiza barra de progresso de quantas arvores tem que ser cortadas
+func update_arvores_invasoras_faltando(qtd_pinos : int) -> void:
+	barra_progresso.update_pinos_faltando(qtd_pinos)
+
+## atualiza barra de progresso de quantos lixos tem que ser recolhidos
+func update_lixo_faltando(qtd_lixo : int) -> void:
+	barra_progresso.update_lixo_faltando(qtd_lixo)
 
 ## atualiza a label do cronometro
 func update_tempo(texto : String) -> void:
 	label_cronometro.text = texto
 
-
-func _goto_menu() -> void:
-	get_tree().paused = false
-	SceneManager.goto_menu()
-	
-func _replay() -> void:
-	get_tree().paused = false
-	SceneManager.restart_level()
-
-# ---- Menu Pause ----
-func pausar() -> void:
-	if is_comecando_contar: return # nao pausar se estiver na contagem inicial
-	if not get_tree().paused: # nao esta pausado
-		_pausar()
-
-func despausar() -> void:
-	if is_comecando_contar: return # nao pausar se estiver na contagem inicial
-	if get_tree().paused: # esta pausado
-		_despausar()
-
-func toggle_pausar() -> void:
-	# nao pausar se estiver na contagem inicial
-	if is_comecando_contar: return
-	
-	# nao esta pausado
-	if not get_tree().paused:
-		_pausar()
-	else: # ja esta pausado
-		_despausar()
-
-func _pausar() -> void:
-	if despausado_recente: return # se tiver despausado recente -> nao pause
-	get_tree().paused = true
-	pause_menu.show()
-	pause_menu_btn_jogo.grab_focus()
-	
-func _despausar() -> void:
-	pause_menu.hide()
-	get_tree().paused = false
-	# se foi despausado recentemente
-	despausado_recente = true
-	get_tree().create_timer(0.5, true).timeout.connect(func(): despausado_recente = false )
-
-func _on_button_jogo_pressed() -> void:
-	_despausar()
-
-func _on_button_restart_pressed() -> void:
-	_replay()
-
-func _on_button_menu_pressed() -> void:
-	_goto_menu()
-
-# ---- Menu Comeco ----
+# ---------------------------------
+# Menu de comeco de partida, contando tempo ate comecar
+# ---------------------------------
 func comecar_contar() -> void:
 	# -- pre contar --
 	is_comecando_contar = true
 	start_menu.show()
 	get_tree().paused = true
+	# comeca a barra de progresso
+	barra_progresso.comecar(start_count_num)
 	# -- contar --
-	while (start_count_num > 0):
-		start_label_count.text = str(start_count_num)
+	var numeros = start_count_num
+	while (numeros > 0):
+		start_label_count.text = str(numeros)
 		await get_tree().create_timer(1.0, true).timeout
-		start_count_num -= 1
+		numeros -= 1
 	# -- pos contar --
 	start_menu.hide()
 	get_tree().paused = false
@@ -127,6 +98,9 @@ func comecar_contar() -> void:
 	# comecar a partida
 	comecar_partida()
 
+# ---------------------------------
+# Comecar Partida
+# ---------------------------------
 func comecar_partida() -> void:
 	emit_signal("partida_comecando")
 	# toca a musica do level
@@ -134,7 +108,9 @@ func comecar_partida() -> void:
 	# comeca o temporizador
 	temporizador.comecar()
 
-# ---- Menu Game Over ----
+# ---------------------------------
+# Menu de GameOver
+# ---------------------------------
 func show_tela_fim(tipo : Tipo_fim) -> void:
 	# para a musica (tb para restart do level n comecar tocando a musica)
 	audio_player_musica.stop()
@@ -180,3 +156,59 @@ func _on_button_replay_pressed() -> void:
 
 func _on_button_menu_gameover_pressed() -> void:
 	_goto_menu()
+
+# ---------------------------------
+# Pausar Partida
+# ---------------------------------
+func pausar() -> void:
+	if is_comecando_contar: return # nao pausar se estiver na contagem inicial
+	if not get_tree().paused: # nao esta pausado
+		_pausar()
+
+func despausar() -> void:
+	if is_comecando_contar: return # nao pausar se estiver na contagem inicial
+	if get_tree().paused: # esta pausado
+		_despausar()
+
+func toggle_pausar() -> void:
+	# nao pausar se estiver na contagem inicial
+	if is_comecando_contar: return
+	
+	# nao esta pausado
+	if not get_tree().paused:
+		_pausar()
+	else: # ja esta pausado
+		_despausar()
+
+func _pausar() -> void:
+	if despausado_recente: return # se tiver despausado recente -> nao pause
+	get_tree().paused = true
+	pause_menu.show()
+	pause_menu_btn_jogo.grab_focus()
+	
+func _despausar() -> void:
+	pause_menu.hide()
+	get_tree().paused = false
+	# se foi despausado recentemente
+	despausado_recente = true
+	get_tree().create_timer(0.5, true).timeout.connect(func(): despausado_recente = false )
+
+func _on_button_jogo_pressed() -> void:
+	_despausar()
+
+func _on_button_restart_pressed() -> void:
+	_replay()
+
+func _on_button_menu_pressed() -> void:
+	_goto_menu()
+
+# ---------------------------------
+# Funcoes de Trocar de Cena
+# ---------------------------------
+func _goto_menu() -> void:
+	get_tree().paused = false
+	SceneManager.goto_menu()
+	
+func _replay() -> void:
+	get_tree().paused = false
+	SceneManager.restart_level()

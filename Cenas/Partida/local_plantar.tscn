@@ -84,10 +84,9 @@ animations = [{
 "speed": 6.0
 }]
 
-[node name="LocalPlantar" type="RigidBody2D" groups=["LocalPlantar", "Marcador"]]
+[node name="LocalPlantar" type="StaticBody2D" groups=["LocalPlantar", "Marcador"]]
 collision_layer = 16
 collision_mask = 0
-gravity_scale = 0.0
 
 [node name="Icon" type="Sprite2D" parent="."]
 modulate = Color(0.075, 0.45, 0, 0.823529)
