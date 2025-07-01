@@ -61,3 +61,10 @@ func reset_save() -> void:
 	_ajustar_globais(config)
 	# save to disk
 	config.save(SAVE_PATH)
+
+func reset_save_partida() -> void:
+	# reseta os scores
+	for level : Globais.Level_id in Globais.leveis_highscore.keys():
+		Globais.leveis_highscore[level] = -1
+	# save to disk
+	save_game()

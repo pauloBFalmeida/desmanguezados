@@ -133,9 +133,72 @@ size_flags_vertical = 4
 min_value = -20.0
 max_value = 20.0
 
+[node name="LabelSave" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Dados Salvos"
+horizontal_alignment = 1
+
+[node name="GridContainerSave" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 50
+columns = 2
+
+[node name="LabelDeletarPartida" type="Label" parent="VBoxContainer/GridContainerSave"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "Deletar Save das partidas"
+
+[node name="ButtonDeletarPartida" type="Button" parent="VBoxContainer/GridContainerSave"]
+layout_mode = 2
+toggle_mode = true
+text = "Deletar"
+
+[node name="LabelPartidaCerteza" type="Label" parent="VBoxContainer/GridContainerSave"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "Tem certeza? "
+
+[node name="ButtonDeletarPartidaCerteza" type="Button" parent="VBoxContainer/GridContainerSave"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95373, 0, 0.316003, 1)
+text = "Sim, Deletar"
+
+[node name="LabelDeletarTodo" type="Label" parent="VBoxContainer/GridContainerSave"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "Deletar Todo o Save"
+
+[node name="ButtonDeletarTodo" type="Button" parent="VBoxContainer/GridContainerSave"]
+layout_mode = 2
+toggle_mode = true
+text = "Deletar"
+
+[node name="LabelTodoCerteza" type="Label" parent="VBoxContainer/GridContainerSave"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "Tem certeza?"
+
+[node name="LabelTodoCerteza2" type="Label" parent="VBoxContainer/GridContainerSave/LabelTodoCerteza"]
+layout_mode = 2
+offset_top = 36.0
+offset_right = 283.0
+offset_bottom = 68.0
+theme_override_font_sizes/font_size = 23
+text = "Até as estatísticas serão perdidas"
+
+[node name="ButtonDeletarTodoCerteza" type="Button" parent="VBoxContainer/GridContainerSave"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95373, 0, 0.316003, 1)
+text = "Sim, Deletar"
+
 [connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]
 [connection signal="toggled" from="VBoxContainer/AimAllTime" to="." method="_on_aim_all_time_toggled"]
 [connection signal="toggled" from="VBoxContainer/TrackingColor" to="." method="_on_tracking_color_toggled"]
 [connection signal="drag_ended" from="VBoxContainer/GridContainer/HSliderMusicaMenu" to="." method="_on_h_slider_musica_menu_drag_ended"]
 [connection signal="drag_ended" from="VBoxContainer/GridContainer/HSliderMusicaPartida" to="." method="_on_h_slider_musica_partida_drag_ended"]
 [connection signal="drag_ended" from="VBoxContainer/GridContainer/HSliderEffects" to="." method="_on_h_slider_effects_drag_ended"]
+[connection signal="toggled" from="VBoxContainer/GridContainerSave/ButtonDeletarPartida" to="." method="_on_button_deletar_partida_toggled"]
+[connection signal="pressed" from="VBoxContainer/GridContainerSave/ButtonDeletarPartidaCerteza" to="." method="_on_button_deletar_certeza_pressed"]
+[connection signal="toggled" from="VBoxContainer/GridContainerSave/ButtonDeletarTodo" to="." method="_on_button_deletar_todo_toggled"]
+[connection signal="pressed" from="VBoxContainer/GridContainerSave/ButtonDeletarTodoCerteza" to="." method="_on_button_deletar_todo_certeza_pressed"]

@@ -9,6 +9,16 @@ extends Menu
 @onready var slider_musica_menu := $VBoxContainer/GridContainer/HSliderMusicaMenu
 @onready var slider_musica_partida := $VBoxContainer/GridContainer/HSliderMusicaPartida
 @onready var slider_efeitos_partida := $VBoxContainer/GridContainer/HSliderEffects
+# -- Audio --
+@onready var toggle_deletar_partida := $VBoxContainer/GridContainerSave/ButtonDeletarPartida
+@onready var toggle_deletar_todo := $VBoxContainer/GridContainerSave/ButtonDeletarTodo
+@onready var label_deletar_partida_certeza := $VBoxContainer/GridContainerSave/ButtonDeletarPartidaCerteza
+@onready var label_deletar_todo_certeza := $VBoxContainer/GridContainerSave/ButtonDeletarTodoCerteza
+@onready var button_deletar_partida_certeza := $VBoxContainer/GridContainerSave/LabelPartidaCerteza
+@onready var button_deletar_todo_certeza := $VBoxContainer/GridContainerSave/LabelTodoCerteza
+
+@onready var itens_partida := [button_deletar_partida_certeza, label_deletar_partida_certeza]
+@onready var itens_todo := [label_deletar_todo_certeza, button_deletar_todo_certeza]
 
 # --- Voltar ---
 func _on_button_voltar_pressed() -> void:
@@ -31,6 +41,9 @@ func _carregar_dados() -> void:
 	slider_musica_menu.set_value_no_signal(Globais.volume_musica_menu)
 	slider_musica_partida.set_value_no_signal(Globais.volume_musica_partida)
 	slider_efeitos_partida.set_value_no_signal(Globais.volume_efeitos_partida)
+	# -- Deletar Save --
+	_on_button_deletar_partida_toggled(false)
+	_on_button_deletar_todo_toggled(false)
 
 # --------- GamePlay ---------
 func _on_aim_all_time_toggled(toggled_on: bool) -> void:
@@ -56,3 +69,42 @@ func _on_h_slider_musica_partida_drag_ended(value_changed: bool) -> void:
 func _on_h_slider_effects_drag_ended(value_changed: bool) -> void:
 	if not value_changed: return
 	Globais.volume_efeitos_partida = slider_efeitos_partida.value
+
+# --------- Deletar Save ---------
+func _on_button_deletar_partida_toggled(toggled_on: bool) -> void:
+	lidar_toggle(toggled_on, toggle_deletar_partida, itens_partida)
+
+func _on_button_deletar_todo_toggled(toggled_on: bool) -> void:
+	lidar_toggle(toggled_on, toggle_deletar_todo, itens_todo)
+
+func _on_button_deletar_certeza_pressed() -> void:
+	# deletar o save
+	SaveManager.reset_save()
+	# mostrar q deletou
+	label_deletar_partida_certeza.text = "Dados deletados!"
+	button_deletar_partida_certeza.hide()
+	toggle_deletar_partida.hide()
+	# volta o cursor para o btn de voltar
+	btn_voltar.grab_focus()
+
+func _on_button_deletar_todo_certeza_pressed() -> void:
+	# deletar o save
+	SaveManager.reset_save()
+	# mostrar q deletou
+	label_deletar_todo_certeza.text = "Dados deletados!"
+	button_deletar_todo_certeza.hide()
+	toggle_deletar_todo.hide()
+	# volta o cursor para o btn de voltar
+	btn_voltar.grab_focus()
+
+
+func lidar_toggle(toggled_on: bool, toggle_btn : Button, itens : Array) -> void:
+	# clicou para deletar
+	if toggled_on:
+		toggle_btn.text = "Não, manter dados"
+		for item in itens:
+			item.show()
+	else:
+		toggle_btn.text = "Deletar"
+		for item in itens:
+			item.hide()
