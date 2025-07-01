@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3yrel5hmuqne"
-path="res://.godot/imported/concha.png-6c592e71fe4571df41cde544a600ff1e.ctex"
+uid="uid://dli02qeiqjx8w"
+path="res://.godot/imported/concha.png-9ac21b4d105f2d3932d0dae8482c6dd6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Temp/concha.png"
-dest_files=["res://.godot/imported/concha.png-6c592e71fe4571df41cde544a600ff1e.ctex"]
+source_file="res://Assets/Interface/Menu/concha.png"
+dest_files=["res://.godot/imported/concha.png-9ac21b4d105f2d3932d0dae8482c6dd6.ctex"]
 
 [params]
 

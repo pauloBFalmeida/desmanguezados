@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0eo0x4xcairy"
-path="res://.godot/imported/VitoriaLimpo.jpg-5675fe9359fb4bb7327b6eebf6131b31.ctex"
+uid="uid://bsiu6yvfgiroo"
+path="res://.godot/imported/VitoriasSujo.jpg-3a412b198720174b8f6452455d1c3438.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Interface/VitoriaLimpo.jpg"
-dest_files=["res://.godot/imported/VitoriaLimpo.jpg-5675fe9359fb4bb7327b6eebf6131b31.ctex"]
+source_file="res://Assets/Interface/Partida/VitoriasSujo.jpg"
+dest_files=["res://.godot/imported/VitoriasSujo.jpg-3a412b198720174b8f6452455d1c3438.ctex"]
 
 [params]
 

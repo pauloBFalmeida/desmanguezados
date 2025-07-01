@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://e0hvhpdu6hbn"]
 
 [ext_resource type="Script" uid="uid://b365074iebc74" path="res://Scripts/Menus/menu_principal.gd" id="1_ntrab"]
-[ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/CartazDesmangezados.png" id="2_givc0"]
+[ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/Menu/CartazDesmangezados.png" id="2_givc0"]
 
 [node name="MenuPrincipal" type="Control"]
 layout_mode = 3
