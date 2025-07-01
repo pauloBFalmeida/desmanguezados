@@ -1,3 +1,6 @@
+# Builds do jogo
+/Builds
+
 # Godot 4+ specific ignores
 .godot/
 
