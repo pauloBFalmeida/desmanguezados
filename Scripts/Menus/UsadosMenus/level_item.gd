@@ -9,7 +9,9 @@ class_name LevelItem
 @onready var level_image := $TextureRect
 @onready var label_name := $LevelName
 @onready var label_info := $Info/LabelTempo
-@onready var medalha_image := $Info/Medalha
+@onready var medalha_concha := $Info/Concha
+@onready var medalha_perola := $Info/Perola
+@onready var medalha_brilho := $Info/Brilho
 
 var level_id : Globais.Level_id
 
@@ -36,10 +38,14 @@ func ajust(_level_id : int) -> void:
 func _load_info() -> void:
 	var highscore : int = Globais.leveis_highscore[level_id]
 	
+	#esconde o brilho
+	medalha_brilho.hide()
+	
 	# se nao tem highscore (ou eh invalido) -> nao mostra
 	if highscore < 0:
 		label_info.hide()
-		medalha_image.hide()
+		medalha_concha.hide()
+		medalha_perola.hide()
 		return
 	
 	# ajusta o texto do tempo
@@ -52,7 +58,13 @@ func _load_info() -> void:
 	
 	# se nao tiver medalha -> esconde a imagem da medalha
 	if medalha == Globais.Medalha_tipo.NENHUMA:
-		medalha_image.hide()
+		medalha_concha.hide()
+		medalha_perola.hide()
 		return
 	
-	medalha_image.modulate = medalha_cor[medalha]
+	medalha_perola.modulate = medalha_cor[medalha]
+	
+	if medalha == Globais.Medalha_tipo.OURO:
+		medalha_brilho.show()
+		# muda a posicao para entre esses valores
+		medalha_brilho.position += Vector2(randf_range(0, 10), randf_range(0, 8))

@@ -1,11 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://cciukv0gmo85j"]
+[gd_scene load_steps=9 format=3 uid="uid://cciukv0gmo85j"]
 
 [ext_resource type="Script" uid="uid://cipaecfgi6vb2" path="res://Scripts/Menus/UsadosMenus/level_item.gd" id="1_ggp4t"]
-[ext_resource type="Texture2D" uid="uid://bmvky7k2qcug2" path="res://Assets/Interface/white.png" id="2_jmyqs"]
-[ext_resource type="Texture2D" uid="uid://d3yrel5hmuqne" path="res://Assets/Temp/concha.png" id="3_2e8ad"]
+[ext_resource type="Texture2D" uid="uid://bmvky7k2qcug2" path="res://Assets/Interface/Partida/white.png" id="2_jmyqs"]
+[ext_resource type="Texture2D" uid="uid://dli02qeiqjx8w" path="res://Assets/Interface/Menu/concha.png" id="3_lyv4a"]
+[ext_resource type="Shader" uid="uid://c5ga6t0j7w2ie" path="res://Scripts/Shaders/shine.gdshader" id="4_e31gh"]
+[ext_resource type="Texture2D" uid="uid://boymgsudwtkuc" path="res://Assets/Interface/Menu/perola.png" id="5_gd4ua"]
+[ext_resource type="Shader" uid="uid://ccawfvoam1m5f" path="res://Scripts/Shaders/brilho.gdshader" id="6_e31gh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hspar"]
+shader = ExtResource("4_e31gh")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_angle = 57.1
+shader_parameter/shine_speed = 0.26
+shader_parameter/shine_delay = 0.3
+shader_parameter/shine_reverse = false
+shader_parameter/Line_Width = 0.027
+shader_parameter/Line_Smoothness = 0.061
+shader_parameter/Brightness = 1.697
+shader_parameter/Distortion = 2.0
+shader_parameter/LensStrength = 0.05
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gd4ua"]
+shader = ExtResource("6_e31gh")
+shader_parameter/color = Color(1, 0.907, 0.69, 0.741176)
+shader_parameter/alpha = -1.189
+shader_parameter/shney_disperse = 3.477
+shader_parameter/shney_speed = 0.5
+shader_parameter/twist_speed = 0.765
+shader_parameter/rota_speed = 1.672
+shader_parameter/curve_ci = 0.258
 
 [node name="Level_Item" type="Button"]
-custom_minimum_size = Vector2(330, 270)
+custom_minimum_size = Vector2(330, 290)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -17,9 +43,9 @@ size_flags_vertical = 0
 flat = true
 script = ExtResource("1_ggp4t")
 medalha_cor = Dictionary[int, Color]({
-0: Color(0.929412, 0.929412, 0, 1),
-1: Color(0.831373, 0.917647, 0.854902, 1),
-2: Color(0.760784, 0.454902, 0.203922, 1)
+0: Color(0.992157, 0.992157, 0, 1),
+1: Color(0.67451, 0.956863, 0.898039, 1),
+2: Color(0.6, 0.54902, 0.431373, 1)
 })
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -49,19 +75,33 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -40.0
-offset_right = 142.0
-offset_bottom = 10.0
+offset_left = -14.0
+offset_top = -31.0
+offset_right = 138.0
+offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 20
 text = "Melhor Tempo: "
 
-[node name="Medalha" type="Sprite2D" parent="Info"]
-position = Vector2(263, 17)
-scale = Vector2(0.144149, 0.144149)
-texture = ExtResource("3_2e8ad")
+[node name="Concha" type="Sprite2D" parent="Info"]
+position = Vector2(264, 32.2744)
+scale = Vector2(0.102098, 0.102098)
+texture = ExtResource("3_lyv4a")
+
+[node name="Perola" type="Sprite2D" parent="Info"]
+material = SubResource("ShaderMaterial_hspar")
+position = Vector2(264, 32.2744)
+scale = Vector2(0.102098, 0.102098)
+texture = ExtResource("5_gd4ua")
+
+[node name="Brilho" type="ColorRect" parent="Info"]
+material = SubResource("ShaderMaterial_gd4ua")
+layout_mode = 0
+offset_left = 239.0
+offset_top = 15.0
+offset_right = 279.0
+offset_bottom = 55.0
 
 [node name="LevelName" type="Label" parent="."]
 layout_mode = 1
