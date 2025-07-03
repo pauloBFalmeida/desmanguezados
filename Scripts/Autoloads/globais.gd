@@ -21,6 +21,14 @@ var volume_efeitos_partida : float = 0.0
 # ---- Scores ----
 var leveis_highscore : Dictionary[LevelManager.Level_id, int] = {}
 
+# ---- Estatisticas ----
+var stats_arvores_plantadas = 0
+var stats_arvores_pinos_cortadas = 0
+var stats_lixos_coletados = 0
+var stats_ferramentas_pegas = 0
+var stats_ferramentas_jogadas = 0
+var stats_zen_tiles_competamente_jogados = 0
+
 # ---- Durante a Execucao ----
 ## jogo ja teve um load feito, i.e., ja foi carregado as Globais
 var jogo_ja_loaded : bool = false

@@ -12,6 +12,14 @@ func _ready() -> void:
 	# camera zoom
 	camera_zoom_in()
 
+func fim_partida() -> void:
+	# salvo a quantidade de tiles jogados que foram limpos
+	Globais.stats_zen_tiles_competamente_jogados += stats_tiles_mapa_jogaveis
+	# 		salvo a nova estatisca no disco
+	SaveManager.save_game()
+	# termino a partida
+	super.fim_partida()
+
 # --------------------------------------------- Respawn Ferramentas
 func _on_button_respawn_ferramentas_pressed() -> void:
 	# pego as ferramentas que estao no chao, ou seja, nenhum jogador esta segurando
@@ -174,6 +182,8 @@ var coords_jogavel : Array = []
 ## martix[y][x] de bool, que marca o que eh a parte jogavel do mapa
 var is_jogavel_coods : Array[Array] = []
 
+var stats_tiles_mapa_jogaveis : int = 0
+
 var noise := FastNoiseLite.new()
 
 func gerar_mapa_aleatorio() -> void:
@@ -188,10 +198,15 @@ func gerar_mapa_aleatorio() -> void:
 	# crio o que vai ser o mapa do chao
 	#		pode criar outras ilhas e pedacinhos em volta
 	generate_island_chao(is_land_map)
+	
 	# pego so a maior regiao unida do mapa -> como area jogavel
 	coords_jogavel = find_largest_region(is_land_map)
 	for coord in coords_jogavel:
 		is_jogavel_coods[coord.y][coord.x] = true
+	
+	# salvo o tamanho do mapa antes de criar o spawn e as coisas
+	stats_tiles_mapa_jogaveis = coords_jogavel.size()
+	
 	# gera os terrenos de raizes e lodo por cima do chao do mapa inteiro
 	gerar_terrenos(tilemap_raizes, tilemap_lodo, terreno_threshold_raizes, -terreno_threshold_lodo)
 	# gerar agua em volta

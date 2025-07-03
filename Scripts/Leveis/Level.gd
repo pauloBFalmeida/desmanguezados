@@ -35,7 +35,7 @@ func _ready() -> void:
 	#
 	ajustar_objetivos()
 	# 
-	temporizador.fim_tempo.connect(_fim_partida)
+	temporizador.fim_tempo.connect(fim_partida)
 	temporizador.set_duracao(duracao_partida_segundos)
 	# contagem inicial para comecar o jogo
 	hud.comecar_contar()
@@ -47,7 +47,7 @@ func ajustar_objetivos() -> void:
 	ajustar_barra_progresso()
 
 # ----- Fim de Jogo -----
-func _fim_partida() -> void:
+func fim_partida() -> void:
 	# se ja acabou a partida -> nao faca nada
 	if is_fim_partida: return
 	
@@ -79,7 +79,7 @@ func verificar_fim() -> void:
 		# espera 1 segundo
 		await get_tree().create_timer(1.0).timeout
 		# acaba a partida
-		_fim_partida()
+		fim_partida()
 
 func qtd_mudas_necessitam_plantar() -> int:
 	# quantidade de arvores nativas que queremos ter no mapa - qtd que tem atualmente
@@ -129,6 +129,8 @@ func plantada_arvore_nativa(arvore : Arvore) -> void:
 	qtd_arvores_nativas += 1
 	arvore.cortada.connect(_cortada_arvore_nativa)
 	arvore.cortada.connect(_update_arvore_cortada.bind(arvore))
+	# add as estatisticas
+	Globais.stats_arvores_plantadas += 1
 	# update e hud
 	_update_hud_mudas()
 	# verifica se acabou o round
@@ -136,6 +138,9 @@ func plantada_arvore_nativa(arvore : Arvore) -> void:
 
 func _cortada_arvore_invasora() -> void:
 	qtd_arvores_invasoras -= 1
+	# add as estatisticas
+	Globais.stats_arvores_pinos_cortadas += 1
+	#
 	_update_hud_arvores_invasoras()
 
 func _cortada_arvore_nativa() -> void:
@@ -166,6 +171,8 @@ func colocado_lixo(lixo : Lixo) -> void:
 
 func _coletado_lixo() -> void:
 	qtd_lixo -= 1
+	# add as estatisticas
+	Globais.stats_lixos_coletados += 1
 	# update a hud
 	_update_hud_lixo()
 	# verifica se acabou o round

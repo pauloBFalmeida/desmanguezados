@@ -1,0 +1,153 @@
+[gd_scene load_steps=6 format=3 uid="uid://nbn4suesoxxx"]
+
+[ext_resource type="Script" uid="uid://dxui5vfaspfbj" path="res://Scripts/Menus/menu_estatisticas.gd" id="1_0i025"]
+[ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/Menu/CartazDesmangezados.png" id="2_n7wd5"]
+[ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_c2hfu"]
+[ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_hbid6"]
+[ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="5_e3ab6"]
+
+[node name="MenuEstatisticas" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0i025")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.37488, 0.3692, 0.71, 1)
+
+[node name="CartazDesmangezados" type="Sprite2D" parent="."]
+modulate = Color(0.15, 0.15, 0.15, 1)
+position = Vector2(641, 361.5)
+scale = Vector2(0.597222, 0.452469)
+texture = ExtResource("2_n7wd5")
+
+[node name="LabelTitulo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme = ExtResource("3_c2hfu")
+text = "Estatísticas"
+
+[node name="ButtonVoltar" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -77.0
+offset_top = -77.0
+offset_right = 77.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_hbid6")
+text = "Voltar"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 249.0
+offset_top = 72.0
+offset_right = 1024.0
+offset_bottom = 701.0
+
+[node name="LabelGeral" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme = ExtResource("4_hbid6")
+text = "Geral"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 50
+columns = 2
+
+[node name="LabelPlantadasText" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_e3ab6")
+text = "Árvores Nativas Plantadas"
+
+[node name="LabelPlantadas" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_e3ab6")
+text = "0"
+
+[node name="LabelPinosText" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_e3ab6")
+text = "Árvores Pinos Cortadas"
+
+[node name="LabelPinos" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_e3ab6")
+text = "0"
+
+[node name="LabelLixoText" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_e3ab6")
+text = "Lixos Recolhidos"
+
+[node name="LabelLixo" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_e3ab6")
+text = "0"
+
+[node name="LabelFerrPegasText" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_e3ab6")
+text = "Ferramentas Pegas"
+
+[node name="LabelFerrPegas" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_e3ab6")
+text = "0"
+
+[node name="LabelFerrJogadasText" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_e3ab6")
+text = "Ferramentas Jogadas"
+
+[node name="LabelFerrJogadas" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_e3ab6")
+text = "0"
+
+[node name="LabelGameplay2" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme = ExtResource("4_hbid6")
+text = "Modo Zen"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainerZen" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 50
+columns = 2
+
+[node name="LabelZenTilesText" type="Label" parent="VBoxContainer/GridContainerZen"]
+layout_mode = 2
+theme = ExtResource("5_e3ab6")
+text = "M² Completamente Restaurados"
+
+[node name="LabelZenTiles" type="Label" parent="VBoxContainer/GridContainerZen"]
+layout_mode = 2
+theme = ExtResource("5_e3ab6")
+text = "0"
+
+[connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]

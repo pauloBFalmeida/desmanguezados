@@ -28,6 +28,13 @@ func save_game() -> void:
 	for level : LevelManager.Level_id in Globais.leveis_highscore.keys():
 		var tempo : int = Globais.leveis_highscore[level]
 		config.set_value("highscore", str(level), tempo)
+	# --- Estatisticas ---
+	config.set_value("stats", "stats_arvores_plantadas", Globais.stats_arvores_plantadas)
+	config.set_value("stats", "stats_arvores_pinos_cortadas", Globais.stats_arvores_pinos_cortadas)
+	config.set_value("stats", "stats_lixos_coletados", Globais.stats_lixos_coletados)
+	config.set_value("stats", "stats_ferramentas_pegas", Globais.stats_ferramentas_pegas)
+	config.set_value("stats", "stats_ferramentas_jogadas", Globais.stats_ferramentas_jogadas)
+	config.set_value("stats", "stats_zen_tiles_competamente_jogados", Globais.stats_zen_tiles_competamente_jogados)
 	
 	# save to disk
 	config.save(SAVE_PATH)
@@ -48,6 +55,13 @@ func _ajustar_globais(config : ConfigFile) -> void:
 	for level : LevelManager.Level_id in Globais.leveis_highscore.keys():
 		var tempo : int = config.get_value("highscore", str(level), -1)
 		Globais.leveis_highscore[level] = tempo
+	# --- Estatisticas ---
+	Globais.stats_arvores_plantadas      = config.get_value("stats", "stats_arvores_plantadas", 0)
+	Globais.stats_arvores_pinos_cortadas = config.get_value("stats", "stats_arvores_pinos_cortadas", 0)
+	Globais.stats_lixos_coletados        = config.get_value("stats", "stats_lixos_coletados", 0)
+	Globais.stats_ferramentas_pegas      = config.get_value("stats", "stats_ferramentas_pegas", 0)
+	Globais.stats_ferramentas_jogadas    = config.get_value("stats", "stats_ferramentas_jogadas", 0)
+	Globais.stats_zen_tiles_competamente_jogados = config.get_value("stats", "stats_zen_tiles_competamente_jogados", 0)
 	
 	print('Globais.possivel_aim_all_time ', Globais.possivel_aim_all_time)
 	print('Globais.indicador_direcao_transparente_sem_target ', Globais.indicador_direcao_transparente_sem_target)

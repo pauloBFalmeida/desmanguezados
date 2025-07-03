@@ -2,6 +2,10 @@ extends Control
 
 func _ready() -> void:
 	$GridContainer/ButtonJogar.grab_focus()
+	
+func _on_button_sair_pressed() -> void:
+	get_tree().quit()
+
 
 func _on_button_jogar_pressed() -> void:
 	SceneManager.goto_selecao()
@@ -14,6 +18,9 @@ func _on_button_config_pressed() -> void:
 
 func _on_button_creditos_pressed() -> void:
 	SceneManager.goto_creditos()
+	
+func _on_button_stats_pressed() -> void:
+	SceneManager.goto_stats()
 
-func _on_button_sair_pressed() -> void:
-	get_tree().quit()
+func _on_button_info_pressed() -> void:
+	SceneManager.goto_info()

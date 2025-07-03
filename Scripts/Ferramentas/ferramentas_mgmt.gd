@@ -84,6 +84,9 @@ func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> boo
 	# coloca colado no jogador, para ter o som no local certinho
 	ferramenta.position = Vector2.ZERO
 	
+	# add as estatisticas
+	Globais.stats_ferramentas_pegas += 1
+	
 	return true # retorne que pegou a ferramenta
 
 func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta, 
@@ -198,6 +201,9 @@ func jogador_throw_ferramenta_jogar(jogador : Jogador, ferramenta : Ferramenta) 
 	_retirar_ferramenta_jogador(jogador, ferramenta)
 	
 	jogar_ferramenta_mgmt.jogar(jogador, ferramenta)
+	
+	# add as estatisticas
+	Globais.stats_ferramentas_jogadas += 1
 
 ## libera a curva de previsao desse jogador
 func jogador_throw_limpar_predicao(jogador : Jogador) -> void:

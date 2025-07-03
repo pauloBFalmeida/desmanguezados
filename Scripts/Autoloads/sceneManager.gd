@@ -6,6 +6,9 @@ const MENU_SELECAO_PATH := "res://Cenas/Menus/menuSelecao.tscn"
 const MENU_MENU_ZEN_PATH := "res://Cenas/Menus/menuZen.tscn"
 const MENU_CONFIGURACAO_PATH := "res://Cenas/Menus/menuConfiguracao.tscn"
 const MENU_CREDITOS_PATH := "res://Cenas/Menus/menuCreditos.tscn"
+const MENU_ESTATISTICAS_PATH := "res://Cenas/Menus/menuEstatisticas.tscn"
+const MENU_INFORMACOES_PATH := "res://Cenas/Menus/menuInfo.tscn"
+
 
 func goto_menu():
 	change_scene(MENUS_PATH)
@@ -24,6 +27,12 @@ func goto_configuracoes():
 
 func goto_creditos():
 	change_menu(MENU_CREDITOS_PATH)
+
+func goto_stats():
+	change_menu(MENU_ESTATISTICAS_PATH)
+
+func goto_info():
+	change_menu(MENU_INFORMACOES_PATH)
 
 func goto_level(level_id : LevelManager.Level_id):
 	if LevelManager.LEVEIS_REF.has(level_id):
