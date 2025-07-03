@@ -365,58 +365,6 @@ grow_horizontal = 2
 theme = ExtResource("3_gxruk")
 text = "Informações"
 
-[node name="ButtonVoltar" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -77.0
-offset_top = -151.0
-offset_right = 77.0
-offset_bottom = -74.0
-grow_horizontal = 2
-grow_vertical = 0
-focus_neighbor_left = NodePath("../ButtonPrev")
-focus_neighbor_top = NodePath("../ButtonNext")
-focus_neighbor_right = NodePath("../ButtonNext")
-theme = ExtResource("4_g5nkx")
-text = "Voltar"
-
-[node name="ButtonNext" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -47.0
-offset_top = -47.5
-offset_bottom = 47.5
-grow_horizontal = 0
-grow_vertical = 2
-focus_neighbor_left = NodePath("../ButtonPrev")
-focus_neighbor_bottom = NodePath("../ButtonVoltar")
-theme = ExtResource("3_gxruk")
-text = ">"
-flat = true
-
-[node name="ButtonPrev" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -47.5
-offset_right = 47.0
-offset_bottom = 47.5
-grow_vertical = 2
-focus_neighbor_right = NodePath("../ButtonNext")
-focus_neighbor_bottom = NodePath("../ButtonVoltar")
-theme = ExtResource("3_gxruk")
-text = "<"
-flat = true
-
 [node name="TelaMangue" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -855,6 +803,58 @@ scale = Vector2(0.182039, 0.182039)
 texture = ExtResource("25_ro7rs")
 region_enabled = true
 region_rect = Rect2(0, 0, 1442, 2150)
+
+[node name="ButtonVoltar" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -77.0
+offset_top = -151.0
+offset_right = 77.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_neighbor_left = NodePath("../ButtonPrev")
+focus_neighbor_top = NodePath("../ButtonNext")
+focus_neighbor_right = NodePath("../ButtonNext")
+theme = ExtResource("4_g5nkx")
+text = "Voltar"
+
+[node name="ButtonNext" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -47.5
+offset_bottom = 47.5
+grow_horizontal = 0
+grow_vertical = 2
+focus_neighbor_left = NodePath("../ButtonPrev")
+focus_neighbor_bottom = NodePath("../ButtonVoltar")
+theme = ExtResource("3_gxruk")
+text = ">"
+flat = true
+
+[node name="ButtonPrev" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -47.5
+offset_right = 47.0
+offset_bottom = 47.5
+grow_vertical = 2
+focus_neighbor_right = NodePath("../ButtonNext")
+focus_neighbor_bottom = NodePath("../ButtonVoltar")
+theme = ExtResource("3_gxruk")
+text = "<"
+flat = true
 
 [connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]
 [connection signal="pressed" from="ButtonNext" to="." method="_on_button_next_pressed"]
