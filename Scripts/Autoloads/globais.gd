@@ -1,5 +1,10 @@
 extends Node
 
+func _ready() -> void:
+	# ajusta como -1 se nao tiver valor ainda
+	for id in Level_id.values():
+		if not leveis_highscore.has(id):
+			leveis_highscore[id] = -1
 
 # ---- -------------------- ----
 # ---- Salvos               ----
@@ -14,34 +19,35 @@ var volume_musica_partida : float = -25.0
 var volume_efeitos_partida : float = 0.0
 
 # ---- Scores ----
-var leveis_highscore : Dictionary[Level_id, int] = {
-	Level_id.TUTORIAL: -1,
-	Level_id.LEVEL_1: -1,
-	Level_id.LEVEL_2: -1,
-	Level_id.LEVEL_3: -1,
-}
+var leveis_highscore : Dictionary[Level_id, int] = {}
 
 # ---- -------------------- ----
 # ---- Nao Salvos           ----
 # ---- -------------------- ----
 
-enum Level_id {ZEN, TUTORIAL, LEVEL_1, LEVEL_2, LEVEL_3}
+enum Level_id {ZEN, TUTORIAL, TUTORIAL_JOGAR, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5}
 
 enum Medalha_tipo {OURO, PRATA, BRONZE, NENHUMA}
 
 const LEVEIS_NOME : Dictionary[Level_id, String] = {
 	Level_id.ZEN: "Zen",
-	Level_id.TUTORIAL: "Tutorial",
+	Level_id.TUTORIAL: "Tutorial 1",
+	Level_id.TUTORIAL_JOGAR: "Tutorial 2",
 	Level_id.LEVEL_1: "Level 1",
 	Level_id.LEVEL_2: "Level 2",
 	Level_id.LEVEL_3: "Level 3 Maré",
+	Level_id.LEVEL_4: "Level 4",
+	Level_id.LEVEL_5: "Level 5",
 }
 
 const LEVEIS_SELECAO_ORDEM : Array[Level_id] = [
 	Level_id.TUTORIAL,
+	Level_id.TUTORIAL_JOGAR,
 	Level_id.LEVEL_1,
 	Level_id.LEVEL_2,
 	Level_id.LEVEL_3,
+	Level_id.LEVEL_4,
+	Level_id.LEVEL_5,
 ]
 
 const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
@@ -57,6 +63,11 @@ const LEVEIS_MEDALHAS : Dictionary[Level_id, Dictionary] = {
 		Medalha_tipo.PRATA:  60,
 		Medalha_tipo.BRONZE: 50 
 		},
+	Level_id.TUTORIAL_JOGAR: {
+		Medalha_tipo.OURO:   70,
+		Medalha_tipo.PRATA:  60,
+		Medalha_tipo.BRONZE: 50 
+		},
 	Level_id.LEVEL_1: {
 		Medalha_tipo.OURO:   50,
 		Medalha_tipo.PRATA:  60,
@@ -68,6 +79,16 @@ const LEVEIS_MEDALHAS : Dictionary[Level_id, Dictionary] = {
 		Medalha_tipo.BRONZE: 70
 		},
 	Level_id.LEVEL_3: {
+		Medalha_tipo.OURO:   50,
+		Medalha_tipo.PRATA:  60,
+		Medalha_tipo.BRONZE: 70
+		},
+	Level_id.LEVEL_4: {
+		Medalha_tipo.OURO:   50,
+		Medalha_tipo.PRATA:  60,
+		Medalha_tipo.BRONZE: 70
+		},
+	Level_id.LEVEL_5: {
 		Medalha_tipo.OURO:   50,
 		Medalha_tipo.PRATA:  60,
 		Medalha_tipo.BRONZE: 70

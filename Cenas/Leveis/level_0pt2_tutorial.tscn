@@ -13,14 +13,13 @@
 radius = 13.0
 height = 60.0
 
-[node name="Level_Tutorial_pt2" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "temporizador", "hud")]
+[node name="Level_Tutorial_pt2" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
 script = ExtResource("1_3aa0c")
 duracao_partida_segundos = 300
 arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
-temporizador = NodePath("HUD/Temporizador")
 hud = NodePath("HUD")
 
 [node name="TileMaps" parent="." instance=ExtResource("2_72oij")]
