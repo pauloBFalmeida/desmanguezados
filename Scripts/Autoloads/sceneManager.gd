@@ -9,7 +9,8 @@ const MENU_CREDITOS_PATH := "res://Cenas/Menus/menuCreditos.tscn"
 
 const LEVEIS_REF  : Dictionary[Globais.Level_id, String] = {
 	Globais.Level_id.ZEN: "res://Cenas/Leveis/level_zen.tscn",
-	Globais.Level_id.TUTORIAL: "res://Cenas/Leveis/level_0_tutorial.tscn",
+	Globais.Level_id.TUTORIAL: "res://Cenas/Leveis/level_0pt2_tutorial.tscn",
+	Globais.Level_id.TUTORIAL_JOGAR: "res://Cenas/Leveis/level_0_tutorial.tscn",
 	Globais.Level_id.LEVEL_1: "res://Cenas/Leveis/level_1.tscn",
 	Globais.Level_id.LEVEL_2: "res://Cenas/Leveis/level_2.tscn",
 	Globais.Level_id.LEVEL_3: "res://Cenas/Leveis/level_3.tscn",
