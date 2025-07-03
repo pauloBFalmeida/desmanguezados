@@ -1,0 +1,861 @@
+[gd_scene load_steps=40 format=4 uid="uid://icyktkxgwl6u"]
+
+[ext_resource type="Script" uid="uid://ba7qvfajpx7o1" path="res://Scripts/Menus/menu_info.gd" id="1_c41fq"]
+[ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_gxruk"]
+[ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_g5nkx"]
+[ext_resource type="Texture2D" uid="uid://no5c4lec5icw" path="res://Assets/Interface/Info/raizesdacooperacao_qr.png" id="5_1hf66"]
+[ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="5_ph17h"]
+[ext_resource type="Texture2D" uid="uid://p0dxr61onviu" path="res://Assets/Siris/blue/action/blue_axe_action.png" id="5_q4b5l"]
+[ext_resource type="Texture2D" uid="uid://vpsxv4wmp1h7" path="res://Assets/Siris/blue/stop/blue_stop.png" id="5_qamk3"]
+[ext_resource type="Texture2D" uid="uid://dh7jvwfvypglq" path="res://Assets/Interface/Info/logo-raizes-cooperacao-ajuste-jun-2023-cor.png" id="6_ctqat"]
+[ext_resource type="Texture2D" uid="uid://b4rlhqxr88kr0" path="res://Assets/Cenario/Tiles/Areia.png" id="6_pt41f"]
+[ext_resource type="Texture2D" uid="uid://bnsy7do16v8k5" path="res://Assets/Ferramentas/circle.png" id="6_r2ttd"]
+[ext_resource type="Texture2D" uid="uid://c86gfamgy4qfk" path="res://Assets/Siris/red/walker/red_walker.png" id="7_cb6o4"]
+[ext_resource type="Texture2D" uid="uid://dtaxj07rrfd7c" path="res://Assets/Siris/red/action/red_gardener_action.png" id="7_i7gnl"]
+[ext_resource type="Texture2D" uid="uid://68swe8aj7isf" path="res://Assets/Siris/blue/action/blue_trashman_action.png" id="8_1k0o7"]
+[ext_resource type="Texture2D" uid="uid://x7dqi6ggmsw0" path="res://Assets/Cenario/Arvores/Pinos.png" id="8_pt41f"]
+[ext_resource type="Texture2D" uid="uid://e14uxly4awj8" path="res://Assets/Cenario/Arvores/ArvoresMangue.png" id="9_1k0o7"]
+[ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="10_psxug"]
+[ext_resource type="Texture2D" uid="uid://cd7kpxvt7hc3i" path="res://Assets/Cenario/Lixos/Lixo.png" id="11_1hf66"]
+[ext_resource type="Texture2D" uid="uid://bbuyad0mhse1y" path="res://Assets/Cenario/Tiles/Solo_Raizes.png" id="11_crcxq"]
+[ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/TileMapDual.gd" id="12_1hf66"]
+[ext_resource type="Shader" uid="uid://bgx5ojm5n4jm4" path="res://Scripts/Shaders/WindyFoliage.gdshader" id="12_psxug"]
+[ext_resource type="Texture2D" uid="uid://mgl30stii2n0" path="res://Assets/Interface/Info/mangue_2.jpg" id="13_oyjxc"]
+[ext_resource type="Texture2D" uid="uid://b0s1crmfqsc52" path="res://Assets/Interface/Info/siri_mangue.jpg" id="14_upqvo"]
+[ext_resource type="Texture2D" uid="uid://ckrvj3utosjhx" path="res://Assets/Siris/red/stop/red_stop.png" id="19_oyjxc"]
+[ext_resource type="Texture2D" uid="uid://b0a364wlbtofe" path="res://Assets/Interface/Info/muda_plantada.jpg" id="24_upqvo"]
+[ext_resource type="Texture2D" uid="uid://blb4uq7ip6lo3" path="res://Assets/Interface/Info/corte_pinos.jpg" id="25_ro7rs"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_figb8"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sy5xu"]
+width = 1024
+height = 1024
+generate_mipmaps = false
+seamless = true
+noise = SubResource("FastNoiseLite_figb8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qamk3"]
+shader = ExtResource("12_psxug")
+shader_parameter/render_noise = false
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_sy5xu")
+shader_parameter/amplitude = 0.15
+shader_parameter/time_scale = 0.03
+shader_parameter/noise_scale = 0.001
+shader_parameter/rotation_strength = 1.0
+shader_parameter/rotation_pivot = Vector2(0.15, 0.995)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cb6o4"]
+shader = ExtResource("12_psxug")
+shader_parameter/render_noise = false
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_sy5xu")
+shader_parameter/amplitude = 0.1
+shader_parameter/time_scale = 0.02
+shader_parameter/noise_scale = 0.001
+shader_parameter/rotation_strength = 0.5
+shader_parameter/rotation_pivot = Vector2(0.63, 0.95)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oyjxc"]
+shader = ExtResource("12_psxug")
+shader_parameter/render_noise = false
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_sy5xu")
+shader_parameter/amplitude = 0.15
+shader_parameter/time_scale = 0.02
+shader_parameter/noise_scale = 0.001
+shader_parameter/rotation_strength = 0.5
+shader_parameter/rotation_pivot = Vector2(0.755, 0.88)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_spnxe"]
+resource_name = "Raizes"
+texture = ExtResource("11_crcxq")
+texture_region_size = Vector2i(15, 15)
+0:3/0 = 0
+0:3/0/terrain_set = 0
+0:3/0/terrain = 0
+0:3/0/terrains_peering_bit/bottom_right_corner = 0
+0:3/0/terrains_peering_bit/bottom_left_corner = 0
+0:3/0/terrains_peering_bit/top_left_corner = 0
+0:3/0/terrains_peering_bit/top_right_corner = 0
+3:3/0 = 0
+3:3/0/terrain_set = 0
+3:3/0/terrains_peering_bit/bottom_right_corner = 0
+3:3/0/terrains_peering_bit/bottom_left_corner = 0
+3:3/0/terrains_peering_bit/top_left_corner = 2
+3:3/0/terrains_peering_bit/top_right_corner = 0
+0:2/0 = 0
+0:2/0/terrain_set = 0
+0:2/0/terrains_peering_bit/bottom_right_corner = 0
+0:2/0/terrains_peering_bit/bottom_left_corner = 0
+0:2/0/terrains_peering_bit/top_left_corner = 0
+0:2/0/terrains_peering_bit/top_right_corner = 2
+1:2/0 = 0
+1:2/0/terrain_set = 0
+1:2/0/terrains_peering_bit/bottom_right_corner = 0
+1:2/0/terrains_peering_bit/bottom_left_corner = 0
+1:2/0/terrains_peering_bit/top_left_corner = 2
+1:2/0/terrains_peering_bit/top_right_corner = 2
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/terrains_peering_bit/bottom_right_corner = 0
+0:0/0/terrains_peering_bit/bottom_left_corner = 2
+0:0/0/terrains_peering_bit/top_left_corner = 0
+0:0/0/terrains_peering_bit/top_right_corner = 0
+3:2/0 = 0
+3:2/0/terrain_set = 0
+3:2/0/terrains_peering_bit/bottom_right_corner = 0
+3:2/0/terrains_peering_bit/bottom_left_corner = 2
+3:2/0/terrains_peering_bit/top_left_corner = 2
+3:2/0/terrains_peering_bit/top_right_corner = 0
+2:3/0 = 0
+2:3/0/terrain_set = 0
+2:3/0/terrains_peering_bit/bottom_right_corner = 0
+2:3/0/terrains_peering_bit/bottom_left_corner = 2
+2:3/0/terrains_peering_bit/top_left_corner = 0
+2:3/0/terrains_peering_bit/top_right_corner = 2
+3:1/0 = 0
+3:1/0/terrain_set = 0
+3:1/0/terrains_peering_bit/bottom_right_corner = 0
+3:1/0/terrains_peering_bit/bottom_left_corner = 2
+3:1/0/terrains_peering_bit/top_left_corner = 2
+3:1/0/terrains_peering_bit/top_right_corner = 2
+1:3/0 = 0
+1:3/0/terrain_set = 0
+1:3/0/terrains_peering_bit/bottom_right_corner = 2
+1:3/0/terrains_peering_bit/bottom_left_corner = 0
+1:3/0/terrains_peering_bit/top_left_corner = 0
+1:3/0/terrains_peering_bit/top_right_corner = 0
+0:1/0 = 0
+0:1/0/terrain_set = 0
+0:1/0/terrains_peering_bit/bottom_right_corner = 2
+0:1/0/terrains_peering_bit/bottom_left_corner = 0
+0:1/0/terrains_peering_bit/top_left_corner = 2
+0:1/0/terrains_peering_bit/top_right_corner = 0
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrains_peering_bit/bottom_right_corner = 2
+1:0/0/terrains_peering_bit/bottom_left_corner = 0
+1:0/0/terrains_peering_bit/top_left_corner = 0
+1:0/0/terrains_peering_bit/top_right_corner = 2
+2:2/0 = 0
+2:2/0/terrain_set = 0
+2:2/0/terrains_peering_bit/bottom_right_corner = 2
+2:2/0/terrains_peering_bit/bottom_left_corner = 0
+2:2/0/terrains_peering_bit/top_left_corner = 2
+2:2/0/terrains_peering_bit/top_right_corner = 2
+3:0/0 = 0
+3:0/0/terrain_set = 0
+3:0/0/terrains_peering_bit/bottom_right_corner = 2
+3:0/0/terrains_peering_bit/bottom_left_corner = 2
+3:0/0/terrains_peering_bit/top_left_corner = 0
+3:0/0/terrains_peering_bit/top_right_corner = 0
+2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/terrains_peering_bit/bottom_right_corner = 2
+2:0/0/terrains_peering_bit/bottom_left_corner = 2
+2:0/0/terrains_peering_bit/top_left_corner = 2
+2:0/0/terrains_peering_bit/top_right_corner = 0
+1:1/0 = 0
+1:1/0/terrain_set = 0
+1:1/0/terrains_peering_bit/bottom_right_corner = 2
+1:1/0/terrains_peering_bit/bottom_left_corner = 2
+1:1/0/terrains_peering_bit/top_left_corner = 0
+1:1/0/terrains_peering_bit/top_right_corner = 2
+2:1/0 = 0
+2:1/0/terrain_set = 0
+2:1/0/terrain = 2
+2:1/0/terrains_peering_bit/bottom_right_corner = 2
+2:1/0/terrains_peering_bit/bottom_left_corner = 2
+2:1/0/terrains_peering_bit/top_left_corner = 2
+2:1/0/terrains_peering_bit/top_right_corner = 2
+
+[sub_resource type="TileSet" id="TileSet_0v28t"]
+tile_size = Vector2i(15, 15)
+terrain_set_0/mode = 1
+terrain_set_0/terrain_0/name = "<any>"
+terrain_set_0/terrain_0/color = Color(0.933333, 0.509804, 0.933333, 1)
+terrain_set_0/terrain_1/name = "FG -Solo_Raizes_correto.png"
+terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
+terrain_set_0/terrain_2/name = "FG -Solo_Raizes.png"
+terrain_set_0/terrain_2/color = Color(0.46875, 0.5, 0.25, 1)
+sources/1 = SubResource("TileSetAtlasSource_spnxe")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_57gvh"]
+resource_name = "Areia"
+texture = ExtResource("6_pt41f")
+texture_region_size = Vector2i(15, 15)
+0:3/0 = 0
+0:3/0/terrain_set = 0
+0:3/0/terrain = 0
+0:3/0/terrains_peering_bit/bottom_right_corner = 0
+0:3/0/terrains_peering_bit/bottom_left_corner = 0
+0:3/0/terrains_peering_bit/top_left_corner = 0
+0:3/0/terrains_peering_bit/top_right_corner = 0
+3:3/0 = 0
+3:3/0/terrain_set = 0
+3:3/0/terrains_peering_bit/bottom_right_corner = 0
+3:3/0/terrains_peering_bit/bottom_left_corner = 0
+3:3/0/terrains_peering_bit/top_left_corner = 2
+3:3/0/terrains_peering_bit/top_right_corner = 0
+0:2/0 = 0
+0:2/0/terrain_set = 0
+0:2/0/terrains_peering_bit/bottom_right_corner = 0
+0:2/0/terrains_peering_bit/bottom_left_corner = 0
+0:2/0/terrains_peering_bit/top_left_corner = 0
+0:2/0/terrains_peering_bit/top_right_corner = 2
+1:2/0 = 0
+1:2/0/terrain_set = 0
+1:2/0/terrains_peering_bit/bottom_right_corner = 0
+1:2/0/terrains_peering_bit/bottom_left_corner = 0
+1:2/0/terrains_peering_bit/top_left_corner = 2
+1:2/0/terrains_peering_bit/top_right_corner = 2
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/terrains_peering_bit/bottom_right_corner = 0
+0:0/0/terrains_peering_bit/bottom_left_corner = 2
+0:0/0/terrains_peering_bit/top_left_corner = 0
+0:0/0/terrains_peering_bit/top_right_corner = 0
+3:2/0 = 0
+3:2/0/terrain_set = 0
+3:2/0/terrains_peering_bit/bottom_right_corner = 0
+3:2/0/terrains_peering_bit/bottom_left_corner = 2
+3:2/0/terrains_peering_bit/top_left_corner = 2
+3:2/0/terrains_peering_bit/top_right_corner = 0
+2:3/0 = 0
+2:3/0/terrain_set = 0
+2:3/0/terrains_peering_bit/bottom_right_corner = 0
+2:3/0/terrains_peering_bit/bottom_left_corner = 2
+2:3/0/terrains_peering_bit/top_left_corner = 0
+2:3/0/terrains_peering_bit/top_right_corner = 2
+3:1/0 = 0
+3:1/0/terrain_set = 0
+3:1/0/terrains_peering_bit/bottom_right_corner = 0
+3:1/0/terrains_peering_bit/bottom_left_corner = 2
+3:1/0/terrains_peering_bit/top_left_corner = 2
+3:1/0/terrains_peering_bit/top_right_corner = 2
+1:3/0 = 0
+1:3/0/terrain_set = 0
+1:3/0/terrains_peering_bit/bottom_right_corner = 2
+1:3/0/terrains_peering_bit/bottom_left_corner = 0
+1:3/0/terrains_peering_bit/top_left_corner = 0
+1:3/0/terrains_peering_bit/top_right_corner = 0
+0:1/0 = 0
+0:1/0/terrain_set = 0
+0:1/0/terrains_peering_bit/bottom_right_corner = 2
+0:1/0/terrains_peering_bit/bottom_left_corner = 0
+0:1/0/terrains_peering_bit/top_left_corner = 2
+0:1/0/terrains_peering_bit/top_right_corner = 0
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrains_peering_bit/bottom_right_corner = 2
+1:0/0/terrains_peering_bit/bottom_left_corner = 0
+1:0/0/terrains_peering_bit/top_left_corner = 0
+1:0/0/terrains_peering_bit/top_right_corner = 2
+2:2/0 = 0
+2:2/0/terrain_set = 0
+2:2/0/terrains_peering_bit/bottom_right_corner = 2
+2:2/0/terrains_peering_bit/bottom_left_corner = 0
+2:2/0/terrains_peering_bit/top_left_corner = 2
+2:2/0/terrains_peering_bit/top_right_corner = 2
+3:0/0 = 0
+3:0/0/terrain_set = 0
+3:0/0/terrains_peering_bit/bottom_right_corner = 2
+3:0/0/terrains_peering_bit/bottom_left_corner = 2
+3:0/0/terrains_peering_bit/top_left_corner = 0
+3:0/0/terrains_peering_bit/top_right_corner = 0
+2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/terrains_peering_bit/bottom_right_corner = 2
+2:0/0/terrains_peering_bit/bottom_left_corner = 2
+2:0/0/terrains_peering_bit/top_left_corner = 2
+2:0/0/terrains_peering_bit/top_right_corner = 0
+1:1/0 = 0
+1:1/0/terrain_set = 0
+1:1/0/terrains_peering_bit/bottom_right_corner = 2
+1:1/0/terrains_peering_bit/bottom_left_corner = 2
+1:1/0/terrains_peering_bit/top_left_corner = 0
+1:1/0/terrains_peering_bit/top_right_corner = 2
+2:1/0 = 0
+2:1/0/terrain_set = 0
+2:1/0/terrain = 2
+2:1/0/terrains_peering_bit/bottom_right_corner = 2
+2:1/0/terrains_peering_bit/bottom_left_corner = 2
+2:1/0/terrains_peering_bit/top_left_corner = 2
+2:1/0/terrains_peering_bit/top_right_corner = 2
+
+[sub_resource type="TileSet" id="TileSet_i1rag"]
+tile_size = Vector2i(15, 15)
+terrain_set_0/mode = 1
+terrain_set_0/terrain_0/name = "<any>"
+terrain_set_0/terrain_0/color = Color(0.933333, 0.509804, 0.933333, 1)
+terrain_set_0/terrain_1/name = "FG -Areia_correto.png"
+terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
+terrain_set_0/terrain_2/name = "FG -Areia.png"
+terrain_set_0/terrain_2/color = Color(0.46875, 0.5, 0.25, 1)
+sources/1 = SubResource("TileSetAtlasSource_57gvh")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_187py"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7wa5r"]
+width = 1024
+height = 1024
+generate_mipmaps = false
+seamless = true
+noise = SubResource("FastNoiseLite_187py")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_crcxq"]
+shader = ExtResource("12_psxug")
+shader_parameter/render_noise = false
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_7wa5r")
+shader_parameter/amplitude = 0.16
+shader_parameter/time_scale = 0.01
+shader_parameter/noise_scale = 0.001
+shader_parameter/rotation_strength = 1.0
+shader_parameter/rotation_pivot = Vector2(0.5, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1hf66"]
+shader = ExtResource("12_psxug")
+shader_parameter/render_noise = false
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_7wa5r")
+shader_parameter/amplitude = 0.16
+shader_parameter/time_scale = 0.01
+shader_parameter/noise_scale = 0.001
+shader_parameter/rotation_strength = 1.0
+shader_parameter/rotation_pivot = Vector2(0.5, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ctqat"]
+shader = ExtResource("12_psxug")
+shader_parameter/render_noise = false
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_7wa5r")
+shader_parameter/amplitude = 0.16
+shader_parameter/time_scale = 0.01
+shader_parameter/noise_scale = 0.001
+shader_parameter/rotation_strength = 1.0
+shader_parameter/rotation_pivot = Vector2(0.5, 1)
+
+[node name="MenuInformacoes" type="Control" node_paths=PackedStringArray("lista_telas")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c41fq")
+lista_telas = [NodePath("TelaMangue"), NodePath("TelaProjeto"), NodePath("TelaArvores")]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -99
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.323192, 0.472892, 0.593802, 1)
+metadata/_edit_lock_ = true
+
+[node name="LabelTitulo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme = ExtResource("3_gxruk")
+text = "Informações"
+
+[node name="ButtonVoltar" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -77.0
+offset_top = -151.0
+offset_right = 77.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_neighbor_left = NodePath("../ButtonPrev")
+focus_neighbor_top = NodePath("../ButtonNext")
+focus_neighbor_right = NodePath("../ButtonNext")
+theme = ExtResource("4_g5nkx")
+text = "Voltar"
+
+[node name="ButtonNext" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -47.5
+offset_bottom = 47.5
+grow_horizontal = 0
+grow_vertical = 2
+focus_neighbor_left = NodePath("../ButtonPrev")
+focus_neighbor_bottom = NodePath("../ButtonVoltar")
+theme = ExtResource("3_gxruk")
+text = ">"
+flat = true
+
+[node name="ButtonPrev" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -47.5
+offset_right = 47.0
+offset_bottom = 47.5
+grow_vertical = 2
+focus_neighbor_right = NodePath("../ButtonNext")
+focus_neighbor_bottom = NodePath("../ButtonVoltar")
+theme = ExtResource("3_gxruk")
+text = "<"
+flat = true
+
+[node name="TelaMangue" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelManguezal" type="Label" parent="TelaMangue"]
+modulate = Color(0.7227, 0.99, 0.75834, 1)
+layout_mode = 2
+offset_left = 248.5
+offset_top = 93.0
+offset_right = 1023.5
+offset_bottom = 149.0
+theme = ExtResource("4_g5nkx")
+text = "Os Manguezais"
+horizontal_alignment = 1
+
+[node name="LabelMangue" type="Label" parent="TelaMangue"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -614.0
+offset_top = -189.0
+offset_right = 220.0
+offset_bottom = 233.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_ph17h")
+text = "Os manguezais são ecossistemas costeiros fundamentais para o equilíbrio ambiental. Eles abrigam grande biodiversidade, servem de berçário para diversas espécies, protegem o litoral da erosão e atuam como filtros naturais da água. 
+Além disso, são fonte de sustento para muitas comunidades ribeirinhas. Porém, estão ameaçados pela poluição, destruição de habitats e exploração predatória."
+horizontal_alignment = 3
+autowrap_mode = 3
+
+[node name="Blue" type="Sprite2D" parent="TelaMangue"]
+z_index = 2
+position = Vector2(984, 675)
+scale = Vector2(3, 3)
+texture = ExtResource("5_qamk3")
+region_enabled = true
+region_rect = Rect2(139, 32, 40, 17)
+
+[node name="Circle" type="Sprite2D" parent="TelaMangue/Blue"]
+modulate = Color(0, 0, 0, 0.341176)
+z_index = -1
+position = Vector2(-0.666667, 6.66667)
+scale = Vector2(0.304029, 0.0747614)
+texture = ExtResource("6_r2ttd")
+
+[node name="Red" type="Sprite2D" parent="TelaMangue"]
+z_index = 2
+position = Vector2(444, 694)
+scale = Vector2(3, 3)
+texture = ExtResource("7_cb6o4")
+region_enabled = true
+region_rect = Rect2(75, 31, 41, 19)
+
+[node name="Circle" type="Sprite2D" parent="TelaMangue/Red"]
+modulate = Color(0, 0, 0, 0.341176)
+z_index = -1
+position = Vector2(1.33333, 4.66665)
+scale = Vector2(0.304029, 0.0747614)
+texture = ExtResource("6_r2ttd")
+
+[node name="ArvoresMangue" type="Sprite2D" parent="TelaMangue"]
+material = SubResource("ShaderMaterial_qamk3")
+position = Vector2(753, 664)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(0, 17, 15, 20)
+
+[node name="ArvoresMangue2" type="Sprite2D" parent="TelaMangue"]
+material = SubResource("ShaderMaterial_cb6o4")
+position = Vector2(208, 669)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(16, 9, 20, 28)
+
+[node name="ArvoresMangue6" type="Sprite2D" parent="TelaMangue"]
+material = SubResource("ShaderMaterial_cb6o4")
+position = Vector2(513, 631)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(16, 9, 20, 28)
+
+[node name="ArvoresMangue3" type="Sprite2D" parent="TelaMangue"]
+material = SubResource("ShaderMaterial_oyjxc")
+position = Vector2(89, 643)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(38, 0, 27, 37)
+
+[node name="ArvoresMangue7" type="Sprite2D" parent="TelaMangue"]
+material = SubResource("ShaderMaterial_oyjxc")
+position = Vector2(343, 638)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(38, 0, 27, 37)
+
+[node name="ArvoresMangue4" type="Sprite2D" parent="TelaMangue"]
+material = SubResource("ShaderMaterial_cb6o4")
+position = Vector2(1145, 657)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(16, 9, 20, 28)
+
+[node name="ArvoresMangue5" type="Sprite2D" parent="TelaMangue"]
+material = SubResource("ShaderMaterial_oyjxc")
+position = Vector2(1241, 632)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(38, 0, 27, 37)
+
+[node name="ArvoresMangue8" type="Sprite2D" parent="TelaMangue"]
+material = SubResource("ShaderMaterial_oyjxc")
+position = Vector2(853, 657)
+scale = Vector2(4.5, 4.5)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(38, 0, 27, 37)
+
+[node name="TileMapDualRaizes" type="TileMapLayer" parent="TelaMangue"]
+z_index = -10
+material = ExtResource("10_psxug")
+scale = Vector2(3, 3)
+tile_map_data = PackedByteArray("AAD//w8AAQACAAEAAAAAAA8AAQACAAEAAAABAA8AAQACAAEAAAACAA8AAQACAAEAAAADAA8AAQACAAEAAAAEAA8AAQACAAEAAAAFAA8AAQACAAEAAAAGAA8AAQACAAEAAAAHAA8AAQACAAEAAAAIAA8AAQACAAEAAAAJAA8AAQACAAEAAAAKAA8AAQACAAEAAAALAA8AAQACAAEAAAAMAA8AAQACAAEAAAANAA8AAQACAAEAAAAOAA8AAQACAAEAAAAPAA8AAQACAAEAAAAQAA8AAQACAAEAAAARAA8AAQACAAEAAAASAA8AAQACAAEAAAATAA8AAQACAAEAAAAUAA8AAQACAAEAAAAVAA8AAQACAAEAAAAWAA8AAQACAAEAAAAXAA8AAQACAAEAAAAYAA8AAQACAAEAAAAZAA8AAQACAAEAAAAaAA8AAQACAAEAAAAbAA8AAQACAAEAAAAcAA8AAQACAAEAAAA=")
+tile_set = SubResource("TileSet_0v28t")
+script = ExtResource("12_1hf66")
+metadata/_custom_type_script = "uid://cjk8nronimk5r"
+
+[node name="Mangue2" type="Sprite2D" parent="TelaMangue"]
+position = Vector2(1051, 276.937)
+scale = Vector2(0.337034, 0.355018)
+texture = ExtResource("13_oyjxc")
+
+[node name="SiriMangue" type="Sprite2D" parent="TelaMangue"]
+z_index = -20
+position = Vector2(1051, 496)
+scale = Vector2(0.660294, 0.660294)
+texture = ExtResource("14_upqvo")
+region_enabled = true
+region_rect = Rect2(0, 49, 512, 291)
+
+[node name="TelaProjeto" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelProjeto" type="Label" parent="TelaProjeto"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -572.0
+offset_top = -232.0
+offset_right = 319.0
+offset_bottom = 197.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_ph17h")
+text = "Nosso jogo é inspirado no Projeto Raízes da Cooperação tem o objetivo geral de contribuir para conservação dos manguezais e ecossistemas associados na Região Hidrográfica Litoral Centro de Santa Catarina.
+
+Projeto faz a atuação tem três frentes: processo de restauração das áreas, educação ambiental e pesquisa acadêmica."
+horizontal_alignment = 3
+autowrap_mode = 3
+
+[node name="RaizesdacooperacaoQr" type="Sprite2D" parent="TelaProjeto"]
+position = Vector2(1093.44, 467.339)
+scale = Vector2(0.0735692, 0.0735692)
+texture = ExtResource("5_1hf66")
+
+[node name="Logo-raizes-cooperacao-ajuste-jun-2023-cor" type="Sprite2D" parent="TelaProjeto"]
+position = Vector2(1093.44, 226.339)
+scale = Vector2(0.66863, 0.66863)
+texture = ExtResource("6_ctqat")
+
+[node name="TileMapDualAreia" type="TileMapLayer" parent="TelaProjeto"]
+z_index = -9
+material = ExtResource("10_psxug")
+scale = Vector2(3, 3)
+tile_map_data = PackedByteArray("AAD//w8AAQACAAEAAAAAAA8AAQACAAEAAAABAA8AAQACAAEAAAACAA8AAQACAAEAAAADAA8AAQACAAEAAAAEAA8AAQACAAEAAAAFAA8AAQACAAEAAAAGAA8AAQACAAEAAAAHAA8AAQACAAEAAAAIAA8AAQACAAEAAAAJAA8AAQACAAEAAAAKAA8AAQACAAEAAAALAA8AAQACAAEAAAAMAA8AAQACAAEAAAANAA8AAQACAAEAAAAOAA8AAQACAAEAAAAPAA8AAQACAAEAAAAQAA8AAQACAAEAAAARAA8AAQACAAEAAAASAA8AAQACAAEAAAATAA8AAQACAAEAAAAUAA8AAQACAAEAAAAVAA8AAQACAAEAAAAWAA8AAQACAAEAAAAXAA8AAQACAAEAAAAYAA8AAQACAAEAAAAZAA8AAQACAAEAAAAaAA8AAQACAAEAAAAbAA8AAQACAAEAAAAcAA8AAQACAAEAAAA=")
+tile_set = SubResource("TileSet_i1rag")
+script = ExtResource("12_1hf66")
+metadata/_custom_type_script = "uid://cjk8nronimk5r"
+
+[node name="BlueColetar" type="Sprite2D" parent="TelaProjeto"]
+position = Vector2(347, 668)
+scale = Vector2(3, 3)
+texture = ExtResource("8_1k0o7")
+region_enabled = true
+region_rect = Rect2(74, 25, 42, 30)
+
+[node name="Circle" type="Sprite2D" parent="TelaProjeto/BlueColetar"]
+modulate = Color(0, 0, 0, 0.341176)
+z_index = -1
+position = Vector2(-0.666667, 6.66667)
+scale = Vector2(0.303, 0.075)
+texture = ExtResource("6_r2ttd")
+
+[node name="RedGardenerAction" type="Sprite2D" parent="TelaProjeto"]
+position = Vector2(961, 672)
+scale = Vector2(3, 3)
+texture = ExtResource("19_oyjxc")
+region_enabled = true
+region_rect = Rect2(10, 95, 42, 19)
+
+[node name="Circle" type="Sprite2D" parent="TelaProjeto/RedGardenerAction"]
+modulate = Color(0, 0, 0, 0.341176)
+z_index = -1
+position = Vector2(1.33333, 4.66665)
+scale = Vector2(0.304029, 0.0747614)
+texture = ExtResource("6_r2ttd")
+
+[node name="Lixo5" type="Sprite2D" parent="TelaProjeto/RedGardenerAction"]
+z_index = -1
+position = Vector2(-5.66669, 8)
+rotation = 0.649101
+scale = Vector2(0.766667, 0.766667)
+texture = ExtResource("11_1hf66")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0, 0, 15, 19)
+
+[node name="Lixo4" type="Sprite2D" parent="TelaProjeto/RedGardenerAction"]
+position = Vector2(-2.66669, 4)
+rotation = 0.649101
+scale = Vector2(0.766667, 0.766667)
+texture = ExtResource("11_1hf66")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0, 0, 15, 5)
+
+[node name="Lixo" type="Sprite2D" parent="TelaProjeto"]
+position = Vector2(107, 665)
+rotation = 0.814756
+scale = Vector2(2.3, 2.3)
+texture = ExtResource("11_1hf66")
+region_enabled = true
+region_rect = Rect2(16, 12, 17, 7)
+
+[node name="Lixo2" type="Sprite2D" parent="TelaProjeto"]
+z_index = -1
+position = Vector2(360, 709)
+rotation = 0.346525
+scale = Vector2(3, 3)
+texture = ExtResource("11_1hf66")
+region_enabled = true
+region_rect = Rect2(31, 0, 11, 10)
+
+[node name="Lixo4" type="Sprite2D" parent="TelaProjeto"]
+z_index = -1
+position = Vector2(627, 692)
+rotation = 0.346525
+scale = Vector2(3, 3)
+texture = ExtResource("11_1hf66")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(31, 0, 11, 10)
+
+[node name="Lixo3" type="Sprite2D" parent="TelaProjeto"]
+position = Vector2(1143, 687)
+rotation = 2.3096
+scale = Vector2(3, 3)
+texture = ExtResource("11_1hf66")
+region_enabled = true
+region_rect = Rect2(16, 12, 17, 7)
+
+[node name="ArvoresMangue4" type="Sprite2D" parent="TelaProjeto"]
+material = SubResource("ShaderMaterial_qamk3")
+position = Vector2(814, 647)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(0, 17, 15, 20)
+
+[node name="ArvoresMangue6" type="Sprite2D" parent="TelaProjeto"]
+material = SubResource("ShaderMaterial_qamk3")
+position = Vector2(1252, 681)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(0, 17, 15, 20)
+
+[node name="ArvoresMangue5" type="Sprite2D" parent="TelaProjeto"]
+material = SubResource("ShaderMaterial_oyjxc")
+position = Vector2(65, 631)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(38, 0, 27, 37)
+
+[node name="ArvoresMangue9" type="Sprite2D" parent="TelaProjeto"]
+material = SubResource("ShaderMaterial_cb6o4")
+position = Vector2(495, 672)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(16, 9, 20, 28)
+
+[node name="TelaArvores" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelArvores" type="Label" parent="TelaArvores"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -293.5
+offset_top = -264.5
+offset_right = 313.5
+offset_bottom = 216.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_ph17h")
+text = "As árvores de pinus são espécies invasoras no manguezal, e sua presença causa contaminação biológica, prejudicando o ecossistema nativo.
+O processo de restauração envolve cortar os pinus, reaproveitá-los como matéria orgânica, replantar espécies nativas e monitorar o local para garantir a recuperação do ambiente."
+horizontal_alignment = 3
+autowrap_mode = 3
+
+[node name="BlueAxeAction" type="Sprite2D" parent="TelaArvores"]
+position = Vector2(991, 665)
+scale = Vector2(3, 3)
+texture = ExtResource("5_q4b5l")
+region_enabled = true
+region_rect = Rect2(74, 74, 41, 31)
+
+[node name="Circle" type="Sprite2D" parent="TelaArvores/BlueAxeAction"]
+modulate = Color(0, 0, 0, 0.341176)
+z_index = -1
+position = Vector2(-0.666667, 6.66667)
+scale = Vector2(0.304029, 0.0747614)
+texture = ExtResource("6_r2ttd")
+
+[node name="RedGardenerAction" type="Sprite2D" parent="TelaArvores"]
+position = Vector2(433, 664)
+scale = Vector2(3, 3)
+texture = ExtResource("7_i7gnl")
+region_enabled = true
+region_rect = Rect2(11, 90, 40, 28)
+
+[node name="Circle" type="Sprite2D" parent="TelaArvores/RedGardenerAction"]
+modulate = Color(0, 0, 0, 0.341176)
+z_index = -1
+position = Vector2(1.33333, 4.66665)
+scale = Vector2(0.304029, 0.0747614)
+texture = ExtResource("6_r2ttd")
+
+[node name="Pinos" type="Sprite2D" parent="TelaArvores"]
+material = SubResource("ShaderMaterial_crcxq")
+position = Vector2(1094, 576)
+scale = Vector2(6, 6)
+texture = ExtResource("8_pt41f")
+
+[node name="Pinos2" type="Sprite2D" parent="TelaArvores"]
+material = SubResource("ShaderMaterial_1hf66")
+position = Vector2(1224, 583)
+scale = Vector2(5.4, 5.4)
+texture = ExtResource("8_pt41f")
+
+[node name="Pinos3" type="Sprite2D" parent="TelaArvores"]
+z_index = -1
+material = SubResource("ShaderMaterial_ctqat")
+position = Vector2(1158, 573)
+scale = Vector2(5.3, 5.3)
+texture = ExtResource("8_pt41f")
+
+[node name="ArvoresMangue" type="Sprite2D" parent="TelaArvores"]
+material = SubResource("ShaderMaterial_qamk3")
+position = Vector2(323, 664)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(0, 17, 15, 20)
+
+[node name="ArvoresMangue2" type="Sprite2D" parent="TelaArvores"]
+material = SubResource("ShaderMaterial_cb6o4")
+position = Vector2(201, 646)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(16, 9, 20, 28)
+
+[node name="ArvoresMangue3" type="Sprite2D" parent="TelaArvores"]
+material = SubResource("ShaderMaterial_oyjxc")
+position = Vector2(62, 629)
+scale = Vector2(4, 4)
+texture = ExtResource("9_1k0o7")
+region_enabled = true
+region_rect = Rect2(38, 0, 27, 37)
+
+[node name="TileMapDualRaizes2" type="TileMapLayer" parent="TelaArvores"]
+z_index = -10
+material = ExtResource("10_psxug")
+scale = Vector2(3, 3)
+tile_map_data = PackedByteArray("AAD//w8AAQACAAEAAAAAAA8AAQACAAEAAAABAA8AAQACAAEAAAACAA8AAQACAAEAAAADAA8AAQACAAEAAAAEAA8AAQACAAEAAAAFAA8AAQACAAEAAAAGAA8AAQACAAEAAAAHAA8AAQACAAEAAAAIAA8AAQACAAEAAAAJAA8AAQACAAEAAAAKAA8AAQACAAEAAAALAA8AAQACAAEAAAAMAA8AAQACAAEAAAANAA8AAQACAAEAAAAOAA8AAQACAAEAAAAPAA8AAQACAAEAAAAQAA8AAQACAAEAAAARAA8AAQACAAEAAAASAA8AAQACAAEAAAATAA8AAQACAAEAAAAUAA8AAQACAAEAAAAVAA8AAQACAAEAAAAWAA8AAQACAAEAAAAXAA8AAQACAAEAAAAYAA8AAQACAAEAAAAZAA8AAQACAAEAAAAaAA8AAQACAAEAAAAbAA8AAQACAAEAAAAcAA8AAQACAAEAAAA=")
+tile_set = SubResource("TileSet_0v28t")
+script = ExtResource("12_1hf66")
+metadata/_custom_type_script = "uid://cjk8nronimk5r"
+
+[node name="MudaPlantada" type="Sprite2D" parent="TelaArvores"]
+z_index = -2
+position = Vector2(1126, 288)
+scale = Vector2(0.420671, 0.434575)
+texture = ExtResource("24_upqvo")
+region_enabled = true
+region_rect = Rect2(90, 122, 678, 902)
+
+[node name="CortePinos" type="Sprite2D" parent="TelaArvores"]
+position = Vector2(186.25, 296.519)
+scale = Vector2(0.182039, 0.182039)
+texture = ExtResource("25_ro7rs")
+region_enabled = true
+region_rect = Rect2(0, 0, 1442, 2150)
+
+[connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]
+[connection signal="pressed" from="ButtonNext" to="." method="_on_button_next_pressed"]
+[connection signal="pressed" from="ButtonPrev" to="." method="_on_button_prev_pressed"]
