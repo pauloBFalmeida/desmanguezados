@@ -2,7 +2,7 @@ extends Control
 class_name LevelItem
 
 
-@export var medalha_cor : Dictionary[Globais.Medalha_tipo, Color]
+@export var medalha_cor : Dictionary[LevelManager.Medalha_tipo, Color]
 ## texto antes do tempo, com espaco no final
 @export var tempo_text := "Melhor Tempo: "
 
@@ -13,7 +13,7 @@ class_name LevelItem
 @onready var medalha_perola := $Info/Perola
 @onready var medalha_brilho := $Info/Brilho
 
-var level_id : Globais.Level_id
+var level_id : LevelManager.Level_id
 
 func btn_grab_focus() -> void:
 	grab_focus()
@@ -25,14 +25,14 @@ func ajust(_level_id : int) -> void:
 	level_id = _level_id
 	# Nome do level
 	var texto_btn : String = "Sem_Nome" 
-	if Globais.LEVEIS_NOME.has(level_id):
-		texto_btn = Globais.LEVEIS_NOME[level_id]
+	if LevelManager.LEVEIS_NOME.has(level_id):
+		texto_btn = LevelManager.LEVEIS_NOME[level_id]
 	label_name.text = texto_btn
 	# info
 	_load_info()
 	# imagem
-	if Globais.LEVEIS_IMAGE.has(level_id):
-		level_image.texture = Globais.LEVEIS_IMAGE[level_id]
+	if LevelManager.LEVEIS_IMAGE.has(level_id):
+		level_image.texture = LevelManager.LEVEIS_IMAGE[level_id]
 	
 
 func _load_info() -> void:
@@ -54,17 +54,17 @@ func _load_info() -> void:
 	label_info.text = tempo_text + str(min) + ":" + str(sec)
 	
 	# ajusta imagem
-	var medalha : Globais.Medalha_tipo = Globais.get_medalha_level(level_id, highscore)
+	var medalha : LevelManager.Medalha_tipo = LevelManager.get_medalha_level(level_id, highscore)
 	
 	# se nao tiver medalha -> esconde a imagem da medalha
-	if medalha == Globais.Medalha_tipo.NENHUMA:
+	if medalha == LevelManager.Medalha_tipo.NENHUMA:
 		medalha_concha.hide()
 		medalha_perola.hide()
 		return
 	
 	medalha_perola.modulate = medalha_cor[medalha]
 	
-	if medalha == Globais.Medalha_tipo.OURO:
+	if medalha == LevelManager.Medalha_tipo.OURO:
 		medalha_brilho.show()
 		# muda a posicao para entre esses valores
 		medalha_brilho.position += Vector2(randf_range(0, 10), randf_range(0, 8))

@@ -21,6 +21,7 @@ Globais="*res://Scripts/Autoloads/globais.gd"
 SceneManager="*res://Scripts/Autoloads/sceneManager.gd"
 InputManager="*res://Scripts/Autoloads/inputManager.gd"
 SaveManager="*res://Scripts/Autoloads/saveManager.gd"
+LevelManager="*res://Scripts/Autoloads/levelManager.gd"
 
 [display]
 

@@ -31,7 +31,7 @@ func comecar_partida() -> void:
 	Globais.modo_zen_porcent_mangue = valor_mangue.value / 10
 	Globais.modo_zen_porcent_lixo   = valor_lixo.value   / 10
 	# comecar a partida
-	SceneManager.goto_level(Globais.Level_id.ZEN)
+	SceneManager.goto_level(LevelManager.Level_id.ZEN)
 
 func _on_button_comecar_pressed() -> void:
 	comecar_partida()

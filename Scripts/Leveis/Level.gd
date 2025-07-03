@@ -58,7 +58,7 @@ func _fim_partida() -> void:
 	get_tree().set_pause(true)
 	
 	# salva o score (o tempo pode ter parado antes)
-	Globais.score_level(Globais.current_level_id, temporizador.get_tempo())
+	LevelManager.score_level(Globais.current_level_id, temporizador.get_tempo())
 	
 	# -- muda a imagem dependendo das condicoes de final --
 	

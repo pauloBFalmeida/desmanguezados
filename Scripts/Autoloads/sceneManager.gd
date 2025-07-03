@@ -7,17 +7,6 @@ const MENU_MENU_ZEN_PATH := "res://Cenas/Menus/menuZen.tscn"
 const MENU_CONFIGURACAO_PATH := "res://Cenas/Menus/menuConfiguracao.tscn"
 const MENU_CREDITOS_PATH := "res://Cenas/Menus/menuCreditos.tscn"
 
-const LEVEIS_REF  : Dictionary[Globais.Level_id, String] = {
-	Globais.Level_id.ZEN: "res://Cenas/Leveis/level_zen.tscn",
-	Globais.Level_id.TUTORIAL: "res://Cenas/Leveis/level_0pt2_tutorial.tscn",
-	Globais.Level_id.TUTORIAL_JOGAR: "res://Cenas/Leveis/level_0_tutorial.tscn",
-	Globais.Level_id.LEVEL_1: "res://Cenas/Leveis/level_1.tscn",
-	Globais.Level_id.LEVEL_2: "res://Cenas/Leveis/level_2.tscn",
-	Globais.Level_id.LEVEL_3: "res://Cenas/Leveis/level_3.tscn",
-	Globais.Level_id.LEVEL_4: "res://Cenas/Leveis/level_4pt2.tscn",
-	Globais.Level_id.LEVEL_5: "res://Cenas/Leveis/level_5.tscn",
-}
-
 func goto_menu():
 	change_scene(MENUS_PATH)
 
@@ -36,10 +25,10 @@ func goto_configuracoes():
 func goto_creditos():
 	change_menu(MENU_CREDITOS_PATH)
 
-func goto_level(level_id : Globais.Level_id):
-	if LEVEIS_REF.has(level_id):
+func goto_level(level_id : LevelManager.Level_id):
+	if LevelManager.LEVEIS_REF.has(level_id):
 		Globais.current_level_id = level_id
-		change_scene(LEVEIS_REF[level_id])
+		change_scene(LevelManager.LEVEIS_REF[level_id])
 
 func restart_level() -> void:
 	goto_level(Globais.current_level_id)

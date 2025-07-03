@@ -25,7 +25,7 @@ func save_game() -> void:
 	config.set_value("config", "volume_musica_partida", Globais.volume_musica_partida)
 	config.set_value("config", "volume_efeitos_partida", Globais.volume_efeitos_partida)
 	# --- HighScore das partidas ---
-	for level : Globais.Level_id in Globais.leveis_highscore.keys():
+	for level : LevelManager.Level_id in Globais.leveis_highscore.keys():
 		var tempo : int = Globais.leveis_highscore[level]
 		config.set_value("highscore", str(level), tempo)
 	
@@ -45,7 +45,7 @@ func _ajustar_globais(config : ConfigFile) -> void:
 	Globais.volume_musica_partida  = config.get_value("config", "volume_musica_partida", -25.0)
 	Globais.volume_efeitos_partida = config.get_value("config", "volume_efeitos_partida", 0.0)
 	# --- HighScore das partidas ---
-	for level : Globais.Level_id in Globais.leveis_highscore.keys():
+	for level : LevelManager.Level_id in Globais.leveis_highscore.keys():
 		var tempo : int = config.get_value("highscore", str(level), -1)
 		Globais.leveis_highscore[level] = tempo
 	
@@ -64,7 +64,7 @@ func reset_save() -> void:
 
 func reset_save_partida() -> void:
 	# reseta os scores
-	for level : Globais.Level_id in Globais.leveis_highscore.keys():
+	for level : LevelManager.Level_id in Globais.leveis_highscore.keys():
 		Globais.leveis_highscore[level] = -1
 	# save to disk
 	save_game()
