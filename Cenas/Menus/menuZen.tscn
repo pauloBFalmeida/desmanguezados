@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5wshuf5fpmi2"]
+[gd_scene load_steps=7 format=3 uid="uid://c5wshuf5fpmi2"]
 
 [ext_resource type="Script" uid="uid://du0101q457t5t" path="res://Scripts/Menus/menu_zen.gd" id="1_k88im"]
 [ext_resource type="Script" uid="uid://sj5rgpesy5f8" path="res://Scripts/Menus/UsadosMenus/controles_manager.gd" id="2_mktyj"]
+[ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/Menu/CartazDesmangezados.png" id="3_k88im"]
+[ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="4_qupnb"]
+[ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="5_srrf6"]
+[ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="6_3xone"]
 
 [node name="MenuZen" type="Control"]
 layout_mode = 3
@@ -24,6 +28,12 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.617928, 0.557354, 1)
 
+[node name="CartazDesmangezados" type="Sprite2D" parent="ColorRect"]
+modulate = Color(0.2, 0.2, 0.2, 1)
+position = Vector2(641, 358.5)
+scale = Vector2(0.603704, 0.461111)
+texture = ExtResource("3_k88im")
+
 [node name="LabelTitulo" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 5
@@ -33,7 +43,7 @@ offset_left = -20.0
 offset_right = 20.0
 offset_bottom = 23.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 80
+theme = ExtResource("4_qupnb")
 text = "Modo Zen"
 
 [node name="ControlesConectados" type="Control" parent="."]
@@ -105,13 +115,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -213.0
-offset_top = -202.0
-offset_right = 213.0
-offset_bottom = -147.0
+offset_left = -227.0
+offset_top = -236.0
+offset_right = 227.0
+offset_bottom = -180.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 40
+theme = ExtResource("5_srrf6")
 text = "Configurações Partida"
 
 [node name="GridContainer" type="GridContainer" parent="."]
@@ -121,10 +131,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -403.5
-offset_top = -138.0
-offset_right = 404.5
-offset_bottom = 85.0
+offset_left = -405.0
+offset_top = -178.0
+offset_right = 406.0
+offset_bottom = 83.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 50
@@ -132,12 +142,13 @@ columns = 2
 
 [node name="LabelMapSize" type="Label" parent="GridContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme = ExtResource("6_3xone")
 text = "Tamanho do mapa:"
 horizontal_alignment = 2
 
 [node name="SpinBoxMapSize" type="SpinBox" parent="GridContainer"]
 layout_mode = 2
+theme = ExtResource("6_3xone")
 min_value = 30.0
 max_value = 200.0
 value = 50.0
@@ -145,36 +156,40 @@ rounded = true
 
 [node name="LabelQtd" type="Label" parent="GridContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme = ExtResource("6_3xone")
 text = "Quantidades"
 horizontal_alignment = 2
 
 [node name="SpinBoxLixo" type="SpinBox" parent="GridContainer"]
 layout_mode = 2
+theme = ExtResource("6_3xone")
 rounded = true
 prefix = "Lixo:"
 suffix = "%"
 
 [node name="SpinBoxPinos" type="SpinBox" parent="GridContainer"]
 layout_mode = 2
+theme = ExtResource("6_3xone")
 rounded = true
 prefix = "Arvores Pinos:"
 suffix = "%"
 
 [node name="SpinBoxMangue" type="SpinBox" parent="GridContainer"]
 layout_mode = 2
+theme = ExtResource("6_3xone")
 rounded = true
 prefix = "Arvores Mangue:"
 suffix = "%"
 
 [node name="LabelSeed" type="Label" parent="GridContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme = ExtResource("6_3xone")
 text = "Seed de geração do mapa:"
 horizontal_alignment = 2
 
 [node name="SpinBoxSeed" type="SpinBox" parent="GridContainer"]
 layout_mode = 2
+theme = ExtResource("6_3xone")
 max_value = 999.0
 rounded = true
 allow_greater = true
@@ -183,7 +198,7 @@ prefix = "Seed:"
 
 [node name="LabelJog" type="Label" parent="GridContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme = ExtResource("6_3xone")
 text = "Jogadores:"
 horizontal_alignment = 2
 
@@ -193,20 +208,24 @@ layout_mode = 2
 [node name="Button1Jog" type="Button" parent="GridContainer/HBoxJog"]
 layout_mode = 2
 focus_neighbor_right = NodePath("../Button2Jog")
-theme_override_font_sizes/font_size = 30
+theme = ExtResource("6_3xone")
+theme_override_colors/font_color = Color(0.629675, 0.629675, 0.629675, 1)
+theme_override_colors/font_pressed_color = Color(0.762968, 1, 0.519136, 1)
 toggle_mode = true
 button_pressed = true
 text = "1 Jogador"
 
 [node name="HSeparator" type="HSeparator" parent="GridContainer/HBoxJog"]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 
 [node name="Button2Jog" type="Button" parent="GridContainer/HBoxJog"]
 layout_mode = 2
 focus_neighbor_left = NodePath("../Button1Jog")
-theme_override_font_sizes/font_size = 30
+theme = ExtResource("6_3xone")
+theme_override_colors/font_color = Color(0.631373, 0.631373, 0.631373, 1)
+theme_override_colors/font_pressed_color = Color(0.764706, 1, 0.517647, 1)
 toggle_mode = true
 text = "2 Jogadores"
 
@@ -223,8 +242,8 @@ offset_right = 164.5
 offset_bottom = -183.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 40
-text = "Comecar Partida"
+theme = ExtResource("5_srrf6")
+text = "Começar Partida"
 
 [node name="ButtonVoltar" type="Button" parent="."]
 layout_mode = 1
@@ -238,7 +257,7 @@ offset_top = -77.0
 offset_right = 77.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("5_srrf6")
 text = "Voltar"
 
 [connection signal="pressed" from="GridContainer/HBoxJog/Button1Jog" to="." method="_on_button_1_jog_pressed"]

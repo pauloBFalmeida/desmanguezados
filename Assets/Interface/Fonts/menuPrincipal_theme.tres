@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cgvj4usswji66"]
+
+[ext_resource type="FontFile" uid="uid://crymnpnv2wp8y" path="res://Assets/Interface/Fonts/Jersey_15/Jersey15-Regular.ttf" id="1_abdh3"]
+
+[resource]
+default_font = ExtResource("1_abdh3")
+default_font_size = 55
+Button/colors/font_color = Color(0.791335, 0.866365, 0.860266, 1)
+Button/colors/font_focus_color = Color(0.744932, 0.947294, 0.497634, 1)
+Button/colors/font_hover_color = Color(0.745098, 0.94902, 0.498039, 1)

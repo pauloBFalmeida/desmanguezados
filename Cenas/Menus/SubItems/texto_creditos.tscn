@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4tsgihkgcwlb"]
+[gd_scene load_steps=5 format=3 uid="uid://b4tsgihkgcwlb"]
 
-[ext_resource type="Script" path="res://Scripts/Menus/UsadosMenus/texto_creditos.gd" id="1_no0t3"]
+[ext_resource type="Script" uid="uid://ndlf2gg0guqt" path="res://Scripts/Menus/UsadosMenus/texto_creditos.gd" id="1_no0t3"]
+[ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="2_2xs24"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_neco8"]
 friction = 0.3
@@ -23,10 +24,10 @@ offset_left = -56.0
 offset_top = -29.0
 offset_right = 53.0
 offset_bottom = 26.0
+theme = ExtResource("2_2xs24")
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 3
-theme_override_font_sizes/font_size = 40
 text = "Paulo"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

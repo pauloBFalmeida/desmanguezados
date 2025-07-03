@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpqt3duw75r62"]
+
+[ext_resource type="Theme" uid="uid://cgvj4usswji66" path="res://Assets/Interface/Fonts/menuPrincipal_theme.tres" id="1_lrv2i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ptg1w"]
+
+[node name="ButtonJogar" type="Button"]
+theme = ExtResource("1_lrv2i")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ptg1w")
+text = "Jogar"
+flat = true
+alignment = 0

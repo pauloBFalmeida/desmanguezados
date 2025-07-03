@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dl22uju6ygrp0"]
+[gd_scene load_steps=6 format=3 uid="uid://dl22uju6ygrp0"]
 
 [ext_resource type="Script" uid="uid://bt6txdh0jok31" path="res://Scripts/Menus/menu_configuracao.gd" id="1_ojjoo"]
 [ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/Menu/CartazDesmangezados.png" id="2_gnunr"]
+[ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_1s67o"]
+[ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_kdt1j"]
+[ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="5_eu4q4"]
 
 [node name="MenuConfiguracao" type="Control"]
 layout_mode = 3
@@ -36,7 +39,7 @@ offset_left = -20.0
 offset_right = 20.0
 offset_bottom = 23.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 80
+theme = ExtResource("3_1s67o")
 text = "Configurações"
 
 [node name="ButtonVoltar" type="Button" parent="."]
@@ -51,56 +54,62 @@ offset_top = -77.0
 offset_right = 77.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("4_kdt1j")
 text = "Voltar"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(0, 550)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -22.0
-offset_top = -20.0
-offset_right = 22.0
-offset_bottom = 20.0
+offset_left = -391.5
+offset_top = -277.0
+offset_right = 391.5
+offset_bottom = 273.0
 grow_horizontal = 2
 grow_vertical = 2
+follow_focus = true
+horizontal_scroll_mode = 0
 
-[node name="LabelGameplay" type="Label" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+
+[node name="LabelGameplay" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_kdt1j")
 text = "Gameplay"
 horizontal_alignment = 1
 
-[node name="AimAllTime" type="CheckButton" parent="VBoxContainer"]
+[node name="AimAllTime" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 23
+theme = ExtResource("5_eu4q4")
 text = "Controlar o indicador de direção tempo todo"
 
-[node name="TrackingColor" type="CheckButton" parent="VBoxContainer"]
+[node name="TrackingColor" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 23
+theme = ExtResource("5_eu4q4")
 text = "Desativar transparência do Indicador de direção "
 
-[node name="LabelAudio" type="Label" parent="VBoxContainer"]
+[node name="LabelAudio" type="Label" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme = ExtResource("4_kdt1j")
 text = "Audio"
 horizontal_alignment = 1
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/h_separation = 50
 columns = 2
 
-[node name="LabelMusicaMenu" type="Label" parent="VBoxContainer/GridContainer"]
+[node name="LabelMusicaMenu" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 23
+theme = ExtResource("5_eu4q4")
 text = "Volume Música Menu"
 
-[node name="HSliderMusicaMenu" type="HSlider" parent="VBoxContainer/GridContainer"]
+[node name="HSliderMusicaMenu" type="HSlider" parent="ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -108,12 +117,12 @@ min_value = -30.0
 max_value = 0.0
 value = -20.0
 
-[node name="LabelMusicaPartida" type="Label" parent="VBoxContainer/GridContainer"]
+[node name="LabelMusicaPartida" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 23
+theme = ExtResource("5_eu4q4")
 text = "Volume Música Partida"
 
-[node name="HSliderMusicaPartida" type="HSlider" parent="VBoxContainer/GridContainer"]
+[node name="HSliderMusicaPartida" type="HSlider" parent="ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -121,84 +130,88 @@ min_value = -35.0
 max_value = -10.0
 value = -25.0
 
-[node name="LabelEffects" type="Label" parent="VBoxContainer/GridContainer"]
+[node name="LabelEffects" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 23
+theme = ExtResource("5_eu4q4")
 text = "Volume Efeitos Sonoros"
 
-[node name="HSliderEffects" type="HSlider" parent="VBoxContainer/GridContainer"]
+[node name="HSliderEffects" type="HSlider" parent="ScrollContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -20.0
 max_value = 20.0
 
-[node name="LabelSave" type="Label" parent="VBoxContainer"]
+[node name="LabelSave" type="Label" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme = ExtResource("4_kdt1j")
 text = "Dados Salvos"
 horizontal_alignment = 1
 
-[node name="GridContainerSave" type="GridContainer" parent="VBoxContainer"]
+[node name="GridContainerSave" type="GridContainer" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/h_separation = 50
 columns = 2
 
-[node name="LabelDeletarPartida" type="Label" parent="VBoxContainer/GridContainerSave"]
+[node name="LabelDeletarPartida" type="Label" parent="ScrollContainer/VBoxContainer/GridContainerSave"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 23
+theme = ExtResource("5_eu4q4")
 text = "Deletar Save das partidas"
 
-[node name="ButtonDeletarPartida" type="Button" parent="VBoxContainer/GridContainerSave"]
+[node name="ButtonDeletarPartida" type="Button" parent="ScrollContainer/VBoxContainer/GridContainerSave"]
 layout_mode = 2
+theme = ExtResource("5_eu4q4")
 toggle_mode = true
 text = "Deletar"
 
-[node name="LabelPartidaCerteza" type="Label" parent="VBoxContainer/GridContainerSave"]
+[node name="LabelPartidaCerteza" type="Label" parent="ScrollContainer/VBoxContainer/GridContainerSave"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 23
+theme = ExtResource("5_eu4q4")
 text = "Tem certeza? "
 
-[node name="ButtonDeletarPartidaCerteza" type="Button" parent="VBoxContainer/GridContainerSave"]
+[node name="ButtonDeletarPartidaCerteza" type="Button" parent="ScrollContainer/VBoxContainer/GridContainerSave"]
 layout_mode = 2
+theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.95373, 0, 0.316003, 1)
 text = "Sim, Deletar"
 
-[node name="LabelDeletarTodo" type="Label" parent="VBoxContainer/GridContainerSave"]
+[node name="LabelDeletarTodo" type="Label" parent="ScrollContainer/VBoxContainer/GridContainerSave"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 23
+theme = ExtResource("5_eu4q4")
 text = "Deletar Todo o Save"
 
-[node name="ButtonDeletarTodo" type="Button" parent="VBoxContainer/GridContainerSave"]
+[node name="ButtonDeletarTodo" type="Button" parent="ScrollContainer/VBoxContainer/GridContainerSave"]
 layout_mode = 2
+theme = ExtResource("5_eu4q4")
 toggle_mode = true
 text = "Deletar"
 
-[node name="LabelTodoCerteza" type="Label" parent="VBoxContainer/GridContainerSave"]
+[node name="LabelTodoCerteza" type="Label" parent="ScrollContainer/VBoxContainer/GridContainerSave"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 23
+theme = ExtResource("5_eu4q4")
 text = "Tem certeza?"
 
-[node name="LabelTodoCerteza2" type="Label" parent="VBoxContainer/GridContainerSave/LabelTodoCerteza"]
+[node name="LabelTodoCerteza2" type="Label" parent="ScrollContainer/VBoxContainer/GridContainerSave/LabelTodoCerteza"]
 layout_mode = 2
 offset_top = 36.0
 offset_right = 283.0
 offset_bottom = 68.0
-theme_override_font_sizes/font_size = 23
+theme = ExtResource("5_eu4q4")
 text = "Até as estatísticas serão perdidas"
 
-[node name="ButtonDeletarTodoCerteza" type="Button" parent="VBoxContainer/GridContainerSave"]
+[node name="ButtonDeletarTodoCerteza" type="Button" parent="ScrollContainer/VBoxContainer/GridContainerSave"]
 layout_mode = 2
+theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.95373, 0, 0.316003, 1)
 text = "Sim, Deletar"
 
 [connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]
-[connection signal="toggled" from="VBoxContainer/AimAllTime" to="." method="_on_aim_all_time_toggled"]
-[connection signal="toggled" from="VBoxContainer/TrackingColor" to="." method="_on_tracking_color_toggled"]
-[connection signal="drag_ended" from="VBoxContainer/GridContainer/HSliderMusicaMenu" to="." method="_on_h_slider_musica_menu_drag_ended"]
-[connection signal="drag_ended" from="VBoxContainer/GridContainer/HSliderMusicaPartida" to="." method="_on_h_slider_musica_partida_drag_ended"]
-[connection signal="drag_ended" from="VBoxContainer/GridContainer/HSliderEffects" to="." method="_on_h_slider_effects_drag_ended"]
-[connection signal="toggled" from="VBoxContainer/GridContainerSave/ButtonDeletarPartida" to="." method="_on_button_deletar_partida_toggled"]
-[connection signal="pressed" from="VBoxContainer/GridContainerSave/ButtonDeletarPartidaCerteza" to="." method="_on_button_deletar_certeza_pressed"]
-[connection signal="toggled" from="VBoxContainer/GridContainerSave/ButtonDeletarTodo" to="." method="_on_button_deletar_todo_toggled"]
-[connection signal="pressed" from="VBoxContainer/GridContainerSave/ButtonDeletarTodoCerteza" to="." method="_on_button_deletar_todo_certeza_pressed"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/AimAllTime" to="." method="_on_aim_all_time_toggled"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/TrackingColor" to="." method="_on_tracking_color_toggled"]
+[connection signal="drag_ended" from="ScrollContainer/VBoxContainer/GridContainer/HSliderMusicaMenu" to="." method="_on_h_slider_musica_menu_drag_ended"]
+[connection signal="drag_ended" from="ScrollContainer/VBoxContainer/GridContainer/HSliderMusicaPartida" to="." method="_on_h_slider_musica_partida_drag_ended"]
+[connection signal="drag_ended" from="ScrollContainer/VBoxContainer/GridContainer/HSliderEffects" to="." method="_on_h_slider_effects_drag_ended"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarPartida" to="." method="_on_button_deletar_partida_toggled"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarPartidaCerteza" to="." method="_on_button_deletar_certeza_pressed"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarTodo" to="." method="_on_button_deletar_todo_toggled"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarTodoCerteza" to="." method="_on_button_deletar_todo_certeza_pressed"]

@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1fhoosfw8cye"]
+[gd_scene load_steps=7 format=3 uid="uid://d1fhoosfw8cye"]
 
 [ext_resource type="Script" uid="uid://c08mirq3yalv1" path="res://Scripts/Menus/menu_selecao.gd" id="1_nmwf3"]
 [ext_resource type="Script" uid="uid://sj5rgpesy5f8" path="res://Scripts/Menus/UsadosMenus/controles_manager.gd" id="3_c8hrp"]
 [ext_resource type="PackedScene" uid="uid://cciukv0gmo85j" path="res://Cenas/Menus/SubItems/level_item.tscn" id="3_ijvx7"]
+[ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_utp8p"]
+[ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_1yk6f"]
+[ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="5_8jvtd"]
 
 [node name="MenuSelecao" type="Control"]
 layout_mode = 3
@@ -34,7 +37,7 @@ offset_left = -20.0
 offset_right = 20.0
 offset_bottom = 23.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 80
+theme = ExtResource("3_utp8p")
 text = "Níveis"
 
 [node name="ControlesConectados" type="Control" parent="."]
@@ -54,7 +57,7 @@ offset_left = 200.0
 offset_right = 259.0
 offset_bottom = 69.0
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("4_1yk6f")
 text = "P1"
 
 [node name="LabelStatusP1" type="Label" parent="ControlesConectados"]
@@ -67,7 +70,7 @@ offset_top = -69.0
 offset_right = 295.0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 40
+theme = ExtResource("5_8jvtd")
 text = "Controle Conectado"
 
 [node name="LabelP2" type="Label" parent="ControlesConectados"]
@@ -80,7 +83,7 @@ offset_right = -200.0
 offset_bottom = 69.0
 grow_horizontal = 0
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("4_1yk6f")
 text = "P2"
 
 [node name="LabelStatusP2" type="Label" parent="ControlesConectados"]
@@ -96,7 +99,7 @@ offset_right = -150.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 40
+theme = ExtResource("5_8jvtd")
 text = "Controle Conectado"
 
 [node name="ScrollContainerLeveis" type="ScrollContainer" parent="."]
@@ -137,7 +140,7 @@ offset_top = -77.0
 offset_right = 77.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("4_1yk6f")
 text = "Voltar"
 
 [connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]

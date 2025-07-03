@@ -3,19 +3,19 @@ extends Menu
 @onready var btn_voltar := $ButtonVoltar
 
 # -- GamePlay --
-@onready var toggle_aim_all_time := $VBoxContainer/AimAllTime
-@onready var toggle_tracking_color := $VBoxContainer/TrackingColor
+@onready var toggle_aim_all_time := $ScrollContainer/VBoxContainer/AimAllTime
+@onready var toggle_tracking_color := $ScrollContainer/VBoxContainer/TrackingColor
 # -- Audio --
-@onready var slider_musica_menu := $VBoxContainer/GridContainer/HSliderMusicaMenu
-@onready var slider_musica_partida := $VBoxContainer/GridContainer/HSliderMusicaPartida
-@onready var slider_efeitos_partida := $VBoxContainer/GridContainer/HSliderEffects
+@onready var slider_musica_menu := $ScrollContainer/VBoxContainer/GridContainer/HSliderMusicaMenu
+@onready var slider_musica_partida := $ScrollContainer/VBoxContainer/GridContainer/HSliderMusicaPartida
+@onready var slider_efeitos_partida := $ScrollContainer/VBoxContainer/GridContainer/HSliderEffects
 # -- Audio --
-@onready var toggle_deletar_partida := $VBoxContainer/GridContainerSave/ButtonDeletarPartida
-@onready var toggle_deletar_todo := $VBoxContainer/GridContainerSave/ButtonDeletarTodo
-@onready var label_deletar_partida_certeza := $VBoxContainer/GridContainerSave/ButtonDeletarPartidaCerteza
-@onready var label_deletar_todo_certeza := $VBoxContainer/GridContainerSave/ButtonDeletarTodoCerteza
-@onready var button_deletar_partida_certeza := $VBoxContainer/GridContainerSave/LabelPartidaCerteza
-@onready var button_deletar_todo_certeza := $VBoxContainer/GridContainerSave/LabelTodoCerteza
+@onready var toggle_deletar_partida := $ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarPartida
+@onready var toggle_deletar_todo := $ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarTodo
+@onready var label_deletar_partida_certeza := $ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarPartidaCerteza
+@onready var label_deletar_todo_certeza := $ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarTodoCerteza
+@onready var button_deletar_partida_certeza := $ScrollContainer/VBoxContainer/GridContainerSave/LabelPartidaCerteza
+@onready var button_deletar_todo_certeza := $ScrollContainer/VBoxContainer/GridContainerSave/LabelTodoCerteza
 
 @onready var itens_partida := [button_deletar_partida_certeza, label_deletar_partida_certeza]
 @onready var itens_todo := [label_deletar_todo_certeza, button_deletar_todo_certeza]

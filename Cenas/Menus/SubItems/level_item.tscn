@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cciukv0gmo85j"]
+[gd_scene load_steps=10 format=3 uid="uid://cciukv0gmo85j"]
 
 [ext_resource type="Script" uid="uid://cipaecfgi6vb2" path="res://Scripts/Menus/UsadosMenus/level_item.gd" id="1_ggp4t"]
 [ext_resource type="Texture2D" uid="uid://bmvky7k2qcug2" path="res://Assets/Interface/Partida/white.png" id="2_jmyqs"]
+[ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="3_gd4ua"]
 [ext_resource type="Texture2D" uid="uid://dli02qeiqjx8w" path="res://Assets/Interface/Menu/concha.png" id="3_lyv4a"]
 [ext_resource type="Shader" uid="uid://c5ga6t0j7w2ie" path="res://Scripts/Shaders/shine.gdshader" id="4_e31gh"]
 [ext_resource type="Texture2D" uid="uid://boymgsudwtkuc" path="res://Assets/Interface/Menu/perola.png" id="5_gd4ua"]
@@ -81,7 +82,8 @@ offset_right = 138.0
 offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 20
+theme = ExtResource("3_gd4ua")
+theme_override_font_sizes/font_size = 25
 text = "Melhor Tempo: "
 
 [node name="Concha" type="Sprite2D" parent="Info"]
@@ -116,7 +118,7 @@ offset_right = 58.0
 offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 30
+theme = ExtResource("3_gd4ua")
 text = "Level 1"
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

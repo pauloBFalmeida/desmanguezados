@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://65vehrxtpinv"]
+[gd_scene load_steps=18 format=4 uid="uid://65vehrxtpinv"]
 
 [ext_resource type="Script" uid="uid://yr3am146nus8" path="res://Scripts/Menus/menu_creditos.gd" id="1_8ooli"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="2_8ooli"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b4tsgihkgcwlb" path="res://Cenas/Menus/SubItems/texto_creditos.tscn" id="3_hhl6k"]
 [ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/Menu/CartazDesmangezados.png" id="3_neco8"]
 [ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="4_63pwd"]
+[ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_sd7ve"]
 [ext_resource type="Script" uid="uid://ymebirrcc0d3" path="res://Scripts/Partida/locais_plantar_colecao.gd" id="6_neco8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mh1yw"]
@@ -89,7 +90,7 @@ offset_right = 77.0
 offset_bottom = -34.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("4_sd7ve")
 text = "Voltar"
 
 [node name="Area2DVoltar" type="Area2D" parent="ButtonVoltar"]

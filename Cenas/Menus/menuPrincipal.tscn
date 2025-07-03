@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://e0hvhpdu6hbn"]
+[gd_scene load_steps=5 format=3 uid="uid://e0hvhpdu6hbn"]
 
 [ext_resource type="Script" uid="uid://b365074iebc74" path="res://Scripts/Menus/menu_principal.gd" id="1_ntrab"]
 [ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/Menu/CartazDesmangezados.png" id="2_givc0"]
+[ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_xgp53"]
+[ext_resource type="PackedScene" uid="uid://cpqt3duw75r62" path="res://PreSets/button_MenuPrincipal.tscn" id="4_xgp53"]
 
 [node name="MenuPrincipal" type="Control"]
 layout_mode = 3
@@ -20,6 +22,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(3.60981e-06, 0.639244, 0.320975, 1)
+metadata/_edit_lock_ = true
 
 [node name="CartazDesmangezados" type="Sprite2D" parent="."]
 modulate = Color(0.54, 0.54, 0.54, 1)
@@ -38,6 +41,7 @@ offset_top = 29.0
 offset_right = 608.0
 offset_bottom = 139.0
 grow_horizontal = 2
+theme = ExtResource("3_xgp53")
 theme_override_font_sizes/font_size = 80
 text = "Desmanguezados"
 
@@ -46,35 +50,36 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -276.5
-offset_right = 801.0
-offset_bottom = 276.5
+offset_left = 34.0
+offset_top = -285.0
+offset_right = 835.0
+offset_bottom = 285.0
 grow_vertical = 2
 theme_override_constants/v_separation = 30
 
-[node name="ButtonJogar" type="Button" parent="GridContainer"]
+[node name="ButtonJogar" parent="GridContainer" instance=ExtResource("4_xgp53")]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "Jogar"
 
-[node name="ButtonZen" type="Button" parent="GridContainer"]
+[node name="ButtonZen" parent="GridContainer" instance=ExtResource("4_xgp53")]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
 text = "Modo Zen"
 
-[node name="ButtonConfig" type="Button" parent="GridContainer"]
+[node name="ButtonConfig" parent="GridContainer" instance=ExtResource("4_xgp53")]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
 text = "Configurações"
 
-[node name="ButtonCreditos" type="Button" parent="GridContainer"]
+[node name="ButtonCreditos" parent="GridContainer" instance=ExtResource("4_xgp53")]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
-text = "Créditos"
+text = "Créditos
+"
 
-[node name="ButtonSair" type="Button" parent="GridContainer"]
+[node name="VSeparator" type="VSeparator" parent="GridContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+
+[node name="ButtonSair" parent="GridContainer" instance=ExtResource("4_xgp53")]
+layout_mode = 2
 text = "Sair"
 
 [connection signal="pressed" from="GridContainer/ButtonJogar" to="." method="_on_button_jogar_pressed"]
