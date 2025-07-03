@@ -44,7 +44,11 @@ func _on_button_respawn_ferramentas_pressed() -> void:
 # --------------------------------------------- Qtd de jogadores
 @onready var jogadores := $SpawnJogadores.get_children()
 
+var jogadores_jogando : Array = []
+
 func lidar_qtd_jogadores_zen() -> void:
+	jogadores_jogando = jogadores.duplicate()
+	
 	if Globais.modo_zen_ter_1_jogador:
 		# se o alvo nao esta no controle -> trocar o target para o outro jogador
 		if not camera_target.is_usando_controle:
@@ -60,6 +64,8 @@ func lidar_qtd_jogadores_zen() -> void:
 				jog.set_process(false)
 				jog.set_process_input(false)
 				jog.global_position = Vector2(-999, -999)
+				# remove dos jogadores jogando
+				jogadores_jogando.erase(jog)
 
 # --------------------------------------------- Camera seguir jogador
 @export var max_distance_target : float = 50.0
@@ -88,6 +94,10 @@ func camera_zoom_in() -> void:
 	camera.zoom = Vector2.ONE * 0.4
 	# esconde a hud (pq esta menor q a tela)
 	hud.hide()
+	# desativa movimento dos jogadores
+	for jog in jogadores_jogando:
+		jog.set_physics_process(false)
+		jog.set_process(false)
 	# esconde arvores e lixo
 	var itens_list = arvores_colecao.get_children() + lixos_colecao.get_children()
 	for item in itens_list:
@@ -112,6 +122,10 @@ func camera_zoom_in() -> void:
 	await get_tree().create_timer(1.5, true).timeout
 	hud.show()
 	hud.comecar_contar()
+	# reativa movimento dos jogadores
+	for jog in jogadores_jogando:
+		jog.set_physics_process(true)
+		jog.set_process(true)
 
 func show_cinematic(duracao: float, itens_list : Array) -> bool:
 	var tempo_item = duracao / itens_list.size()
