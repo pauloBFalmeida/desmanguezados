@@ -70,6 +70,16 @@ func _on_h_slider_effects_drag_ended(value_changed: bool) -> void:
 	if not value_changed: return
 	Globais.volume_efeitos_partida = slider_efeitos_partida.value
 
+# --------- Exibicao ---------
+func _on_tela_cheia_toggled(toggled_on: bool) -> void:
+	# on -> full screen
+	if toggled_on:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	# off -> janela
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED) 
+
+
 # --------- Deletar Save ---------
 func _on_button_deletar_partida_toggled(toggled_on: bool) -> void:
 	lidar_toggle(toggled_on, toggle_deletar_partida, itens_partida)

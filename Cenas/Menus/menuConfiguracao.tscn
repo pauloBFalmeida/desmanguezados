@@ -142,6 +142,17 @@ size_flags_vertical = 4
 min_value = -20.0
 max_value = 20.0
 
+[node name="LabelExibicao" type="Label" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("4_kdt1j")
+text = "Exibição"
+horizontal_alignment = 1
+
+[node name="TelaCheia" type="CheckButton" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+text = "Tela cheia"
+
 [node name="LabelSave" type="Label" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_kdt1j")
@@ -211,6 +222,7 @@ text = "Sim, Deletar"
 [connection signal="drag_ended" from="ScrollContainer/VBoxContainer/GridContainer/HSliderMusicaMenu" to="." method="_on_h_slider_musica_menu_drag_ended"]
 [connection signal="drag_ended" from="ScrollContainer/VBoxContainer/GridContainer/HSliderMusicaPartida" to="." method="_on_h_slider_musica_partida_drag_ended"]
 [connection signal="drag_ended" from="ScrollContainer/VBoxContainer/GridContainer/HSliderEffects" to="." method="_on_h_slider_effects_drag_ended"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/TelaCheia" to="." method="_on_tela_cheia_toggled"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarPartida" to="." method="_on_button_deletar_partida_toggled"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarPartidaCerteza" to="." method="_on_button_deletar_certeza_pressed"]
 [connection signal="toggled" from="ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarTodo" to="." method="_on_button_deletar_todo_toggled"]
