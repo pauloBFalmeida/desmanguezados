@@ -192,11 +192,7 @@ layout_mode = 2
 
 [node name="Button1Jog" type="Button" parent="GridContainer/HBoxJog"]
 layout_mode = 2
-focus_neighbor_left = NodePath("../../../ButtonVoltar")
 focus_neighbor_right = NodePath("../Button2Jog")
-focus_neighbor_bottom = NodePath("../../../ButtonVoltar")
-focus_next = NodePath("../Button2Jog")
-focus_previous = NodePath("../../../ButtonVoltar")
 theme_override_font_sizes/font_size = 30
 toggle_mode = true
 button_pressed = true
@@ -210,10 +206,6 @@ layout_mode = 2
 [node name="Button2Jog" type="Button" parent="GridContainer/HBoxJog"]
 layout_mode = 2
 focus_neighbor_left = NodePath("../Button1Jog")
-focus_neighbor_right = NodePath("../../../ButtonVoltar")
-focus_neighbor_bottom = NodePath("../../../ButtonVoltar")
-focus_next = NodePath("../../../ButtonVoltar")
-focus_previous = NodePath("../Button1Jog")
 theme_override_font_sizes/font_size = 30
 toggle_mode = true
 text = "2 Jogadores"
@@ -246,9 +238,6 @@ offset_top = -77.0
 offset_right = 77.0
 grow_horizontal = 2
 grow_vertical = 0
-focus_neighbor_left = NodePath("../GridContainer/HBoxJog/Button1Jog")
-focus_neighbor_top = NodePath("../GridContainer/HBoxJog/Button1Jog")
-focus_neighbor_right = NodePath("../GridContainer/HBoxJog/Button2Jog")
 theme_override_font_sizes/font_size = 50
 text = "Voltar"
 
