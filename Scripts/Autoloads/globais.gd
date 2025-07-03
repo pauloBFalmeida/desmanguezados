@@ -19,13 +19,15 @@ var leveis_highscore : Dictionary[Level_id, int] = {
 	Level_id.LEVEL_1: -1,
 	Level_id.LEVEL_2: -1,
 	Level_id.LEVEL_3: -1,
+	Level_id.LEVEL_4: -1,
+	Level_id.LEVEL_5: -1,
 }
 
 # ---- -------------------- ----
 # ---- Nao Salvos           ----
 # ---- -------------------- ----
 
-enum Level_id {ZEN, TUTORIAL, LEVEL_1, LEVEL_2, LEVEL_3}
+enum Level_id {ZEN, TUTORIAL, LEVEL_1, LEVEL_2, LEVEL_3,  LEVEL_4,  LEVEL_5}
 
 enum Medalha_tipo {OURO, PRATA, BRONZE, NENHUMA}
 
@@ -35,6 +37,8 @@ const LEVEIS_NOME : Dictionary[Level_id, String] = {
 	Level_id.LEVEL_1: "Level 1",
 	Level_id.LEVEL_2: "Level 2",
 	Level_id.LEVEL_3: "Level 3 Maré",
+	Level_id.LEVEL_4: "Level 4",
+	Level_id.LEVEL_5: "Level 5",
 }
 
 const LEVEIS_SELECAO_ORDEM : Array[Level_id] = [
@@ -42,6 +46,8 @@ const LEVEIS_SELECAO_ORDEM : Array[Level_id] = [
 	Level_id.LEVEL_1,
 	Level_id.LEVEL_2,
 	Level_id.LEVEL_3,
+	Level_id.LEVEL_4,
+	Level_id.LEVEL_5,
 ]
 
 const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
@@ -68,6 +74,16 @@ const LEVEIS_MEDALHAS : Dictionary[Level_id, Dictionary] = {
 		Medalha_tipo.BRONZE: 70
 		},
 	Level_id.LEVEL_3: {
+		Medalha_tipo.OURO:   50,
+		Medalha_tipo.PRATA:  60,
+		Medalha_tipo.BRONZE: 70
+		},
+	Level_id.LEVEL_4: {
+		Medalha_tipo.OURO:   50,
+		Medalha_tipo.PRATA:  60,
+		Medalha_tipo.BRONZE: 70
+		},
+	Level_id.LEVEL_5: {
 		Medalha_tipo.OURO:   50,
 		Medalha_tipo.PRATA:  60,
 		Medalha_tipo.BRONZE: 70
