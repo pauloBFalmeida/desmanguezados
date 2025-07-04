@@ -9,4 +9,4 @@ theme = ExtResource("1_lrv2i")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ptg1w")
 text = "Jogar"
 flat = true
-alignment = 0
+alignment = 2
