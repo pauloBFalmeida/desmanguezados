@@ -97,13 +97,13 @@ tilemaps_chao = NodePath("../TileMaps")
 [node name="FerramentasMgmt" parent="." instance=ExtResource("6_poegd")]
 
 [node name="Corte" parent="FerramentasMgmt" index="1"]
-position = Vector2(783, 433)
+position = Vector2(851, 227)
 
 [node name="Plantar" parent="FerramentasMgmt" index="2"]
 position = Vector2(1203, 435)
 
 [node name="Recolhe" parent="FerramentasMgmt" index="3"]
-position = Vector2(749, 161)
+position = Vector2(794, 413)
 
 [node name="LixosColecao" type="CanvasGroup" parent="."]
 
@@ -117,22 +117,31 @@ position = Vector2(983, 475)
 position = Vector2(78, 285)
 
 [node name="LixoEmbalagem3" parent="LixosColecao" instance=ExtResource("13_poegd")]
-position = Vector2(534, 507)
+position = Vector2(593, 554)
+rotation = -1.49213
 
 [node name="LixoEmbalagem2" parent="LixosColecao" instance=ExtResource("13_poegd")]
-position = Vector2(868, 614)
+position = Vector2(835, 587)
+rotation = 1.60167
 
 [node name="LixoEmbalagem" parent="LixosColecao" instance=ExtResource("13_poegd")]
-position = Vector2(639, 501)
+position = Vector2(592, 433)
 
 [node name="LixoSaco" parent="LixosColecao" instance=ExtResource("7_poegd")]
 position = Vector2(200, 75)
+rotation = -0.700696
 
 [node name="LixoGarrafa" parent="LixosColecao" instance=ExtResource("5_ycy2s")]
 position = Vector2(145, 121)
+rotation = 2.36917
 
 [node name="LixoSaco2" parent="LixosColecao" instance=ExtResource("7_poegd")]
 position = Vector2(956, 580)
+rotation = -0.509146
+
+[node name="LixoSaco6" parent="LixosColecao" instance=ExtResource("7_poegd")]
+position = Vector2(1070, 488)
+rotation = 0.471409
 
 [node name="LixoGarrafa2" parent="LixosColecao" instance=ExtResource("5_ycy2s")]
 position = Vector2(1013, 537)
@@ -143,6 +152,14 @@ position = Vector2(1095, 355)
 [node name="LixoSaco3" parent="LixosColecao" instance=ExtResource("7_poegd")]
 position = Vector2(383, 512)
 
+[node name="LixoSaco7" parent="LixosColecao" instance=ExtResource("7_poegd")]
+position = Vector2(553, 524)
+rotation = -0.331695
+
+[node name="LixoSaco8" parent="LixosColecao" instance=ExtResource("7_poegd")]
+position = Vector2(421, 575)
+rotation = 0.391068
+
 [node name="LixoSaco4" parent="LixosColecao" instance=ExtResource("7_poegd")]
 position = Vector2(1009, 302)
 
@@ -151,39 +168,51 @@ position = Vector2(432, 500)
 
 [node name="LixoGarrafa6" parent="LixosColecao" instance=ExtResource("5_ycy2s")]
 position = Vector2(290, 521)
+rotation = -1.11055
 
 [node name="LixoGarrafa5" parent="LixosColecao" instance=ExtResource("5_ycy2s")]
 position = Vector2(564, 213)
+rotation = -2.20734
 
 [node name="LixoSaco5" parent="LixosColecao" instance=ExtResource("7_poegd")]
 position = Vector2(172, 466)
+rotation = 0.441053
 
 [node name="LixoGarrafa7" parent="LixosColecao" instance=ExtResource("5_ycy2s")]
-position = Vector2(574, 574)
+position = Vector2(605, 610)
+rotation = 2.36917
 
 [node name="LixoLata9" parent="LixosColecao" instance=ExtResource("6_00t72")]
 position = Vector2(150, 300)
+rotation = -0.412211
 
 [node name="LixoLata8" parent="LixosColecao" instance=ExtResource("6_00t72")]
 position = Vector2(459, 542)
 
+[node name="LixoLata11" parent="LixosColecao" instance=ExtResource("6_00t72")]
+position = Vector2(500, 506)
+rotation = 0.72827
+
 [node name="LixoLata10" parent="LixosColecao" instance=ExtResource("6_00t72")]
 position = Vector2(1173, 508)
+rotation = -0.412211
 
 [node name="LixoLata6" parent="LixosColecao" instance=ExtResource("6_00t72")]
 position = Vector2(1068, 435)
 
 [node name="LixoLata7" parent="LixosColecao" instance=ExtResource("6_00t72")]
-position = Vector2(589, 641)
+position = Vector2(622, 656)
 
 [node name="LixoLata5" parent="LixosColecao" instance=ExtResource("6_00t72")]
 position = Vector2(1124, 402)
 
 [node name="LixoLata4" parent="LixosColecao" instance=ExtResource("6_00t72")]
 position = Vector2(949, 649)
+rotation = 0.400976
 
 [node name="LixoLata3" parent="LixosColecao" instance=ExtResource("6_00t72")]
 position = Vector2(261, 479)
+rotation = 0.400976
 
 [node name="LixoLata2" parent="LixosColecao" instance=ExtResource("6_00t72")]
 position = Vector2(146, 396)

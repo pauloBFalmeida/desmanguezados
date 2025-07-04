@@ -350,17 +350,17 @@ position = Vector2(4, 16)
 shape = SubResource("CapsuleShape2D_f55y0")
 
 [node name="ArvorePinos" parent="ArvoresColecao" instance=ExtResource("3_n343k")]
-position = Vector2(405, 558)
+position = Vector2(408, 542)
 
 [node name="CollisionShape2D" parent="ArvoresColecao/ArvorePinos" index="2"]
 position = Vector2(4, -12)
 shape = SubResource("CapsuleShape2D_nsusp")
 
 [node name="ArvorePinos5" parent="ArvoresColecao" instance=ExtResource("3_n343k")]
-position = Vector2(519, 544)
+position = Vector2(472, 566)
 
 [node name="ArvorePinos3" parent="ArvoresColecao" instance=ExtResource("3_n343k")]
-position = Vector2(448, 607)
+position = Vector2(444, 625)
 
 [node name="SpawnJogadores" parent="." node_paths=PackedStringArray("ferramentas_mgmt", "tilemaps_chao") instance=ExtResource("5_7tecl")]
 position = Vector2(518, 343)
@@ -390,31 +390,51 @@ position = Vector2(1169, 320)
 [node name="LixosColecao" type="CanvasGroup" parent="."]
 
 [node name="LixoGarrafa" parent="LixosColecao" instance=ExtResource("10_7xcft")]
-position = Vector2(855, 572)
-rotation = -2.6902
+position = Vector2(814, 607)
+rotation = -2.01207
 
 [node name="LixoGarrafa2" parent="LixosColecao" instance=ExtResource("10_7xcft")]
-position = Vector2(382, 154)
-rotation = 0.167122
+position = Vector2(382, 145)
+rotation = 1.01547
+
+[node name="LixoGarrafa3" parent="LixosColecao" instance=ExtResource("10_7xcft")]
+position = Vector2(430, 249)
+rotation = 2.23482
 
 [node name="LixoLata" parent="LixosColecao" instance=ExtResource("11_nsusp")]
-position = Vector2(362, 197)
+position = Vector2(363, 216)
 rotation = 0.300457
 
+[node name="LixoLata3" parent="LixosColecao" instance=ExtResource("11_nsusp")]
+position = Vector2(314, 119)
+rotation = 2.35816
+
 [node name="LixoSaco2" parent="LixosColecao" instance=ExtResource("12_dm0al")]
-position = Vector2(403, 238)
+position = Vector2(372, 253)
 rotation = 0.0862933
 scale = Vector2(-1, 1)
 
+[node name="LixoSaco3" parent="LixosColecao" instance=ExtResource("12_dm0al")]
+position = Vector2(423, 120)
+rotation = 0.33548
+scale = Vector2(-1, 1)
+
 [node name="LixoEmbalagem" parent="LixosColecao" instance=ExtResource("13_g43a6")]
-position = Vector2(438, 192)
+position = Vector2(401, 191)
+
+[node name="LixoEmbalagem2" parent="LixosColecao" instance=ExtResource("13_g43a6")]
+position = Vector2(775, 546)
 
 [node name="LixoLata2" parent="LixosColecao" instance=ExtResource("11_nsusp")]
-position = Vector2(848, 512)
+position = Vector2(826, 538)
 rotation = -0.74651
 
+[node name="LixoLata4" parent="LixosColecao" instance=ExtResource("11_nsusp")]
+position = Vector2(728, 612)
+rotation = 0.742758
+
 [node name="LixoSaco4" parent="LixosColecao" instance=ExtResource("12_dm0al")]
-position = Vector2(793, 534)
+position = Vector2(793, 487)
 
 [node name="LocaisPlantarColecao" type="Node2D" parent="."]
 z_index = -1

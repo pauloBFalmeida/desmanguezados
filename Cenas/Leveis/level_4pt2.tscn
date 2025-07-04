@@ -151,7 +151,7 @@ ferramentas_mgmt = NodePath("../FerramentasMgmt")
 tilemaps_chao = NodePath("../TileMapsChao")
 
 [node name="Jogador1" parent="SpawnJogadores" index="0"]
-position = Vector2(-19, -5)
+position = Vector2(489, 91)
 
 [node name="Jogador2" parent="SpawnJogadores" index="1"]
 position = Vector2(122, 58)
@@ -276,6 +276,12 @@ rotation = 2.24735
 
 [node name="LocaisPlantarColecao" type="Node2D" parent="."]
 z_index = -1
+position = Vector2(401, 84)
+script = ExtResource("16_bm0rk")
+
+[node name="LocaisPlantarColecao2" type="Node2D" parent="."]
+z_index = -1
+position = Vector2(666, 510)
 script = ExtResource("16_bm0rk")
 
 [node name="HUD" parent="." instance=ExtResource("17_01j21")]
