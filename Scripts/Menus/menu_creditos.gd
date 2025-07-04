@@ -72,14 +72,20 @@ func usar_recolher(body : Node2D, ferramenta : Ferramenta) -> void:
 		0.0,
 		0.5 # duracao
 	).from_current()
-	tween.finished.connect(
-		func():
-			if not corpo.was_hit: # se nao levou dano
-				# spawna lugar para ser plantado
-				await _chamar_spawn_plantar(corpo)
-			# libera memoria
-			corpo.queue_free()
-	)
+	tween.finished.connect( _fim_recolher.bind(corpo) )
+
+func _fim_recolher(corpo : TextoCreditos) -> void:
+	if not corpo.was_hit: # se nao levou dano
+		# nao eh temporario -> respawn
+		if not corpo.temporario:
+			# spawna lugar para ser plantado
+			await _chamar_spawn_plantar(corpo)
+	# libera memoria
+	corpo.morrer()
+	
+	# se terminou todos
+	if textos_creditos_pai.get_children().size() <= 1:
+		_pascoa()
 
 func usar_plantar(global_pos : Vector2) -> void:
 	var dados := plantar_dados_por_global_pos[global_pos]
@@ -92,7 +98,7 @@ func usar_plantar(global_pos : Vector2) -> void:
 	# fake wait, para ter certeza que fez essa func antes de free o texto_creditos antigo
 	await get_tree().create_timer(0.1).timeout
 
-func _spawn_texto_credito(dados : Dictionary, global_pos : Vector2) -> void:
+func _spawn_texto_credito(dados : Dictionary, global_pos : Vector2) -> TextoCreditos:
 	var tween = create_tween()
 	var texto_creditos = texto_creditos_ref.instantiate()
 	texto_creditos.global_position = global_pos # isso tem que ser feito antes do _ready
@@ -110,6 +116,8 @@ func _spawn_texto_credito(dados : Dictionary, global_pos : Vector2) -> void:
 		1.5 # duracao
 	).from_current()
 	tween.finished.connect(func(): texto_creditos.toggle_collision(true))
+	
+	return texto_creditos
 
 func _spawn_plantar(global_pos : Vector2) -> void:
 	# -- cria o local de plantar ---
@@ -120,6 +128,42 @@ func _spawn_plantar(global_pos : Vector2) -> void:
 	# add to colecao
 	local_plantar.global_position = global_pos
 	locais_plantar_colecao.add_local_plantar(local_plantar)
+
+# limpou todos os creditos
+@onready var dados_copy : Dictionary = $Textos/Paulo.get_dados().duplicate(true)
+var vezes_pascoa : int = 0
+const textos_pascoa := [
+	"Obrigado Por Jogar!",
+	"Nós te amamos S2",
+	"De verdade",
+	"Agora uma ideia...",
+	"Que tal jogar os leveis normais ;_;",
+	"Ou faz o que você, se divertir mais",
+	"mas muito obrigado msm :)",
+]
+func _pascoa() -> void:
+	# so mostre a pascoa 1 vez
+	if vezes_pascoa >= textos_pascoa.size(): 
+		locais_plantar_colecao.global_position = Vector2(0,0)
+		return
+	
+	# retira momentaneamente os lugares de plantar
+	locais_plantar_colecao.global_position = Vector2(-999, -999)
+	
+	# muda o texto
+	dados_copy["texto"] = textos_pascoa[vezes_pascoa]
+	# muda o lugar
+	var global_pos = Vector2(450, 310)
+	global_pos += Vector2(150, 0).rotated(vezes_pascoa * (-2.5*PI) / textos_pascoa.size())
+	
+	vezes_pascoa += 1
+	
+	var texto_obrigado = _spawn_texto_credito(dados_copy, global_pos)
+	texto_obrigado.temporario = true
+	texto_obrigado.death.connect(_pascoa_acabar)
+
+func _pascoa_acabar() -> void:
+	locais_plantar_colecao.global_position = Vector2(0,0)
 
 # ------------------------------------------------------------------------------
 # Voltar para o menu

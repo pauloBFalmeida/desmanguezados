@@ -2,6 +2,9 @@ extends RigidBody2D
 class_name TextoCreditos
 
 signal hit
+signal death
+
+var temporario : bool = false
 
 ## distancia minima do spawn para poder spawnar outro
 @export var min_distance_spawn : float = 100.0
@@ -54,3 +57,7 @@ func set_dados(dados : Dictionary) -> void:
 	mass = dados["peso"]
 	label_texto.add_theme_font_size_override("normal_font_size", dados["font_size"])
 	label_texto.add_theme_color_override("normal_font_size", dados["font_color"])
+
+func morrer() -> void:
+	emit_signal("death")
+	queue_free()
