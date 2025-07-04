@@ -93,7 +93,7 @@ position = Vector2(563, 185)
 position = Vector2(1013, 617)
 
 [node name="Plantar" parent="FerramentasMgmt" index="2"]
-position = Vector2(130, 224)
+position = Vector2(257, 145)
 
 [node name="Recolhe" parent="FerramentasMgmt" index="3"]
 position = Vector2(134, 852)
