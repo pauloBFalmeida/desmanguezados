@@ -207,7 +207,7 @@ func _on_button_restart_pressed() -> void:
 	_replay()
 
 func _on_button_prox_pressed() -> void:
-	SceneManager.goto_selecao()
+	_goto_selecao()
 
 func _on_button_menu_pressed() -> void:
 	_goto_menu()
@@ -218,7 +218,12 @@ func _on_button_menu_pressed() -> void:
 func _goto_menu() -> void:
 	get_tree().paused = false
 	SceneManager.goto_menu()
-	
+
+func _goto_selecao() -> void:
+	get_tree().paused = false
+	SceneManager.goto_menu()
+	SceneManager.goto_selecao()
+
 func _replay() -> void:
 	get_tree().paused = false
 	SceneManager.restart_level()
