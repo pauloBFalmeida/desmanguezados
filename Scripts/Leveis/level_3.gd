@@ -14,7 +14,6 @@ extends Level
 @onready var timer_mare := $TimerMare
 @onready var area_2d_mare := $Area2DMare
 
-@export var spawn_jogadores : SpawnJogadores
 @export var tilemaps_sobre_chao : TileMapsChao
 
 enum Mare {CHEIA, DESCENDO_BLOCK, DESCENDO_ANDAVEL, VAZIA, SUBINDO_ANDAVEL, SUBINDO_BLOCK}

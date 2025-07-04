@@ -1,6 +1,7 @@
 class_name Level
 extends Node
 
+@export var spawn_jogadores : SpawnJogadores
 @export var arvores_colecao : CanvasGroup
 @export var lixos_colecao : CanvasGroup
 @export var locais_plantar_colecao : LocalPlantarColecao
@@ -38,7 +39,7 @@ func _ready() -> void:
 	temporizador.fim_tempo.connect(fim_partida)
 	temporizador.set_duracao(duracao_partida_segundos)
 	# contagem inicial para comecar o jogo
-	hud.comecar_contar()
+	contagem_inicio()
 
 func ajustar_objetivos() -> void:
 	ajustar_arvores()
@@ -110,6 +111,16 @@ func _ajustar_pause() -> void:
 		node.set_process_mode(Node.PROCESS_MODE_PAUSABLE)
 	# set HUD (e filhos) como processar sempre
 	hud.set_process_mode(Node.PROCESS_MODE_ALWAYS)
+
+func contagem_inicio() -> void:
+	# pausa os jogadores
+	spawn_jogadores.pausar_jogadores(true)
+	# faz a contagem de comeco de partida
+	hud.comecar_contar()
+	await hud.partida_comecando
+	
+	# despausa os jogadores
+	spawn_jogadores.pausar_jogadores(false)
 
 # ----- Arvores -----
 func ajustar_arvores() -> void:

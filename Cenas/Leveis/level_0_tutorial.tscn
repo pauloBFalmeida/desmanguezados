@@ -29,7 +29,7 @@ height = 80.0
 radius = 13.0
 height = 60.0
 
-[node name="Level_Tutorial" type="Node" node_paths=PackedStringArray("divisor_meio_mapa", "jogador_top", "jogador_bot", "intrucao_jog_top", "intrucao_jog_bot", "primeira_ferramenta_jog", "primeira_usar_jog", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
+[node name="Level_Tutorial" type="Node" node_paths=PackedStringArray("divisor_meio_mapa", "jogador_top", "jogador_bot", "intrucao_jog_top", "intrucao_jog_bot", "primeira_ferramenta_jog", "primeira_usar_jog", "spawn_jogadores", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
 script = ExtResource("1_f55y0")
 divisor_meio_mapa = NodePath("Node2DDivisorMeioMapa")
 jogador_top = NodePath("SpawnJogadores/Jogador1")
@@ -60,6 +60,7 @@ primeira_usar_jog = {
 NodePath("SpawnJogadores/Jogador1"): NodePath("LixosColecao/LixoLata"),
 NodePath("SpawnJogadores/Jogador2"): NodePath("ArvoresColecao/ArvorePinos")
 }
+spawn_jogadores = NodePath("SpawnJogadores")
 arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")

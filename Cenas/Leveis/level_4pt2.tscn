@@ -314,12 +314,13 @@ size = Vector2(61.1647, 168.038)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tmt6o"]
 size = Vector2(74.8443, 185.187)
 
-[node name="Level_4pt2" type="Node" node_paths=PackedStringArray("tile_mare", "spawn_jogadores", "tilemaps_sobre_chao", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
+[node name="Level_4pt2" type="Node" node_paths=PackedStringArray("tile_mare", "spawn_jogadores", "tilemaps_sobre_chao", "spawn_jogadores", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
 script = ExtResource("1_txcry")
 tile_mare = NodePath("TileMapsSobre/TileMapLayerMare")
 mare_andavel_min_color = Color(1, 1, 1, 0.4)
 spawn_jogadores = NodePath("SpawnJogadores")
 tilemaps_sobre_chao = NodePath("TileMapsSobre")
+spawn_jogadores = NodePath("SpawnJogadores")
 arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")

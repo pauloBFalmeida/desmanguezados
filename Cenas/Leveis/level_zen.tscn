@@ -12,10 +12,11 @@ _data = [Vector2(0, 0.2), 0.0, 0.484919, 0, 0, Vector2(0.741697, 1), 0.0, 0.0, 0
 point_count = 3
 metadata/_snap_enabled = true
 
-[node name="Level_Zen" type="Node" node_paths=PackedStringArray("camera_target", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
+[node name="Level_Zen" type="Node" node_paths=PackedStringArray("camera_target", "spawn_jogadores", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
 script = ExtResource("1_h16eq")
 camera_lerp_speed_curve = SubResource("Curve_h16eq")
 camera_target = NodePath("SpawnJogadores/Jogador2")
+spawn_jogadores = NodePath("SpawnJogadores")
 arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")

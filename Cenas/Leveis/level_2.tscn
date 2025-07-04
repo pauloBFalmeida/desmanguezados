@@ -13,8 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://bxemk6uv78eif" path="res://Cenas/Partida/local_plantar.tscn" id="15_awc43"]
 [ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Interface/hud.tscn" id="16_vrx3h"]
 
-[node name="Level_2" type="Node" node_paths=PackedStringArray("arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
+[node name="Level_2" type="Node" node_paths=PackedStringArray("spawn_jogadores", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
 script = ExtResource("1_eixhn")
+spawn_jogadores = NodePath("SpawnJogadores")
 arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")

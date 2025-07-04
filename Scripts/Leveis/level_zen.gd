@@ -49,23 +49,35 @@ var jogadores_jogando : Array = []
 func lidar_qtd_jogadores_zen() -> void:
 	jogadores_jogando = jogadores.duplicate()
 	
-	if Globais.modo_zen_ter_1_jogador:
-		# se o alvo nao esta no controle -> trocar o target para o outro jogador
-		if not camera_target.is_usando_controle:
-			for jog in jogadores:
-				if jog != camera_target:
-					camera_target = jog
-					break
-		# move o outro jogador para longe e desativa ele
+	# se ambos estiverem jogando -> nao faz nada
+	if not Globais.modo_zen_ter_1_jogador: return
+	
+	# se o alvo nao esta no controle -> trocar o target para o outro jogador
+	if not camera_target.is_usando_controle:
 		for jog in jogadores:
 			if jog != camera_target:
-				jog.hide()
-				jog.set_physics_process(false)
-				jog.set_process(false)
-				jog.set_process_input(false)
-				jog.global_position = Vector2(-999, -999)
-				# remove dos jogadores jogando
-				jogadores_jogando.erase(jog)
+				camera_target = jog
+				break
+	# move o outro jogador para longe e desativa ele
+	_turn_off_jog_not_cam_target()
+	# remove dos jogadores jogando 
+	for jog in jogadores:
+		if jog != camera_target:
+			jogadores_jogando.erase(jog)
+
+## desliga o jogador que nao eh o camera target
+func _turn_off_jog_not_cam_target() -> void:
+	# se ambos estiverem jogando -> nao faz nada
+	if not Globais.modo_zen_ter_1_jogador: return
+		
+	# desliga o jogador que nao eh o camera target
+	for jog in jogadores:
+		if jog != camera_target:
+			jog.hide()
+			jog.set_physics_process(false)
+			jog.set_process(false)
+			jog.set_process_input(false)
+			jog.global_position = Vector2(-999, -999)
 
 # --------------------------------------------- Camera seguir jogador
 @export var max_distance_target : float = 50.0
@@ -95,9 +107,7 @@ func camera_zoom_in() -> void:
 	# esconde a hud (pq esta menor q a tela)
 	hud.hide()
 	# desativa movimento dos jogadores
-	for jog in jogadores_jogando:
-		jog.set_physics_process(false)
-		jog.set_process(false)
+	spawn_jogadores.pausar_jogadores(true)
 	# esconde arvores e lixo
 	var itens_list = arvores_colecao.get_children() + lixos_colecao.get_children()
 	for item in itens_list:
@@ -118,21 +128,27 @@ func camera_zoom_in() -> void:
 		2.5 			# duracao
 	).from_current()
 	
+	# desativa movimento dos jogadores ## de novo ??
+	spawn_jogadores.pausar_jogadores(true)
 	# espera o zoom chegar perto do fim para mostrar a hud e comecar a contar
-	await get_tree().create_timer(1.5, true).timeout
+	await get_tree().create_timer(1.5).timeout
+	# desativa movimento dos jogadores ## de novo ??
+	spawn_jogadores.pausar_jogadores(true)
 	hud.show()
 	hud.comecar_contar()
+	await hud.partida_comecando
+	
 	# reativa movimento dos jogadores
-	for jog in jogadores_jogando:
-		jog.set_physics_process(true)
-		jog.set_process(true)
+	spawn_jogadores.pausar_jogadores(false)
+	# tem certeza que desligou o que nao eh camera target
+	_turn_off_jog_not_cam_target()
 
 func show_cinematic(duracao: float, itens_list : Array) -> bool:
 	var tempo_item = duracao / itens_list.size()
 	
 	for item in itens_list:
 		item.show()
-		await get_tree().create_timer(tempo_item, true).timeout
+		await get_tree().create_timer(tempo_item).timeout
 	
 	return true # para funcionar o await
 

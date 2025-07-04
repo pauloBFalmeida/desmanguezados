@@ -91,3 +91,17 @@ func _find_global_pos_mais_prox(lista_pos: Array, default_global_pos : Vector2) 
 
 func get_ferramentas_mgmt() -> FerramentaMgmt:
 	return ferramentas_mgmt
+
+# ------------------------------------
+func pausar_jogadores(pausar : bool = true) -> void:
+	var executar := not pausar
+	set_physics_process(executar)
+	for jog in jogadores:
+		jog.set_physics_process(executar)
+		jog.set_process(executar)
+		jog.set_process_input(executar)
+		if pausar:
+			jog.jogador_anim.stop()
+		else:
+			jog.jogador_anim.play()
+	

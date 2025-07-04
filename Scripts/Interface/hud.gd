@@ -40,6 +40,7 @@ func _input(event: InputEvent) -> void:
 		despausar()
 
 func _ready() -> void:
+	_despausar()
 	# ajusta o audio
 	audio_player_musica.stream = musica_level
 	audio_player_musica.stop()
@@ -48,7 +49,6 @@ func _ready() -> void:
 	# esconde as telas
 	start_menu.hide()
 	game_over_menu.hide()
-	_despausar()
 
 func get_temporizador() -> Temporizador:
 	return temporizador
@@ -82,7 +82,6 @@ func comecar_contar() -> void:
 	# -- pre contar --
 	is_comecando_contar = true
 	start_menu.show()
-	get_tree().paused = true
 	# comeca a barra de progresso
 	barra_progresso.comecar(start_count_num)
 	# -- contar --
@@ -93,7 +92,6 @@ func comecar_contar() -> void:
 		numeros -= 1
 	# -- pos contar --
 	start_menu.hide()
-	get_tree().paused = false
 	is_comecando_contar = false
 	# comecar a partida
 	comecar_partida()
