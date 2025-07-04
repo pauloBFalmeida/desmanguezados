@@ -1,7 +1,7 @@
 [gd_scene load_steps=39 format=4 uid="uid://e0hvhpdu6hbn"]
 
 [ext_resource type="Script" uid="uid://b365074iebc74" path="res://Scripts/Menus/menu_principal.gd" id="1_ntrab"]
-[ext_resource type="Script" uid="uid://b0bje2dy25stn" path="res://Scripts/Menus/UsadosMenus/background_principal.gd" id="2_jgvpl"]
+[ext_resource type="Script" path="res://Scripts/Menus/UsadosMenus/background_principal.gd" id="2_jgvpl"]
 [ext_resource type="TileSet" uid="uid://bihajaisgd8ms" path="res://PreSets/Cenario/tiles/tilemap_areia.tres" id="2_ov37b"]
 [ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_xgp53"]
 [ext_resource type="Texture2D" uid="uid://bgnf6wpo3en3s" path="res://Assets/Cenario/AnimacaoMar/mar/Frame1.png" id="4_2a355"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://by6cbncn8b5if" path="res://Assets/Cenario/AnimacaoMar/mar/Frame2.png" id="5_ov37b"]
 [ext_resource type="Texture2D" uid="uid://bacnhyxp8hrir" path="res://Assets/Cenario/AnimacaoMar/mar/Frame3.png" id="6_jgvpl"]
 [ext_resource type="Texture2D" uid="uid://dw5fd686if51k" path="res://Assets/Cenario/AnimacaoMar/mar/Frame4.png" id="7_55wq7"]
-[ext_resource type="Script" uid="uid://dqy3ujnnmq3yu" path="res://Scripts/Menus/UsadosMenus/tilemap_anim.gd" id="8_55wq7"]
+[ext_resource type="Script" path="res://Scripts/Menus/UsadosMenus/tilemap_anim.gd" id="8_55wq7"]
 [ext_resource type="Texture2D" uid="uid://dbga62g6ihbka" path="res://Assets/Cenario/AnimacaoMar/borda/Frame1.png" id="8_ov8d6"]
 [ext_resource type="Texture2D" uid="uid://chpvve6ssyij7" path="res://Assets/Cenario/AnimacaoMar/borda/Frame2.png" id="9_exyxp"]
 [ext_resource type="Texture2D" uid="uid://bispd85wqcntu" path="res://Assets/Cenario/AnimacaoMar/borda/Frame3.png" id="10_y0seq"]
