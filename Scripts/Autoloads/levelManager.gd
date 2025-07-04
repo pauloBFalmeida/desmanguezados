@@ -37,7 +37,13 @@ const LEVEIS_SELECAO_ORDEM : Array[Level_id] = [
 ]
 
 const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
-	#Level_id.TUTORIAL: preload()
+	Level_id.TUTORIAL : preload("res://Assets/Interface/leveis_thumbnails/tutorial_1.png"),
+	Level_id.TUTORIAL_JOGAR : preload("res://Assets/Interface/leveis_thumbnails/tutorial_2.png"),
+	Level_id.LEVEL_1 : preload("res://Assets/Interface/leveis_thumbnails/lv1.png"),
+	Level_id.LEVEL_2 : preload("res://Assets/Interface/leveis_thumbnails/lv2.png"),
+	Level_id.LEVEL_3 : preload("res://Assets/Interface/leveis_thumbnails/lv3.png"),
+	Level_id.LEVEL_4 : preload("res://Assets/Interface/leveis_thumbnails/lv4_2.png"),
+	Level_id.LEVEL_5 : preload("res://Assets/Interface/leveis_thumbnails/lv5.png"),
 }
 
 ## tempo para consquistar as medalhas de cada level
