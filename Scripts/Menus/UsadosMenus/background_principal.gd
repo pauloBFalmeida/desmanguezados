@@ -42,9 +42,9 @@ func _mover(capivara_id : int) -> void:
 			var new_pos = _calc_new_pos(capivaras[capivara_id].global_position)
 			# indo para direita
 			if new_pos.x > capivaras[capivara_id].global_position.x:
-				capivaras[capivara_id].flip_h = false
-			else: # indo para esquerda
 				capivaras[capivara_id].flip_h = true
+			else: # indo para esquerda
+				capivaras[capivara_id].flip_h = false
 			var tween := create_tween()
 			tween.set_ease(Tween.EASE_IN_OUT)
 			tween.set_trans(Tween.TRANS_CIRC)
