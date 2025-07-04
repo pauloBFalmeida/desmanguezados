@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b6sdx5v5l772m"]
+[gd_scene load_steps=16 format=3 uid="uid://b6sdx5v5l772m"]
 
 [ext_resource type="Script" uid="uid://brncsdifpd8ke" path="res://Scripts/Interface/hud.gd" id="1_toh8p"]
 [ext_resource type="Texture2D" uid="uid://clny3k8wxq5x1" path="res://Assets/Interface/Partida/GameOverImage.jpg" id="2_7b8ht"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" uid="uid://b4twgrhsdpeiu" path="res://Scripts/Interface/barra_progresso.gd" id="10_uk2xs"]
 [ext_resource type="Texture2D" uid="uid://e14uxly4awj8" path="res://Assets/Cenario/Arvores/ArvoresMangue.png" id="11_42fxd"]
 [ext_resource type="Texture2D" uid="uid://cd7kpxvt7hc3i" path="res://Assets/Cenario/Lixos/Lixo.png" id="12_nmlv5"]
+[ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="13_nmlv5"]
+[ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="14_rsky8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pqhgn"]
 shader = ExtResource("7_po4ji")
@@ -164,7 +166,8 @@ grow_vertical = 2
 
 [node name="LabelTit" type="Label" parent="PauseMenu/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 60
+theme = ExtResource("13_nmlv5")
+theme_override_font_sizes/font_size = 65
 text = "Pausado"
 horizontal_alignment = 1
 
@@ -175,7 +178,8 @@ layout_mode = 2
 
 [node name="ButtonJogo" type="Button" parent="PauseMenu/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme = ExtResource("13_nmlv5")
+theme_override_font_sizes/font_size = 50
 text = "Continuar Jogo"
 
 [node name="VSeparator2" type="VSeparator" parent="PauseMenu/VBoxContainer"]
@@ -185,7 +189,8 @@ layout_mode = 2
 
 [node name="ButtonRestart" type="Button" parent="PauseMenu/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme = ExtResource("14_rsky8")
+theme_override_font_sizes/font_size = 50
 text = "Reiniciar Level"
 
 [node name="VSeparator3" type="VSeparator" parent="PauseMenu/VBoxContainer"]
@@ -195,7 +200,8 @@ layout_mode = 2
 
 [node name="ButtonMenu" type="Button" parent="PauseMenu/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme = ExtResource("14_rsky8")
+theme_override_font_sizes/font_size = 50
 text = "Voltar Menu"
 
 [node name="StartMenu" type="Control" parent="."]
@@ -235,18 +241,19 @@ grow_vertical = 2
 
 [node name="LabelStartText" type="Label" parent="StartMenu/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("14_rsky8")
+theme_override_font_sizes/font_size = 60
 text = "Jogo começa em"
 horizontal_alignment = 1
 
 [node name="LabelStartCount" type="Label" parent="StartMenu/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("14_rsky8")
+theme_override_font_sizes/font_size = 70
 text = "0"
 horizontal_alignment = 1
 
 [node name="GameOverMenu" type="Control" parent="."]
-visible = false
 z_index = 99
 layout_mode = 1
 anchors_preset = 15
@@ -281,9 +288,9 @@ offset_right = -100.0
 offset_bottom = -39.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = ExtResource("14_rsky8")
 theme_override_colors/font_hover_color = Color(1, 0.878431, 0.101961, 1)
 theme_override_colors/font_focus_color = Color(1, 0.878431, 0.101961, 1)
-theme_override_font_sizes/font_size = 30
 text = "Voltar Menu"
 
 [node name="ButtonReplay" type="Button" parent="GameOverMenu/ControlBtns"]
@@ -296,10 +303,25 @@ offset_top = -89.0
 offset_right = 310.0
 offset_bottom = -39.0
 grow_vertical = 0
+theme = ExtResource("14_rsky8")
 theme_override_colors/font_hover_color = Color(1, 0.88, 0.1, 1)
 theme_override_colors/font_focus_color = Color(1, 0.878431, 0.101961, 1)
-theme_override_font_sizes/font_size = 30
 text = "Jogar de Novo"
+
+[node name="ButtonProx" type="Button" parent="GameOverMenu/ControlBtns"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = -89.0
+offset_right = 310.0
+offset_bottom = -39.0
+grow_vertical = 0
+theme = ExtResource("14_rsky8")
+theme_override_colors/font_hover_color = Color(1, 0.88, 0.1, 1)
+theme_override_colors/font_focus_color = Color(1, 0.878431, 0.101961, 1)
+text = "Próximo Nível"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 volume_db = -25.0
@@ -309,3 +331,4 @@ volume_db = -25.0
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonMenu" to="." method="_on_button_menu_pressed"]
 [connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonMenu" to="." method="_on_button_menu_gameover_pressed"]
 [connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonReplay" to="." method="_on_button_replay_pressed"]
+[connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonProx" to="." method="_on_button_prox_pressed"]

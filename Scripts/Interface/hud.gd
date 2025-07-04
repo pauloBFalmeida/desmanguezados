@@ -12,6 +12,7 @@ signal partida_comecando
 @onready var game_over_sprite := $GameOverMenu/ImagemFim
 @onready var game_over_btns := $GameOverMenu/ControlBtns
 @onready var game_over_btn_replay := $GameOverMenu/ControlBtns/ButtonReplay
+@onready var game_over_btn_prox := $GameOverMenu/ControlBtns/ButtonProx
 
 # -- pause --
 @onready var pause_menu := $PauseMenu
@@ -138,8 +139,16 @@ func show_tela_fim(tipo : Tipo_fim) -> void:
 	await tween.finished
 	#await get_tree().create_timer(1.0, true).timeout
 	game_over_btns.show()
-	game_over_btn_replay.grab_focus()
 	
+	if tipo == Tipo_fim.VITORIA_LIMPO:
+		game_over_btn_replay.hide()
+		game_over_btn_prox.show()
+		game_over_btn_prox.grab_focus()
+	else:
+		game_over_btn_prox.hide()
+		game_over_btn_replay.show()
+		game_over_btn_replay.grab_focus()
+		
 	# TODO: fazer algo especial para cada tela ?
 	#match tipo:
 		#Tipo_fim.DERROTA_TEMPO:
@@ -196,6 +205,9 @@ func _on_button_jogo_pressed() -> void:
 
 func _on_button_restart_pressed() -> void:
 	_replay()
+
+func _on_button_prox_pressed() -> void:
+	SceneManager.goto_selecao()
 
 func _on_button_menu_pressed() -> void:
 	_goto_menu()
