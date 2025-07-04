@@ -14,8 +14,6 @@ func _ready() -> void:
 	for tile_pos in filled_tiles:
 		var source_id = get_cell_source_id(tile_pos)
 		current_frames[tile_pos] = source_id
-		print("Tile preenchido em:", tile_pos)
-		print("  Source ID:", source_id)
 
 func _physics_process(delta: float) -> void:
 	frame_timer += delta

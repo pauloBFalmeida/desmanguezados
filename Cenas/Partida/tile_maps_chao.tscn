@@ -13,12 +13,12 @@
 shader = ExtResource("2_wqg1e")
 shader_parameter/WATER_COL = Color(0.0980392, 0.603922, 0.541176, 1)
 shader_parameter/WATER2_COL = Color(0.027451, 0.552941, 0.498039, 1)
-shader_parameter/FOAM_COL = Color(0.370683, 0.758467, 0.695834, 1)
-shader_parameter/distortion_speed = 2.0
+shader_parameter/FOAM_COL = Color(0.493709, 0.87396, 0.809209, 1)
+shader_parameter/distortion_speed = 1.2
 shader_parameter/tile = Vector2(6, 6)
 shader_parameter/offset = Vector2(0, 0)
-shader_parameter/pixel_size = 15.0
-shader_parameter/blur_strength = 0.75
+shader_parameter/pixel_size = 10.0
+shader_parameter/blur_strength = 0.67
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e7ako"]
 resource_name = "Agua"
