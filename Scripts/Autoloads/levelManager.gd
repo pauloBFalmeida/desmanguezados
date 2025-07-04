@@ -61,29 +61,29 @@ const LEVEIS_MEDALHAS : Dictionary[Level_id, Dictionary] = {
 		Medalha_tipo.BRONZE: 50 
 		},
 	Level_id.LEVEL_1: {
-		Medalha_tipo.OURO:   50,
-		Medalha_tipo.PRATA:  60,
-		Medalha_tipo.BRONZE: 70
+		Medalha_tipo.OURO:   95,
+		Medalha_tipo.PRATA:  115,
+		Medalha_tipo.BRONZE: 125
 		},
 	Level_id.LEVEL_2: {
-		Medalha_tipo.OURO:   50,
-		Medalha_tipo.PRATA:  60,
-		Medalha_tipo.BRONZE: 70
+		Medalha_tipo.OURO:   95,
+		Medalha_tipo.PRATA:  115,
+		Medalha_tipo.BRONZE: 125
 		},
 	Level_id.LEVEL_3: {
-		Medalha_tipo.OURO:   50,
-		Medalha_tipo.PRATA:  60,
-		Medalha_tipo.BRONZE: 70
+		Medalha_tipo.OURO:   95,
+		Medalha_tipo.PRATA:  115,
+		Medalha_tipo.BRONZE: 125
 		},
 	Level_id.LEVEL_4: {
-		Medalha_tipo.OURO:   50,
-		Medalha_tipo.PRATA:  60,
-		Medalha_tipo.BRONZE: 70
+		Medalha_tipo.OURO:   72,
+		Medalha_tipo.PRATA:  87,
+		Medalha_tipo.BRONZE: 100
 		},
 	Level_id.LEVEL_5: {
-		Medalha_tipo.OURO:   50,
-		Medalha_tipo.PRATA:  60,
-		Medalha_tipo.BRONZE: 70
+		Medalha_tipo.OURO:   101,
+		Medalha_tipo.PRATA:  115,
+		Medalha_tipo.BRONZE: 130
 		},
 }
 
