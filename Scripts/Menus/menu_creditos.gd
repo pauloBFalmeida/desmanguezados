@@ -136,10 +136,7 @@ const textos_pascoa := [
 	"Obrigado Por Jogar!",
 	"Nós te amamos S2",
 	"De verdade",
-	"Agora uma ideia...",
-	"Que tal jogar os leveis normais ;_;",
-	"Ou faz o que você, se divertir mais",
-	"mas muito obrigado msm :)",
+	"Muito obrigado msm :)",
 ]
 func _pascoa() -> void:
 	# so mostre a pascoa 1 vez
