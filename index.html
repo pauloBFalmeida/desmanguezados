@@ -74,8 +74,25 @@
     <!-- About Section -->
     <section id="about" class="py-16 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 text-blue-800">Sobre o Projeto</h2>
-            <div class="flex flex-col md:flex-row items-center">
+            <h2 class="text-3xl font-bold text-center text-blue-800">Sobre o Projeto</h2>
+            
+            <div class="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+                <h3 class="text-2xl font-semibold mb-6 text-indigo-700 text-center">O Jogo</h3>
+                <p class="text-gray-700 mb-6 text-lg">
+                    Um coop 2D de tela compartilhada. Os jogadores controlam 2 siris irmãos que correm contra o tempo para conseguir
+                    restaurar o mangue, cortando as árvores pinos invasoras, plantando mudas de árvores nativas do manguezal,
+                    e recolhendo o lixo antes do tempo acabar, para restaurar o mangue a tempo de impedir o mar de inundar
+                    os ecossistemas vizinhos.
+                </p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">2D</span>
+                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">Pixel Art</span>
+                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">Coop</span>
+                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">Shared-Screen</span>
+                </div>
+            </div>
+
+            <div class="mt-12 flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
                     <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
                          alt="Equipe desenvolvendo o jogo" 
@@ -84,11 +101,7 @@
                 <div class="md:w-1/2">
                     <h3 class="text-2xl font-semibold mb-4 text-blue-700">Criação</h3>
                     <p class="text-gray-700 mb-4">
-                        Desenvolvido como projeto da disciplina de Projeto de Jogos e Entretenimento Digital, nosso jogo é um coop 2D 
-                        de tela compartilhada. Os jogadores controlam 2 siris irmãos que correm contra o tempo para conseguir
-                        restaurar o mangue, cortando as árvores pinos invasoras, e plantando mudas de árvores nativas do manguezal,
-                        juntamente recolhendo o lixo antes do tempo acabar, para restaurar o mangue antes do mar inundar
-                        os ecossistemas vizinhos.
+                        Desenvolvido como projeto da disciplina de Projeto de Jogos e Entretenimento Digital
                     </p>
                     <p class="text-gray-700 mb-4">
                         ???????????
@@ -104,20 +117,7 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="mt-12 bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
-                <h3 class="text-2xl font-semibold mb-6 text-indigo-700 text-center">Sobre o Jogo</h3>
-                <p class="text-gray-700 mb-6 text-lg">
-                    O jogo foi desenvolvido inteiramente pela equipe, utilizando capturas de tela reais do jogo e edição de vídeo.
-                    Mostramos as principais mecânicas, personagens e ambientes, sem revelar spoilers da narrativa.
-                </p>
-                <div class="flex flex-wrap gap-3 justify-center">
-                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">2D</span>
-                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">Pixel Art</span>
-                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">Coop</span>
-                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">Shared-screen</span>
-                </div>
-            </div>
+
         </div>
     </section>
 
@@ -397,6 +397,29 @@
                         </a>
                     </div>
                 </div>
+
+                <!-- PDF Item 6 -->
+                <div class="pdf-item bg-gray-50 rounded-lg p-6 shadow-md border border-gray-200 transition">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-file-pdf text-indigo-700 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-indigo-800">Todo Processo de Produção</h3>
+                            <p class="text-sm text-gray-600">Slides - Todos os anteriores</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 text-sm">Slides da apresentação final com demonstração de todas as features implementadas.</p>
+                    <div class="flex space-x-4 mt-2">
+                        <a href="pdfs/Apresentacao_1.pdf" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center">
+                            <i class="fas fa-eye mr-2"></i> Visualizar ????
+                        </a>
+                        <a href="pdfs/Apresentacao_1.pdf" download class="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center">
+                            <i class="fas fa-download mr-2"></i> Baixar (???MB)
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -433,7 +456,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-blue-900 text-white py-8">
+    <footer class="bg-blue-900 text-white py-4">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
@@ -441,7 +464,7 @@
                         <i class="fas fa-gamepad text-2xl mr-2"></i>
                         <span class="text-xl font-bold">Desmanguezados</span>
                     </div>
-                    <p class="text-sm text-indigo-300 mt-1">Projeto de Jogos e Entretenimento Digital- 2025</p>
+                    <p class="text-sm text-indigo-300 mt-1">Projeto de Jogos e Entretenimento Digital - 2025.1</p>
                 </div>
                 
                 <div class="flex space-x-6">
@@ -454,14 +477,14 @@
                 </div>
             </div>
             
-            <div class="border-t border-indigo-800 mt-6 pt-6 text-sm text-center text-indigo-300">
-                <p class="mt-2">Trabalho acadêmico desenvolvido para a disciplina de Desenvolvimento de Projeto de Jogos e Entretenimento Digital.</p>
-                <p class="mt-2">Professor Orientador do projeto: Eduardo Napoleão.</p>
+            <div class="border-t border-indigo-800 mt-2 text-sm text-center text-indigo-300">
+                <p class="mt-2">Trabalho acadêmico desenvolvido para a disciplina de Desenvolvimento de Projeto de Jogos e Entretenimento Digital 2025.1</p>
+                <p class="mt-2">Professor Orientador do projeto: Eduardo Napoleão</p>
             </div>
             <div class="text-sm text-center text-indigo-300 flex justify-center gap-4 flex-wrap">
                 <p class="mt-2">UNIVALI</p>
-                <p class="mt-2">Cesar Albenes Zeferino | Diretor Escola Politécnica.</p>
-                <p class="mt-2">Giorgio Gilwan da Silva | Coordenador do Curso.</p>
+                <p class="mt-2">Cesar Albenes Zeferino | Diretor Escola Politécnica</p>
+                <p class="mt-2">Giorgio Gilwan da Silva | Coordenador do Curso</p>
             </div>
         </div>
     </footer>
