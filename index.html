@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desmanguezados</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <style>
+        .gallery-item {
+            transition: all 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        .pdf-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Header -->
+    <header class="bg-blue-900 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fas fa-gamepad text-3xl mr-3"></i>
+                    <h1 class="text-2xl md:text-3xl font-bold">Desmanguezados</h1>
+                </div>
+                <nav class="flex space-x-1 md:space-x-6">
+                    <a href="#about" class="px-3 py-2 rounded hover:bg-indigo-700 transition">Sobre</a>
+                    <a href="#trailer" class="px-3 py-2 rounded hover:bg-indigo-700 transition">Trailer</a>
+                    <a href="#gallery" class="px-3 py-2 rounded hover:bg-indigo-700 transition">Eventos</a>
+                    <a href="#presentations" class="px-3 py-2 rounded hover:bg-indigo-700 transition">Apresentações</a>
+                    <a href="#download" class="px-3 py-2 rounded bg-red-600 hover:bg-red-700 text-white font-semibold transition">Download</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-b from-blue-800 to-blue-400 text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Restaure o Mangue como um siri</h2>
+            <p class="text-xl md:text-2xl mb-8 max-w-4xl mx-auto">Um jogo coop shared-screen de 2 jogadores sobre preservação ambiental</p>
+            <div class="flex justify-center space-x-4">
+                <a href="#trailer" class="bg-white text-indigo-800 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition flex items-center">
+                    <i class="fas fa-play mr-2"></i> Assistir Trailer
+                </a>
+                <a href="#download" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition flex items-center">
+                    <i class="fas fa-download mr-2"></i> Baixar Jogo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-blue-800">Sobre o Projeto</h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Equipe desenvolvendo o jogo" 
+                         class="rounded-lg shadow-xl w-full h-auto">
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-700">Criação</h3>
+                    <p class="text-gray-700 mb-4">
+                        Desenvolvido como projeto da disciplina de Projeto de Jogos e Entretenimento Digital, nosso jogo é um coop 2D 
+                        de tela compartilhada. Os jogadores controlam 2 siris irmãos que correm contra o tempo para conseguir
+                        restaurar o mangue, cortando as árvores pinos invasoras, e plantando mudas de árvores nativas do manguezal,
+                        juntamente recolhendo o lixo antes do tempo acabar, para restaurar o mangue antes do mar inundar
+                        os ecossistemas vizinhos.
+                    </p>
+                    <p class="text-gray-700 mb-4">
+                        ???????????
+                        A equipe foi composta por 5 alunos, cada um responsável por diferentes aspectos do desenvolvimento: programação, 
+                        arte, design de níveis, narrativa e testes.
+                    </p>
+                    <div class="bg-indigo-100 p-4 rounded-lg border-l-4 border-indigo-500">
+                        <p class="text-indigo-800">
+                            <i class="fas fa-info-circle mr-2"></i> 
+                            O jogo foi avaliado com nota máxima pela banca examinadora e selecionado para representar a faculdade 
+                            no Festival Nacional de Jogos Universitários.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+                <h3 class="text-2xl font-semibold mb-6 text-indigo-700 text-center">Sobre o Jogo</h3>
+                <p class="text-gray-700 mb-6 text-lg">
+                    O jogo foi desenvolvido inteiramente pela equipe, utilizando capturas de tela reais do jogo e edição de vídeo.
+                    Mostramos as principais mecânicas, personagens e ambientes, sem revelar spoilers da narrativa.
+                </p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">2D</span>
+                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">Pixel Art</span>
+                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">Coop</span>
+                    <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium">Shared-screen</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trailer Section -->
+    <section id="trailer" class="py-16 bg-blue-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-indigo-800">Trailer do Jogo</h2>
+            <!-- <p class="text-center text-gray-700 max-w-3xl mx-auto mb-8">
+                Assista ao trailer do jogo.
+            </p> -->
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="video-container rounded-xl shadow-2xl overflow-hidden">
+                    <!-- Vídeo placeholder - substitua pelo embed real do seu vídeo -->
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="py-16 bg-gradient-to-br from-blue-500 to-blue-900 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-6">Baixe o Jogo Agora!</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">
+                Disponibilizamos versões para Windows, Mac e Linux. Totalmente gratuito!
+            </p>
+            
+            <div class="max-w-md mx-auto text-center">
+                <a href="https://itch.io" class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition inline-flex items-center">
+                    <i class="fab fa-itch-io text-2xl mr-3"></i> 
+                    Baixar no itch.io
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-blue-800">Nossa Equipe</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                <!-- Team Member 1 -->
+                <div class="text-center">
+                    <h3 class="font-semibold text-lg text-indigo-700">Vulpe</h3>
+                    <p class="text-gray-600">Artista</p>
+                    <div class="flex justify-center space-x-2 mt-2">
+                        <a href="https://www.instagram.com/fortedofoxpixelart/" class="text-indigo-600 hover:text-indigo-800"><i class="fab fa-instagram"></i> @fortedofoxpixelart</a>
+                    </div>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="text-center">
+                    <h3 class="font-semibold text-lg text-indigo-700">Davi Coelho  </h3>
+                    <p class="text-gray-600">Artista </p>
+                    <div class="flex justify-center space-x-2 mt-2">
+                        <a href="https://www.instagram.com/coelho_cinza/" class="text-indigo-600 hover:text-indigo-800"><i class="fab fa-instagram"></i> @coelho_cinza</a>
+                    </div>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="text-center">
+                    <h3 class="font-semibold text-lg text-indigo-700">Rafael Krigger</h3>
+                    <p class="text-gray-600">Marketing</p>
+                    <div class="flex justify-center space-x-2 mt-2">
+                        <a href="https://www.instagram.com/rafael_krigger/" class="text-indigo-600 hover:text-indigo-800"><i class="fab fa-instagram"></i> @rafael_krigger</a>
+                    </div>
+                </div>
+                
+                <!-- Team Member 4 -->
+                <div class="text-center">
+                    <h3 class="font-semibold text-lg text-indigo-700">Paulo Almeida</h3>
+                    <p class="text-gray-600">Programador </p>
+                    <div class="flex justify-center space-x-2 mt-2">
+                        <a href="https://paulobfalmeida.github.io/" class="text-indigo-600 hover:text-indigo-800"><i class="fab fa-github"></i> @paulobfalmeida</a>
+                    </div>
+                </div>
+                
+                <!-- Team Member 5 -->
+                <div class="text-center">
+                    <h3 class="font-semibold text-lg text-indigo-700">Isadora</h3>
+                    <p class="text-gray-600">Design de Níveis</p>
+                    <div class="flex justify-center space-x-2 mt-2">
+                        <a href="#" class="text-indigo-600 hover:text-indigo-800"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-indigo-600 hover:text-indigo-800"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-indigo-600 hover:text-indigo-800"><i class="fab fa-itch-io"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-blue-800">Eventos</h2>
+            
+            <!-- TestNight Event -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-center mb-8 text-indigo-700">TestNight</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white">
+                        <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                             alt="TestNight" 
+                             class="w-full h-64 object-cover">
+                    </div>
+                    <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white">
+                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="TestNight" 
+                             class="w-full h-64 object-cover">
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
+                    <p class="text-gray-700">
+                        Durante o primeiro evento levamos o jogo com apenas 1 tutorial e 3 fases, não tinha animações nem músicas implementadas.
+                        O objetivo era testar as mecânicas e o core loop do jogo, além da receptividade ao uso de controle e teclado.
+                        <br>
+                        De acordo com os resultados concluímos que os jogadores preferiam muito mais o uso dos controles,
+                        as mecânicas e a proposta do jogo foram bem aceitas, o jogo estava um pouco mais difícil do que o esperado por causa do tempo corrido, 
+                        percebemos que a grande diferença entre a habilidade dos jogadores era um fator que trazia frustração ao jogo.
+                        E por fim, no final das fases por conta do fluxo do jogo, um dos jogadores sentia tédio por já ter completado os seus objetivos e não ter o que fazer enquanto esperava o outro terminar.
+                    </p>
+                </div>
+            </div>
+
+            <!-- GameFest Event -->
+            <div>
+                <h3 class="text-2xl font-bold text-center mb-8 text-indigo-700">GameFest</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white">
+                        <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                             alt="GameFest" 
+                             class="w-full h-64 object-cover">
+                    </div>
+                    <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white">
+                        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
+                             alt="GameFest" 
+                             class="w-full h-64 object-cover">
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
+                    <p class="text-gray-700">
+                        No GameFest levamos uma versão demo do jogo, contendo 2 tutoriais simples, e mais 5 fases diferentes.
+                        Um menu de configurações. Um menu de estatísticas contando a quantidade dos objetivos feitos em todos jogos.
+                        Menu de créditos com os nomes e função dos membros da equipe. Uma aba de informações, com informações ambientais sobre o mangue, e sobre o projeto que foi usado de inspiração para o jogo.
+                        E foram entregues novos adesivos reais para as pessoas que jogassem o jogo.
+                        <br>
+                        Além disso, foram trazidas novas mecânicas pensando nos pontos fracos encontrados durante o primeiro evento:
+                        foi criado um modo zen, para 1 ou 2 jogadores sem tempo limite, o fator tempo do jogo foi estendido e foram adicionados medalhas para os jogadores que terminassem rápido a fase,
+                        assim foi mudado para uma motivação de conquista em vez de um fator limitante que levava ao fim do jogo.
+                        E finalmente, adição da possibilidade dos 2 jogadores usarem a ferramenta muda (de forma limitada) o que resolveu o tédio no final das fases.
+                        <br>
+                        Os jogadores aceitaram bem as mudanças e tiveram reações majoritariamente positivas ao jogo, a maior parte dos feedbacks foram sugestões de pequenos ajustes ao jogo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Presentations Section -->
+    <section id="presentations" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-blue-800">Apresentações</h2>
+            <p class="text-center text-gray-700 max-w-3xl mx-auto mb-8">
+                Documentação e apresentações realizadas durante o desenvolvimento do projeto:
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- PDF Item 1 -->
+                <div class="pdf-item bg-gray-50 rounded-lg p-6 shadow-md border border-gray-200 transition">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-file-pdf text-indigo-700 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-indigo-800">Apresentação 1</h3>
+                            <p class="text-sm text-gray-600">Slides - Imersão Preliminar</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 text-sm">?????Documento com a proposta inicial do jogo, incluindo conceito, público-alvo e mecânicas principais.</p>
+                    <div class="flex space-x-4 mt-2">
+                        <a href="pdfs/Apresentacao_1.pdf" download class="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center">
+                            <i class="fas fa-eye mr-2"></i> Abrir
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- PDF Item 2 -->
+                <div class="pdf-item bg-gray-50 rounded-lg p-6 shadow-md border border-gray-200 transition">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-file-pdf text-indigo-700 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-indigo-800">Apresentação 2</h3>
+                            <p class="text-sm text-gray-600">Slides - Imersão em Profundidade</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 text-sm">Slides da primeira apresentação para a banca avaliadora, com protótipos conceituais.</p>
+                    <div class="flex space-x-4 mt-2">
+                        <a href="pdfs/Apresentacao_2.pdf" download class="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center">
+                            <i class="fas fa-eye mr-2"></i> Abrir
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- PDF Item 3 -->
+                <div class="pdf-item bg-gray-50 rounded-lg p-6 shadow-md border border-gray-200 transition">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-file-pdf text-indigo-700 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-indigo-800">Apresentação 3</h3>
+                            <p class="text-sm text-gray-600">Slides - Etapa Criativa</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 text-sm">Relatório detalhado do progresso após 6 semanas de desenvolvimento.</p>
+                    <div class="flex space-x-4 mt-2">
+                        <a href="pdfs/Apresentacao_3.pdf" download class="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center">
+                            <i class="fas fa-eye mr-2"></i> Abrir
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- PDF Item 4 -->
+                <div class="pdf-item bg-gray-50 rounded-lg p-6 shadow-md border border-gray-200 transition">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-file-pdf text-indigo-700 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-indigo-800">Apresentação 4</h3>
+                            <p class="text-sm text-gray-600">Slides - Etapa de (pós)prototipagem</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 text-sm">Documentação completa das escolhas técnicas e arquitetura do jogo.</p>
+                    <div class="flex space-x-4 mt-2">
+                        <a href="pdfs/Apresentacao_4.pdf" download class="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center">
+                            <i class="fas fa-eye mr-2"></i> Abrir
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- PDF Item 5 -->
+                <div class="pdf-item bg-gray-50 rounded-lg p-6 shadow-md border border-gray-200 transition">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-indigo-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-file-pdf text-indigo-700 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-indigo-800">Apresentação 5</h3>
+                            <p class="text-sm text-gray-600">Slides - PostMortem</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 text-sm">Slides da apresentação final com demonstração de todas as features implementadas.</p>
+                    <div class="flex space-x-4 mt-2">
+                        <a href="pdfs/Apresentacao_4.pdf" download class="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center">
+                            <i class="fas fa-eye mr-2"></i> Abrir????
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ONG Section -->
+    <section id="ONG" class="py-4 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <!-- <h2 class="text-3xl font-bold text-center mb-12 text-blue-800">ONG Inspiradora</h2> -->
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/3 mb-6 md:mb-0">
+                        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                             alt="ONG Inspiradora" 
+                             class="rounded-lg w-full h-auto">
+                    </div>
+                    <div class="md:w-2/3 md:pl-8">
+                        <h3 class="text-2xl font-semibold mb-4 text-indigo-700">Conheça a ONG que nos inspirou</h3>
+                        <p class="text-gray-700 mb-4">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
+                            nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
+                            nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+                        </p>
+                        <p class="text-gray-700 mb-6">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
+                            nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+                        </p>
+                        <a href="https://www.exampleong.org" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition inline-flex items-center">
+                            <i class="fas fa-external-link-alt mr-2"></i> Visite o site da ONG
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center">
+                        <i class="fas fa-gamepad text-2xl mr-2"></i>
+                        <span class="text-xl font-bold">Desmanguezados</span>
+                    </div>
+                    <p class="text-sm text-indigo-300 mt-1">Projeto de Jogos e Entretenimento Digital- 2025</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="https://github.com/pauloBFalmeida/desmanguezados" class="hover:text-indigo-300 flex items-center">
+                        <i class="fab fa-github mr-2"></i> Código do Projeto
+                    </a>
+                    <a href="https://itch.io" class="hover:text-indigo-300 flex items-center">
+                        <i class="fab fa-itch-io mr-2"></i> Baixar o Jogo ??????
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-indigo-800 mt-6 pt-6 text-sm text-center text-indigo-300">
+                <p class="mt-2">Trabalho acadêmico desenvolvido para a disciplina de Desenvolvimento de Projeto de Jogos e Entretenimento Digital.</p>
+                <p class="mt-2">Professor Orientador do projeto: Eduardo Napoleão.</p>
+            </div>
+            <div class="text-sm text-center text-indigo-300 flex justify-center gap-4 flex-wrap">
+                <p class="mt-2">UNIVALI</p>
+                <p class="mt-2">Cesar Albenes Zeferino | Diretor Escola Politécnica.</p>
+                <p class="mt-2">Giorgio Gilwan da Silva | Coordenador do Curso.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PDF Viewer Modal -->
+    <div id="pdfModal" class="fixed inset-0 z-50 hidden overflow-auto bg-black bg-opacity-50">
+        <div class="relative w-full max-w-6xl mx-auto my-8">
+            <div class="bg-white rounded-lg shadow-xl">
+                <div class="flex justify-between items-center p-4 border-b">
+                    <h3 id="pdfTitle" class="text-xl font-semibold"></h3>
+                    <button onclick="closePdfModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <div id="pdfViewerContainer" class="w-full h-screen-80">
+                        <canvas id="pdfCanvas" class="mx-auto"></canvas>
+                    </div>
+                    <div class="flex justify-between mt-4">
+                        <button id="prevPage" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+                            <i class="fas fa-arrow-left mr-2"></i>Anterior
+                        </button>
+                        <span id="pageNum" class="text-gray-700">Página 1 de 1</span>
+                        <button id="nextPage" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+                            Próxima<i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configura PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
+        
+        // Variáveis do visualizador
+        let pdfDoc = null,
+            pageNum = 1,
+            pageRendering = false,
+            pageNumPending = null,
+            scale = 1.5;
+
+        // Funções do visualizador
+        function renderPage(num) {
+            pageRendering = true;
+            pdfDoc.getPage(num).then(function(page) {
+                const viewport = page.getViewport({ scale: scale });
+                const canvas = document.getElementById('pdfCanvas');
+                const ctx = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+
+                const renderTask = page.render(renderContext);
+                renderTask.promise.then(function() {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+
+            document.getElementById('pageNum').textContent = `Página ${num} de ${pdfDoc.numPages}`;
+        }
+
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        function onPrevPage() {
+            if (pageNum <= 1) return;
+            pageNum--;
+            queueRenderPage(pageNum);
+        }
+
+        function onNextPage() {
+            if (pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            queueRenderPage(pageNum);
+        }
+
+        function openPdfModal(pdfUrl, title) {
+            document.getElementById('pdfTitle').textContent = title;
+            document.getElementById('pdfModal').classList.remove('hidden');
+            
+            pdfjsLib.getDocument(pdfUrl).promise.then(function(pdfDoc_) {
+                pdfDoc = pdfDoc_;
+                pageNum = 1;
+                renderPage(pageNum);
+            });
+        }
+
+        function closePdfModal() {
+            document.getElementById('pdfModal').classList.add('hidden');
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Simple form submission handler
+        const contactForm = document.querySelector('form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Obrigado pela sua mensagem! Entraremos em contato em breve.');
+                this.reset();
+            });
+        }
+    </script>
+</body>
+</html>
