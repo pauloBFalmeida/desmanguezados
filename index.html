@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desmanguezados</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
     <style>
         .gallery-item {
             transition: all 0.3s ease;
@@ -489,108 +487,7 @@
         </div>
     </footer>
 
-    <!-- PDF Viewer Modal -->
-    <div id="pdfModal" class="fixed inset-0 z-50 hidden overflow-auto bg-black bg-opacity-50">
-        <div class="relative w-full max-w-6xl mx-auto my-8">
-            <div class="bg-white rounded-lg shadow-xl">
-                <div class="flex justify-between items-center p-4 border-b">
-                    <h3 id="pdfTitle" class="text-xl font-semibold"></h3>
-                    <button onclick="closePdfModal()" class="text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="p-4">
-                    <div id="pdfViewerContainer" class="w-full h-screen-80">
-                        <canvas id="pdfCanvas" class="mx-auto"></canvas>
-                    </div>
-                    <div class="flex justify-between mt-4">
-                        <button id="prevPage" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
-                            <i class="fas fa-arrow-left mr-2"></i>Anterior
-                        </button>
-                        <span id="pageNum" class="text-gray-700">Página 1 de 1</span>
-                        <button id="nextPage" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
-                            Próxima<i class="fas fa-arrow-right ml-2"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Configura PDF.js
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
-        
-        // Variáveis do visualizador
-        let pdfDoc = null,
-            pageNum = 1,
-            pageRendering = false,
-            pageNumPending = null,
-            scale = 1.5;
-
-        // Funções do visualizador
-        function renderPage(num) {
-            pageRendering = true;
-            pdfDoc.getPage(num).then(function(page) {
-                const viewport = page.getViewport({ scale: scale });
-                const canvas = document.getElementById('pdfCanvas');
-                const ctx = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-
-                const renderContext = {
-                    canvasContext: ctx,
-                    viewport: viewport
-                };
-
-                const renderTask = page.render(renderContext);
-                renderTask.promise.then(function() {
-                    pageRendering = false;
-                    if (pageNumPending !== null) {
-                        renderPage(pageNumPending);
-                        pageNumPending = null;
-                    }
-                });
-            });
-
-            document.getElementById('pageNum').textContent = `Página ${num} de ${pdfDoc.numPages}`;
-        }
-
-        function queueRenderPage(num) {
-            if (pageRendering) {
-                pageNumPending = num;
-            } else {
-                renderPage(num);
-            }
-        }
-
-        function onPrevPage() {
-            if (pageNum <= 1) return;
-            pageNum--;
-            queueRenderPage(pageNum);
-        }
-
-        function onNextPage() {
-            if (pageNum >= pdfDoc.numPages) return;
-            pageNum++;
-            queueRenderPage(pageNum);
-        }
-
-        function openPdfModal(pdfUrl, title) {
-            document.getElementById('pdfTitle').textContent = title;
-            document.getElementById('pdfModal').classList.remove('hidden');
-            
-            pdfjsLib.getDocument(pdfUrl).promise.then(function(pdfDoc_) {
-                pdfDoc = pdfDoc_;
-                pageNum = 1;
-                renderPage(pageNum);
-            });
-        }
-
-        function closePdfModal() {
-            document.getElementById('pdfModal').classList.add('hidden');
-        }
-
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -601,16 +498,6 @@
                 });
             });
         });
-
-        // Simple form submission handler
-        const contactForm = document.querySelector('form');
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('Obrigado pela sua mensagem! Entraremos em contato em breve.');
-                this.reset();
-            });
-        }
     </script>
 </body>
 </html>
