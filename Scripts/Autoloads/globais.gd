@@ -41,4 +41,4 @@ var modo_zen_porcent_pinos  : float = 7.0
 var modo_zen_porcent_mangue : float = 1.5
 var modo_zen_porcent_lixo   : float = 9.0
 
-var current_level_id : LevelManager.Level_id
+var current_level_id : LevelManager.Level_id = LevelManager.LEVEIS_SELECAO_ORDEM[0]

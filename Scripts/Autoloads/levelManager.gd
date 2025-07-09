@@ -112,3 +112,16 @@ func score_level(level_id : Level_id, tempo : int) -> void:
 	if tempo > Globais.leveis_highscore[level_id]:
 		Globais.leveis_highscore[level_id] = tempo
 		SaveManager.save_game()
+
+func get_next_level(level_id : Level_id) -> Level_id:
+	# nao tem o level atual na lista de leveis para jogar -> retorne o primeiro da lista
+	if not LEVEIS_SELECAO_ORDEM.has(level_id):
+		return LEVEIS_SELECAO_ORDEM[0]
+	# pega a posicao do level atual na lista
+	var id : int = LEVEIS_SELECAO_ORDEM.find(level_id)
+	# tem o proximo level na lista -> retorne o proximo
+	if id + 1 < LEVEIS_SELECAO_ORDEM.size():
+		return LEVEIS_SELECAO_ORDEM[id + 1]
+	
+	# se nao tiver proximo -> retorne o atual
+	return level_id

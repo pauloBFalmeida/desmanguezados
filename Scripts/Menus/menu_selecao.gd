@@ -4,8 +4,10 @@ extends Menu
 @onready var label_status_P2 := $ControlesConectados/LabelStatusP2
 
 @onready var container_leveis := $ScrollContainerLeveis/HBoxContainer
+@onready var scroll_container := $ScrollContainerLeveis
 
 var leveis_itens = []
+var leveis_itens_por_level_id : Dictionary[LevelManager.Level_id, LevelItem] = {}
 
 func _ready() -> void:
 	# controle conectado -> atualiza as informacoes de controles conectados
@@ -25,9 +27,20 @@ func _criar_level_itens() -> void:
 		var item = item_ref.instantiate()
 		leveis_itens.append(item)
 		container_leveis.add_child(item)
+		# add no dicionario
+		leveis_itens_por_level_id[level_id] = item
 		# link botao com inicio do level
 		item.ajust(level_id)
-	leveis_itens[0].btn_grab_focus()
+	# pre seleciona o proximo level (ou o inicial se acabou de abrir)
+	print('Globais.current_level_id ', Globais.current_level_id)
+	print('leveis_itens ', leveis_itens)
+	if leveis_itens_por_level_id.has(Globais.current_level_id):
+		var item_focus = leveis_itens_por_level_id[Globais.current_level_id]
+		item_focus.btn_grab_focus()
+		await get_tree().process_frame
+		scroll_container.ensure_control_visible(item_focus)
+	else: # se nao tinha na lista de leveis jogaveis -> pega o primeiro level da lista
+		leveis_itens[0].btn_grab_focus()
 
 # --- Controles Conectados ---
 func update_conectados():

@@ -162,7 +162,7 @@ func _on_button_replay_pressed() -> void:
 	_replay()
 
 func _on_button_menu_gameover_pressed() -> void:
-	_goto_menu()
+	_goto_selecao()
 
 # ---------------------------------
 # Pausar Partida
@@ -207,6 +207,9 @@ func _on_button_restart_pressed() -> void:
 	_replay()
 
 func _on_button_prox_pressed() -> void:
+	# atualiza para pre-selecionar o proximo level no menu de selecao
+	Globais.current_level_id = LevelManager.get_next_level(Globais.current_level_id)
+	# vai para o menu de selecao
 	_goto_selecao()
 
 func _on_button_menu_pressed() -> void:
