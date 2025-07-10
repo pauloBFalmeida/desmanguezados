@@ -31,6 +31,87 @@
             width: 100%;
             height: 100%;
         }
+
+        .carousel-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .carousel-images {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .carousel-image {
+            width: calc(33.333% - 14px);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+        }
+        
+        .carousel-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            gap: 10px;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-dot.active {
+            background: #6366f1;
+            transform: scale(1.2);
+        }
+        
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.8);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .carousel-btn.prev {
+            left: 10px;
+        }
+        
+        .carousel-btn.next {
+            right: 10px;
+        }
+        
+        .carousel-btn:hover {
+            background: white;
+        }
     </style>
 </head>
 <body class="bg-gray-100 font-sans">
@@ -218,19 +299,31 @@
             <!-- TestNight Event -->
             <div class="mb-16">
                 <h3 class="text-2xl font-bold text-center mb-8 text-indigo-700">TestNight</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white">
-                        <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
-                             alt="TestNight" 
-                             class="w-full h-64 object-cover">
+
+                <div class="carousel-container" id="testnight-carousel">
+                    <button class="carousel-btn prev" onclick="prevSlide('testnight')">❮</button>
+                    
+                    <div class="carousel-images">
+                        <!-- Apenas 3 imagens no HTML - serão alteradas via JS -->
+                        <div class="carousel-image">
+                            <img src="" alt="TestNight 1" id="testnight-img-1">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="" alt="TestNight 2" id="testnight-img-2">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="" alt="TestNight 3" id="testnight-img-3">
+                        </div>
                     </div>
-                    <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white">
-                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                             alt="TestNight" 
-                             class="w-full h-64 object-cover">
+                    
+                    <button class="carousel-btn next" onclick="nextSlide('testnight')">❯</button>
+                    
+                    <div class="carousel-nav" id="testnight-dots">
+                        <!-- Pontos serão gerados pelo JavaScript -->
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
+                
+                <div class="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto mt-6">
                     <p class="text-gray-700">
                         Durante o primeiro evento levamos o jogo com apenas 1 tutorial e 3 fases, não tinha animações nem músicas implementadas.
                         O objetivo era testar as mecânicas e o core loop do jogo, além da receptividade ao uso de controle e teclado.
@@ -246,19 +339,31 @@
             <!-- GameFest Event -->
             <div>
                 <h3 class="text-2xl font-bold text-center mb-8 text-indigo-700">GameFest</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white">
-                        <img src="https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
-                             alt="GameFest" 
-                             class="w-full h-64 object-cover">
+
+                <div class="carousel-container" id="gamefest-carousel">
+                    <button class="carousel-btn prev" onclick="prevSlide('gamefest')">❮</button>
+                    
+                    <div class="carousel-images">
+                        <!-- Apenas 3 imagens no HTML - serão alteradas via JS -->
+                        <div class="carousel-image">
+                            <img src="" alt="GameFest 1" id="gamefest-img-1">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="" alt="GameFest 2" id="gamefest-img-2">
+                        </div>
+                        <div class="carousel-image">
+                            <img src="" alt="GameFest 3" id="gamefest-img-3">
+                        </div>
                     </div>
-                    <div class="gallery-item rounded-lg overflow-hidden shadow-md bg-white">
-                        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
-                             alt="GameFest" 
-                             class="w-full h-64 object-cover">
+                    
+                    <button class="carousel-btn next" onclick="nextSlide('gamefest')">❯</button>
+                    
+                    <div class="carousel-nav" id="gamefest-dots">
+                        <!-- Pontos serão gerados pelo JavaScript -->
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto">
+                
+                <div class="bg-white p-6 rounded-lg shadow-md max-w-3xl mx-auto mt-6">
                     <p class="text-gray-700">
                         No GameFest levamos uma versão demo do jogo, contendo 2 tutoriais simples, e mais 5 fases diferentes.
                         Um menu de configurações. Um menu de estatísticas contando a quantidade dos objetivos feitos em todos jogos.
@@ -498,6 +603,92 @@
                 });
             });
         });
+
+        // Conjuntos de imagens para cada evento
+        const imageSets = {
+            testnight: [
+                'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80',
+                'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+                'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+                'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+                'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1469&q=80',
+                'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80'
+            ],
+            gamefest: [
+                'https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80',
+                'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1469&q=80',
+                'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80',
+                'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+                'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1469&q=80',
+                'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80'
+            ]
+        };
+
+        // Estado dos carrosseis
+        const carouselState = {
+            testnight: { currentIndex: 0 },
+            gamefest: { currentIndex: 0 }
+        };
+
+        // Inicializa os carrosseis
+        document.addEventListener('DOMContentLoaded', function() {
+            initCarousel('testnight');
+            initCarousel('gamefest');
+        });
+
+        function initCarousel(carouselId) {
+            // Cria os pontos de navegação
+            const dotsContainer = document.getElementById(`${carouselId}-dots`);
+            const imageCount = imageSets[carouselId].length;
+            
+            for (let i = 0; i < imageCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot';
+                dot.dataset.index = i;
+                dot.addEventListener('click', () => goToSlide(carouselId, i));
+                dotsContainer.appendChild(dot);
+            }
+            
+            // Atualiza as imagens iniciais
+            updateCarousel(carouselId);
+        }
+
+        function updateCarousel(carouselId) {
+            const state = carouselState[carouselId];
+            const images = imageSets[carouselId];
+            const dots = document.querySelectorAll(`#${carouselId}-dots .carousel-dot`);
+            
+            // Atualiza as 3 imagens visíveis
+            for (let i = 0; i < 3; i++) {
+                const imgIndex = (state.currentIndex + i) % images.length;
+                const imgElement = document.getElementById(`${carouselId}-img-${i+1}`);
+                imgElement.src = images[imgIndex];
+                imgElement.alt = `${carouselId} ${imgIndex + 1}`;
+            }
+            
+            // Atualiza os pontos ativos
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === state.currentIndex);
+            });
+        }
+
+        function nextSlide(carouselId) {
+            const state = carouselState[carouselId];
+            state.currentIndex = (state.currentIndex + 1) % imageSets[carouselId].length;
+            updateCarousel(carouselId);
+        }
+
+        function prevSlide(carouselId) {
+            const state = carouselState[carouselId];
+            const length = imageSets[carouselId].length;
+            state.currentIndex = (state.currentIndex - 1 + length) % length;
+            updateCarousel(carouselId);
+        }
+
+        function goToSlide(carouselId, index) {
+            carouselState[carouselId].currentIndex = index;
+            updateCarousel(carouselId);
+        }
     </script>
 </body>
 </html>
