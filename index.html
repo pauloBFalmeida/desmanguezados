@@ -42,6 +42,7 @@
             display: flex;
             gap: 20px;
             justify-content: center;
+            position: relative;
         }
         
         .carousel-image {
@@ -102,15 +103,23 @@
         }
         
         .carousel-btn.prev {
-            left: 10px;
+            left: -50px;
         }
         
         .carousel-btn.next {
-            right: 10px;
+            right: -50px;
         }
         
         .carousel-btn:hover {
             background: white;
+        }
+
+        .carousel-container:hover .carousel-btn {
+            display: flex;  /* Mostra os botões quando hover */
+        }
+
+        .carousel-images:hover ~ .carousel-btn {
+            opacity: 1;
         }
     </style>
 </head>
@@ -626,8 +635,14 @@
 
         // Estado dos carrosseis
         const carouselState = {
-            testnight: { currentIndex: 0 },
-            gamefest: { currentIndex: 0 }
+            testnight: { 
+                currentIndex: 0,
+                intervalId: null
+            },
+            gamefest: { 
+                currentIndex: 0,
+                intervalId: null
+            }
         };
 
         // Inicializa os carrosseis
@@ -645,12 +660,34 @@
                 const dot = document.createElement('div');
                 dot.className = 'carousel-dot';
                 dot.dataset.index = i;
-                dot.addEventListener('click', () => goToSlide(carouselId, i));
+                dot.addEventListener('click', () => {
+                    goToSlide(carouselId, i);
+                    resetInterval(carouselId);  // Reinicia o intervalo quando clica manualmente
+                });
                 dotsContainer.appendChild(dot);
             }
             
             // Atualiza as imagens iniciais
             updateCarousel(carouselId);
+            
+            // Inicia o intervalo automático
+            startAutoRotation(carouselId);
+        }
+
+        function startAutoRotation(carouselId) {
+            // Para qualquer intervalo existente primeiro
+            if (carouselState[carouselId].intervalId) {
+                clearInterval(carouselState[carouselId].intervalId);
+            }
+            
+            // Inicia novo intervalo
+            carouselState[carouselId].intervalId = setInterval(() => {
+                nextSlide(carouselId);
+            }, 3000);  // 3000ms = 3 segundos
+        }
+
+        function resetInterval(carouselId) {
+            startAutoRotation(carouselId);
         }
 
         function updateCarousel(carouselId) {
@@ -676,6 +713,7 @@
             const state = carouselState[carouselId];
             state.currentIndex = (state.currentIndex + 1) % imageSets[carouselId].length;
             updateCarousel(carouselId);
+            resetInterval(carouselId);  // Reinicia o intervalo
         }
 
         function prevSlide(carouselId) {
@@ -683,12 +721,28 @@
             const length = imageSets[carouselId].length;
             state.currentIndex = (state.currentIndex - 1 + length) % length;
             updateCarousel(carouselId);
+            resetInterval(carouselId);  // Reinicia o intervalo
         }
 
         function goToSlide(carouselId, index) {
             carouselState[carouselId].currentIndex = index;
             updateCarousel(carouselId);
         }
+
+        document.querySelectorAll('.carousel-container').forEach(container => {
+            const carouselId = container.id.replace('-carousel', '');
+            
+            container.addEventListener('mouseenter', () => {
+                if (carouselState[carouselId].intervalId) {
+                    clearInterval(carouselState[carouselId].intervalId);
+                    carouselState[carouselId].intervalId = null;
+                }
+            });
+            
+            container.addEventListener('mouseleave', () => {
+                startAutoRotation(carouselId);
+            });
+        });
     </script>
 </body>
 </html>
