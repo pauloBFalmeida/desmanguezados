@@ -14,6 +14,7 @@ config/name="Desmanguezados"
 run/main_scene="uid://4k8drpikovn2"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="uid://csn05g2ocwtcj"
+config/windows_native_icon="res://icone.ico"
 
 [autoload]
 
