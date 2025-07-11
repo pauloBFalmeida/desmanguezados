@@ -1,7 +1,7 @@
-[gd_scene load_steps=39 format=4 uid="uid://e0hvhpdu6hbn"]
+[gd_scene load_steps=40 format=4 uid="uid://e0hvhpdu6hbn"]
 
 [ext_resource type="Script" uid="uid://b365074iebc74" path="res://Scripts/Menus/menu_principal.gd" id="1_ntrab"]
-[ext_resource type="Script" path="res://Scripts/Menus/UsadosMenus/background_principal.gd" id="2_jgvpl"]
+[ext_resource type="Script" uid="uid://b0bje2dy25stn" path="res://Scripts/Menus/UsadosMenus/background_principal.gd" id="2_jgvpl"]
 [ext_resource type="TileSet" uid="uid://bihajaisgd8ms" path="res://PreSets/Cenario/tiles/tilemap_areia.tres" id="2_ov37b"]
 [ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_xgp53"]
 [ext_resource type="Texture2D" uid="uid://bgnf6wpo3en3s" path="res://Assets/Cenario/AnimacaoMar/mar/Frame1.png" id="4_2a355"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://by6cbncn8b5if" path="res://Assets/Cenario/AnimacaoMar/mar/Frame2.png" id="5_ov37b"]
 [ext_resource type="Texture2D" uid="uid://bacnhyxp8hrir" path="res://Assets/Cenario/AnimacaoMar/mar/Frame3.png" id="6_jgvpl"]
 [ext_resource type="Texture2D" uid="uid://dw5fd686if51k" path="res://Assets/Cenario/AnimacaoMar/mar/Frame4.png" id="7_55wq7"]
-[ext_resource type="Script" path="res://Scripts/Menus/UsadosMenus/tilemap_anim.gd" id="8_55wq7"]
+[ext_resource type="Script" uid="uid://dqy3ujnnmq3yu" path="res://Scripts/Menus/UsadosMenus/tilemap_anim.gd" id="8_55wq7"]
 [ext_resource type="Texture2D" uid="uid://dbga62g6ihbka" path="res://Assets/Cenario/AnimacaoMar/borda/Frame1.png" id="8_ov8d6"]
 [ext_resource type="Texture2D" uid="uid://chpvve6ssyij7" path="res://Assets/Cenario/AnimacaoMar/borda/Frame2.png" id="9_exyxp"]
 [ext_resource type="Texture2D" uid="uid://bispd85wqcntu" path="res://Assets/Cenario/AnimacaoMar/borda/Frame3.png" id="10_y0seq"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://ds7teuiqj5h2" path="res://Assets/Cenario/AnimacaoMar/capivara/Frame3.png" id="18_vk453"]
 [ext_resource type="Texture2D" uid="uid://c6bjjcij3iiaj" path="res://Assets/Cenario/AnimacaoMar/capivara/Frame4.png" id="19_vy8g6"]
 [ext_resource type="Texture2D" uid="uid://i0la7mhbq51s" path="res://Assets/Cenario/AnimacaoMar/capivara/Frame5.png" id="20_f1imb"]
+[ext_resource type="Texture2D" uid="uid://belrygy6ygg87" path="res://Assets/Interface/Menu/titulo.png" id="23_ov8d6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_55wq7"]
 texture = ExtResource("4_2a355")
@@ -181,6 +182,7 @@ sprite_frames = SubResource("SpriteFrames_bdmmh")
 autoplay = "default"
 
 [node name="LabelTitulo" type="Label" parent="."]
+visible = false
 layout_mode = 1
 offset_left = 40.0
 offset_top = 32.0
@@ -189,6 +191,11 @@ offset_bottom = 144.0
 theme = ExtResource("3_xgp53")
 theme_override_font_sizes/font_size = 80
 text = "Desmanguezados"
+
+[node name="Titulo" type="Sprite2D" parent="."]
+position = Vector2(306.341, 84.625)
+scale = Vector2(0.267886, 0.267886)
+texture = ExtResource("23_ov8d6")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
