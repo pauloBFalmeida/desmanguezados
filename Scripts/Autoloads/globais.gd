@@ -6,6 +6,15 @@ func _ready() -> void:
 		if not leveis_highscore.has(id):
 			leveis_highscore[id] = -1
 
+func is_abrindo_jogo() -> bool:
+	# jogo nao estava aberto -> abriu agora
+	if not is_jogo_aberto:
+		is_jogo_aberto = true
+		# retorne true -> que esta abrindo agora
+		return true
+	# retorne false -> que ja estava aberto
+	return false
+
 # ---- -------------------- ----
 # ---- Salvos               ----
 # ---- -------------------- ----
@@ -30,6 +39,8 @@ var stats_ferramentas_jogadas = 0
 var stats_zen_tiles_competamente_jogados = 0
 
 # ---- Durante a Execucao ----
+var is_jogo_aberto := false
+
 ## jogo ja teve um load feito, i.e., ja foi carregado as Globais
 var jogo_ja_loaded : bool = false
 

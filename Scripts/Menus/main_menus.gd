@@ -2,7 +2,21 @@ extends Node
 
 @onready var audio_player_musica_menu := $AudioStreamPlayerMusicaMenu
 
+@onready var logo_vulpe := $LogoVulpe
+
 func _ready() -> void:
+	if Globais.is_abrindo_jogo():
+		logo_vulpe.show()
+		# mostra solido por um tempo
+		await get_tree().create_timer(1.5).timeout
+		# tween
+		var tween := create_tween()
+		tween.set_ease(Tween.EASE_OUT)
+		tween.set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(logo_vulpe, 'modulate:a', 0.0, 0.7).from_current()
+		await tween.finished
+	logo_vulpe.hide()
+	
 	# faz o load do save do game (se ja tiver feito, nao sobrescreve)
 	SaveManager.load_game(false)
 	
