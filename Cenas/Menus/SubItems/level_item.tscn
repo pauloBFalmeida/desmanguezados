@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://cciukv0gmo85j"]
 
 [ext_resource type="Script" uid="uid://cipaecfgi6vb2" path="res://Scripts/Menus/UsadosMenus/level_item.gd" id="1_ggp4t"]
-[ext_resource type="Texture2D" uid="uid://bmvky7k2qcug2" path="res://Assets/Interface/Partida/white.png" id="2_jmyqs"]
+[ext_resource type="Texture2D" uid="uid://c40pbr4o7v5ia" path="res://Assets/Interface/leveis_thumbnails/lv1.png" id="2_gd4ua"]
 [ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="3_gd4ua"]
 [ext_resource type="Texture2D" uid="uid://dli02qeiqjx8w" path="res://Assets/Interface/Menu/concha.png" id="3_lyv4a"]
 [ext_resource type="Shader" uid="uid://c5ga6t0j7w2ie" path="res://Scripts/Shaders/shine.gdshader" id="4_e31gh"]
@@ -54,13 +54,13 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -147.0
-offset_top = 8.0
-offset_right = 838.0
-offset_bottom = 500.0
+offset_left = -141.0
+offset_top = 6.0
+offset_right = 925.0
+offset_bottom = 606.0
 grow_horizontal = 2
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("2_jmyqs")
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("2_gd4ua")
 
 [node name="Info" type="Control" parent="."]
 anchors_preset = 0
