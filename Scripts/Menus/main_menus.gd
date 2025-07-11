@@ -5,6 +5,7 @@ extends Node
 @onready var logo_vulpe := $LogoVulpe
 
 func _ready() -> void:
+	# se esta abrindo o jogo pela primeira vez
 	if Globais.is_abrindo_jogo():
 		logo_vulpe.show()
 		# mostra solido por um tempo
