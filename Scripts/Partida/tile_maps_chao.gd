@@ -8,6 +8,11 @@ class_name TileMapsChao
 @onready var tilemap_agua_size_x = 1 / tilemap_agua.scale.x
 @onready var tilemap_lodo_size_x = 1 / tilemap_lodo.scale.x
 
+func _ready() -> void:
+	# verificar remover efeitos graficos
+	if tilemap_agua and is_instance_valid(tilemap_agua):
+		Globais.verif_rem_efeito(tilemap_agua)
+
 func jogador_pos_on_water(global_pos_jog : Vector2) -> bool:
 	# pega o tile de agua que o jogador esta em cima
 	var tile = _get_tile_data(global_pos_jog, tilemap_agua_size_x, tilemap_agua)

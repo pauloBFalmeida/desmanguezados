@@ -12,6 +12,10 @@ extends Arvore
 
 func _ready() -> void:
 	super() # chama _ready da classe Arvore
+	# verificar remover efeitos graficos
+	for sprite in sprites_idade.values(): # para cada sprite
+		Globais.verif_rem_efeito(sprite)
+	
 	#comecar_crescer()
 	# desligar as colisoes e sprites
 	for key in sprites_idade.keys():

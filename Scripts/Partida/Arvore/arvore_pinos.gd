@@ -1,14 +1,16 @@
 extends Arvore
 
 @onready var anim_player := $AnimationPlayer
+@onready var sprite := $Pinos
 
 @onready var front_z_index := z_index
 @onready var behind_z_index := 0
 
-
 func _ready() -> void:
 	super() # chama _ready da classe Arvore
 	idade = Crescimento.ADULTA
+	# verificar remover efeitos graficos
+	Globais.verif_rem_efeito(sprite)
 
 func cortar() -> void:
 	# nao faz nada se tiver sendo cortada

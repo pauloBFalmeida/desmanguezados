@@ -79,6 +79,9 @@ func _on_tela_cheia_toggled(toggled_on: bool) -> void:
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED) 
 
+func _on_rem_efeitos_graf_toggled(toggled_on: bool) -> void:
+	Globais.remov_efeitos_graf = toggled_on
+
 
 # --------- Deletar Save ---------
 func _on_button_deletar_partida_toggled(toggled_on: bool) -> void:
