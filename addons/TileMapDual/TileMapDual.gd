@@ -4,7 +4,20 @@ class_name TileMapDual
 extends TileMapLayer
 
 
+## An invisible material used to hide the world grid so only the display layers show up.
+## Currently implemented as a shader that sets all pixels to 0 alpha.
 var _ghost_material: Material = preload("res://addons/TileMapDual/ghost_material.tres")
+
+
+# === External functions that don't exist once exported ===
+# HACK: this uses some sort of "Dynamic Linking" technique because these features don't exist right now
+# - conditional compilation
+# - static signals
+static func _editor_only(name: String):
+	push_error('Attempt to call Editor-Only function "' + name + '"')
+static var autotile: Callable = _editor_only.bind('autotile').unbind(3)
+static var popup: Callable = _editor_only.bind('popup').unbind(2)
+
 
 ## Material for the display tilemap.
 @export_custom(PROPERTY_HINT_RESOURCE_TYPE, "ShaderMaterial, CanvasItemMaterial")
@@ -21,9 +34,9 @@ func _ready() -> void:
 	_tileset_watcher = TileSetWatcher.new(tile_set)
 	_display = Display.new(self, _tileset_watcher)
 	add_child(_display)
-	_make_self_invisible()
+	_make_self_invisible(true)
 	if Engine.is_editor_hint():
-		_tileset_watcher.atlas_autotiled.connect(_atlas_autotiled, 1)
+		_tileset_watcher.atlas_autotiled.connect(_atlas_autotiled)
 		set_process(true)
 	else: # Run in-game using signals for better performance
 		changed.connect(_changed, 1)
@@ -35,24 +48,19 @@ func _ready() -> void:
 
 ## Automatically generate terrains when the atlas is initialized.
 func _atlas_autotiled(source_id: int, atlas: TileSetAtlasSource):
-	var urm := EditorPlugin.new().get_undo_redo()
-	urm.create_action("Create tiles in non-transparent texture regions", UndoRedo.MergeMode.MERGE_ALL, self, true)
-	# NOTE: commit_action() is called immediately after.
-	# NOTE: Atlas is guaranteed to have only been auto-generated with no extra peering bit information.
-	TerrainPreset.write_default_preset(urm, tile_set, atlas)
-	urm.commit_action()
-
+	autotile.call(source_id, atlas, tile_set)
+	
 
 ## Keeps track of use_parent_material to see when it turns on or off.
 var _cached_use_parent_material = null
 ##[br] Makes the main world grid invisible.
 ##[br] The main tiles don't need to be seen. Only the DisplayLayers should be visible.
 ##[br] Called every frame, and functions a lot like TileSetWatcher.
-func _make_self_invisible() -> void:
+func _make_self_invisible(startup: bool = false) -> void:
 	# If user has set a material in the original slot, inform the user
 	if material != _ghost_material:
-		if Engine.is_editor_hint():
-			TileMapDualEditorPlugin.popup(
+		if not startup and Engine.is_editor_hint():
+			popup.call(
 				"Warning! Direct material edit detected.",
 				"Don't manually edit the real material in the editor! Instead edit the custom 'Display Material' property.\n" +
 				"(Resetting the material to an invisible shader material... this is to keep the 'World Layer' invisible)\n" +
@@ -70,7 +78,7 @@ func _make_self_invisible() -> void:
 		and use_parent_material != _cached_use_parent_material
 		and _cached_use_parent_material == false # cache may be null
 	):
-		TileMapDualEditorPlugin.popup(
+		popup.call(
 			"Warning: Using Parent Material.",
 			"The parent material will override any other materials used by the TileMapDual,\n" +
 			"including the 'ghost shader' that the world tiles use to hide themselves.\n" +
@@ -83,7 +91,8 @@ func _make_self_invisible() -> void:
 	_cached_use_parent_material = use_parent_material
 
 
-## HACK: How long to wait before processing another "frame"
+## HACK: How long to wait before processing another "frame".
+## Mainly matters when [godot_4_3_compatibility] is active.
 @export_range(0.0, 0.1) var refresh_time: float = 0.02
 var _timer: float = 0.0
 func _process(delta: float) -> void: # Only used inside the editor
@@ -95,12 +104,30 @@ func _process(delta: float) -> void: # Only used inside the editor
 	_timer = refresh_time
 	call_deferred('_changed')
 
+## When toggled on, double-checks ALL cells in the grid every change.
+## Only use this when running Godot 4.3 and below,
+## where TileMapLayer could not detect changes properly.
+@export var godot_4_3_compatibility: bool = _godot_is_below_4_4()
+
+## Detects if godot is below v4.4.
+## Only used to detect whether the _update_cells() function is usable.
+func _godot_is_below_4_4():
+	var version := Engine.get_version_info()
+	return version.major < 4 or version.major == 4 and version.minor < 4
 
 ## Called by signals when the tileset changes,
 ## or by _process inside the editor.
 func _changed() -> void:
 	_tileset_watcher.update(tile_set)
-	_display.update([])
+
+	var updated_cells := []
+	# HACK: double check all tiles every refresh
+	if godot_4_3_compatibility and tile_set != null:
+		var current_cells := TileCache.new()
+		current_cells.update(self, get_used_cells())
+		updated_cells = current_cells.xor(_display.cached_cells)
+
+	_display.update(updated_cells)
 	_make_self_invisible()
 
 
