@@ -174,7 +174,7 @@ shape = SubResource("RectangleShape2D_neco8")
 position = Vector2(823, 307)
 
 [node name="Label" parent="Textos/GameDesign" index="0"]
-text = "GameDesigner"
+text = "Level Design"
 
 [node name="CollisionShape2D" parent="Textos/GameDesign" index="1"]
 position = Vector2(89, 4)
