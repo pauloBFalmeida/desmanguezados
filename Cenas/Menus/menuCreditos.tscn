@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/Menu/CartazDesmangezados.png" id="3_neco8"]
 [ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="4_63pwd"]
 [ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_sd7ve"]
+[ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="6_g3wrx"]
 [ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="6_mh1yw"]
 [ext_resource type="Script" uid="uid://ymebirrcc0d3" path="res://Scripts/Partida/locais_plantar_colecao.gd" id="6_neco8"]
 
@@ -14,7 +15,7 @@
 size = Vector2(175, 95)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g3wrx"]
-size = Vector2(250, 56)
+size = Vector2(235, 54)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hhl6k"]
 size = Vector2(229, 40)

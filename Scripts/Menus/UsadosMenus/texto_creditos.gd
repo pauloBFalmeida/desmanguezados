@@ -47,16 +47,14 @@ func get_dados() -> Dictionary:
 	var dados : Dictionary = {
 		"texto": label_texto.text,
 		"peso" : mass,
-		"font_size" : label_texto.get_theme_font_size("normal_font_size"),
-		"font_color": label_texto.get_theme_color("normal_font_size"),
+		"theme" : label_texto.theme,
 	}
 	return dados
 
 func set_dados(dados : Dictionary) -> void:
 	label_texto.text = dados["texto"]
 	mass = dados["peso"]
-	label_texto.add_theme_font_size_override("normal_font_size", dados["font_size"])
-	label_texto.add_theme_color_override("normal_font_size", dados["font_color"])
+	label_texto.theme = dados["theme"]
 
 func morrer() -> void:
 	emit_signal("death")
