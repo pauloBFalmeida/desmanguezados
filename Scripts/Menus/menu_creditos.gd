@@ -165,6 +165,7 @@ func _pascoa_acabar() -> void:
 # ------------------------------------------------------------------------------
 # Voltar para o menu
 # ------------------------------------------------------------------------------
+@onready var botao_voltar := $ButtonVoltar
 func _on_button_voltar_pressed() -> void:
 	voltar_menu_principal()
 
@@ -185,3 +186,19 @@ func _on_area_2d_voltar_body_exited(body: Node2D) -> void:
 func _passou_tempo(jogador : Jogador) -> void:
 	if dentro_area_voltar.has(jogador):
 		voltar_menu_principal()
+
+func _visual_botao_voltar() -> void:
+	# se esta reto -> rode um pouco
+	if botao_voltar.rotation == 0:
+		botao_voltar.rotation = PI/36
+	# roda pro outro lado
+	botao_voltar.rotation *= -1
+
+func _physics_process(delta: float) -> void:
+	# roda 1 a cada 3 vezes
+	if Engine.get_physics_frames() % 3 == 0:
+		# se tiver dentro do botao de voltar -> mostrar visual
+		if not dentro_area_voltar.is_empty():
+				_visual_botao_voltar()
+		else:
+			botao_voltar.rotation = 0
