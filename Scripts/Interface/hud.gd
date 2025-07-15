@@ -229,4 +229,5 @@ func _goto_selecao() -> void:
 
 func _replay() -> void:
 	get_tree().paused = false
+	await get_tree().process_frame
 	SceneManager.restart_level()
