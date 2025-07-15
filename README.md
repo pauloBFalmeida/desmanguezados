@@ -68,10 +68,12 @@ Assim o novo level deve ter sido adicionado e pode ser acessado no menu de sele�
 ## Guia de Instalação
 Baixar o zip do projeto -> Godot 4 Importar projeto
 
+
 ## Plugins utilizados
 
-
 [TileMapDual](https://github.com/pablogila/TileMapDual)
+
+Não é um plugin, mas o shader da tela veio daqui [Screen Space Shaders](https://github.com/godotengine/godot-demo-projects/tree/4.2-31d1c0c/2d/screen_space_shaders).
 
 ### Se o plugin não estiver ativo:
 Projeto -> Configurações do Projeto -> Plugins -> Habilitado tem que estar marcado como Ativo
