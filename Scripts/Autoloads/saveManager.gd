@@ -75,6 +75,20 @@ func _ajustar_globais(config : ConfigFile) -> void:
 	#print('Globais.indicador_direcao_transparente_sem_target ', Globais.indicador_direcao_transparente_sem_target)
 	#print('Globais.leveis_highscore ', Globais.leveis_highscore)
 
+# ----- Reset Globais das config -----
+func reset_globais_config() -> void:
+	Globais.possivel_aim_all_time = false
+	Globais.indicador_direcao_transparente_sem_target = true
+	# - Audio -
+	Globais.volume_musica_menu     = -20.0
+	Globais.volume_musica_partida  = -25.0
+	Globais.volume_efeitos_partida = 0.0
+	# - Exibicao -
+	Globais.tela_cheia         = true
+	Globais.remov_efeitos_graf = false
+	Globais.remov_logo_intro   = false
+	
+
 # ----- Delete Save -----
 func reset_save() -> void:
 	var config = ConfigFile.new()

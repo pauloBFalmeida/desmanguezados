@@ -29,9 +29,12 @@ extends Menu
 
 # ----- Menu de Tags -----
 enum Tag {GAMEPLAY, AUDIO, EXIBICAO, SAVE}
-
-@onready var tag_buttons : Array = container_tags.get_children()
-
+@onready var buttons_por_tag : Dictionary[Tag, Button] = {
+	Tag.GAMEPLAY : $VBoxTags/TagGameplay,
+	Tag.AUDIO    : $VBoxTags/TagAudio,
+	Tag.EXIBICAO : $VBoxTags/TagExibicao,
+	Tag.SAVE     : $VBoxTags/TagSave,
+}
 ## string escrita nos metadados das configuracoes -> Tag
 var string_para_tag : Dictionary[String, Tag] = {
 	"gameplay" : Tag.GAMEPLAY,
@@ -100,12 +103,7 @@ func _on_h_slider_effects_drag_ended(value_changed: bool) -> void:
 # --------- Exibicao ---------
 func _on_tela_cheia_toggled(toggled_on: bool) -> void:
 	Globais.tela_cheia = toggled_on
-	# on -> full screen
-	if toggled_on:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	# off -> janela
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED) 
+	Globais.ajustar_tela_cheia()
 
 func _on_rem_efeitos_graf_toggled(toggled_on: bool) -> void:
 	Globais.remov_efeitos_graf = toggled_on
@@ -115,6 +113,11 @@ func _on_rem_logo_intro_toggled(toggled_on: bool) -> void:
 
 
 # --------- Deletar Save ---------
+func _on_button_reset_configs_pressed() -> void:
+	SaveManager.reset_globais_config()
+	# update visual
+	_on_tag_gameplay_toggled(true)
+
 func _on_button_deletar_partida_toggled(toggled_on: bool) -> void:
 	lidar_toggle(toggled_on, toggle_deletar_partida, itens_partida)
 
@@ -158,16 +161,24 @@ func _ajustar_tags_configs() -> void:
 	# cria uma lista vazia para cada tag
 	for tag in Tag.values():
 		configs_por_tag[tag] = []
+	# para cada botao de tag ajusta o receber foco para mesmo de apertar
+	buttons_por_tag[Tag.GAMEPLAY].focus_entered.connect( _on_tag_gameplay_toggled.bind(true) )
+	buttons_por_tag[Tag.AUDIO].focus_entered.connect(    _on_tag_audio_toggled.bind(true) )
+	buttons_por_tag[Tag.EXIBICAO].focus_entered.connect( _on_tag_exibicao_toggled.bind(true) )
+	buttons_por_tag[Tag.SAVE].focus_entered.connect(     _on_tag_save_toggled.bind(true) )
 	# ajusta as configs nas tags 
 	for config in container_configs.get_children():
 		var config_tag : String = config.get_meta("tag")
 		var tag = string_para_tag[config_tag]
 		# adiciono ao dict de configs por tag
 		configs_por_tag[tag].append(config)
+	# ajusta movimentos do focus nos neighbors
+	_ajustar_tags_focus_neighbors()
 	# mostra no inicio as tags de gameplay
 	_update_configs_por_tag(Tag.GAMEPLAY)
 
 func _update_configs_por_tag(tag_mostar : Tag) -> void:
+	_unpress_tag_buttons(tag_mostar)
 	# 
 	for tag in Tag.values():
 		for config in configs_por_tag[tag]:
@@ -177,28 +188,48 @@ func _update_configs_por_tag(tag_mostar : Tag) -> void:
 				config.hide()
 
 ## des-aperta todos os botoes das tags, com excessao do passado como parametro
-func _unpress_tag_buttons(except : Button) -> void:
-	for btn in tag_buttons:
-		if btn != except:
-			btn.set_pressed_no_signal(false)
+func _unpress_tag_buttons(except_tag : Tag) -> void:
+	# des-aperta todos os botoes de tag
+	for btn in buttons_por_tag.values():
+		btn.set_pressed_no_signal(false)
+	# aperta a excessao
+	buttons_por_tag[except_tag].set_pressed_no_signal(true)
+
+func _ajustar_tags_focus_neighbors() -> void:
+	for tag in Tag.values():
+		var button_tag = buttons_por_tag[tag]
+		# pego o primeiro da lista dos Controls de configuracao por tag
+		var btn_config : Control = configs_por_tag[tag][0]
+		# se for uma grid ou container -> pego o 2 elemento (pq em geral o primeiro eh labe)
+		if btn_config is GridContainer:
+			btn_config = btn_config.get_child(1) # 2 elemento da grid
+		# neighbor direita <-recebe- (o do NodePath do) btn_config
+		button_tag.focus_neighbor_right = btn_config.get_path()
+		# todos botoes configuracoes dessa tag recebem botao de tag como neighbor esq
+		var button_tag_path = button_tag.get_path()
+		for config in configs_por_tag[tag]:
+			# se for um botao <-recebe- (o do NodePath do) button_tag
+			if config is Button:
+				config.focus_neighbor_left = button_tag_path
+			# se for uma grid -> pega os botoes presentes nessa grid
+			if config is GridContainer:
+				for grid_item in config.get_children():
+					if grid_item is Button:
+						grid_item.focus_neighbor_left = button_tag_path
 
 # -- btn presses --
 func _on_tag_gameplay_toggled(toggled_on: bool) -> void:
 	if toggled_on:
-		_unpress_tag_buttons($VBoxTags/TagGameplay)
 		_update_configs_por_tag(Tag.GAMEPLAY)
 
 func _on_tag_audio_toggled(toggled_on: bool) -> void:
 	if toggled_on:
-		_unpress_tag_buttons($VBoxTags/TagAudio)
 		_update_configs_por_tag(Tag.AUDIO)
 
 func _on_tag_exibicao_toggled(toggled_on: bool) -> void:
 	if toggled_on:
-		_unpress_tag_buttons($VBoxTags/TagExibicao)
 		_update_configs_por_tag(Tag.EXIBICAO)
 
 func _on_tag_save_toggled(toggled_on: bool) -> void:
 	if toggled_on:
-		_unpress_tag_buttons($VBoxTags/TagSave)
 		_update_configs_por_tag(Tag.SAVE)

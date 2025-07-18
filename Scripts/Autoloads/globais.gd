@@ -5,6 +5,8 @@ func _ready() -> void:
 	for id in LevelManager.Level_id.values():
 		if not leveis_highscore.has(id):
 			leveis_highscore[id] = -1
+	# ajusta a tela cheia
+	ajustar_tela_cheia()
 
 func is_abrindo_jogo() -> bool:
 	# jogo nao estava aberto -> abriu agora
@@ -58,6 +60,13 @@ var modo_zen_porcent_lixo   : float = 9.0
 
 var current_level_id : LevelManager.Level_id = LevelManager.LEVEIS_SELECAO_ORDEM[0]
 
+func ajustar_tela_cheia() -> void:
+	# true -> full screen
+	if tela_cheia:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	# false -> janela
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED) 
 
 func verif_rem_efeito(nodo : Node2D) -> void:
 	# se nao for para remover os efeitos graficos -> nao faca nada
