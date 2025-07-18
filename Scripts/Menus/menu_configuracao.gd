@@ -5,6 +5,7 @@ extends Menu
 @onready var container_configs := $VBoxConfigs
 @onready var container_tags := $VBoxTags
 # -- Controles --
+@onready var container_controles := $VBoxConfigs/GridContainerControles
 @onready var toggle_controle_p1 := $VBoxConfigs/GridContainerControles/ButtonControleP1
 @onready var toggle_controle_p2 := $VBoxConfigs/GridContainerControles/ButtonControleP2
 @onready var options_tipos_controles := $VBoxConfigs/GridContainerControles/OptionsTipoControles
@@ -50,6 +51,8 @@ var string_para_tag : Dictionary[String, Tag] = {
 }
 var configs_por_tag : Dictionary[Tag, Array]
 
+# ----- Personalizar controles -----
+@onready var container_personalizar_controles := $VBoxConfigs/ScrollContainerPersControles
 
 # --- Voltar ---
 func _on_button_voltar_pressed() -> void:
@@ -58,7 +61,7 @@ func _on_button_voltar_pressed() -> void:
 
 func _ready() -> void:
 	btn_voltar.grab_focus()
-	waiting_input.hide()
+	_hide_personalizar_controles()
 	# ---
 	_ajustar_tags_configs()
 	_carregar_dados()
@@ -111,13 +114,22 @@ func _ajustar_options_tipo_controle() -> void:
 		# se for o tipo atual -> selecione ele
 		if tipo == tipo_atual:
 			options_tipos_controles.select(tipo)
-	#
-	_ajustar_botoes_controle()
 
 func _on_options_tipo_controles_item_selected(index: int) -> void:
 	var tipo : int = options_tipos_controles.get_item_id(index)
 	Globais.controle_tipo_player[controle_player_curr] = tipo
 
+func _on_button_personalizar_controles_pressed() -> void:
+	# ajusta os botoes
+	container_personalizar_controles.mostrar_personalizar_controle(
+		controle_player_curr,
+		buttons_por_tag[Tag.CONTROLES])
+	# so mostra o container personalizar controles
+	container_controles.hide()
+	container_personalizar_controles.show()
+
+func _hide_personalizar_controles() -> void:
+	container_personalizar_controles.hide()
 
 # --------- GamePlay ---------
 func _on_aim_all_time_toggled(toggled_on: bool) -> void:
@@ -205,7 +217,7 @@ func _ajustar_tags_configs() -> void:
 	# cria uma lista vazia para cada tag
 	for tag in Tag.values():
 		configs_por_tag[tag] = []
-	# para cada botao de tag ajusta o receber foco para mesmo de apertar
+	# -- para cada botao de tag ajusta o receber foco para mesmo de apertar --
 	buttons_por_tag[Tag.CONTROLES].focus_entered.connect( _on_tag_controles_toggled.bind(true) )
 	buttons_por_tag[Tag.GAMEPLAY].focus_entered.connect(  _on_tag_gameplay_toggled.bind(true) )
 	buttons_por_tag[Tag.AUDIO].focus_entered.connect(     _on_tag_audio_toggled.bind(true) )
@@ -213,12 +225,16 @@ func _ajustar_tags_configs() -> void:
 	buttons_por_tag[Tag.SAVE].focus_entered.connect(      _on_tag_save_toggled.bind(true) )
 	# ajusta as configs nas tags 
 	for config in container_configs.get_children():
-		var config_tag : String = config.get_meta("tag")
-		var tag = string_para_tag[config_tag]
-		# adiciono ao dict de configs por tag
-		configs_por_tag[tag].append(config)
-	# ajusta movimentos do focus nos neighbors
+		var tag_string : String = config.get_meta("tag", "")
+		if string_para_tag.has(tag_string):
+			var tag = string_para_tag[tag_string]
+			# adiciono ao dict de configs por tag
+			configs_por_tag[tag].append(config)
+	# -- ajusta movimentos do focus nos neighbors --
 	_ajustar_tags_focus_neighbors()
+	#  -- esconde sub-menus ao clicar em outra tag --
+	for tag_btn in buttons_por_tag.values():
+		tag_btn.focus_entered.connect(_hide_personalizar_controles)
 
 func _update_configs_por_tag(tag_mostar : Tag) -> void:
 	_unpress_tag_buttons(tag_mostar)
@@ -305,89 +321,3 @@ func _on_tag_exibicao_toggled(toggled_on: bool) -> void:
 func _on_tag_save_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		_update_configs_por_tag(Tag.SAVE)
-
-
-# ----------- Ouvir inputs ----------
-@onready var waiting_input := $ColorRectWaitingInput
-@onready var waiting_input_button := $ColorRectWaitingInput/Button
-var escutar_input : bool = false
-var event_do_input : InputEvent
-signal input_apertado
-
-func _input(event):
-	if not escutar_input: return
-	
-	if event is InputEventJoypadButton:
-		if event.pressed:
-			event_do_input = event
-			emit_signal("input_apertado")
-			#print("Button index: %s pressed on device %s" % [event.button_index, event.device])
-	if event is InputEventJoypadMotion:
-		if event.axis == JOY_AXIS_TRIGGER_LEFT and event.axis_value > 0.4:
-			event_do_input = event
-			emit_signal("input_apertado")
-			#print("L2 (gatilho esquerdo): ", event.axis_value)
-		elif event.axis == JOY_AXIS_TRIGGER_RIGHT and event.axis_value > 0.4:
-			event_do_input = event
-			emit_signal("input_apertado")
-			#print("R2 (gatilho direito): ", event.axis_value)
-
-func _ajustar_botoes_controle() -> void:
-	controle_player_curr
-	pass
-
-func _receber_input(event_name : String) -> void:
-	waiting_input.show()
-	waiting_input_button.grab_focus()
-	# comeca a escutar
-	escutar_input = true
-	# esperar ate ter input
-	await input_apertado
-	InputManager.change_controller_action(
-		controle_player_curr, 	# player id do controle
-		event_name, 			# nome da acao no InputManager.action_names
-		event_do_input			# event novo que vamos colocar na acao
-	)
-	# para de escutar
-	escutar_input = false
-	waiting_input.hide()
-
-func _alterar_texto_botao(button : Button) -> void:
-	var controle_btn := InputManager.Controle_btn.A
-	# se for um trigger -> eh so pegar direto o botao do controle
-	if event_do_input is InputEventJoypadMotion:
-		if event_do_input.axis == JOY_AXIS_TRIGGER_LEFT:
-			controle_btn = InputManager.Controle_btn.LT
-		elif event_do_input.axis == JOY_AXIS_TRIGGER_RIGHT:
-			controle_btn = InputManager.Controle_btn.RT
-	# se for um botao -> pegar o botao com base no 'index do botao no controle'
-	var controle_tipo = Globais.controle_tipo_player[controle_player_curr]
-	var btn_index = InputManager.controle_btn_indexes[controle_tipo]
-	if event_do_input is InputEventJoypadButton:
-		var id = event_do_input.button_index
-		if btn_index.has(id):
-			controle_btn = btn_index[id]
-	# ajustar o texto
-	var btn_nomes = InputManager.controle_btn_nomes[controle_tipo]
-	button.text = btn_nomes[controle_btn]
-	# pega o foco
-	button.grab_focus()
-
-func _on_button_fer_usar_pressed() -> void:
-	await _receber_input("interact")
-	_alterar_texto_botao($VBoxConfigs/GridContainerControles/ButtonFerUsar)
-	#
-	
-	#var tex := $VBoxConfigs/GridContainerControles/LabelFerramenta2
-	#
-	#for ctr_btn in InputManager.Controle_btn.values():
-		#tex.text = InputManager.PS_btn_nomes[ctr_btn]
-		#await get_tree().create_timer(0.5).timeout
-	
-	#tex.text = "\u25A1 Square Button\n"
-	#tex.text += "\u25B3 Triangulo Button\n"
-	#tex.text += "\u25CB Bola Button\n"
-	#tex.text += "\U01F150 A\n"
-	#tex.text += "\u23F5 start\n"
-	#tex.text += "\U01F53C up\n"
-	

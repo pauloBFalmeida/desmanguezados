@@ -102,7 +102,13 @@ func change_controller_action(player_id: PlayerId, action_name: String, action_e
 	if InputMap.has_action(action):
 		InputMap.action_erase_events(action)
 		InputMap.action_add_event(action, action_event)
-	
+
+func get_action_events(player_id: PlayerId, action_name: String) -> Array[InputEvent]:
+	var action : String = actionMap_players[player_id][action_name]
+	if InputMap.has_action(action):
+		return InputMap.action_get_events(action)
+	return []
+
 # ---------- Nomes Botoes ---------------
 enum Controle_btn {
 	A, B, X, Y,

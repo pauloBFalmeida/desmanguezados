@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dl22uju6ygrp0"]
+[gd_scene load_steps=8 format=3 uid="uid://dl22uju6ygrp0"]
 
 [ext_resource type="Script" uid="uid://bt6txdh0jok31" path="res://Scripts/Menus/menu_configuracao.gd" id="1_ojjoo"]
 [ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/Menu/CartazDesmangezados.png" id="2_gnunr"]
 [ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_1s67o"]
 [ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_kdt1j"]
 [ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="5_eu4q4"]
+[ext_resource type="Script" uid="uid://b45rnt8p1oqyy" path="res://Scripts/Menus/UsadosMenus/personalizar_controles.gd" id="6_eu4q4"]
 [ext_resource type="Theme" uid="uid://bgkss7jqb5ycr" path="res://Assets/Interface/Fonts/simbols_theme.tres" id="6_kdt1j"]
 
 [node name="MenuConfiguracao" type="Control"]
@@ -160,6 +161,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="GridContainerControles" type="GridContainer" parent="VBoxConfigs"]
+visible = false
 layout_mode = 2
 theme_override_constants/h_separation = 50
 columns = 2
@@ -203,33 +205,142 @@ item_count = 2
 popup/item_0/id = 0
 popup/item_1/id = 1
 
-[node name="LabelFerramenta" type="Label" parent="VBoxConfigs/GridContainerControles"]
+[node name="VSeparator" type="VSeparator" parent="VBoxConfigs/GridContainerControles"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-theme = ExtResource("5_eu4q4")
-text = "Ferramenta"
 
-[node name="LabelFerramenta2" type="Label" parent="VBoxConfigs/GridContainerControles"]
-layout_mode = 2
-theme = ExtResource("6_kdt1j")
-text = "aaaa"
-
-[node name="HSeparator" type="HSeparator" parent="VBoxConfigs/GridContainerControles"]
-visible = false
+[node name="VSeparator2" type="VSeparator" parent="VBoxConfigs/GridContainerControles"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="VBoxConfigs/GridContainerControles"]
+[node name="LabelPersonalizarControles" type="Label" parent="VBoxConfigs/GridContainerControles"]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
-text = "Usar"
+text = "Personalizar Controles"
 
-[node name="ButtonFerUsar" type="Button" parent="VBoxConfigs/GridContainerControles"]
+[node name="ButtonPersonalizarControles" type="Button" parent="VBoxConfigs/GridContainerControles"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("5_eu4q4")
+text = "Editar"
+
+[node name="ScrollContainerPersControles" type="ScrollContainer" parent="VBoxConfigs" node_paths=PackedStringArray("primeiro_botao")]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+script = ExtResource("6_eu4q4")
+primeiro_botao = NodePath("GridContainer/ButtonFerPegar")
+
+[node name="GridContainer" type="GridContainer" parent="VBoxConfigs/ScrollContainerPersControles"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 10
+columns = 3
+
+[node name="HSeparator" type="HSeparator" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="HSeparator3" type="HSeparator" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="LabelAcao" type="Label" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+text = "Ferramentas"
+
+[node name="LabelBotao" type="Label" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+text = "Botão"
+
+[node name="LabelBotaoExtra" type="Label" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+text = "Botão Extra"
+
+[node name="LabelPegar" type="Label" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+text = "Pegar"
+
+[node name="ButtonFerPegar" type="Button" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
 text = "A"
+
+[node name="ButtonFerPegar2" type="Button" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("6_kdt1j")
+text = "A"
+
+[node name="LabelLargar" type="Label" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+text = "Largar"
+
+[node name="ButtonFerLargar" type="Button" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("6_kdt1j")
+text = "A"
+
+[node name="ButtonFerLargar2" type="Button" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("6_kdt1j")
+text = "A"
+
+[node name="LabelUsar" type="Label" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+text = "Usar"
+
+[node name="ButtonFerUsar" type="Button" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("6_kdt1j")
+text = "A"
+
+[node name="ButtonFerUsar2" type="Button" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("6_kdt1j")
+text = "A"
+
+[node name="LabelFerramenta2" type="Label" parent="VBoxConfigs/ScrollContainerPersControles/GridContainer"]
+layout_mode = 2
+theme = ExtResource("6_kdt1j")
+text = "aaaa"
 
 [node name="AimAllTime" type="CheckButton" parent="VBoxConfigs"]
 visible = false
@@ -433,7 +544,13 @@ focus_mode = 0
 [connection signal="toggled" from="VBoxConfigs/GridContainerControles/ButtonControleP1" to="." method="_on_button_controle_p_1_toggled"]
 [connection signal="toggled" from="VBoxConfigs/GridContainerControles/ButtonControleP2" to="." method="_on_button_controle_p_2_toggled"]
 [connection signal="item_selected" from="VBoxConfigs/GridContainerControles/OptionsTipoControles" to="." method="_on_options_tipo_controles_item_selected"]
-[connection signal="pressed" from="VBoxConfigs/GridContainerControles/ButtonFerUsar" to="." method="_on_button_fer_usar_pressed"]
+[connection signal="pressed" from="VBoxConfigs/GridContainerControles/ButtonPersonalizarControles" to="." method="_on_button_personalizar_controles_pressed"]
+[connection signal="pressed" from="VBoxConfigs/ScrollContainerPersControles/GridContainer/ButtonFerPegar" to="VBoxConfigs/ScrollContainerPersControles" method="_on_button_fer_pegar_pressed"]
+[connection signal="pressed" from="VBoxConfigs/ScrollContainerPersControles/GridContainer/ButtonFerPegar2" to="VBoxConfigs/ScrollContainerPersControles" method="_on_button_fer_pegar2_pressed"]
+[connection signal="pressed" from="VBoxConfigs/ScrollContainerPersControles/GridContainer/ButtonFerLargar" to="VBoxConfigs/ScrollContainerPersControles" method="_on_button_fer_largar_pressed"]
+[connection signal="pressed" from="VBoxConfigs/ScrollContainerPersControles/GridContainer/ButtonFerLargar2" to="VBoxConfigs/ScrollContainerPersControles" method="_on_button_fer_largar2_pressed"]
+[connection signal="pressed" from="VBoxConfigs/ScrollContainerPersControles/GridContainer/ButtonFerUsar" to="VBoxConfigs/ScrollContainerPersControles" method="_on_button_fer_usar_pressed"]
+[connection signal="pressed" from="VBoxConfigs/ScrollContainerPersControles/GridContainer/ButtonFerUsar2" to="VBoxConfigs/ScrollContainerPersControles" method="_on_button_fer_usar2_pressed"]
 [connection signal="toggled" from="VBoxConfigs/AimAllTime" to="." method="_on_aim_all_time_toggled"]
 [connection signal="toggled" from="VBoxConfigs/TrackingColor" to="." method="_on_tracking_color_toggled"]
 [connection signal="drag_ended" from="VBoxConfigs/GridContainerAudio/HSliderMusicaMenu" to="." method="_on_h_slider_musica_menu_drag_ended"]
