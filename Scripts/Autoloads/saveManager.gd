@@ -24,6 +24,10 @@ func save_game() -> void:
 	config.set_value("config", "volume_musica_menu", Globais.volume_musica_menu)
 	config.set_value("config", "volume_musica_partida", Globais.volume_musica_partida)
 	config.set_value("config", "volume_efeitos_partida", Globais.volume_efeitos_partida)
+	# - Exibicao -
+	config.set_value("config", "tela_cheia", Globais.tela_cheia)
+	config.set_value("config", "remov_efeitos_graf", Globais.remov_efeitos_graf)
+	config.set_value("config", "remov_logo_intro", Globais.remov_logo_intro)
 	# --- HighScore das partidas ---
 	for level : LevelManager.Level_id in Globais.leveis_highscore.keys():
 		var tempo : int = Globais.leveis_highscore[level]
@@ -51,6 +55,10 @@ func _ajustar_globais(config : ConfigFile) -> void:
 	Globais.volume_musica_menu     = config.get_value("config", "volume_musica_menu", -20.0)
 	Globais.volume_musica_partida  = config.get_value("config", "volume_musica_partida", -25.0)
 	Globais.volume_efeitos_partida = config.get_value("config", "volume_efeitos_partida", 0.0)
+	# - Exibicao -
+	Globais.tela_cheia         = config.get_value("config", "tela_cheia", true)
+	Globais.remov_efeitos_graf = config.get_value("config", "remov_efeitos_graf", false)
+	Globais.remov_logo_intro   = config.get_value("config", "remov_logo_intro", false)
 	# --- HighScore das partidas ---
 	for level : LevelManager.Level_id in Globais.leveis_highscore.keys():
 		var tempo : int = config.get_value("highscore", str(level), -1)
@@ -63,9 +71,9 @@ func _ajustar_globais(config : ConfigFile) -> void:
 	Globais.stats_ferramentas_jogadas    = config.get_value("stats", "stats_ferramentas_jogadas", 0)
 	Globais.stats_zen_tiles_competamente_jogados = config.get_value("stats", "stats_zen_tiles_competamente_jogados", 0)
 	
-	print('Globais.possivel_aim_all_time ', Globais.possivel_aim_all_time)
-	print('Globais.indicador_direcao_transparente_sem_target ', Globais.indicador_direcao_transparente_sem_target)
-	print('Globais.leveis_highscore ', Globais.leveis_highscore)
+	#print('Globais.possivel_aim_all_time ', Globais.possivel_aim_all_time)
+	#print('Globais.indicador_direcao_transparente_sem_target ', Globais.indicador_direcao_transparente_sem_target)
+	#print('Globais.leveis_highscore ', Globais.leveis_highscore)
 
 # ----- Delete Save -----
 func reset_save() -> void:

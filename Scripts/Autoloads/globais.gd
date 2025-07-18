@@ -27,6 +27,10 @@ var volume_musica_menu : float = -20.0
 var volume_musica_partida : float = -25.0
 var volume_efeitos_partida : float = 0.0
 
+var tela_cheia := false
+var remov_efeitos_graf := false
+var remov_logo_intro := false
+
 # ---- Scores ----
 var leveis_highscore : Dictionary[LevelManager.Level_id, int] = {}
 
@@ -40,7 +44,6 @@ var stats_zen_tiles_competamente_jogados = 0
 
 # ---- Durante a Execucao ----
 var is_jogo_aberto := false
-var remov_efeitos_graf := false
 
 ## jogo ja teve um load feito, i.e., ja foi carregado as Globais
 var jogo_ja_loaded : bool = false

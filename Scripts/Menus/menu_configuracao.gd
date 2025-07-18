@@ -2,23 +2,45 @@ extends Menu
 
 @onready var btn_voltar := $ButtonVoltar
 
+@onready var container_configs := $VBoxConfigs
+@onready var container_tags := $VBoxTags
 # -- GamePlay --
-@onready var toggle_aim_all_time := $ScrollContainer/VBoxContainer/AimAllTime
-@onready var toggle_tracking_color := $ScrollContainer/VBoxContainer/TrackingColor
+@onready var toggle_aim_all_time := $VBoxConfigs/AimAllTime
+@onready var toggle_tracking_color := $VBoxConfigs/TrackingColor
 # -- Audio --
-@onready var slider_musica_menu := $ScrollContainer/VBoxContainer/GridContainer/HSliderMusicaMenu
-@onready var slider_musica_partida := $ScrollContainer/VBoxContainer/GridContainer/HSliderMusicaPartida
-@onready var slider_efeitos_partida := $ScrollContainer/VBoxContainer/GridContainer/HSliderEffects
-# -- Audio --
-@onready var toggle_deletar_partida := $ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarPartida
-@onready var toggle_deletar_todo := $ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarTodo
-@onready var label_deletar_partida_certeza := $ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarPartidaCerteza
-@onready var label_deletar_todo_certeza := $ScrollContainer/VBoxContainer/GridContainerSave/ButtonDeletarTodoCerteza
-@onready var button_deletar_partida_certeza := $ScrollContainer/VBoxContainer/GridContainerSave/LabelPartidaCerteza
-@onready var button_deletar_todo_certeza := $ScrollContainer/VBoxContainer/GridContainerSave/LabelTodoCerteza
+@onready var slider_musica_menu := $VBoxConfigs/GridContainerAudio/HSliderMusicaMenu
+@onready var slider_musica_partida := $VBoxConfigs/GridContainerAudio/HSliderMusicaPartida
+@onready var slider_efeitos_partida := $VBoxConfigs/GridContainerAudio/HSliderEffects
+# -- Exibicao --
+@onready var toggle_fullscreen := $VBoxConfigs/TelaCheia
+@onready var toggle_rem_efeitos_graf := $VBoxConfigs/RemEfeitosGraf
+@onready var toggle_rem_logo_intro := $VBoxConfigs/RemLogoIntro
+# -- Save --
+@onready var toggle_deletar_partida := $VBoxConfigs/GridContainerSave/ButtonDeletarPartida
+@onready var toggle_deletar_todo := $VBoxConfigs/GridContainerSave/ButtonDeletarTodo
+@onready var label_deletar_partida_certeza := $VBoxConfigs/GridContainerSave/ButtonDeletarPartidaCerteza
+@onready var label_deletar_todo_certeza := $VBoxConfigs/GridContainerSave/ButtonDeletarTodoCerteza
+@onready var button_deletar_partida_certeza := $VBoxConfigs/GridContainerSave/LabelPartidaCerteza
+@onready var button_deletar_todo_certeza := $VBoxConfigs/GridContainerSave/LabelTodoCerteza
 
+# -- Save Dados --
 @onready var itens_partida := [button_deletar_partida_certeza, label_deletar_partida_certeza]
 @onready var itens_todo := [label_deletar_todo_certeza, button_deletar_todo_certeza]
+
+# ----- Menu de Tags -----
+enum Tag {GAMEPLAY, AUDIO, EXIBICAO, SAVE}
+
+@onready var tag_buttons : Array = container_tags.get_children()
+
+## string escrita nos metadados das configuracoes -> Tag
+var string_para_tag : Dictionary[String, Tag] = {
+	"gameplay" : Tag.GAMEPLAY,
+	"audio" : Tag.AUDIO,
+	"exibicao" : Tag.EXIBICAO,
+	"save" : Tag.SAVE,
+}
+var configs_por_tag : Dictionary[Tag, Array]
+
 
 # --- Voltar ---
 func _on_button_voltar_pressed() -> void:
@@ -28,6 +50,7 @@ func _on_button_voltar_pressed() -> void:
 func _ready() -> void:
 	btn_voltar.grab_focus()
 	# ---
+	_ajustar_tags_configs()
 	_carregar_dados()
 
 # --------- Carregar os dados do disco ---------
@@ -41,6 +64,10 @@ func _carregar_dados() -> void:
 	slider_musica_menu.set_value_no_signal(Globais.volume_musica_menu)
 	slider_musica_partida.set_value_no_signal(Globais.volume_musica_partida)
 	slider_efeitos_partida.set_value_no_signal(Globais.volume_efeitos_partida)
+	# -- Exibicao --
+	toggle_fullscreen.set_pressed_no_signal(Globais.tela_cheia)
+	toggle_rem_efeitos_graf.set_pressed_no_signal(Globais.remov_efeitos_graf)
+	toggle_rem_logo_intro.set_pressed_no_signal(Globais.remov_logo_intro)
 	# -- Deletar Save --
 	_on_button_deletar_partida_toggled(false)
 	_on_button_deletar_todo_toggled(false)
@@ -72,6 +99,7 @@ func _on_h_slider_effects_drag_ended(value_changed: bool) -> void:
 
 # --------- Exibicao ---------
 func _on_tela_cheia_toggled(toggled_on: bool) -> void:
+	Globais.tela_cheia = toggled_on
 	# on -> full screen
 	if toggled_on:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -81,6 +109,9 @@ func _on_tela_cheia_toggled(toggled_on: bool) -> void:
 
 func _on_rem_efeitos_graf_toggled(toggled_on: bool) -> void:
 	Globais.remov_efeitos_graf = toggled_on
+
+func _on_rem_logo_intro_toggled(toggled_on: bool) -> void:
+	Globais.remov_logo_intro = toggled_on
 
 
 # --------- Deletar Save ---------
@@ -121,3 +152,53 @@ func lidar_toggle(toggled_on: bool, toggle_btn : Button, itens : Array) -> void:
 		toggle_btn.text = "Deletar"
 		for item in itens:
 			item.hide()
+
+# --------- Tags ---------
+func _ajustar_tags_configs() -> void:
+	# cria uma lista vazia para cada tag
+	for tag in Tag.values():
+		configs_por_tag[tag] = []
+	# ajusta as configs nas tags 
+	for config in container_configs.get_children():
+		var config_tag : String = config.get_meta("tag")
+		var tag = string_para_tag[config_tag]
+		# adiciono ao dict de configs por tag
+		configs_por_tag[tag].append(config)
+	# mostra no inicio as tags de gameplay
+	_update_configs_por_tag(Tag.GAMEPLAY)
+
+func _update_configs_por_tag(tag_mostar : Tag) -> void:
+	# 
+	for tag in Tag.values():
+		for config in configs_por_tag[tag]:
+			if tag == tag_mostar:
+				config.show()
+			else:
+				config.hide()
+
+## des-aperta todos os botoes das tags, com excessao do passado como parametro
+func _unpress_tag_buttons(except : Button) -> void:
+	for btn in tag_buttons:
+		if btn != except:
+			btn.set_pressed_no_signal(false)
+
+# -- btn presses --
+func _on_tag_gameplay_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		_unpress_tag_buttons($VBoxTags/TagGameplay)
+		_update_configs_por_tag(Tag.GAMEPLAY)
+
+func _on_tag_audio_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		_unpress_tag_buttons($VBoxTags/TagAudio)
+		_update_configs_por_tag(Tag.AUDIO)
+
+func _on_tag_exibicao_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		_unpress_tag_buttons($VBoxTags/TagExibicao)
+		_update_configs_por_tag(Tag.EXIBICAO)
+
+func _on_tag_save_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		_unpress_tag_buttons($VBoxTags/TagSave)
+		_update_configs_por_tag(Tag.SAVE)
