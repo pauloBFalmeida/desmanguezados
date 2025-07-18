@@ -1,9 +1,119 @@
-[gd_scene load_steps=5 format=3 uid="uid://4k8drpikovn2"]
+[gd_scene load_steps=9 format=3 uid="uid://4k8drpikovn2"]
 
 [ext_resource type="Script" uid="uid://bbcxwtqia30uw" path="res://Scripts/Menus/main_menus.gd" id="1_rvni6"]
 [ext_resource type="PackedScene" uid="uid://e0hvhpdu6hbn" path="res://Cenas/Menus/menuPrincipal.tscn" id="2_fecgd"]
 [ext_resource type="AudioStream" uid="uid://cpj2lw3sqksoj" path="res://Assets/Audio/musica/main_menu.mp3" id="3_fecgd"]
 [ext_resource type="Texture2D" uid="uid://cchjymymhapg4" path="res://Assets/Interface/intro/splatter_vulpe.png" id="4_ik0y3"]
+[ext_resource type="Texture2D" uid="uid://boueh3uw4c70t" path="res://Assets/Interface/intro/splatter_cubanos.png" id="5_i8q7x"]
+
+[sub_resource type="Animation" id="Animation_6x3w5"]
+resource_name = "show"
+length = 7.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SplatterVulpe:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3.13, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SplatterVulpe:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 2.83333, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SplatterCubanos:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SplatterCubanos:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(3.5, 4.56667, 6.01, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.122252, 0.122252, 0.122252, 0.019802)]
+}
+
+[sub_resource type="Animation" id="Animation_owjbp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SplatterVulpe:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SplatterCubanos:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SplatterCubanos:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SplatterVulpe:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e4wjp"]
+_data = {
+&"RESET": SubResource("Animation_owjbp"),
+&"show": SubResource("Animation_6x3w5")
+}
 
 [node name="MainMenus" type="Node"]
 script = ExtResource("1_rvni6")
@@ -14,7 +124,7 @@ script = ExtResource("1_rvni6")
 stream = ExtResource("3_fecgd")
 volume_db = -20.0
 
-[node name="LogoVulpe" type="Control" parent="."]
+[node name="LogosInicio" type="Control" parent="."]
 visible = false
 z_index = 20
 layout_mode = 3
@@ -22,7 +132,19 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="SplatterVulpe" type="Sprite2D" parent="LogoVulpe"]
+[node name="SplatterVulpe" type="Sprite2D" parent="LogosInicio"]
+visible = false
 position = Vector2(625, 364)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("4_ik0y3")
+
+[node name="SplatterCubanos" type="Sprite2D" parent="LogosInicio"]
+visible = false
+position = Vector2(647.667, 362)
+scale = Vector2(0.339815, 0.339815)
+texture = ExtResource("5_i8q7x")
+
+[node name="AnimationPlayerLogos" type="AnimationPlayer" parent="LogosInicio"]
+libraries = {
+&"": SubResource("AnimationLibrary_e4wjp")
+}
