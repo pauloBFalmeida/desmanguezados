@@ -86,7 +86,7 @@ func _carregar_dados() -> void:
 	_on_button_deletar_todo_toggled(false)
 
 # --------- Controles ---------
-var controle_player_curr := InputManager.PlayerId.P1
+var controle_player_curr := InputManager.PlayerId.P2
 func _on_button_controle_p_1_toggled(toggled_on: bool) -> void:
 	if not toggled_on: toggle_controle_p1.set_pressed_no_signal(true)
 	
@@ -111,7 +111,8 @@ func _ajustar_options_tipo_controle() -> void:
 		# se for o tipo atual -> selecione ele
 		if tipo == tipo_atual:
 			options_tipos_controles.select(tipo)
-	
+	#
+	_ajustar_botoes_controle()
 
 func _on_options_tipo_controles_item_selected(index: int) -> void:
 	var tipo : int = options_tipos_controles.get_item_id(index)
@@ -308,27 +309,74 @@ func _on_tag_save_toggled(toggled_on: bool) -> void:
 
 # ----------- Ouvir inputs ----------
 @onready var waiting_input := $ColorRectWaitingInput
-@onready var button_wait_input := $ColorRectWaitingInput/Button
-var escutar_input : bool = true
-
+@onready var waiting_input_button := $ColorRectWaitingInput/Button
+var escutar_input : bool = false
+var event_do_input : InputEvent
+signal input_apertado
 
 func _input(event):
 	if not escutar_input: return
 	
 	if event is InputEventJoypadButton:
 		if event.pressed:
-			InputManager.change_controller_action(controle_player_curr, 'pickup', event)
-			print("Button index: %s pressed on device %s" % [event.button_index, event.device])
+			event_do_input = event
+			emit_signal("input_apertado")
+			#print("Button index: %s pressed on device %s" % [event.button_index, event.device])
 	if event is InputEventJoypadMotion:
 		if event.axis == JOY_AXIS_TRIGGER_LEFT and event.axis_value > 0.4:
-			print("L2 (gatilho esquerdo): ", event.axis_value)
+			event_do_input = event
+			emit_signal("input_apertado")
+			#print("L2 (gatilho esquerdo): ", event.axis_value)
 		elif event.axis == JOY_AXIS_TRIGGER_RIGHT and event.axis_value > 0.4:
-			print("R2 (gatilho direito): ", event.axis_value)
+			event_do_input = event
+			emit_signal("input_apertado")
+			#print("R2 (gatilho direito): ", event.axis_value)
+
+func _ajustar_botoes_controle() -> void:
+	controle_player_curr
+	pass
+
+func _receber_input(event_name : String) -> void:
+	waiting_input.show()
+	waiting_input_button.grab_focus()
+	# comeca a escutar
+	escutar_input = true
+	# esperar ate ter input
+	await input_apertado
+	InputManager.change_controller_action(
+		controle_player_curr, 	# player id do controle
+		event_name, 			# nome da acao no InputManager.action_names
+		event_do_input			# event novo que vamos colocar na acao
+	)
+	# para de escutar
+	escutar_input = false
+	waiting_input.hide()
+
+func _alterar_texto_botao(button : Button) -> void:
+	var controle_btn := InputManager.Controle_btn.A
+	# se for um trigger -> eh so pegar direto o botao do controle
+	if event_do_input is InputEventJoypadMotion:
+		if event_do_input.axis == JOY_AXIS_TRIGGER_LEFT:
+			controle_btn = InputManager.Controle_btn.LT
+		elif event_do_input.axis == JOY_AXIS_TRIGGER_RIGHT:
+			controle_btn = InputManager.Controle_btn.RT
+	# se for um botao -> pegar o botao com base no 'index do botao no controle'
+	var controle_tipo = Globais.controle_tipo_player[controle_player_curr]
+	var btn_index = InputManager.controle_btn_indexes[controle_tipo]
+	if event_do_input is InputEventJoypadButton:
+		var id = event_do_input.button_index
+		if btn_index.has(id):
+			controle_btn = btn_index[id]
+	# ajustar o texto
+	var btn_nomes = InputManager.controle_btn_nomes[controle_tipo]
+	button.text = btn_nomes[controle_btn]
+	# pega o foco
+	button.grab_focus()
 
 func _on_button_fer_usar_pressed() -> void:
-	pass
-	
-	#waiting_input.show()
+	await _receber_input("interact")
+	_alterar_texto_botao($VBoxConfigs/GridContainerControles/ButtonFerUsar)
+	#
 	
 	#var tex := $VBoxConfigs/GridContainerControles/LabelFerramenta2
 	#
