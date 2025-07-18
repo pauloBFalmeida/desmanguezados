@@ -25,6 +25,10 @@ func is_abrindo_jogo() -> bool:
 var possivel_aim_all_time : bool = false
 var indicador_direcao_transparente_sem_target : bool = true
 
+var controle_tipo_player : Dictionary[InputManager.PlayerId, InputManager.Controle_tipo]={
+	InputManager.PlayerId.P1 : InputManager.Controle_tipo.PS, 
+	InputManager.PlayerId.P2 : InputManager.Controle_tipo.PS }
+
 var volume_musica_menu : float = -20.0
 var volume_musica_partida : float = -25.0
 var volume_efeitos_partida : float = 0.0

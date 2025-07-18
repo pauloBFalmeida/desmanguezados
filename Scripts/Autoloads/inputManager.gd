@@ -25,6 +25,14 @@ const action_names = [
 	"aim_down",
 ]
 
+enum Controle_tipo {PS, XBOX, SWITCH}
+
+const controle_tipo_string : Dictionary[Controle_tipo, String] = {
+	Controle_tipo.PS : "PS",
+	Controle_tipo.XBOX : "Xbox",
+	Controle_tipo.SWITCH : "Switch",
+}
+
 # actionMap_players[player id] -> acoes[nome da acao (do action_names)] -> nome da acao pro player no InputMap
 var actionMap_players = {}
 

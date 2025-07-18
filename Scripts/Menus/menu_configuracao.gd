@@ -4,6 +4,10 @@ extends Menu
 
 @onready var container_configs := $VBoxConfigs
 @onready var container_tags := $VBoxTags
+# -- Controles --
+@onready var toggle_controle_p1 := $VBoxConfigs/GridContainerControles/ButtonControleP1
+@onready var toggle_controle_p2 := $VBoxConfigs/GridContainerControles/ButtonControleP2
+@onready var options_tipos_controles := $VBoxConfigs/GridContainerControles/OptionsTipoControles
 # -- GamePlay --
 @onready var toggle_aim_all_time := $VBoxConfigs/AimAllTime
 @onready var toggle_tracking_color := $VBoxConfigs/TrackingColor
@@ -28,19 +32,21 @@ extends Menu
 @onready var itens_todo := [label_deletar_todo_certeza, button_deletar_todo_certeza]
 
 # ----- Menu de Tags -----
-enum Tag {GAMEPLAY, AUDIO, EXIBICAO, SAVE}
+enum Tag {CONTROLES, GAMEPLAY, AUDIO, EXIBICAO, SAVE}
 @onready var buttons_por_tag : Dictionary[Tag, Button] = {
-	Tag.GAMEPLAY : $VBoxTags/TagGameplay,
-	Tag.AUDIO    : $VBoxTags/TagAudio,
-	Tag.EXIBICAO : $VBoxTags/TagExibicao,
-	Tag.SAVE     : $VBoxTags/TagSave,
+	Tag.CONTROLES : $VBoxTags/TagControles,
+	Tag.GAMEPLAY  : $VBoxTags/TagGameplay,
+	Tag.AUDIO     : $VBoxTags/TagAudio,
+	Tag.EXIBICAO  : $VBoxTags/TagExibicao,
+	Tag.SAVE      : $VBoxTags/TagSave,
 }
 ## string escrita nos metadados das configuracoes -> Tag
 var string_para_tag : Dictionary[String, Tag] = {
-	"gameplay" : Tag.GAMEPLAY,
-	"audio" : Tag.AUDIO,
-	"exibicao" : Tag.EXIBICAO,
-	"save" : Tag.SAVE,
+	"controles" : Tag.CONTROLES,
+	"gameplay"  : Tag.GAMEPLAY,
+	"audio"     : Tag.AUDIO,
+	"exibicao"  : Tag.EXIBICAO,
+	"save"      : Tag.SAVE,
 }
 var configs_por_tag : Dictionary[Tag, Array]
 
@@ -55,12 +61,15 @@ func _ready() -> void:
 	# ---
 	_ajustar_tags_configs()
 	_carregar_dados()
+	# mostra no inicio as configuracoes dos controles
+	_update_configs_por_tag(Tag.CONTROLES)
 
 # --------- Carregar os dados do disco ---------
 func _carregar_dados() -> void:
+	# -- Controles --
+	_ajustar_options_tipo_controle()
 	# -- GamePlay --
 	toggle_aim_all_time.set_pressed_no_signal(Globais.possivel_aim_all_time)
-	
 	var desativar_transparente : bool = not Globais.indicador_direcao_transparente_sem_target
 	toggle_tracking_color.set_pressed_no_signal(desativar_transparente)
 	# -- Audio --
@@ -74,6 +83,39 @@ func _carregar_dados() -> void:
 	# -- Deletar Save --
 	_on_button_deletar_partida_toggled(false)
 	_on_button_deletar_todo_toggled(false)
+
+# --------- Controles ---------
+var controle_player_curr := InputManager.PlayerId.P1
+func _on_button_controle_p_1_toggled(toggled_on: bool) -> void:
+	if not toggled_on: toggle_controle_p1.set_pressed_no_signal(true)
+	
+	controle_player_curr = InputManager.PlayerId.P1
+	toggle_controle_p2.set_pressed_no_signal(false) # des-aperta o P2
+	_ajustar_options_tipo_controle()
+
+func _on_button_controle_p_2_toggled(toggled_on: bool) -> void:
+	if not toggled_on: toggle_controle_p2.set_pressed_no_signal(true)
+	
+	controle_player_curr = InputManager.PlayerId.P2
+	toggle_controle_p1.set_pressed_no_signal(false) # des-aperta o P1
+	_ajustar_options_tipo_controle()
+
+func _ajustar_options_tipo_controle() -> void:
+	options_tipos_controles.clear()
+	var tipo_atual := Globais.controle_tipo_player[controle_player_curr]
+	for tipo in InputManager.controle_tipo_string.keys():
+		# adiciono o item com o nome do tipo de controle
+		var texto : String = InputManager.controle_tipo_string[tipo]
+		options_tipos_controles.add_item(texto, tipo)
+		# se for o tipo atual -> selecione ele
+		if tipo == tipo_atual:
+			options_tipos_controles.select(tipo)
+	
+
+func _on_options_tipo_controles_item_selected(index: int) -> void:
+	var tipo : int = options_tipos_controles.get_item_id(index)
+	Globais.controle_tipo_player[controle_player_curr] = tipo
+
 
 # --------- GamePlay ---------
 func _on_aim_all_time_toggled(toggled_on: bool) -> void:
@@ -162,10 +204,11 @@ func _ajustar_tags_configs() -> void:
 	for tag in Tag.values():
 		configs_por_tag[tag] = []
 	# para cada botao de tag ajusta o receber foco para mesmo de apertar
-	buttons_por_tag[Tag.GAMEPLAY].focus_entered.connect( _on_tag_gameplay_toggled.bind(true) )
-	buttons_por_tag[Tag.AUDIO].focus_entered.connect(    _on_tag_audio_toggled.bind(true) )
-	buttons_por_tag[Tag.EXIBICAO].focus_entered.connect( _on_tag_exibicao_toggled.bind(true) )
-	buttons_por_tag[Tag.SAVE].focus_entered.connect(     _on_tag_save_toggled.bind(true) )
+	buttons_por_tag[Tag.CONTROLES].focus_entered.connect( _on_tag_controles_toggled.bind(true) )
+	buttons_por_tag[Tag.GAMEPLAY].focus_entered.connect(  _on_tag_gameplay_toggled.bind(true) )
+	buttons_por_tag[Tag.AUDIO].focus_entered.connect(     _on_tag_audio_toggled.bind(true) )
+	buttons_por_tag[Tag.EXIBICAO].focus_entered.connect(  _on_tag_exibicao_toggled.bind(true) )
+	buttons_por_tag[Tag.SAVE].focus_entered.connect(      _on_tag_save_toggled.bind(true) )
 	# ajusta as configs nas tags 
 	for config in container_configs.get_children():
 		var config_tag : String = config.get_meta("tag")
@@ -174,8 +217,6 @@ func _ajustar_tags_configs() -> void:
 		configs_por_tag[tag].append(config)
 	# ajusta movimentos do focus nos neighbors
 	_ajustar_tags_focus_neighbors()
-	# mostra no inicio as tags de gameplay
-	_update_configs_por_tag(Tag.GAMEPLAY)
 
 func _update_configs_por_tag(tag_mostar : Tag) -> void:
 	_unpress_tag_buttons(tag_mostar)
@@ -197,27 +238,56 @@ func _unpress_tag_buttons(except_tag : Tag) -> void:
 
 func _ajustar_tags_focus_neighbors() -> void:
 	for tag in Tag.values():
+		# -- Focus Neighbors do botao da tag --
+		# pega o botao da tag atual
 		var button_tag = buttons_por_tag[tag]
 		# pego o primeiro da lista dos Controls de configuracao por tag
 		var btn_config : Control = configs_por_tag[tag][0]
-		# se for uma grid ou container -> pego o 2 elemento (pq em geral o primeiro eh labe)
+		# se for uma grid ou container -> pego o primeiro botao que eu achar
 		if btn_config is GridContainer:
-			btn_config = btn_config.get_child(1) # 2 elemento da grid
+			for grid_item in btn_config.get_children():
+				# para ao encontrar o primeiro item da grid que for um botao
+				if _focus_valid(grid_item):
+					btn_config = grid_item
+					break
+		
 		# neighbor direita <-recebe- (o do NodePath do) btn_config
 		button_tag.focus_neighbor_right = btn_config.get_path()
-		# todos botoes configuracoes dessa tag recebem botao de tag como neighbor esq
+		# apertou o botao da tag -> foca no botao btn_config
+		button_tag.pressed.connect( func(): btn_config.grab_focus() )
+		
+		# -- Focus Neighbors dos botoes das configuracoes --
 		var button_tag_path = button_tag.get_path()
+		
+		# ultimo botao de configuracoes dessa tag -recebe-> proximo como botao da tag
+		if _focus_valid(configs_por_tag[tag][-1]):
+			configs_por_tag[tag][-1].focus_neighbor_right = button_tag_path
+			configs_por_tag[tag][-1].focus_neighbor_bottom = button_tag_path
+		
+		# se for o menu de controles -> pula resto da funcao
+		#	como temos 2 botoes horizontais (selecionar player do controle)
+		#	nao queremos que apertar esquerda volte para os botoes das tags
+		if tag == Tag.CONTROLES: continue 
+		
+		# todos botoes configuracoes dessa tag recebem botao de tag como neighbor esq
 		for config in configs_por_tag[tag]:
 			# se for um botao <-recebe- (o do NodePath do) button_tag
-			if config is Button:
+			if _focus_valid(config):
 				config.focus_neighbor_left = button_tag_path
 			# se for uma grid -> pega os botoes presentes nessa grid
 			if config is GridContainer:
 				for grid_item in config.get_children():
-					if grid_item is Button:
+					if _focus_valid(grid_item):
 						grid_item.focus_neighbor_left = button_tag_path
 
+func _focus_valid(item : Control) -> bool:
+	return (item is Button) or (item is Range) 
+
 # -- btn presses --
+func _on_tag_controles_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		_update_configs_por_tag(Tag.CONTROLES)
+
 func _on_tag_gameplay_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		_update_configs_por_tag(Tag.GAMEPLAY)
