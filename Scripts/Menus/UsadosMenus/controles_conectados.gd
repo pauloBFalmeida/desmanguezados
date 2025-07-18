@@ -23,16 +23,18 @@ func update_conectados():
 	# -- atualiza as labels --
 	# Player 1
 	if is_controle_conectado[InputManager.PlayerId.P1]:
-		label_status_P1.text = _get_controle_texto(Globais.controle_tipo_P1)
+		label_status_P1.text = _get_controle_texto(InputManager.PlayerId.P1)
 	else:
 		label_status_P1.text = "WASD"
 	# Player 2
 	if is_controle_conectado[InputManager.PlayerId.P2]:
-		label_status_P2.text = _get_controle_texto(Globais.controle_tipo_P2)
+		label_status_P2.text = _get_controle_texto(InputManager.PlayerId.P2)
 	else:
 		label_status_P2.text = "Setas"
 
-func _get_controle_texto(controle_tipo : InputManager.Controle_tipo) -> String:
+func _get_controle_texto(player_id : InputManager.PlayerId) -> String:
+	var controle_tipo :	InputManager.Controle_tipo
+	controle_tipo = Globais.controle_tipo_player[player_id]
 	return ("Controle "
 			+ InputManager.controle_tipo_string[controle_tipo]
 			+ " Conectado")
