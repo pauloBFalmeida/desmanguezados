@@ -52,7 +52,7 @@ var string_para_tag : Dictionary[String, Tag] = {
 var configs_por_tag : Dictionary[Tag, Array]
 
 # ----- Personalizar controles -----
-@onready var container_personalizar_controles := $VBoxConfigs/ScrollContainerPersControles
+@onready var personalizar_controles := $VBoxConfigs/PersonalizarControles
 
 # --- Voltar ---
 func _on_button_voltar_pressed() -> void:
@@ -121,15 +121,15 @@ func _on_options_tipo_controles_item_selected(index: int) -> void:
 
 func _on_button_personalizar_controles_pressed() -> void:
 	# ajusta os botoes
-	container_personalizar_controles.mostrar_personalizar_controle(
+	personalizar_controles.mostrar_personalizar_controle(
 		controle_player_curr,
 		buttons_por_tag[Tag.CONTROLES])
 	# so mostra o container personalizar controles
 	container_controles.hide()
-	container_personalizar_controles.show()
+	personalizar_controles.show()
 
 func _hide_personalizar_controles() -> void:
-	container_personalizar_controles.hide()
+	personalizar_controles.hide()
 
 # --------- GamePlay ---------
 func _on_aim_all_time_toggled(toggled_on: bool) -> void:
