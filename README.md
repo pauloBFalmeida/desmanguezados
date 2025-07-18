@@ -1,6 +1,7 @@
 # Desmanguezados
 jogo da disciplina projeto de jogos
 
+Acesse o [site do projeto](https://paulobfalmeida.github.io/desmanguezados/)
 
 # Guia de Desenvolvimento
 
