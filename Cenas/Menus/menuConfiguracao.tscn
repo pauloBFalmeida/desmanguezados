@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dl22uju6ygrp0"]
+[gd_scene load_steps=7 format=3 uid="uid://dl22uju6ygrp0"]
 
 [ext_resource type="Script" uid="uid://bt6txdh0jok31" path="res://Scripts/Menus/menu_configuracao.gd" id="1_ojjoo"]
 [ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/Menu/CartazDesmangezados.png" id="2_gnunr"]
 [ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_1s67o"]
 [ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_kdt1j"]
 [ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="5_eu4q4"]
+[ext_resource type="Theme" uid="uid://bgkss7jqb5ycr" path="res://Assets/Interface/Fonts/simbols_theme.tres" id="6_kdt1j"]
 
 [node name="MenuConfiguracao" type="Control"]
 layout_mode = 3
@@ -167,6 +168,8 @@ metadata/tag = "controles"
 [node name="ButtonControleP1" type="Button" parent="VBoxConfigs/GridContainerControles"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
@@ -178,6 +181,8 @@ text = "Controle P1"
 [node name="ButtonControleP2" type="Button" parent="VBoxConfigs/GridContainerControles"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
@@ -185,7 +190,7 @@ theme_override_colors/font_pressed_color = Color(0.933333, 0.933333, 0.933333, 1
 toggle_mode = true
 text = "Controle P2"
 
-[node name="LabelMusicaMenu" type="Label" parent="VBoxConfigs/GridContainerControles"]
+[node name="LabelTipoControle" type="Label" parent="VBoxConfigs/GridContainerControles"]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Tipo do Controle"
@@ -197,6 +202,31 @@ allow_reselect = true
 item_count = 2
 popup/item_0/id = 0
 popup/item_1/id = 1
+
+[node name="LabelFerramenta" type="Label" parent="VBoxConfigs/GridContainerControles"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+text = "Ferramenta"
+
+[node name="LabelFerramenta2" type="Label" parent="VBoxConfigs/GridContainerControles"]
+layout_mode = 2
+theme = ExtResource("6_kdt1j")
+text = "aaaa"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxConfigs/GridContainerControles"]
+visible = false
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxConfigs/GridContainerControles"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+text = "Usar"
+
+[node name="ButtonFerUsar" type="Button" parent="VBoxConfigs/GridContainerControles"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+text = "A"
 
 [node name="AimAllTime" type="CheckButton" parent="VBoxConfigs"]
 visible = false
@@ -347,6 +377,44 @@ theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.95373, 0, 0.316003, 1)
 text = "Sim, Deletar"
 
+[node name="ColorRectWaitingInput" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.0
+offset_top = -76.5
+offset_right = 198.0
+offset_bottom = 76.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.705882)
+
+[node name="Label" type="Label" parent="ColorRectWaitingInput"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -28.0
+offset_right = 165.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_kdt1j")
+text = "Esperando Input"
+
+[node name="Button" type="Button" parent="ColorRectWaitingInput"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
 [connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]
 [connection signal="toggled" from="VBoxTags/TagControles" to="." method="_on_tag_controles_toggled"]
 [connection signal="toggled" from="VBoxTags/TagGameplay" to="." method="_on_tag_gameplay_toggled"]
@@ -356,6 +424,7 @@ text = "Sim, Deletar"
 [connection signal="toggled" from="VBoxConfigs/GridContainerControles/ButtonControleP1" to="." method="_on_button_controle_p_1_toggled"]
 [connection signal="toggled" from="VBoxConfigs/GridContainerControles/ButtonControleP2" to="." method="_on_button_controle_p_2_toggled"]
 [connection signal="item_selected" from="VBoxConfigs/GridContainerControles/OptionsTipoControles" to="." method="_on_options_tipo_controles_item_selected"]
+[connection signal="pressed" from="VBoxConfigs/GridContainerControles/ButtonFerUsar" to="." method="_on_button_fer_usar_pressed"]
 [connection signal="toggled" from="VBoxConfigs/AimAllTime" to="." method="_on_aim_all_time_toggled"]
 [connection signal="toggled" from="VBoxConfigs/TrackingColor" to="." method="_on_tracking_color_toggled"]
 [connection signal="drag_ended" from="VBoxConfigs/GridContainerAudio/HSliderMusicaMenu" to="." method="_on_h_slider_musica_menu_drag_ended"]

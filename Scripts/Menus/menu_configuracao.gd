@@ -58,6 +58,7 @@ func _on_button_voltar_pressed() -> void:
 
 func _ready() -> void:
 	btn_voltar.grab_focus()
+	waiting_input.hide()
 	# ---
 	_ajustar_tags_configs()
 	_carregar_dados()
@@ -303,3 +304,42 @@ func _on_tag_exibicao_toggled(toggled_on: bool) -> void:
 func _on_tag_save_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		_update_configs_por_tag(Tag.SAVE)
+
+
+# ----------- Ouvir inputs ----------
+@onready var waiting_input := $ColorRectWaitingInput
+@onready var button_wait_input := $ColorRectWaitingInput/Button
+var escutar_input : bool = true
+
+
+func _input(event):
+	if not escutar_input: return
+	
+	if event is InputEventJoypadButton:
+		if event.pressed:
+			InputManager.change_controller_action(controle_player_curr, 'pickup', event)
+			print("Button index: %s pressed on device %s" % [event.button_index, event.device])
+	if event is InputEventJoypadMotion:
+		if event.axis == JOY_AXIS_TRIGGER_LEFT and event.axis_value > 0.4:
+			print("L2 (gatilho esquerdo): ", event.axis_value)
+		elif event.axis == JOY_AXIS_TRIGGER_RIGHT and event.axis_value > 0.4:
+			print("R2 (gatilho direito): ", event.axis_value)
+
+func _on_button_fer_usar_pressed() -> void:
+	pass
+	
+	#waiting_input.show()
+	
+	#var tex := $VBoxConfigs/GridContainerControles/LabelFerramenta2
+	#
+	#for ctr_btn in InputManager.Controle_btn.values():
+		#tex.text = InputManager.PS_btn_nomes[ctr_btn]
+		#await get_tree().create_timer(0.5).timeout
+	
+	#tex.text = "\u25A1 Square Button\n"
+	#tex.text += "\u25B3 Triangulo Button\n"
+	#tex.text += "\u25CB Bola Button\n"
+	#tex.text += "\U01F150 A\n"
+	#tex.text += "\u23F5 start\n"
+	#tex.text += "\U01F53C up\n"
+	

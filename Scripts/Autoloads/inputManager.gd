@@ -86,3 +86,107 @@ func _clone_action_controller(original: String, new_name: String, device_id: int
 		# so para o device com o id desejado
 		event_copy.device = device_id
 		InputMap.action_add_event(new_name, event_copy)
+
+func remove_controller_action(player_id: PlayerId, action_name: String) -> void:
+	#var device_id : int = -1
+	#for key in controles_conectados.keys():
+		#if controles_conectados[key] == player_id:
+			#device_id = key
+	#if device_id == -1: return
+	var action : String = actionMap_players[player_id][action_name]
+	if InputMap.has_action(action):
+		InputMap.action_erase_events(action)
+
+func change_controller_action(player_id: PlayerId, action_name: String, action_event: InputEvent) -> void:
+	var action : String = actionMap_players[player_id][action_name]
+	if InputMap.has_action(action):
+		InputMap.action_erase_events(action)
+		InputMap.action_add_event(action, action_event)
+	
+# ---------- Nomes Botoes ---------------
+enum Controle_btn {
+	A, B, X, Y,
+	LB, RB, LT, RT, 
+	UP, DOWN, LEFT, RIGHT,
+	JL, JR, # press joystick
+	SELECT, START,
+}
+
+const controle_btn_nomes : Dictionary[Controle_tipo, Dictionary] = {
+	Controle_tipo.PS: PS_btn_nomes,
+	Controle_tipo.XBOX: Xbox_btn_nomes,
+	Controle_tipo.SWITCH: Switch_btn_nomes,
+}
+
+const PS_btn_nomes : Dictionary[Controle_btn, String] = {
+	Controle_btn.A: "\u2613",
+	Controle_btn.B: "\u25CB",	# Bolinha
+	Controle_btn.X: "\u2610", #"\u25A2", #"\u25A1", 	# Quadrado
+	Controle_btn.Y: "\u25B3", 	# Triangulo
+	Controle_btn.LB: "L1",
+	Controle_btn.RB: "R1",
+	Controle_btn.LT: "L2",
+	Controle_btn.RT: "R2",
+	Controle_btn.JL: "\u24C1", # joystick press Left
+	Controle_btn.JR: "\u24C7", # joystick press Right
+	Controle_btn.UP: "\u23F6",
+	Controle_btn.DOWN: "\u23F7",
+	Controle_btn.LEFT: "\u23F4",
+	Controle_btn.RIGHT: "\u23F5",
+	Controle_btn.SELECT: "\u25AC",
+	Controle_btn.START: "\u27A4",#"\u25BA",
+}
+const Xbox_btn_nomes : Dictionary[Controle_btn, String] = {
+	Controle_btn.A: "\U01F150", # A
+	Controle_btn.B: "\U01F151", # B
+	Controle_btn.X: "\U01F167", # X
+	Controle_btn.Y: "\U01F168", # Y
+	Controle_btn.LB: "LB",
+	Controle_btn.RB: "RB",
+	Controle_btn.LT: "LT",
+	Controle_btn.RT: "RT",
+	Controle_btn.JL: "\u24C1", # joystick press Left
+	Controle_btn.JR: "\u24C7", # joystick press Right
+	Controle_btn.UP: "\u23F7",
+	Controle_btn.DOWN: "\u23F6",
+	Controle_btn.LEFT: "\u23F4",
+	Controle_btn.RIGHT: "\u23F5",
+	Controle_btn.SELECT: "\u274F",
+	Controle_btn.START: "\u2630",
+}
+
+const Switch_btn_nomes : Dictionary[Controle_btn, String] = {
+	Controle_btn.A: "\U01F151", # B
+	Controle_btn.B: "\U01F150", # A
+	Controle_btn.X: "\U01F168", # Y
+	Controle_btn.Y: "\U01F167", # X
+	Controle_btn.LB: "L",
+	Controle_btn.RB: "R",
+	Controle_btn.LT: "ZL",
+	Controle_btn.RT: "ZR",
+	Controle_btn.JL: "\u24C1", # joystick press Left
+	Controle_btn.JR: "\u24C7", # joystick press Right
+	Controle_btn.UP: "\u23F7",
+	Controle_btn.DOWN: "\u23F6",
+	Controle_btn.LEFT: "\u23F4",
+	Controle_btn.RIGHT: "\u23F5",
+	Controle_btn.SELECT: "\u25D9",
+	Controle_btn.START: "\u2302",
+}
+
+const PS_btn_index : Dictionary[int, Controle_btn] = {
+	0:  Controle_btn.A,
+	1:  Controle_btn.B,
+	2:  Controle_btn.X,
+	3:  Controle_btn.Y,
+	4:  Controle_btn.SELECT,
+	6:  Controle_btn.START,
+	7:  Controle_btn.JL,
+	8:  Controle_btn.JR,
+	9:  Controle_btn.LB,
+	10: Controle_btn.RB,
+	11: Controle_btn.UP,
+	12: Controle_btn.DOWN,
+	13: Controle_btn.LEFT,
+	14: Controle_btn.RIGHT,
+}
