@@ -120,6 +120,12 @@ func reset_save_partida() -> void:
 const SAVE_INPUT_PATH = "user://save_input.cfg"
 
 # ----- Acessar o disco -----
+func reset_inputs() -> void:
+	var file = ConfigFile.new()
+	file.clear()
+	# save to disk
+	file.save(SAVE_INPUT_PATH)
+
 func load_inputs() -> void:
 	var file = ConfigFile.new()
 	if file.load(SAVE_INPUT_PATH) != OK:  # se o arquivo nao existe
@@ -132,7 +138,10 @@ func _ajustar_input(file : ConfigFile) -> void:
 	for player in InputManager.PlayerId.values():
 		for action : String in InputManager.action_names:
 			# criar o section do configFile
-			var section : String = "player_" + str(player+1) + "_" + action
+			var section : String
+			section  = "player_" + str(player+1)
+			section += "_c" if InputManager.players_no_controle.has(player) else "_k"
+			section += "_" + action
 			# pega a quantidade de eventos que tem na acao
 			var amount = file.get_value(section, "amount", 0)
 			# load de cada evento
@@ -144,28 +153,30 @@ func _ajustar_input(file : ConfigFile) -> void:
 				var event : InputEvent = _create_event_from_data(data)
 				InputManager.add_action_input(player, action, event)
 
-func save_inputs() -> void:
+func save_inputs(player : InputManager.PlayerId) -> void:
 	var file = ConfigFile.new()
 	
-	for player in InputManager.PlayerId.values():
-		for action : String in InputManager.action_names:
-			# criar o section do configFile
-			var section : String = "player_" + str(player+1) + "_" + action
-			# pega a lista da eventos de uma acao
-			var event_list : Array = InputManager.get_action_events(player, action)
-			if event_list.is_empty(): continue # se nao tem eventos na acao -> pule
-			# salva a quantidade de eventos que tem na acao
-			var amount := event_list.size()
-			file.set_value(section, "amount", amount)
-			# salva cada evento
-			for count in range(amount):
-				var event : InputEvent = event_list[count]
-				var data : Dictionary  = InputManager.get_event_data(event, player) 
-				if data.is_empty(): continue # se nao conseguiu pegar os dados acao -> pule
-				# key do configFile
-				var key : String = "event_" + str(count)
-				# salva o evento
-				_salva_evento(file, data, section, key)
+	for action : String in InputManager.action_names:
+		# criar o section do configFile
+		var section : String
+		section  = "player_" + str(player+1)
+		section += "_c" if InputManager.players_no_controle.has(player) else "_k"
+		section += "_" + action
+		# pega a lista da eventos de uma acao
+		var event_list : Array = InputManager.get_action_events(player, action)
+		if event_list.is_empty(): continue # se nao tem eventos na acao -> pule
+		# salva a quantidade de eventos que tem na acao
+		var amount := event_list.size()
+		file.set_value(section, "amount", amount)
+		# salva cada evento
+		for count in range(amount):
+			var event : InputEvent = event_list[count]
+			var data : Dictionary  = InputManager.get_event_data(event, player) 
+			if data.is_empty(): continue # se nao conseguiu pegar os dados acao -> pule
+			# key do configFile
+			var key : String = "event_" + str(count)
+			# salva o evento
+			_salva_evento(file, data, section, key)
 	
 	# save to disk
 	file.save(SAVE_INPUT_PATH)

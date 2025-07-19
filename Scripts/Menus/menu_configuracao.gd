@@ -9,6 +9,7 @@ extends Menu
 @onready var toggle_controle_p1 := $VBoxConfigs/GridContainerControles/ButtonControleP1
 @onready var toggle_controle_p2 := $VBoxConfigs/GridContainerControles/ButtonControleP2
 @onready var options_tipos_controles := $VBoxConfigs/GridContainerControles/OptionsTipoControles
+@onready var button_load_controles := $VBoxConfigs/GridContainerControles/ButtonLoadControles
 # -- GamePlay --
 @onready var toggle_aim_all_time := $VBoxConfigs/AimAllTime
 @onready var toggle_tracking_color := $VBoxConfigs/TrackingColor
@@ -21,6 +22,7 @@ extends Menu
 @onready var toggle_rem_efeitos_graf := $VBoxConfigs/RemEfeitosGraf
 @onready var toggle_rem_logo_intro := $VBoxConfigs/RemLogoIntro
 # -- Save --
+@onready var button_reset_controles := $VBoxConfigs/GridContainerSave/ButtonResetControles
 @onready var toggle_deletar_partida := $VBoxConfigs/GridContainerSave/ButtonDeletarPartida
 @onready var toggle_deletar_todo := $VBoxConfigs/GridContainerSave/ButtonDeletarTodo
 @onready var label_deletar_partida_certeza := $VBoxConfigs/GridContainerSave/ButtonDeletarPartidaCerteza
@@ -60,6 +62,10 @@ func _on_button_voltar_pressed() -> void:
 	SaveManager.save_game()
 
 func _ready() -> void:
+	print('----------')
+	SaveManager.load_inputs()
+	print('----------')
+	
 	btn_voltar.grab_focus()
 	_hide_personalizar_controles()
 	# ---
@@ -119,6 +125,11 @@ func _on_options_tipo_controles_item_selected(index: int) -> void:
 	var tipo : int = options_tipos_controles.get_item_id(index)
 	Globais.controle_tipo_player[controle_player_curr] = tipo
 
+func _on_button_load_controles_pressed() -> void:
+	SaveManager.load_inputs()
+	button_load_controles.text = "Carregados"
+	button_load_controles.disabled = true
+
 func _on_button_personalizar_controles_pressed() -> void:
 	# ajusta os botoes
 	personalizar_controles.mostrar_personalizar_controle(
@@ -173,6 +184,11 @@ func _on_button_reset_configs_pressed() -> void:
 	SaveManager.reset_globais_config()
 	# update visual
 	_on_tag_gameplay_toggled(true)
+
+func _on_button_reset_controles_pressed() -> void:
+	SaveManager.reset_inputs()
+	button_reset_controles.text = "Removidos"
+	button_reset_controles.disabled = true
 
 func _on_button_deletar_partida_toggled(toggled_on: bool) -> void:
 	lidar_toggle(toggled_on, toggle_deletar_partida, itens_partida)

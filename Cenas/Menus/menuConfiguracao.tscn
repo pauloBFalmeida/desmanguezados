@@ -214,12 +214,27 @@ layout_mode = 2
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
+[node name="LabelLoadControles" type="Label" parent="VBoxConfigs/GridContainerControles"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+text = "Carregar Controles
+Personalizados
+"
+
+[node name="ButtonLoadControles" type="Button" parent="VBoxConfigs/GridContainerControles"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme = ExtResource("5_eu4q4")
+text = "Carregar"
+
 [node name="LabelPersonalizarControles" type="Label" parent="VBoxConfigs/GridContainerControles"]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Personalizar Controles"
 
-[node name="ButtonPersonalizarControles" type="Button" parent="VBoxConfigs/GridContainerControles"]
+[node name="ButtonPersonalizarControles2" type="Button" parent="VBoxConfigs/GridContainerControles"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -228,6 +243,7 @@ theme = ExtResource("5_eu4q4")
 text = "Editar"
 
 [node name="PersonalizarControles" type="Control" parent="VBoxConfigs" node_paths=PackedStringArray("primeiro_botao")]
+visible = false
 layout_mode = 2
 script = ExtResource("6_eu4q4")
 primeiro_botao = NodePath("ScrollContainerPersControles/GridContainer/ButtonFerPegar")
@@ -364,6 +380,23 @@ size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
 text = "A"
 
+[node name="LabelSalvarControles" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("5_eu4q4")
+text = "Salvar Controles"
+
+[node name="VSeparator" type="VSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="ButtonSalvarControles" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("5_eu4q4")
+text = "Salvar"
+
 [node name="ColorRectWaitingInput" type="ColorRect" parent="VBoxConfigs/PersonalizarControles"]
 visible = false
 z_index = 99
@@ -491,7 +524,6 @@ text = "Remover Logos na Abertura do Jogo"
 metadata/tag = "exibicao"
 
 [node name="GridContainerSave" type="GridContainer" parent="VBoxConfigs"]
-visible = false
 layout_mode = 2
 theme_override_constants/h_separation = 50
 columns = 2
@@ -506,6 +538,17 @@ text = "Voltar Configurações Iniciais"
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Voltar"
+
+[node name="LabelResetControles" type="Label" parent="VBoxConfigs/GridContainerSave"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+theme_override_font_sizes/font_size = 35
+text = "Remover Controles Personalizados"
+
+[node name="ButtonResetControles" type="Button" parent="VBoxConfigs/GridContainerSave"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+text = "Remover"
 
 [node name="LabelDeletarPartida" type="Label" parent="VBoxConfigs/GridContainerSave"]
 layout_mode = 2
@@ -551,6 +594,7 @@ offset_top = 36.0
 offset_right = 283.0
 offset_bottom = 68.0
 theme = ExtResource("5_eu4q4")
+theme_override_font_sizes/font_size = 35
 text = "Até as estatísticas serão perdidas"
 
 [node name="ButtonDeletarTodoCerteza" type="Button" parent="VBoxConfigs/GridContainerSave"]
@@ -568,7 +612,8 @@ text = "Sim, Deletar"
 [connection signal="toggled" from="VBoxConfigs/GridContainerControles/ButtonControleP1" to="." method="_on_button_controle_p_1_toggled"]
 [connection signal="toggled" from="VBoxConfigs/GridContainerControles/ButtonControleP2" to="." method="_on_button_controle_p_2_toggled"]
 [connection signal="item_selected" from="VBoxConfigs/GridContainerControles/OptionsTipoControles" to="." method="_on_options_tipo_controles_item_selected"]
-[connection signal="pressed" from="VBoxConfigs/GridContainerControles/ButtonPersonalizarControles" to="." method="_on_button_personalizar_controles_pressed"]
+[connection signal="pressed" from="VBoxConfigs/GridContainerControles/ButtonLoadControles" to="." method="_on_button_load_controles_pressed"]
+[connection signal="pressed" from="VBoxConfigs/GridContainerControles/ButtonPersonalizarControles2" to="." method="_on_button_personalizar_controles_pressed"]
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerPegar" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_pegar_pressed"]
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerPegar2" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_pegar2_pressed"]
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerLargar" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_largar_pressed"]
@@ -577,6 +622,7 @@ text = "Sim, Deletar"
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerUsar2" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_usar2_pressed"]
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerJogarForca" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_jogar_forca_pressed"]
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerJogarForca2" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_jogar_forca_2_pressed"]
+[connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonSalvarControles" to="VBoxConfigs/PersonalizarControles" method="_on_button_salvar_controles_pressed"]
 [connection signal="toggled" from="VBoxConfigs/AimAllTime" to="." method="_on_aim_all_time_toggled"]
 [connection signal="toggled" from="VBoxConfigs/TrackingColor" to="." method="_on_tracking_color_toggled"]
 [connection signal="drag_ended" from="VBoxConfigs/GridContainerAudio/HSliderMusicaMenu" to="." method="_on_h_slider_musica_menu_drag_ended"]
@@ -586,6 +632,7 @@ text = "Sim, Deletar"
 [connection signal="toggled" from="VBoxConfigs/RemEfeitosGraf" to="." method="_on_rem_efeitos_graf_toggled"]
 [connection signal="toggled" from="VBoxConfigs/RemLogoIntro" to="." method="_on_rem_logo_intro_toggled"]
 [connection signal="pressed" from="VBoxConfigs/GridContainerSave/ButtonResetConfigs" to="." method="_on_button_reset_configs_pressed"]
+[connection signal="pressed" from="VBoxConfigs/GridContainerSave/ButtonResetControles" to="." method="_on_button_reset_controles_pressed"]
 [connection signal="toggled" from="VBoxConfigs/GridContainerSave/ButtonDeletarPartida" to="." method="_on_button_deletar_partida_toggled"]
 [connection signal="pressed" from="VBoxConfigs/GridContainerSave/ButtonDeletarPartidaCerteza" to="." method="_on_button_deletar_certeza_pressed"]
 [connection signal="toggled" from="VBoxConfigs/GridContainerSave/ButtonDeletarTodo" to="." method="_on_button_deletar_todo_toggled"]

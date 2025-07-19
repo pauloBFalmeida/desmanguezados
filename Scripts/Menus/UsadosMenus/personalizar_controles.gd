@@ -31,6 +31,9 @@ func _ready() -> void:
 	# funciona durante o pause
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
+func _on_button_salvar_controles_pressed() -> void:
+	SaveManager.save_inputs(controle_player_curr)
+
 func mostrar_personalizar_controle(
 			_controle_player_curr : InputManager.PlayerId,
 			botao_tag : Button
