@@ -86,9 +86,7 @@ func _get_event_data(event : InputEvent) -> Dictionary:
 			data["on_controle"] = true
 			return data
 	elif event is InputEventKey:
-		data["button"] = event.key_label
 		data["on_controle"] = false
-#		???????????????????????????????
 		return data
 	return data
 
@@ -160,13 +158,16 @@ func _ajustar_texto_botao_acao(btns : Array[Button], action : String) -> void:
 			print(data["button"])
 		# se for no teclado -> altere o texto do button para o botao do keyboard
 		else:
-			print(OS.get_keycode_string(evento.keycode))
+			botao.text = _get_string_keyboard(evento)
 
 func _ajustar_texto_botao_evento(button : Button) -> void:
-	var controle_button := InputManager.Controle_btn.NONE
-	controle_button = event_data_input["button"]
-	# ajustar texto
-	_alterar_texto_botao(button, controle_button)
+	if event_data_input["on_controle"]:
+		var controle_button := InputManager.Controle_btn.NONE
+		controle_button = event_data_input["button"]
+		# ajustar texto
+		_alterar_texto_botao(button, controle_button)
+	else:
+		button.text = _get_string_keyboard(event_input)
 
 func _alterar_texto_botao(button: Button, controle_button: InputManager.Controle_btn) -> void:
 	# caso seja invalido
@@ -183,6 +184,13 @@ func _alterar_texto_botao(button: Button, controle_button: InputManager.Controle
 	button.text = btn_nomes[controle_button]
 	# pega o foco
 	button.grab_focus()
+
+func _get_string_keyboard(event : InputEventKey) -> String:
+	if event.unicode != 0:
+		return char(event.unicode)
+	else:
+		var keycode := DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
+		return OS.get_keycode_string(keycode)
 
 # ---------------------------------------------------- Pegar
 func _on_button_fer_pegar_pressed() -> void:
