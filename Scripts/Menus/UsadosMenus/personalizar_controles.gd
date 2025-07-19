@@ -5,6 +5,7 @@ extends Control
 @onready var waiting_input_button := $ColorRectWaitingInput/Button
 @onready var grid := $ScrollContainerPersControles/GridContainer
 @onready var label_jogar_forca := $ScrollContainerPersControles/GridContainer/LabelJogarForca
+@onready var button_salvar := $ScrollContainerPersControles/GridContainer/ButtonSalvarControles
 
 @onready var btns_pegar : Array[Button] = [
 	$ScrollContainerPersControles/GridContainer/ButtonFerPegar, 
@@ -33,6 +34,8 @@ func _ready() -> void:
 
 func _on_button_salvar_controles_pressed() -> void:
 	SaveManager.save_inputs(controle_player_curr)
+	button_salvar.text = "Salvos"
+	button_salvar.disabled = true
 
 func mostrar_personalizar_controle(
 			_controle_player_curr : InputManager.PlayerId,
@@ -41,6 +44,9 @@ func mostrar_personalizar_controle(
 	controle_player_curr = _controle_player_curr
 	# foco no primeiro botao
 	primeiro_botao.grab_focus()
+	# ajusta o texto
+	button_salvar.disabled = false
+	button_salvar.text = "Salvar"
 	# ajusta todos os neighbors left para serem o botao da tag 'controles'
 	for item in grid.get_children():
 		# item eh um botao AND esta na 2 coluna

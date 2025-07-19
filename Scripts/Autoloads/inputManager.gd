@@ -87,7 +87,7 @@ func _clone_action_controller(original: String, new_name: String, device_id: int
 		event_copy.device = device_id
 		InputMap.action_add_event(new_name, event_copy)
 
-func remove_controller_action(player_id: PlayerId, action_name: String) -> void:
+func remove_actions_input(player_id: PlayerId, action_name: String) -> void:
 	#var device_id : int = -1
 	#for key in controles_conectados.keys():
 		#if controles_conectados[key] == player_id:
@@ -240,7 +240,8 @@ func get_event_data(event : InputEvent, player : PlayerId, escutar_input : bool 
 		data["on_controle"] = false
 		if event is InputEventKey:
 			data["on_mouse"] = false
-			data["unicode"] = event.unicode
+			if event.unicode != 0:
+				data["unicode"] = event.unicode
 			data["physical_keycode"] = event.physical_keycode
 		elif event is InputEventMouseButton:
 			data["on_mouse"] = true

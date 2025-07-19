@@ -144,6 +144,9 @@ func _ajustar_input(file : ConfigFile) -> void:
 			section += "_" + action
 			# pega a quantidade de eventos que tem na acao
 			var amount = file.get_value(section, "amount", 0)
+			if amount == 0: continue # se nao tem -> pule
+			# remove as acoes presentes atuais
+			InputManager.remove_actions_input(player, action)
 			# load de cada evento
 			for count in range(amount):
 				# key do configFile
@@ -199,7 +202,8 @@ func _salva_evento(file : ConfigFile, data : Dictionary,
 		if data["on_mouse"]:
 			file.set_value(section, key_original + "button", data["button"])
 		else: # no teclado
-			file.set_value(section, key_original + "unicode", data["unicode"])
+			if data.has("unicode"):
+				file.set_value(section, key_original + "unicode", data["unicode"])
 			file.set_value(section, key_original + "physical_keycode", data["physical_keycode"])
 
 func _load_evento(file : ConfigFile, section : String, key_original : String) -> Dictionary:
