@@ -166,6 +166,9 @@ func save_inputs() -> void:
 				var key : String = "event_" + str(count)
 				# salva o evento
 				_salva_evento(file, data, section, key)
+	
+	# save to disk
+	file.save(SAVE_INPUT_PATH)
 
 func _salva_evento(file : ConfigFile, data : Dictionary, 
 					section : String, key_original : String) -> void:
