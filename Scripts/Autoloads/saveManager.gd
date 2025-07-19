@@ -261,10 +261,10 @@ func _create_event_from_data(data : Dictionary) -> InputEvent:
 			return event
 		else: # teclado
 			var event := InputEventKey.new()
-			if data["unicode"] == 0:
-				event.unicode = data["unicode"]
-			else: # nao tem unicode -> physical keycode
-				event.physical_keycode = data["physical_keycode"]
+			if data["unicode"] != 0:
+				event.unicode = int( data["unicode"] )
+			#else: # nao tem unicode -> physical keycode
+			event.physical_keycode = data["physical_keycode"]
 			return event
 	# nao deve cair aqui
 	return InputEventJoypadButton.new()
