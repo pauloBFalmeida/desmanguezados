@@ -364,20 +364,6 @@ size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
 text = "A"
 
-[node name="LabelMovimento" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
-layout_mode = 2
-theme = ExtResource("5_eu4q4")
-theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
-text = "Ferramentas"
-
-[node name="VSeparator" type="VSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-
-[node name="VSeparator2" type="VSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-
 [node name="ColorRectWaitingInput" type="ColorRect" parent="VBoxConfigs/PersonalizarControles"]
 visible = false
 z_index = 99
