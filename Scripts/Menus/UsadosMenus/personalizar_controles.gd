@@ -62,7 +62,6 @@ func _input(event):
 func _get_event_data(event : InputEvent) -> Dictionary:
 	var data := {}
 	if event is InputEventJoypadButton:
-		#print("Button index: %s pressed on device %s" % [event.button_index, event.device])
 		var controle_tipo = Globais.controle_tipo_player[controle_player_curr]
 		var btn_index = InputManager.controle_btn_indexes[controle_tipo]
 		var id = event.button_index
@@ -74,14 +73,12 @@ func _get_event_data(event : InputEvent) -> Dictionary:
 		# se for LT ou RT (trigger) garante que tenha apertado um pouco
 		#	para evitar apertos acidentais ou deadzones 
 		if escutar_input and event.axis_value < 0.4: return data
-		# se nao estiver escutando por inputs, ou passar do treshold
+		# se nao estiver escutando por inputs, ou passar do threshold
 		if event.axis == JOY_AXIS_TRIGGER_LEFT:
-			#print("L2 (gatilho esquerdo): ", event.axis_value)
 			data["button"] = InputManager.Controle_btn.LT
 			data["on_controle"] = true
 			return data
 		elif event.axis == JOY_AXIS_TRIGGER_RIGHT:
-			#print("R2 (gatilho direito): ", event.axis_value)
 			data["button"] = InputManager.Controle_btn.RT
 			data["on_controle"] = true
 			return data
@@ -155,7 +152,6 @@ func _ajustar_texto_botao_acao(btns : Array[Button], action : String) -> void:
 		# se for no controle -> altere o texto do button para o botao controle 
 		if data["on_controle"]:
 			_alterar_texto_botao(botao, data["button"])
-			print(data["button"])
 		# se for no teclado -> altere o texto do button para o botao do keyboard
 		else:
 			botao.text = _get_string_keyboard(evento)
