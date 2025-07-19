@@ -22,6 +22,7 @@ extends Menu
 @onready var toggle_rem_efeitos_graf := $VBoxConfigs/RemEfeitosGraf
 @onready var toggle_rem_logo_intro := $VBoxConfigs/RemLogoIntro
 # -- Save --
+@onready var label_reset_controles := $VBoxConfigs/GridContainerSave/LabelResetControles
 @onready var button_reset_controles := $VBoxConfigs/GridContainerSave/ButtonResetControles
 @onready var toggle_deletar_partida := $VBoxConfigs/GridContainerSave/ButtonDeletarPartida
 @onready var toggle_deletar_todo := $VBoxConfigs/GridContainerSave/ButtonDeletarTodo
@@ -62,10 +63,6 @@ func _on_button_voltar_pressed() -> void:
 	SaveManager.save_game()
 
 func _ready() -> void:
-	print('----------')
-	SaveManager.load_inputs()
-	print('----------')
-	
 	btn_voltar.grab_focus()
 	_hide_personalizar_controles()
 	# ---
@@ -142,6 +139,7 @@ func _on_button_personalizar_controles_pressed() -> void:
 func _hide_personalizar_controles() -> void:
 	personalizar_controles.hide()
 
+
 # --------- GamePlay ---------
 func _on_aim_all_time_toggled(toggled_on: bool) -> void:
 	Globais.possivel_aim_all_time = toggled_on
@@ -189,6 +187,8 @@ func _on_button_reset_controles_pressed() -> void:
 	SaveManager.reset_inputs()
 	button_reset_controles.text = "Removidos"
 	button_reset_controles.disabled = true
+	label_reset_controles.text += "\n\n"
+	label_reset_controles.get_child(0).show()
 
 func _on_button_deletar_partida_toggled(toggled_on: bool) -> void:
 	lidar_toggle(toggled_on, toggle_deletar_partida, itens_partida)

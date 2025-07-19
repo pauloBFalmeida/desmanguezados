@@ -545,6 +545,18 @@ theme = ExtResource("5_eu4q4")
 theme_override_font_sizes/font_size = 35
 text = "Remover Controles Personalizados"
 
+[node name="LabelResetControlesMais" type="Label" parent="VBoxConfigs/GridContainerSave/LabelResetControles"]
+visible = false
+layout_mode = 2
+offset_top = 32.0
+offset_right = 451.0
+offset_bottom = 68.0
+theme = ExtResource("5_eu4q4")
+theme_override_colors/font_color = Color(0.952941, 0, 0.313726, 1)
+theme_override_font_sizes/font_size = 35
+text = "Para ter efeito
+O jogo deverá ser reiniciado"
+
 [node name="ButtonResetControles" type="Button" parent="VBoxConfigs/GridContainerSave"]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
