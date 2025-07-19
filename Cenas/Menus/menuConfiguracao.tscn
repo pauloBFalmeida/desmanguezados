@@ -262,7 +262,7 @@ self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
-[node name="LabelAcao" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="LabelFerramentas" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
@@ -343,10 +343,40 @@ size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
 text = "A"
 
-[node name="LabelFerramenta2" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="LabelJogarForca" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
 layout_mode = 2
+theme = ExtResource("5_eu4q4")
+text = "Força de Jogar"
+
+[node name="ButtonFerJogarForca" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
-text = "aaaa"
+text = "A"
+
+[node name="ButtonFerJogarForca2" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("6_kdt1j")
+text = "A"
+
+[node name="LabelMovimento" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+text = "Ferramentas"
+
+[node name="VSeparator" type="VSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
 
 [node name="ColorRectWaitingInput" type="ColorRect" parent="VBoxConfigs/PersonalizarControles"]
 visible = false
@@ -559,6 +589,8 @@ text = "Sim, Deletar"
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerLargar2" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_largar2_pressed"]
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerUsar" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_usar_pressed"]
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerUsar2" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_usar2_pressed"]
+[connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerJogarForca" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_jogar_forca_pressed"]
+[connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerJogarForca2" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_jogar_forca_2_pressed"]
 [connection signal="toggled" from="VBoxConfigs/AimAllTime" to="." method="_on_aim_all_time_toggled"]
 [connection signal="toggled" from="VBoxConfigs/TrackingColor" to="." method="_on_tracking_color_toggled"]
 [connection signal="drag_ended" from="VBoxConfigs/GridContainerAudio/HSliderMusicaMenu" to="." method="_on_h_slider_musica_menu_drag_ended"]
