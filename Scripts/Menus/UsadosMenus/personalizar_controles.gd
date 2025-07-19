@@ -36,6 +36,10 @@ func _on_button_salvar_controles_pressed() -> void:
 	SaveManager.save_inputs(controle_player_curr)
 	button_salvar.text = "Salvos"
 	button_salvar.disabled = true
+	# espera um pouco para voltar a habilitar o botao de salvar
+	await get_tree().create_timer(2.0).timeout
+	button_salvar.disabled = false
+	button_salvar.text = "Salvar"
 
 func mostrar_personalizar_controle(
 			_controle_player_curr : InputManager.PlayerId,
@@ -143,7 +147,7 @@ func _ajustar_texto_botao_acao(btns : Array[Button], action : String) -> void:
 			_alterar_texto_botao(botao, data["button"])
 		# se for no teclado -> altere o texto do button para o botao do keyboard
 		else:
-			botao.text = _get_string_keyboard(evento)
+			botao.text = _get_string_keyboard(data)
 
 func _ajustar_texto_botao_evento(button : Button) -> void:
 	if event_data_input["on_controle"]:
@@ -152,7 +156,7 @@ func _ajustar_texto_botao_evento(button : Button) -> void:
 		# ajustar texto
 		_alterar_texto_botao(button, controle_button)
 	else:
-		button.text = _get_string_keyboard(event_input)
+		button.text = _get_string_keyboard(event_data_input)
 
 func _alterar_texto_botao(button: Button, controle_button: InputManager.Controle_btn) -> void:
 	# caso seja invalido
@@ -170,19 +174,10 @@ func _alterar_texto_botao(button: Button, controle_button: InputManager.Controle
 	# pega o foco
 	button.grab_focus()
 
-func _get_string_keyboard(event : InputEvent) -> String:
-	# teclado
-	if event is InputEventKey:
-		var evento : InputEventKey = event
-		if evento.unicode != 0:
-			return char(evento.unicode)
-		else:
-			var keycode := DisplayServer.keyboard_get_keycode_from_physical(evento.physical_keycode)
-			return OS.get_keycode_string(keycode)
+func _get_string_keyboard(data : Dictionary) -> String:
 	# mouse
-	elif event is InputEventMouseButton:
-		var evento : InputEventMouseButton = event
-		match evento.button_index:
+	if data["on_mouse"]:
+		match data["button"]:
 			MouseButton.MOUSE_BUTTON_LEFT:
 				return "Mouse E"
 			MouseButton.MOUSE_BUTTON_RIGHT:
@@ -193,7 +188,15 @@ func _get_string_keyboard(event : InputEvent) -> String:
 				return "Mouse E1"
 			MouseButton.MOUSE_BUTTON_XBUTTON2:
 				return "Mouse E2"
-	
+	# teclado
+	else:
+		if (data.has("unicode") and data["unicode"] != 0 
+				and data["unicode"] != 32 # space
+				):
+			return char(data["unicode"])
+		else:
+			var keycode := DisplayServer.keyboard_get_keycode_from_physical(data["physical_keycode"])
+			return OS.get_keycode_string(keycode)
 	return "?"
 
 func _esconder_not_on_controle(btns : Array[Button], action : String, label : Label) -> void:
