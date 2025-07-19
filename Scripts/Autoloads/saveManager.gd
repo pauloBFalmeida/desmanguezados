@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_PATH = "user://save_game.cfg"
+const SAVE_GAME_PATH = "user://save_game.cfg"
 
 # ----- Acessar o disco -----
 func load_game(force_load : bool = true) -> bool:
@@ -8,7 +8,7 @@ func load_game(force_load : bool = true) -> bool:
 	if (not force_load) and Globais.jogo_ja_loaded: return true
 	
 	var file = ConfigFile.new()
-	if file.load(SAVE_PATH) != OK:  # se o arquivo nao existe
+	if file.load(SAVE_GAME_PATH) != OK:  # se o arquivo nao existe
 		return false
 	# coloca os valores nas globais
 	_ajustar_globais(file)
@@ -44,7 +44,7 @@ func save_game() -> void:
 	file.set_value("stats", "stats_zen_tiles_competamente_jogados", Globais.stats_zen_tiles_competamente_jogados)
 	
 	# save to disk
-	file.save(SAVE_PATH)
+	file.save(SAVE_GAME_PATH)
 
 # ----- Ajustar as globais -----
 # coloca valores do arquivo nas nos globais
@@ -106,7 +106,7 @@ func reset_save() -> void:
 	# re load
 	_ajustar_globais(file)
 	# save to disk
-	file.save(SAVE_PATH)
+	file.save(SAVE_GAME_PATH)
 
 func reset_save_partida() -> void:
 	# reseta os scores
