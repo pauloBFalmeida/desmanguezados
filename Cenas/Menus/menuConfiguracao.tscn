@@ -175,7 +175,7 @@ size_flags_vertical = 4
 theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_pressed_color = Color(0.764706, 1, 0.517647, 1)
 toggle_mode = true
 text = "Controle P1"
 
@@ -187,7 +187,7 @@ size_flags_vertical = 4
 theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.572549, 0.572549, 0.572549, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+theme_override_colors/font_pressed_color = Color(0.764706, 1, 0.517647, 1)
 toggle_mode = true
 button_pressed = true
 text = "Controle P2"
