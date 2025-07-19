@@ -97,16 +97,18 @@ func remove_controller_action(player_id: PlayerId, action_name: String) -> void:
 	if InputMap.has_action(action):
 		InputMap.action_erase_events(action)
 
-func change_controller_action(player_id: PlayerId, action_name: String, action_event: InputEvent) -> void:
+func change_action_input(player_id: PlayerId, action_name: String, action_event: InputEvent) -> void:
 	var action : String = actionMap_players[player_id][action_name]
-	if InputMap.has_action(action):
-		InputMap.action_erase_events(action)
-		InputMap.action_add_event(action, action_event)
+	if not InputMap.has_action(action):
+		InputMap.add_action(action)
+	InputMap.action_erase_events(action)
+	InputMap.action_add_event(action, action_event)
 
-func add_controller_action(player_id: PlayerId, action_name: String, action_event: InputEvent) -> void:
+func add_action_input(player_id: PlayerId, action_name: String, action_event: InputEvent) -> void:
 	var action : String = actionMap_players[player_id][action_name]
-	if InputMap.has_action(action):
-		InputMap.action_add_event(action, action_event)
+	if not InputMap.has_action(action):
+		InputMap.add_action(action)
+	InputMap.action_add_event(action, action_event)
 
 func get_action_events(player_id: PlayerId, action_name: String) -> Array[InputEvent]:
 	var action : String = actionMap_players[player_id][action_name]
@@ -208,3 +210,41 @@ const PS_btn_index : Dictionary[int, Controle_btn] = {
 	13: Controle_btn.LEFT,
 	14: Controle_btn.RIGHT,
 }
+
+func get_event_data(event : InputEvent, player : PlayerId, escutar_input : bool = false) -> Dictionary:
+	var data := {}
+	# controle
+	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		data["on_controle"] = true
+		if event is InputEventJoypadButton:
+			var controle_tipo = Globais.controle_tipo_player[player]
+			var btn_index = InputManager.controle_btn_indexes[controle_tipo]
+			var id = event.button_index
+			if btn_index.has(id):
+				data["button"] = btn_index[id]
+				data["controle_tipo"] = controle_tipo
+				return data
+		elif event is InputEventJoypadMotion:
+			# se for LT ou RT (trigger) garante que tenha apertado um pouco
+			#	para evitar apertos acidentais ou deadzones 
+			if escutar_input and event.axis_value < 0.4: return {}
+			# se nao estiver escutando por inputs, ou passar do threshold
+			if event.axis == JOY_AXIS_TRIGGER_LEFT:
+				data["button"] = InputManager.Controle_btn.LT
+				return data
+			elif event.axis == JOY_AXIS_TRIGGER_RIGHT:
+				data["button"] = InputManager.Controle_btn.RT
+				return data
+	# mouse e teclado
+	elif event is InputEventKey or event is InputEventMouseButton:
+		data["on_controle"] = false
+		if event is InputEventKey:
+			data["on_mouse"] = false
+			data["unicode"] = event.unicode
+			data["physical_keycode"] = event.physical_keycode
+		elif event is InputEventMouseButton:
+			data["on_mouse"] = true
+			data["button"] = event.button_index
+		return data
+	# se chegou aqui, nao caiu em nada antes -> retorne invalido
+	return {}

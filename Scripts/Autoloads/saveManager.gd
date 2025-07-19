@@ -97,7 +97,7 @@ func reset_globais_config() -> void:
 	Globais.tela_cheia         = true
 	Globais.remov_efeitos_graf = false
 	Globais.remov_logo_intro   = false
-	
+
 
 # ----- Delete Save -----
 func reset_save() -> void:
@@ -114,3 +114,139 @@ func reset_save_partida() -> void:
 		Globais.leveis_highscore[level] = -1
 	# save to disk
 	save_game()
+
+
+# ----------------------- Save Input Controls --------------------
+const SAVE_INPUT_PATH = "user://save_input.cfg"
+
+# ----- Acessar o disco -----
+func load_inputs() -> void:
+	var file = ConfigFile.new()
+	if file.load(SAVE_INPUT_PATH) != OK:  # se o arquivo nao existe
+		return
+	# coloca os valores nas globais
+	_ajustar_input(file)
+
+# coloca valores do arquivo nas nos globais
+func _ajustar_input(file : ConfigFile) -> void:
+	for player in InputManager.PlayerId.values():
+		for action : String in InputManager.action_names:
+			# criar o section do configFile
+			var section : String = "player_" + str(player+1) + "_" + action
+			# pega a quantidade de eventos que tem na acao
+			var amount = file.get_value(section, "amount", 0)
+			# load de cada evento
+			for count in range(amount):
+				# key do configFile
+				var key : String = "event_" + str(count)
+				# salva o evento
+				var data : Dictionary = _load_evento(file, section, key)
+				var event : InputEvent = _create_event_from_data(data)
+				InputManager.add_action_input(player, action, event)
+
+func save_inputs() -> void:
+	var file = ConfigFile.new()
+	
+	for player in InputManager.PlayerId.values():
+		for action : String in InputManager.action_names:
+			# criar o section do configFile
+			var section : String = "player_" + str(player+1) + "_" + action
+			# pega a lista da eventos de uma acao
+			var event_list : Array = InputManager.get_action_events(player, action)
+			if event_list.is_empty(): continue # se nao tem eventos na acao -> pule
+			# salva a quantidade de eventos que tem na acao
+			var amount := event_list.size()
+			file.set_value(section, "amount", amount)
+			# salva cada evento
+			for count in range(amount):
+				var event : InputEvent = event_list[count]
+				var data : Dictionary  = InputManager.get_event_data(event, player) 
+				if data.is_empty(): continue # se nao conseguiu pegar os dados acao -> pule
+				# key do configFile
+				var key : String = "event_" + str(count)
+				# salva o evento
+				_salva_evento(file, data, section, key)
+
+func _salva_evento(file : ConfigFile, data : Dictionary, 
+					section : String, key_original : String) -> void:
+	# adiciona _ depois da key original 
+	key_original = key_original + "_"
+	# salva "no_controle"
+	file.set_value(section, key_original + "on_controle", data["on_controle"])
+	# -- esta no controle --
+	if data["on_controle"]:
+		file.set_value(section, key_original + "button", data["button"])
+		# se tem 'controle_tipo' -> salva
+		if data.has("controle_tipo"):
+			file.set_value(section, key_original + "controle_tipo", data["controle_tipo"])
+	# -- esta no mouse teclado --
+	else:
+		file.set_value(section, key_original + "on_mouse", data["on_mouse"])
+		if data["on_mouse"]:
+			file.set_value(section, key_original + "button", data["button"])
+		else: # no teclado
+			file.set_value(section, key_original + "unicode", data["unicode"])
+			file.set_value(section, key_original + "physical_keycode", data["physical_keycode"])
+
+func _load_evento(file : ConfigFile, section : String, key_original : String) -> Dictionary:
+	var data : Dictionary = {}
+	# adiciona _ depois da key original
+	key_original = key_original + "_"
+	
+	data["on_controle"] = file.get_value(section, key_original + "on_controle", false)
+	# -- esta no controle --
+	if data["on_controle"]:
+		data["button"] = file.get_value(section, key_original + "button", 0)
+		# se tem 'controle_tipo'
+		#	# como controle_tipo eh um enum, -1 so eh possivel se get_value nao tiver a key
+		var controle_tipo : int = file.get_value(section, key_original + "controle_tipo", -1)
+		if controle_tipo != -1: # tem controle_tipo
+			data["controle_tipo"] = controle_tipo
+	# -- esta no mouse teclado --
+	else:
+		data["on_mouse"] = file.get_value(section, key_original + "on_mouse", false)
+		if data["on_mouse"]:
+			data["button"] = file.get_value(section, key_original + "button", 0)
+		else: # no teclado
+			data["unicode"] = file.get_value(section, key_original + "unicode", 0)
+			data["physical_keycode"] = file.get_value(section, key_original + "physical_keycode", 0)
+	# retorna a data que montamos
+	return data
+
+func _create_event_from_data(data : Dictionary) -> InputEvent:
+	# -- no controle --
+	if data["on_controle"]:
+		if data.has("controle_tipo"):
+			var event := InputEventJoypadButton.new()
+			# pegue o tipo de controle (PS, Xbox ...)
+			var controle_tipo = data["controle_tipo"]
+			# nos temos o Controle_btn, mas queremos o index do botao no device (controle)
+			#	para isso fazemos o oposto de: btn_indexes[index do device] -> Controle_btn
+			#	que eh entao: dado Controle_btn no btn_indexes -pegamos-> index do device
+			var btn_indexes = InputManager.controle_btn_indexes[controle_tipo]
+			for btn_index in btn_indexes.keys():
+				if btn_indexes[btn_index] == data["button"]:
+					event.button_index = btn_index
+					return event
+		else: # nao tem controle_tipo -> entao eh axis
+			var event := InputEventJoypadMotion.new()
+			match data["button"]:
+				InputManager.Controle_btn.LT:
+					event.axis = JOY_AXIS_TRIGGER_LEFT
+				InputManager.Controle_btn.RT:
+					event.axis = JOY_AXIS_TRIGGER_RIGHT
+	# -- mouse e teclado --
+	else:
+		if data["on_mouse"]: # mouse
+			var event := InputEventMouseButton.new()
+			event.button_index = data["button"]
+			return event
+		else: # teclado
+			var event := InputEventKey.new()
+			if data["unicode"] == 0:
+				event.unicode = data["unicode"]
+			else: # nao tem unicode -> physical keycode
+				event.physical_keycode = data["physical_keycode"]
+			return event
+	# nao deve cair aqui
+	return InputEventJoypadButton.new()

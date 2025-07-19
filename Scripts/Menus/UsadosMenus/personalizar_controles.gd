@@ -4,6 +4,7 @@ extends Control
 @onready var waiting_input := $ColorRectWaitingInput
 @onready var waiting_input_button := $ColorRectWaitingInput/Button
 @onready var grid := $ScrollContainerPersControles/GridContainer
+@onready var label_jogar_forca := $ScrollContainerPersControles/GridContainer/LabelJogarForca
 
 @onready var btns_pegar : Array[Button] = [
 	$ScrollContainerPersControles/GridContainer/ButtonFerPegar, 
@@ -48,6 +49,8 @@ func mostrar_personalizar_controle(
 	_ajustar_texto_botao_acao(btns_largar, "drop")
 	_ajustar_texto_botao_acao(btns_usar, "interact")
 	_ajustar_texto_botao_acao(btns_jogar_forca, "throw_force")
+	# esconde jogar forca se nao for no controle
+	_esconder_not_on_controle(btns_jogar_forca, "throw_force", label_jogar_forca)
 
 # ----------- Ouvir inputs ----------
 func _input(event):
@@ -60,32 +63,7 @@ func _input(event):
 		emit_signal("input_apertado")
 
 func _get_event_data(event : InputEvent) -> Dictionary:
-	var data := {}
-	if event is InputEventJoypadButton:
-		var controle_tipo = Globais.controle_tipo_player[controle_player_curr]
-		var btn_index = InputManager.controle_btn_indexes[controle_tipo]
-		var id = event.button_index
-		if btn_index.has(id):
-			data["button"] = btn_index[id]
-			data["on_controle"] = true
-			return data
-	elif event is InputEventJoypadMotion:
-		# se for LT ou RT (trigger) garante que tenha apertado um pouco
-		#	para evitar apertos acidentais ou deadzones 
-		if escutar_input and event.axis_value < 0.4: return data
-		# se nao estiver escutando por inputs, ou passar do threshold
-		if event.axis == JOY_AXIS_TRIGGER_LEFT:
-			data["button"] = InputManager.Controle_btn.LT
-			data["on_controle"] = true
-			return data
-		elif event.axis == JOY_AXIS_TRIGGER_RIGHT:
-			data["button"] = InputManager.Controle_btn.RT
-			data["on_controle"] = true
-			return data
-	elif event is InputEventKey:
-		data["on_controle"] = false
-		return data
-	return data
+	return InputManager.get_event_data(event, controle_player_curr, escutar_input)
 
 # ----------- Ouvir inputs ----------
 func _receber_input() -> void:
@@ -110,18 +88,20 @@ func _receber_input() -> void:
 func _alterar_input(event_name : String, botao : Button) -> void:
 	# botao ja tinha uma acao antes -> mude para a nova acao
 	if botao.get_meta("contem_acao", false):
-		InputManager.change_controller_action(
+		InputManager.change_action_input(
 			controle_player_curr, 	# player id do controle
 			event_name, 			# nome da acao no InputManager.action_names
 			event_input				# event novo que vamos colocar na acao
 		)
 	# botao nao tinha uma acao antes -> adicione a nova acao
 	else:
-		InputManager.add_controller_action(
+		InputManager.add_action_input(
 			controle_player_curr, 	# player id do controle
 			event_name, 			# nome da acao no InputManager.action_names
 			event_input				# event novo que vamos colocar na acao
 		)
+	# atualiza o texto no botao
+	_ajustar_texto_botao_evento(botao)
 
 # ----------- Ajustar Botoes ----------
 func _ajustar_texto_botao_acao(btns : Array[Button], action : String) -> void:
@@ -181,53 +161,86 @@ func _alterar_texto_botao(button: Button, controle_button: InputManager.Controle
 	# pega o foco
 	button.grab_focus()
 
-func _get_string_keyboard(event : InputEventKey) -> String:
-	if event.unicode != 0:
-		return char(event.unicode)
-	else:
-		var keycode := DisplayServer.keyboard_get_keycode_from_physical(event.physical_keycode)
-		return OS.get_keycode_string(keycode)
+func _get_string_keyboard(event : InputEvent) -> String:
+	# teclado
+	if event is InputEventKey:
+		var evento : InputEventKey = event
+		if evento.unicode != 0:
+			return char(evento.unicode)
+		else:
+			var keycode := DisplayServer.keyboard_get_keycode_from_physical(evento.physical_keycode)
+			return OS.get_keycode_string(keycode)
+	# mouse
+	elif event is InputEventMouseButton:
+		var evento : InputEventMouseButton = event
+		match evento.button_index:
+			MouseButton.MOUSE_BUTTON_LEFT:
+				return "Mouse E"
+			MouseButton.MOUSE_BUTTON_RIGHT:
+				return "Mouse D"
+			MouseButton.MOUSE_BUTTON_MIDDLE:
+				return "Mouse Meio"
+			MouseButton.MOUSE_BUTTON_XBUTTON1:
+				return "Mouse E1"
+			MouseButton.MOUSE_BUTTON_XBUTTON2:
+				return "Mouse E2"
+	
+	return "?"
+
+func _esconder_not_on_controle(btns : Array[Button], action : String, label : Label) -> void:
+	var is_on_controle : bool = false
+	# descobre se esta no controle ou no teclado
+	for evento : InputEvent in InputManager.get_action_events(controle_player_curr, action):
+		var data : Dictionary = _get_event_data(evento)
+		# nao tem dados de evento -ou seja-> nao tem evento associado
+		if data.is_empty():
+			is_on_controle = false
+			break
+		# esta no controle
+		if data["on_controle"]:
+			is_on_controle = true
+			break
+		else:
+			is_on_controle = false
+			break
+	# se estiver no teclado -> esconda os botoes
+	if not is_on_controle:
+		for btn in btns:
+			btn.hide()
+		label.hide()
 
 # ---------------------------------------------------- Pegar
 func _on_button_fer_pegar_pressed() -> void:
 	await _receber_input()
 	_alterar_input("pickup", btns_pegar[0])
-	_ajustar_texto_botao_evento(btns_pegar[0])
 
 func _on_button_fer_pegar2_pressed() -> void:
 	await _receber_input()
 	_alterar_input("pickup", btns_pegar[1])
-	_ajustar_texto_botao_evento(btns_pegar[1])
 
 # ---------------------------------------------------- Largar
 func _on_button_fer_largar_pressed() -> void:
 	await _receber_input()
 	_alterar_input("drop", btns_largar[0])
-	_ajustar_texto_botao_evento(btns_largar[0])
 
 func _on_button_fer_largar2_pressed() -> void:
 	await _receber_input()
 	_alterar_input("drop", btns_largar[1])
-	_ajustar_texto_botao_evento(btns_largar[1])
 
 # ---------------------------------------------------- Usar
 func _on_button_fer_usar_pressed() -> void:
 	await _receber_input()
 	_alterar_input("interact", btns_usar[0])
-	_ajustar_texto_botao_evento(btns_usar[0])
 
 func _on_button_fer_usar2_pressed() -> void:
 	await _receber_input()
 	_alterar_input("interact", btns_usar[1])
-	_ajustar_texto_botao_evento(btns_usar[1])
 
 # ---------------------------------------------------- Jogar Forca 
 func _on_button_fer_jogar_forca_pressed() -> void:
 	await _receber_input()
 	_alterar_input("throw_force", btns_jogar_forca[0])
-	_ajustar_texto_botao_evento(btns_jogar_forca[0])
 
 func _on_button_fer_jogar_forca_2_pressed() -> void:
 	await _receber_input()
 	_alterar_input("throw_force", btns_jogar_forca[1])
-	_ajustar_texto_botao_evento(btns_jogar_forca[1])
