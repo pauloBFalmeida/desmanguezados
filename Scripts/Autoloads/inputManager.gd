@@ -59,6 +59,11 @@ func add_keyboard(player_id: PlayerId):
 	for action_name in action_names:
 		var ref_name: String = prefix + action_name
 		actionMap_players[player_id][action_name] = ref_name
+	# controles personalizados salvos para esse player 
+	# 	se tiver -> entao coloque essas acoes e acabe a funcao
+	# 	se nao tiver -> continue a funcao
+	#	false -> pois nao eh no controle, e sim no teclado
+	SaveManager.load_player_input(player_id, false)
 
 # ---- Adiciona as actionMap para controle ----
 func add_controller(player_id: PlayerId, device_id: int) -> void:
@@ -73,6 +78,9 @@ func add_controller(player_id: PlayerId, device_id: int) -> void:
 		var ref_name: String = "contr_" + action_name
 		_clone_action_controller(ref_name, new_name, device_id)
 		actionMap_players[player_id][action_name] = new_name
+	# controles personalizados salvos para esse player 
+	#	true -> pois este jogador esta usando o controle
+	SaveManager.load_player_input(player_id, true)
 	# emite o sinal avisando que foi adicionado um controle
 	emit_signal("controle_added")
 
@@ -88,12 +96,12 @@ func _clone_action_controller(original: String, new_name: String, device_id: int
 		InputMap.action_add_event(new_name, event_copy)
 
 func remove_actions_input(player_id: PlayerId, action_name: String) -> void:
-	#var device_id : int = -1
-	#for key in controles_conectados.keys():
-		#if controles_conectados[key] == player_id:
-			#device_id = key
-	#if device_id == -1: return
+	# se o player ainda nao tiver acoes no actionMap -> acabe, pois nao tem o que remover
+	if ( (not actionMap_players.has(player_id)) or
+		 (not actionMap_players[player_id].has(action_name)) ): return
+	# pega a acao
 	var action : String = actionMap_players[player_id][action_name]
+	# se tiver a acao no inputmap -> remova os eventos associados
 	if InputMap.has_action(action):
 		InputMap.action_erase_events(action)
 
@@ -105,6 +113,7 @@ func change_action_input(player_id: PlayerId, action_name: String, action_event:
 	InputMap.action_add_event(action, action_event)
 
 func add_action_input(player_id: PlayerId, action_name: String, action_event: InputEvent) -> void:
+	# pega a acao e adicione o evento
 	var action : String = actionMap_players[player_id][action_name]
 	if not InputMap.has_action(action):
 		InputMap.add_action(action)

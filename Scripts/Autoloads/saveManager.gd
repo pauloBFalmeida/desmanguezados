@@ -131,30 +131,47 @@ func load_inputs() -> void:
 	if file.load(SAVE_INPUT_PATH) != OK:  # se o arquivo nao existe
 		return
 	# coloca os valores nas globais
-	_ajustar_input(file)
+	_ajustar_todos_inputs(file)
 
-# coloca valores do arquivo nas nos globais
-func _ajustar_input(file : ConfigFile) -> void:
+## coloca os inputs do arquivo de um jogador
+##		retorna true -> se tinha alguma acao para colocar
+##		retorna false -> se nao colocou nenhuma acao 
+func load_player_input(player : InputManager.PlayerId, on_controle : bool) -> bool:
+	var file = ConfigFile.new()
+	if file.load(SAVE_INPUT_PATH) != OK:  # se o arquivo nao existe
+		return false # retorna que nao conseguiu colocar os valores
+	# retorna se colocou alguma acao dos eventos
+	return _ler_input_player(file, player, on_controle)
+
+func _ajustar_todos_inputs(file : ConfigFile) -> void:
 	for player in InputManager.PlayerId.values():
-		for action : String in InputManager.action_names:
-			# criar o section do configFile
-			var section : String
-			section  = "player_" + str(player+1)
-			section += "_c" if InputManager.players_no_controle.has(player) else "_k"
-			section += "_" + action
-			# pega a quantidade de eventos que tem na acao
-			var amount = file.get_value(section, "amount", 0)
-			if amount == 0: continue # se nao tem -> pule
-			# remove as acoes presentes atuais
-			InputManager.remove_actions_input(player, action)
-			# load de cada evento
-			for count in range(amount):
-				# key do configFile
-				var key : String = "event_" + str(count)
-				# salva o evento
-				var data : Dictionary = _load_evento(file, section, key)
-				var event : InputEvent = _create_event_from_data(data)
-				InputManager.add_action_input(player, action, event)
+		var on_controle : bool = InputManager.players_no_controle.has(player)
+		_ler_input_player(file, player, on_controle)
+
+func _ler_input_player(file : ConfigFile, player : InputManager.PlayerId, on_controle : bool) -> bool:
+	var colocou_alguma_acao : bool = false
+	for action : String in InputManager.action_names:
+		# criar o section do configFile
+		var section : String
+		section  = "player_" + str(player+1)
+		section += "_c" if on_controle else "_k"
+		section += "_" + action
+		# pega a quantidade de eventos que tem na acao
+		var amount = file.get_value(section, "amount", 0)
+		if amount == 0: continue # se nao tem -> pule
+		# remove as acoes presentes atuais
+		InputManager.remove_actions_input(player, action)
+		# load de cada evento
+		for count in range(amount):
+			# key do configFile
+			var key : String = "event_" + str(count)
+			# salva o evento
+			var data : Dictionary = _load_evento(file, section, key)
+			var event : InputEvent = _create_event_from_data(data)
+			InputManager.add_action_input(player, action, event)
+		# marca que colocou alguma acao
+		colocou_alguma_acao = true
+	return colocou_alguma_acao
 
 func save_inputs(player : InputManager.PlayerId) -> void:
 	var file = ConfigFile.new()
