@@ -125,6 +125,18 @@ func get_action_events(player_id: PlayerId, action_name: String) -> Array[InputE
 		return InputMap.action_get_events(action)
 	return []
 
+## pega o botao do jogador que faz a acao 'action_name'
+func get_text_action(player_id: PlayerId, action_name: String) -> String:
+	var events : Array[InputEvent] = get_action_events(player_id, action_name)
+	# se nao tem eventos -> retorne nenhum botao '-'
+	if events.is_empty(): return '-'
+	# pega o primeiro evento da lista
+	var evento : InputEvent = events[0]
+	# pega os dados desse evento para conseguir gerar o texto com o botao desse evento
+	var data  : Dictionary = get_event_data(evento, player_id)
+	var texto : String     = get_texto_acao(data,   player_id)
+	return texto
+
 # ---------- Nomes Botoes ---------------
 enum Controle_btn {
 	A, B, X, Y,
