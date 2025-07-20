@@ -220,6 +220,50 @@ const PS_btn_index : Dictionary[int, Controle_btn] = {
 	14: Controle_btn.RIGHT,
 }
 
+func get_texto_acao(data : Dictionary, player : PlayerId) -> String:
+	# se nao tiver nada -> retorne '-'
+	if data.is_empty(): return '-'
+	
+	if data["on_controle"]: # -- controle --
+		# pega o botao do controle
+		var controle_button := InputManager.Controle_btn.NONE
+		controle_button = data["button"]
+		# caso seja invalido
+		if controle_button == InputManager.Controle_btn.NONE:
+			return '-'
+		
+		# tipo de controle (PS, Xbox ...)
+		var controle_tipo = Globais.controle_tipo_player[player]
+		# pega a String que representa o botao
+		var btn_nomes = InputManager.controle_btn_nomes[controle_tipo]
+		# retorna o texto
+		return btn_nomes[controle_button]
+	else: # -- mouse teclado --
+		# mouse
+		if data["on_mouse"]:
+			match data["button"]:
+				MouseButton.MOUSE_BUTTON_LEFT:
+					return "Mouse E"
+				MouseButton.MOUSE_BUTTON_RIGHT:
+					return "Mouse D"
+				MouseButton.MOUSE_BUTTON_MIDDLE:
+					return "Mouse Meio"
+				MouseButton.MOUSE_BUTTON_XBUTTON1:
+					return "Mouse E1"
+				MouseButton.MOUSE_BUTTON_XBUTTON2:
+					return "Mouse E2"
+		# teclado
+		else:
+			if (data.has("unicode") and data["unicode"] != 0 
+					and data["unicode"] != 32 # space
+					):
+				return char(data["unicode"])
+			else:
+				var keycode := DisplayServer.keyboard_get_keycode_from_physical(data["physical_keycode"])
+				return OS.get_keycode_string(keycode)
+	# nao deve cair aqui
+	return '-'
+
 func get_event_data(event : InputEvent, player : PlayerId, escutar_input : bool = false) -> Dictionary:
 	var data := {}
 	# controle

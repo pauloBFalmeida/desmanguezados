@@ -61,10 +61,10 @@ func mostrar_personalizar_controle(
 			item.focus_neighbor_left = botao_tag.get_path()
 	
 	# -- ajusta o texto dos botoes --
-	_ajustar_texto_botao_acao(btns_pegar, "pickup")
-	_ajustar_texto_botao_acao(btns_largar, "drop")
-	_ajustar_texto_botao_acao(btns_usar, "interact")
-	_ajustar_texto_botao_acao(btns_jogar_forca, "throw_force")
+	_ajustar_texto_botao_add_contem_acao(btns_pegar, "pickup")
+	_ajustar_texto_botao_add_contem_acao(btns_largar, "drop")
+	_ajustar_texto_botao_add_contem_acao(btns_usar, "interact")
+	_ajustar_texto_botao_add_contem_acao(btns_jogar_forca, "throw_force")
 	# esconde jogar forca se nao for no controle
 	_esconder_not_on_controle(btns_jogar_forca, "throw_force", label_jogar_forca)
 	
@@ -120,10 +120,10 @@ func _alterar_input(event_name : String, botao : Button) -> void:
 			event_input				# event novo que vamos colocar na acao
 		)
 	# atualiza o texto no botao
-	_ajustar_texto_botao_evento(botao)
+	_alterar_texto_botao(botao, event_data_input)
 
 # ----------- Ajustar Botoes ----------
-func _ajustar_texto_botao_acao(btns : Array[Button], action : String) -> void:
+func _ajustar_texto_botao_add_contem_acao(btns : Array[Button], action : String) -> void:
 	# para cada botao da acao -> associe um event da acao do input manager
 	var action_events : Array[InputEvent] = InputManager.get_action_events(controle_player_curr, action)
 	for contador in range(len(btns)):
@@ -133,7 +133,7 @@ func _ajustar_texto_botao_acao(btns : Array[Button], action : String) -> void:
 		# se passou a quantidade de eventos -> proximo 
 		if contador >= len(action_events):
 			botao.set_meta("contem_acao", false)
-			_alterar_texto_botao(botao, InputManager.Controle_btn.NONE)
+			_alterar_texto_botao(botao, {}) # texto como '-'
 			continue
 			
 		var evento : InputEvent = action_events[contador]
@@ -142,68 +142,20 @@ func _ajustar_texto_botao_acao(btns : Array[Button], action : String) -> void:
 		# nao tem dados de evento -ou seja-> nao tem evento associado -> proximo
 		if data.is_empty():
 			botao.set_meta("contem_acao", false)
-			_alterar_texto_botao(botao, InputManager.Controle_btn.NONE)
+			_alterar_texto_botao(botao, {}) # texto como '-'
 			continue
 		
 		# coloca que o botao contem uma acao
 		botao.set_meta("contem_acao", true)
 		# -- analisa a acao --
-		# se for no controle -> altere o texto do button para o botao controle 
-		if data["on_controle"]:
-			_alterar_texto_botao(botao, data["button"])
-		# se for no teclado -> altere o texto do button para o botao do keyboard
-		else:
-			botao.text = _get_string_keyboard(data)
+		_alterar_texto_botao(botao, data)
 
-func _ajustar_texto_botao_evento(button : Button) -> void:
-	if event_data_input["on_controle"]:
-		var controle_button := InputManager.Controle_btn.NONE
-		controle_button = event_data_input["button"]
-		# ajustar texto
-		_alterar_texto_botao(button, controle_button)
-	else:
-		button.text = _get_string_keyboard(event_data_input)
-
-func _alterar_texto_botao(button: Button, controle_button: InputManager.Controle_btn) -> void:
-	# caso seja invalido
-	if controle_button == InputManager.Controle_btn.NONE:
-		button.text = '-'
-		button.grab_focus() # pega o foco
-		return
-	
-	# tipo de controle (PS, Xbox ...)
-	var controle_tipo = Globais.controle_tipo_player[controle_player_curr]
-	# pega a String que representa o botao
-	var btn_nomes = InputManager.controle_btn_nomes[controle_tipo]
+func _alterar_texto_botao(button : Button, data : Dictionary) -> void:
+	var texto : String = InputManager.get_texto_acao(data, controle_player_curr)
 	# ajustar o texto
-	button.text = btn_nomes[controle_button]
+	button.text = texto
 	# pega o foco
 	button.grab_focus()
-
-func _get_string_keyboard(data : Dictionary) -> String:
-	# mouse
-	if data["on_mouse"]:
-		match data["button"]:
-			MouseButton.MOUSE_BUTTON_LEFT:
-				return "Mouse E"
-			MouseButton.MOUSE_BUTTON_RIGHT:
-				return "Mouse D"
-			MouseButton.MOUSE_BUTTON_MIDDLE:
-				return "Mouse Meio"
-			MouseButton.MOUSE_BUTTON_XBUTTON1:
-				return "Mouse E1"
-			MouseButton.MOUSE_BUTTON_XBUTTON2:
-				return "Mouse E2"
-	# teclado
-	else:
-		if (data.has("unicode") and data["unicode"] != 0 
-				and data["unicode"] != 32 # space
-				):
-			return char(data["unicode"])
-		else:
-			var keycode := DisplayServer.keyboard_get_keycode_from_physical(data["physical_keycode"])
-			return OS.get_keycode_string(keycode)
-	return "?"
 
 func _esconder_not_on_controle(btns : Array[Button], action : String, label : Label) -> void:
 	var is_on_controle : bool = false
