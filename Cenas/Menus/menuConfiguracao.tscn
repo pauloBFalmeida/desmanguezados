@@ -234,7 +234,7 @@ layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Personalizar Controles"
 
-[node name="ButtonPersonalizarControles2" type="Button" parent="VBoxConfigs/GridContainerControles"]
+[node name="ButtonPersonalizarControles" type="Button" parent="VBoxConfigs/GridContainerControles"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -242,11 +242,11 @@ size_flags_vertical = 4
 theme = ExtResource("5_eu4q4")
 text = "Editar"
 
-[node name="PersonalizarControles" type="Control" parent="VBoxConfigs" node_paths=PackedStringArray("primeiro_botao")]
-visible = false
+[node name="PersonalizarControles" type="Control" parent="VBoxConfigs" node_paths=PackedStringArray("menu_configuracao", "primeiro_botao")]
 layout_mode = 2
 script = ExtResource("6_eu4q4")
-primeiro_botao = NodePath("ScrollContainerPersControles/GridContainer/ButtonFerPegar")
+menu_configuracao = NodePath("../..")
+primeiro_botao = NodePath("ScrollContainerPersControles/GridContainer/ButtonDesfazer")
 
 [node name="ScrollContainerPersControles" type="ScrollContainer" parent="VBoxConfigs/PersonalizarControles"]
 custom_minimum_size = Vector2(0, 500)
@@ -397,6 +397,22 @@ size_flags_vertical = 4
 theme = ExtResource("5_eu4q4")
 text = "Salvar"
 
+[node name="LabelDesfazer" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("5_eu4q4")
+text = "Desfazer Alterações"
+
+[node name="VSeparator2" type="VSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="ButtonDesfazer" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("5_eu4q4")
+text = "Desfazer"
+
 [node name="ColorRectWaitingInput" type="ColorRect" parent="VBoxConfigs/PersonalizarControles"]
 visible = false
 z_index = 99
@@ -524,6 +540,7 @@ text = "Remover Logos na Abertura do Jogo"
 metadata/tag = "exibicao"
 
 [node name="GridContainerSave" type="GridContainer" parent="VBoxConfigs"]
+visible = false
 layout_mode = 2
 theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 10
@@ -630,7 +647,7 @@ text = "Sim, Deletar"
 [connection signal="toggled" from="VBoxConfigs/GridContainerControles/ButtonControleP2" to="." method="_on_button_controle_p_2_toggled"]
 [connection signal="item_selected" from="VBoxConfigs/GridContainerControles/OptionsTipoControles" to="." method="_on_options_tipo_controles_item_selected"]
 [connection signal="pressed" from="VBoxConfigs/GridContainerControles/ButtonLoadControles" to="." method="_on_button_load_controles_pressed"]
-[connection signal="pressed" from="VBoxConfigs/GridContainerControles/ButtonPersonalizarControles2" to="." method="_on_button_personalizar_controles_pressed"]
+[connection signal="pressed" from="VBoxConfigs/GridContainerControles/ButtonPersonalizarControles" to="." method="_on_button_personalizar_controles_pressed"]
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerPegar" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_pegar_pressed"]
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerPegar2" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_pegar2_pressed"]
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerLargar" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_largar_pressed"]
@@ -640,6 +657,7 @@ text = "Sim, Deletar"
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerJogarForca" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_jogar_forca_pressed"]
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonFerJogarForca2" to="VBoxConfigs/PersonalizarControles" method="_on_button_fer_jogar_forca_2_pressed"]
 [connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonSalvarControles" to="VBoxConfigs/PersonalizarControles" method="_on_button_salvar_controles_pressed"]
+[connection signal="pressed" from="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer/ButtonDesfazer" to="VBoxConfigs/PersonalizarControles" method="_on_button_desfazer_pressed"]
 [connection signal="toggled" from="VBoxConfigs/AimAllTime" to="." method="_on_aim_all_time_toggled"]
 [connection signal="toggled" from="VBoxConfigs/TrackingColor" to="." method="_on_tracking_color_toggled"]
 [connection signal="drag_ended" from="VBoxConfigs/GridContainerAudio/HSliderMusicaMenu" to="." method="_on_h_slider_musica_menu_drag_ended"]

@@ -9,6 +9,7 @@ extends Menu
 @onready var toggle_controle_p1 := $VBoxConfigs/GridContainerControles/ButtonControleP1
 @onready var toggle_controle_p2 := $VBoxConfigs/GridContainerControles/ButtonControleP2
 @onready var options_tipos_controles := $VBoxConfigs/GridContainerControles/OptionsTipoControles
+@onready var button_personalizar_controles := $VBoxConfigs/GridContainerControles/ButtonPersonalizarControles
 @onready var button_load_controles := $VBoxConfigs/GridContainerControles/ButtonLoadControles
 # -- GamePlay --
 @onready var toggle_aim_all_time := $VBoxConfigs/AimAllTime
@@ -123,7 +124,7 @@ func _on_options_tipo_controles_item_selected(index: int) -> void:
 	Globais.controle_tipo_player[controle_player_curr] = tipo
 
 func _on_button_load_controles_pressed() -> void:
-	SaveManager.load_inputs()
+	SaveManager.load_todos_inputs()
 	button_load_controles.text = "Carregados"
 	button_load_controles.disabled = true
 
@@ -138,6 +139,11 @@ func _on_button_personalizar_controles_pressed() -> void:
 
 func _hide_personalizar_controles() -> void:
 	personalizar_controles.hide()
+
+func sair_personalizar_controles() -> void:
+	_hide_personalizar_controles()
+	container_controles.show()
+	button_personalizar_controles.grab_focus()
 
 
 # --------- GamePlay ---------

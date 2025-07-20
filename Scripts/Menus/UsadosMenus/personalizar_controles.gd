@@ -1,5 +1,6 @@
 extends Control
 
+@export var menu_configuracao : Menu
 @export var primeiro_botao : Button
 @onready var waiting_input := $ColorRectWaitingInput
 @onready var waiting_input_button := $ColorRectWaitingInput/Button
@@ -41,13 +42,15 @@ func _on_button_salvar_controles_pressed() -> void:
 	button_salvar.disabled = false
 	button_salvar.text = "Salvar"
 
+func _on_button_desfazer_pressed() -> void:
+	SaveManager.load_todos_inputs()
+	menu_configuracao.sair_personalizar_controles()
+
 func mostrar_personalizar_controle(
 			_controle_player_curr : InputManager.PlayerId,
 			botao_tag : Button
 			) -> void:
 	controle_player_curr = _controle_player_curr
-	# foco no primeiro botao
-	primeiro_botao.grab_focus()
 	# ajusta o texto
 	button_salvar.disabled = false
 	button_salvar.text = "Salvar"
@@ -64,6 +67,9 @@ func mostrar_personalizar_controle(
 	_ajustar_texto_botao_acao(btns_jogar_forca, "throw_force")
 	# esconde jogar forca se nao for no controle
 	_esconder_not_on_controle(btns_jogar_forca, "throw_force", label_jogar_forca)
+	
+	# foco no primeiro botao
+	primeiro_botao.grab_focus()
 
 # ----------- Ouvir inputs ----------
 func _input(event):

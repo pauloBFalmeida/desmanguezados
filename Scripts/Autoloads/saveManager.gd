@@ -126,7 +126,7 @@ func reset_inputs() -> void:
 	# save to disk
 	file.save(SAVE_INPUT_PATH)
 
-func load_inputs() -> void:
+func load_todos_inputs() -> void:
 	var file = ConfigFile.new()
 	if file.load(SAVE_INPUT_PATH) != OK:  # se o arquivo nao existe
 		return
