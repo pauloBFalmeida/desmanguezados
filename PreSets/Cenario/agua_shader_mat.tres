@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cs3v0gkb8rgpw"]
+
+[ext_resource type="Shader" uid="uid://ckv1f2csh5xk" path="res://Scripts/Shaders/agua2.gdshader" id="1_liw6f"]
+
+[resource]
+shader = ExtResource("1_liw6f")
+shader_parameter/WATER_COL = Color(0.0980392, 0.603922, 0.541176, 1)
+shader_parameter/WATER2_COL = Color(0.027451, 0.552941, 0.498039, 1)
+shader_parameter/FOAM_COL = Color(0.493709, 0.87396, 0.809209, 1)
+shader_parameter/distortion_speed = 1.2
+shader_parameter/tile = Vector2(6, 6)
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/pixel_size = 10.0
+shader_parameter/blur_strength = 0.67
