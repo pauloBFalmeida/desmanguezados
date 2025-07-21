@@ -67,7 +67,7 @@ text = "Respawnar Ferramentas"
 [node name="ImagemFim" parent="Camera2D/HUD/GameOverMenu" index="0"]
 position = Vector2(-646, -363)
 
-[node name="ControlBtns" parent="Camera2D/HUD/GameOverMenu" index="1"]
+[node name="ControlBtns" parent="Camera2D/HUD/GameOverMenu" index="2"]
 offset_top = 354.0
 offset_bottom = 354.0
 

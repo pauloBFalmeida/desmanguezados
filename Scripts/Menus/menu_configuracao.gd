@@ -119,7 +119,7 @@ func _ajustar_options_tipo_controle() -> void:
 		if tipo == tipo_atual:
 			options_tipos_controles.select(tipo)
 
-func _on_options_tipo_controles_item_selected(index: int) -> void:
+func _on_options_tipo_controles_item_selected(index) -> void:
 	var tipo : int = options_tipos_controles.get_item_id(index)
 	Globais.controle_tipo_player[controle_player_curr] = tipo
 

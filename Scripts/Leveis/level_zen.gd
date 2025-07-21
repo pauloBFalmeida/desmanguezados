@@ -17,6 +17,9 @@ func fim_partida() -> void:
 	Globais.stats_zen_tiles_competamente_jogados += stats_tiles_mapa_jogaveis
 	# 		salvo a nova estatisca no disco
 	SaveManager.save_game()
+	# esconde o botao de proximo nivel da hud
+	$Camera2D/HUD/GameOverMenu/ControlBtns/ButtonProx.hide()
+	
 	# termino a partida
 	super.fim_partida()
 
