@@ -96,7 +96,7 @@ func _info_usar_ferramenta() -> void:
 	
 	# -- decide o que fazer para o jogador --
 	var _callable_mostrar    := func(_b): info_mostrar()
-	var _callable_esconder   := func(_b): info_esconder()
+	var _callable_esconder   := func(_b): info_menos_visivel()
 	var _callable_info_pegar := func(_b):
 		await _mudar_parent(original_parent)
 		tipo_informacao = Info_tipo.PEGAR_FERRAMENTA
@@ -137,7 +137,7 @@ func _info_largar_ferramenta() -> void:
 	var tween = create_tween().set_loops()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(info, "modulate:a", 0.0, 2.0)
+	tween.tween_property(info, "modulate:a", 0.4, 2.0)
 	tween.tween_interval(3)
 	tween.tween_property(info, "modulate:a", 1.0, 2.0)
 	tween.tween_interval(3)
@@ -205,6 +205,17 @@ func info_esconder() -> void:
 
 func info_esconder_now() -> void:
 	info.modulate.a = 0.0
+
+func info_menos_visivel()-> void:
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(
+		info,
+		"modulate:a",
+		0.4,
+		0.4
+	)
 
 var esconder_depois_min_time : bool = true
 var entrou_area_engine_ms  : int = 0
