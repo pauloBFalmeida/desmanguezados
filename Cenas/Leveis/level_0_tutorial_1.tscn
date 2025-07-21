@@ -101,11 +101,13 @@ position = Vector2(563, 185)
 position = Vector2(1013, 617)
 
 [node name="UI_info2" parent="FerramentasMgmt/Corte" index="3" instance=ExtResource("6_sd4mf")]
+collision_layer = 260
 
 [node name="Plantar" parent="FerramentasMgmt" index="2"]
 position = Vector2(257, 145)
 
 [node name="UI_info" parent="FerramentasMgmt/Plantar" index="3" instance=ExtResource("6_sd4mf")]
+collision_layer = 260
 
 [node name="Recolhe" parent="FerramentasMgmt" index="3"]
 visible = false

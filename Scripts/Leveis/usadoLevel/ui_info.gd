@@ -43,7 +43,6 @@ func info_tipo_preparar() -> void:
 			info_tipo_update()
 
 func info_tipo_update() -> void:
-	print('tipo_informacao ', tipo_informacao)
 	match tipo_informacao:
 		Info_tipo.ACABAR:
 			queue_free()
