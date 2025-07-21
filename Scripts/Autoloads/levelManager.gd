@@ -6,8 +6,8 @@ enum Medalha_tipo {OURO, PRATA, BRONZE, NENHUMA}
 
 const LEVEIS_REF  : Dictionary[Level_id, String] = {
 	Level_id.ZEN: "res://Cenas/Leveis/level_zen.tscn",
-	Level_id.TUTORIAL: "res://Cenas/Leveis/level_0pt2_tutorial.tscn",
-	Level_id.TUTORIAL_JOGAR: "res://Cenas/Leveis/level_0_tutorial.tscn",
+	Level_id.TUTORIAL: "res://Cenas/Leveis/level_0_tutorial_1.tscn",
+	Level_id.TUTORIAL_JOGAR: "res://Cenas/Leveis/level_0_tutorial_2.tscn",
 	Level_id.LEVEL_1: "res://Cenas/Leveis/level_1.tscn",
 	Level_id.LEVEL_2: "res://Cenas/Leveis/level_2.tscn",
 	Level_id.LEVEL_3: "res://Cenas/Leveis/level_3.tscn",
@@ -19,11 +19,11 @@ const LEVEIS_NOME : Dictionary[Level_id, String] = {
 	Level_id.ZEN: "Zen",
 	Level_id.TUTORIAL: "Tutorial 1",
 	Level_id.TUTORIAL_JOGAR: "Tutorial 2",
-	Level_id.LEVEL_1: "Level 1",
-	Level_id.LEVEL_2: "Level 2",
-	Level_id.LEVEL_3: "Level 3 Maré",
-	Level_id.LEVEL_4: "Level 4",
-	Level_id.LEVEL_5: "Level 5",
+	Level_id.LEVEL_1: "Level Simples",
+	Level_id.LEVEL_2: "Level N",
+	Level_id.LEVEL_3: "Level Maré",
+	Level_id.LEVEL_4: "Level Ilhas",
+	Level_id.LEVEL_5: "Level Separados",
 }
 
 const LEVEIS_SELECAO_ORDEM : Array[Level_id] = [
@@ -31,9 +31,9 @@ const LEVEIS_SELECAO_ORDEM : Array[Level_id] = [
 	Level_id.TUTORIAL_JOGAR,
 	Level_id.LEVEL_1,
 	Level_id.LEVEL_2,
+	Level_id.LEVEL_5,
 	Level_id.LEVEL_3,
 	Level_id.LEVEL_4,
-	Level_id.LEVEL_5,
 ]
 
 const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
