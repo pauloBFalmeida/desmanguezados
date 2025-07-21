@@ -77,7 +77,7 @@ lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
 hud = NodePath("HUD")
-duracao_partida_segundos = 145
+duracao_partida_segundos = 75
 
 [node name="TileMapsChao" parent="." instance=ExtResource("2_7jkve")]
 
