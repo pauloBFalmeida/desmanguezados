@@ -1,6 +1,10 @@
 extends CharacterBody2D
 class_name Jogador
 
+signal pegou_ferramenta
+signal usou_ferramenta
+signal largou_ferramenta
+
 @export var player_id := InputManager.PlayerId.P1
 var is_usando_controle : bool = false
 
@@ -233,6 +237,9 @@ func usar_ferramenta(body : Node2D) -> void:
 	jogador_anim.mudar_movimento(JogadorAnimation.Movimento_tipo.ACAO, duracao_cooldown)
 	# mostra o cooldown no player
 	cooldown_jogador(duracao_cooldown)
+	
+	# sinal que usou a ferramenta
+	emit_signal("usou_ferramenta")
 
 func balancar_ferramenta() -> void:
 	# se nao tiver segurando uma ferramenta
@@ -294,6 +301,9 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	# anim pegar a ferramenta
 	anim_segurar_ferramenta(segurando)
 	
+	# sinal que pegou a ferramenta
+	emit_signal("pegou_ferramenta")
+	
 	# remove a ferramenta dos bodies dentro da area de interacao do jogador
 	bodys_dentro_area.erase(ferramenta)
 	
@@ -323,7 +333,11 @@ func _limpar_jogador_ferramenta(ferramenta : Ferramenta) -> void:
 	area_interacao.set_collision_mask_value(collision_layer_ferramentas, true)
 	area_interacao.set_collision_mask_value(collision_layer_ferramentas_unico, true)
 	
+	# volta a animao para siri sem ferramenta
 	anim_idle()
+	
+	# sinal que largou a ferramenta
+	emit_signal("largou_ferramenta")
 
 # ---- Jogar da ferramenta ----
 func _throw_ferramenta_segurando(delta : float) -> void:
@@ -503,11 +517,25 @@ func _turn_off_manual_aim() -> void:
 # ----------------------------------------------
 var bodys_dentro_area := {}
 func _on_area_interacao_body_entered(body: Node2D) -> void:
+	# se for uma informacao -> avise que esta dentro da area de interacao
+	if body.is_in_group("Informacao"): 
+		var info : Informacao = body
+		info.dentro_area_interacao(self)
+		return # acabe a funcao
+	# se nao estiver dentro da area -> adicione
 	if not bodys_dentro_area.has(body):
 		bodys_dentro_area[body] = body
-	_update_indicador_direcao_interacao()
+		# atualiza o indicador de direcao se entrar algo novo na area
+		_update_indicador_direcao_interacao()
 
 func _on_area_interacao_body_exited(body: Node2D) -> void:
+	# se for uma informacao -> avise que esta saiu da area de interacao
+	if body.is_in_group("Informacao"): 
+		var info : Informacao = body
+		info.saiu_area_interacao(self)
+		return # acabe a funcao
+	# se estiva dentro da area -> remova
 	if bodys_dentro_area.has(body):
 		bodys_dentro_area.erase(body)
-	_update_indicador_direcao_interacao()
+		# atualiza o indicador de direcao se entrar algo novo na area
+		_update_indicador_direcao_interacao()

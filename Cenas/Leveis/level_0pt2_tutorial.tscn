@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=4 uid="uid://brsap2uvu30a2"]
+[gd_scene load_steps=11 format=4 uid="uid://brsap2uvu30a2"]
 
 [ext_resource type="Script" uid="uid://dhcjgvplgc3c2" path="res://Scripts/Leveis/Level.gd" id="1_3aa0c"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps_chao.tscn" id="2_72oij"]
 [ext_resource type="PackedScene" uid="uid://b6fqbdb1cd3kc" path="res://Cenas/Partida/Arvores/arvore_pinos.tscn" id="3_7rcnc"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="4_p6oeo"]
 [ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="5_0k57f"]
+[ext_resource type="PackedScene" uid="uid://cg8j3m8bt5io6" path="res://PreSets/ui_info.tscn" id="6_i4sx8"]
 [ext_resource type="Script" uid="uid://ymebirrcc0d3" path="res://Scripts/Partida/locais_plantar_colecao.gd" id="11_4htl7"]
 [ext_resource type="PackedScene" uid="uid://bxemk6uv78eif" path="res://Cenas/Partida/local_plantar.tscn" id="12_0vvff"]
 [ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Interface/hud.tscn" id="13_1vs18"]
@@ -22,6 +23,12 @@ locais_plantar_colecao = NodePath("LocaisPlantarColecao")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
 hud = NodePath("HUD")
 duracao_partida_segundos = 300
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="TileMaps" parent="." instance=ExtResource("2_72oij")]
 
@@ -96,6 +103,10 @@ position = Vector2(1013, 617)
 [node name="Plantar" parent="FerramentasMgmt" index="2"]
 position = Vector2(257, 145)
 
+[node name="UI_info" parent="FerramentasMgmt/Plantar" index="3" instance=ExtResource("6_i4sx8")]
+
+[node name="Node2D" type="Node2D" parent="FerramentasMgmt/Plantar" index="4"]
+
 [node name="Recolhe" parent="FerramentasMgmt" index="3"]
 position = Vector2(134, 852)
 
@@ -130,6 +141,9 @@ position = Vector2(616, 224)
 position = Vector2(412, 210)
 
 [node name="HUD" parent="." instance=ExtResource("13_1vs18")]
+metadata/_edit_lock_ = true
+
+[node name="ColorCorrectionEffect" parent="HUD" index="1"]
 metadata/_edit_lock_ = true
 
 [editable path="TileMaps"]

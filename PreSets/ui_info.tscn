@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://cg8j3m8bt5io6"]
+
+[ext_resource type="Script" uid="uid://cn4o5emxemw0l" path="res://Scripts/Leveis/usadoLevel/ui_info.gd" id="1_20bdb"]
+[ext_resource type="Theme" uid="uid://bgkss7jqb5ycr" path="res://Assets/Interface/Fonts/simbols_theme.tres" id="2_wgohx"]
+[ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="3_6dps0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_72oij"]
+radius = 23.0217
+
+[node name="UI_info" type="StaticBody2D" groups=["Informacao"]]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_20bdb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_72oij")
+
+[node name="Info" type="Control" parent="."]
+z_index = 50
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LabelSimbolo" type="Label" parent="Info"]
+layout_mode = 0
+offset_left = -77.0
+offset_top = -133.0
+offset_right = 86.0
+offset_bottom = -48.0
+size_flags_horizontal = 4
+theme = ExtResource("2_wgohx")
+theme_override_colors/font_color = Color(0.34902, 0.670588, 0.945098, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+text = "D"
+horizontal_alignment = 1
+
+[node name="LabelTexto" type="Label" parent="Info"]
+layout_mode = 0
+offset_left = -77.0
+offset_top = -133.0
+offset_right = 86.0
+offset_bottom = -48.0
+size_flags_horizontal = 4
+theme = ExtResource("3_6dps0")
+theme_override_colors/font_color = Color(0.34902, 0.670588, 0.945098, 1)
+theme_override_constants/outline_size = 8
+text = "
+para Pegar"
+horizontal_alignment = 1
