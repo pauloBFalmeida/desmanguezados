@@ -3,6 +3,7 @@ class_name Temporizador
 
 signal fim_tempo
 
+var tempo_inicial : float = 0
 ## segundo que duracao da partida
 var tempo_restante: float = 60.0
 
@@ -19,12 +20,17 @@ func _ready() -> void:
 	audio_player_final_tempo.volume_db = Globais.volume_efeitos_partida
 
 func set_duracao(valor : int) -> void:
+	tempo_inicial  = float(valor)
 	tempo_restante = float(valor)
 	atualizar_cronometro()
 
 ## retorna o tempo do level, arredondando para cima (24.6 -> 25)
 func get_tempo() -> int:
 	return ceil(tempo_restante)
+
+## retorna o tempo que levou para o level ser concluido, arredondando para baixo (24.6 -> 24)
+func get_tempo_partida() -> int:
+	return floor(tempo_inicial - tempo_restante)
 
 func comecar():
 	# Inicia o cronômetro

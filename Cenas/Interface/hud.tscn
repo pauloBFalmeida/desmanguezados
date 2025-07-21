@@ -73,9 +73,9 @@ offset_right = 31.0
 offset_bottom = 33.0
 grow_horizontal = 2
 theme = ExtResource("14_rsky8")
-theme_override_colors/font_color = Color(0, 0.956863, 0.423529, 1)
-theme_override_constants/outline_size = 8
-theme_override_font_sizes/font_size = 25
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 45
 text = "02:00"
 horizontal_alignment = 1
 visible_characters = 6
@@ -85,8 +85,9 @@ visible_ratio = 1.2
 modulate = Color(0.51, 0.51, 0.51, 0.513726)
 z_index = -1
 layout_mode = 0
-offset_right = 64.0
-offset_bottom = 33.0
+offset_left = -5.0
+offset_right = 92.0
+offset_bottom = 47.0
 
 [node name="BarraProgresso" type="Control" parent="."]
 modulate = Color(1, 1, 1, 0.588235)
@@ -275,6 +276,26 @@ grow_vertical = 2
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("4_k3s11")
 centered = false
+
+[node name="LabelTempoPartida" type="Label" parent="GameOverMenu"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -419.5
+offset_top = -714.0
+offset_right = 387.5
+offset_bottom = -658.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("14_rsky8")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 50
+text = "Tempo Partida: 00 segundos"
 
 [node name="ControlBtns" type="Control" parent="GameOverMenu"]
 layout_mode = 1

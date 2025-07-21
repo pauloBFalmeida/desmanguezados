@@ -67,7 +67,7 @@ func _ajustar_globais(file : ConfigFile) -> void:
 	Globais.remov_logo_intro   = file.get_value("config", "remov_logo_intro", false)
 	# --- HighScore das partidas ---
 	for level : LevelManager.Level_id in Globais.leveis_highscore.keys():
-		var tempo : int = file.get_value("highscore", str(level), -1)
+		var tempo : int = file.get_value("highscore", str(level), Globais.no_highscore_value)
 		Globais.leveis_highscore[level] = tempo
 	# --- Estatisticas ---
 	Globais.stats_arvores_plantadas      = file.get_value("stats", "stats_arvores_plantadas", 0)
@@ -111,7 +111,7 @@ func reset_save() -> void:
 func reset_save_partida() -> void:
 	# reseta os scores
 	for level : LevelManager.Level_id in Globais.leveis_highscore.keys():
-		Globais.leveis_highscore[level] = -1
+		Globais.leveis_highscore[level] = Globais.no_highscore_value
 	# save to disk
 	save_game()
 

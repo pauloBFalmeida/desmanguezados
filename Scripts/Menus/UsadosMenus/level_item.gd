@@ -42,16 +42,16 @@ func _load_info() -> void:
 	medalha_brilho.hide()
 	
 	# se nao tem highscore (ou eh invalido) -> nao mostra
-	if highscore < 0:
+	if highscore >= Globais.no_highscore_value or highscore < 0:
 		label_info.hide()
 		medalha_concha.hide()
 		medalha_perola.hide()
 		return
 	
 	# ajusta o texto do tempo
-	var min : int = highscore / 60
-	var sec : int = highscore % 60
-	label_info.text = tempo_text + str(min) + ":" + str(sec)
+	var minuto  : int = highscore / 60
+	var segundo : int = highscore % 60
+	label_info.text = tempo_text + str(minuto) + ":" + str(segundo)
 	
 	# ajusta imagem
 	var medalha : LevelManager.Medalha_tipo = LevelManager.get_medalha_level(level_id, highscore)

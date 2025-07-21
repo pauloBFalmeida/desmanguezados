@@ -1,10 +1,14 @@
 extends Node
 
+# quando comparamos o score pegamos o menor
+#	-entao-> usamos um valor alto para os leveis sem highscore ainda
+const no_highscore_value : int = 999
+
 func _ready() -> void:
-	# ajusta como -1 se nao tiver valor ainda
+	# ajusta o valor dos que leveis sem highscore ainda 
 	for id in LevelManager.Level_id.values():
 		if not leveis_highscore.has(id):
-			leveis_highscore[id] = -1
+			leveis_highscore[id] = Globais.no_highscore_value
 	# ajusta a tela cheia
 	ajustar_tela_cheia()
 

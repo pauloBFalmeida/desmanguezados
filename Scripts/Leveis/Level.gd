@@ -58,8 +58,10 @@ func fim_partida() -> void:
 	# pausa o jogo
 	get_tree().set_pause(true)
 	
+	var tempo_partida = temporizador.get_tempo_partida()
+	print(tempo_partida)
 	# salva o score (o tempo pode ter parado antes)
-	LevelManager.score_level(Globais.current_level_id, temporizador.get_tempo())
+	LevelManager.score_level(Globais.current_level_id, tempo_partida)
 	
 	# -- muda a imagem dependendo das condicoes de final --
 	
@@ -69,7 +71,7 @@ func fim_partida() -> void:
 		if qtd_lixo > 0: # deixou lixo
 			hud.show_tela_fim(Hud.Tipo_fim.VITORIA_SUJO)
 		else: # limpou tudo
-			hud.show_tela_fim(Hud.Tipo_fim.VITORIA_LIMPO)
+			hud.show_tela_fim(Hud.Tipo_fim.VITORIA_LIMPO, tempo_partida)
 	
 
 func verificar_fim() -> void:

@@ -20,7 +20,7 @@ const LEVEIS_NOME : Dictionary[Level_id, String] = {
 	Level_id.TUTORIAL: "Tutorial 1",
 	Level_id.TUTORIAL_JOGAR: "Tutorial 2",
 	Level_id.LEVEL_1: "Level Simples",
-	Level_id.LEVEL_2: "Level N",
+	Level_id.LEVEL_2: "Level Ene",
 	Level_id.LEVEL_3: "Level Maré",
 	Level_id.LEVEL_4: "Level Ilhas",
 	Level_id.LEVEL_5: "Level Separados",
@@ -47,43 +47,44 @@ const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
 }
 
 ## tempo para consquistar as medalhas de cada level
-## 		ou seja, tem que conquistar com pelo menos esse tempo de sobra no relogio
-##		so vai ganhar ouro de 70s, se terminar com mais de 70 segundos de tempo restante
+##		Para consquistar a medalha tem que completar o level em menos tempo do que isso
+##		ou seja se leva ouro = 30, tem que completar em menos de 30 segundos
+##		se levar mais, vai ganhar prata ou pior
 const LEVEIS_MEDALHAS : Dictionary[Level_id, Dictionary] = {
 	Level_id.TUTORIAL: {
-		Medalha_tipo.OURO:   70,
-		Medalha_tipo.PRATA:  60,
-		Medalha_tipo.BRONZE: 50 
+		Medalha_tipo.OURO:   30,
+		Medalha_tipo.PRATA:  45,
+		Medalha_tipo.BRONZE: 60 
 		},
 	Level_id.TUTORIAL_JOGAR: {
-		Medalha_tipo.OURO:   70,
-		Medalha_tipo.PRATA:  60,
-		Medalha_tipo.BRONZE: 50 
+		Medalha_tipo.OURO:   40,
+		Medalha_tipo.PRATA:  55,
+		Medalha_tipo.BRONZE: 70 
 		},
 	Level_id.LEVEL_1: {
-		Medalha_tipo.OURO:   95,
-		Medalha_tipo.PRATA:  115,
-		Medalha_tipo.BRONZE: 125
+		Medalha_tipo.OURO:   50,
+		Medalha_tipo.PRATA:  60,
+		Medalha_tipo.BRONZE: 75
 		},
 	Level_id.LEVEL_2: {
-		Medalha_tipo.OURO:   95,
-		Medalha_tipo.PRATA:  115,
-		Medalha_tipo.BRONZE: 125
+		Medalha_tipo.OURO:   60,
+		Medalha_tipo.PRATA:  70,
+		Medalha_tipo.BRONZE: 85
 		},
 	Level_id.LEVEL_3: {
-		Medalha_tipo.OURO:   95,
-		Medalha_tipo.PRATA:  115,
-		Medalha_tipo.BRONZE: 125
+		Medalha_tipo.OURO:   55,
+		Medalha_tipo.PRATA:  65,
+		Medalha_tipo.BRONZE: 80
 		},
 	Level_id.LEVEL_4: {
-		Medalha_tipo.OURO:   72,
-		Medalha_tipo.PRATA:  87,
-		Medalha_tipo.BRONZE: 100
+		Medalha_tipo.OURO:   80,
+		Medalha_tipo.PRATA:  90,
+		Medalha_tipo.BRONZE: 105
 		},
 	Level_id.LEVEL_5: {
-		Medalha_tipo.OURO:   101,
-		Medalha_tipo.PRATA:  115,
-		Medalha_tipo.BRONZE: 130
+		Medalha_tipo.OURO:   55,
+		Medalha_tipo.PRATA:  65,
+		Medalha_tipo.BRONZE: 80
 		},
 }
 
@@ -95,11 +96,11 @@ func get_medalha_level(level_id : Level_id, tempo : int) -> Medalha_tipo:
 	
 	var medalhas_tempos := LEVEIS_MEDALHAS[level_id]
 	
-	if tempo >= medalhas_tempos[Medalha_tipo.OURO]:
+	if tempo <= medalhas_tempos[Medalha_tipo.OURO]:
 		return Medalha_tipo.OURO
-	elif tempo >= medalhas_tempos[Medalha_tipo.PRATA]:
+	elif tempo <= medalhas_tempos[Medalha_tipo.PRATA]:
 		return Medalha_tipo.PRATA
-	elif tempo >= medalhas_tempos[Medalha_tipo.BRONZE]:
+	elif tempo <= medalhas_tempos[Medalha_tipo.BRONZE]:
 		return Medalha_tipo.BRONZE
 	
 	return Medalha_tipo.NENHUMA
@@ -108,8 +109,10 @@ func score_level(level_id : Level_id, tempo : int) -> void:
 	# nao esta na lista de leveis para jogar -> nao faca nada
 	if not LEVEIS_SELECAO_ORDEM.has(level_id): return
 	
+	print('lv ',level_id, ' tempo ', tempo, ' < antigo ', Globais.leveis_highscore[level_id])
 	# novo highscore
-	if tempo > Globais.leveis_highscore[level_id]:
+	if tempo < Globais.leveis_highscore[level_id]:
+		print('Highscore')
 		Globais.leveis_highscore[level_id] = tempo
 		SaveManager.save_game()
 

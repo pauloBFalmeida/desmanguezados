@@ -10,6 +10,7 @@ signal partida_comecando
 # -- fim de jogo --
 @onready var game_over_menu := $GameOverMenu
 @onready var game_over_sprite := $GameOverMenu/ImagemFim
+@onready var game_over_label_tempo := $GameOverMenu/LabelTempoPartida
 @onready var game_over_btns := $GameOverMenu/ControlBtns
 @onready var game_over_btn_replay := $GameOverMenu/ControlBtns/ButtonReplay
 @onready var game_over_btn_prox := $GameOverMenu/ControlBtns/ButtonProx
@@ -110,7 +111,7 @@ func comecar_partida() -> void:
 # ---------------------------------
 # Menu de GameOver
 # ---------------------------------
-func show_tela_fim(tipo : Tipo_fim) -> void:
+func show_tela_fim(tipo : Tipo_fim, tempo_partida : int = -1) -> void:
 	# para a musica (tb para restart do level n comecar tocando a musica)
 	audio_player_musica.stop()
 	
@@ -135,9 +136,19 @@ func show_tela_fim(tipo : Tipo_fim) -> void:
 		1.5 # seg
 	).from_current()
 	
-	# espera um tempo para mostrar os botoes
+	# espera a imagem ficar do tamanho da tela
 	await tween.finished
-	#await get_tree().create_timer(1.0, true).timeout
+	
+	if tipo == Tipo_fim.VITORIA_LIMPO and tempo_partida != -1:
+		game_over_label_tempo.show()
+		game_over_label_tempo.text  = "Tempo Partida: "
+		game_over_label_tempo.text += str(tempo_partida) + " segundos"
+		#game_over_label_tempo.text += "(Novo Recorde)" ## TODO
+	else:
+		game_over_label_tempo.hide()
+	
+	# espera um tempo para mostrar os botoes
+	await get_tree().create_timer(1.0, true).timeout
 	game_over_btns.show()
 	
 	if tipo == Tipo_fim.VITORIA_LIMPO:
@@ -148,15 +159,7 @@ func show_tela_fim(tipo : Tipo_fim) -> void:
 		game_over_btn_prox.hide()
 		game_over_btn_replay.show()
 		game_over_btn_replay.grab_focus()
-		
-	# TODO: fazer algo especial para cada tela ?
-	#match tipo:
-		#Tipo_fim.DERROTA_TEMPO:
-			#pass
-		#Tipo_fim.VITORIA_SUJO:
-			#pass
-		#Tipo_fim.VITORIA_LIMPO:
-			#pass
+
 
 func _on_button_replay_pressed() -> void:
 	_replay()
