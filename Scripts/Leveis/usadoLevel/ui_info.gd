@@ -225,6 +225,9 @@ func info_esconder_min_time() -> void:
 # Area de interacao
 # ---------------------------------------------------------
 func _atualizar_jogador(jogador : Jogador) -> void:
+	# se estiver como filho de jogador -> nao mude a cor
+	if get_parent() is Jogador: return
+	
 	curr_jogador = jogador
 	label_simbolo.add_theme_color_override("font_color", jogador.theme_color)
 	label_texto.add_theme_color_override("font_color", jogador.theme_color)

@@ -100,14 +100,15 @@ position = Vector2(563, 185)
 [node name="Corte" parent="FerramentasMgmt" index="1"]
 position = Vector2(1013, 617)
 
+[node name="UI_info2" parent="FerramentasMgmt/Corte" index="3" instance=ExtResource("6_i4sx8")]
+
 [node name="Plantar" parent="FerramentasMgmt" index="2"]
 position = Vector2(257, 145)
 
 [node name="UI_info" parent="FerramentasMgmt/Plantar" index="3" instance=ExtResource("6_i4sx8")]
 
-[node name="Node2D" type="Node2D" parent="FerramentasMgmt/Plantar" index="4"]
-
 [node name="Recolhe" parent="FerramentasMgmt" index="3"]
+visible = false
 position = Vector2(134, 852)
 
 [node name="LixosColecao" type="CanvasGroup" parent="."]
