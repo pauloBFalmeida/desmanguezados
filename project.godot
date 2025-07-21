@@ -58,6 +58,7 @@ Marcador="alvo das interações das ferramentas"
 Arvore="é uma arvore interagivel"
 Lixo="é um lixo interagivel"
 LocalPlantar="local para plantar as mudas de arvores"
+Informacao="ui de informacao"
 
 [input]
 
@@ -275,6 +276,7 @@ pause={
 2d_physics/layer_6="Lixo"
 2d_physics/layer_7="FerramentasUnico"
 2d_physics/layer_8="Paredes"
+2d_physics/layer_9="Informacao"
 
 [physics]
 
