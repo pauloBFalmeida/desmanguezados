@@ -8,7 +8,6 @@ enum Info_tipo {
 	PEGAR_FERRAMENTA,
 	USAR_FERRAMENTA,
 	LARGAR_FERRAMENTA,
-	TROCAR_FERRAMENTA,
 	JOGAR_FERRAMENTA,
 	ACABAR
 }
@@ -28,7 +27,7 @@ var func_entrar_area : Callable
 
 
 func _ready() -> void:
-	info.modulate.a = 0.0
+	info_esconder_now()
 	# comeca o movimento dos textos
 	_criar_tween_movimento_info()
 	# prepara a info inicial
@@ -60,11 +59,10 @@ func info_tipo_update() -> void:
 			func_entrar_area = Callable()
 			func_sair_area   = Callable()
 			_info_largar_ferramenta()
-		Info_tipo.TROCAR_FERRAMENTA:
-			
-			pass
 		Info_tipo.JOGAR_FERRAMENTA:
-			pass
+			func_entrar_area = Callable()
+			func_sair_area   = Callable()
+			_info_jogar_ferramenta()
 
 # ---------------------------------------------------------
 # Acontecer quando esta em cada tipo_informacao
@@ -118,7 +116,6 @@ func _info_usar_ferramenta() -> void:
 	curr_jogador.area_interacao.body_exited.disconnect( _callable_esconder )
 	curr_jogador.largou_ferramenta.disconnect( _callable_info_pegar )
 		
-		
 	# avanca para a proxima info
 	tipo_informacao = Info_tipo.LARGAR_FERRAMENTA
 	info_tipo_update()
@@ -134,13 +131,30 @@ func _info_largar_ferramenta() -> void:
 	label_texto.text = "\npara Largar"
 	
 	# -- decide o que fazer para o jogador --
-	var tween = create_tween().set_loops()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(info, "modulate:a", 0.4, 2.0)
-	tween.tween_interval(3)
-	tween.tween_property(info, "modulate:a", 1.0, 2.0)
-	tween.tween_interval(3)
+	_criar_tween_transparente()
+	
+	# -- esperar as condicoes para terminar --
+	await curr_jogador.largou_ferramenta
+	
+	# avanca para a proxima info
+	tipo_informacao = Info_tipo.ACABAR
+	info_tipo_update()
+
+func _info_jogar_ferramenta() -> void:
+	# muda o texto
+	label_simbolo.text = InputManager.get_text_action(
+		curr_jogador.player_id,
+		"drop"
+	)
+	label_texto.text = "Segure\n\npara Jogar"
+	label_texto.position.y -= 44
+	
+	# deixa visivel
+	info_mostrar()
+	
+	# espera um pouco segundos -> para deixar menos visivel
+	await get_tree().create_timer(5.0).timeout
+	_criar_tween_transparente()
 	
 	# -- esperar as condicoes para terminar --
 	await curr_jogador.largou_ferramenta
@@ -171,6 +185,15 @@ func _criar_tween_movimento_info() -> void:
 		info.position.y - (movimento_distancia),
 		movimento_duracao
 	).as_relative()
+
+func _criar_tween_transparente() -> void:
+	var tween = create_tween().set_loops()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(info, "modulate:a", 0.4, 2.0)
+	tween.tween_interval(3)
+	tween.tween_property(info, "modulate:a", 1.0, 2.0)
+	tween.tween_interval(3)
 
 func _mudar_parent(target_parent : Node) -> void:
 	await get_tree().create_timer(1.0).timeout
@@ -231,6 +254,15 @@ func info_esconder_min_time() -> void:
 	if func_sair_area.is_null(): return
 	# esconde
 	info_esconder()
+
+# ---------------------------------------------------------
+# Fazer acao
+# ---------------------------------------------------------
+func tomar_acao(jogador : Jogador) -> void:
+	curr_jogador = jogador
+	match tipo_informacao:
+		Info_tipo.JOGAR_FERRAMENTA:
+			info_tipo_update()
 
 # ---------------------------------------------------------
 # Area de interacao

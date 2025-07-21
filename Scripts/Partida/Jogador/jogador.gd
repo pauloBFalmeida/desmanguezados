@@ -225,10 +225,15 @@ func interagir() -> void:
 # ----------------------------------------------
 # Usar, Balancar ferramenta
 # ----------------------------------------------
+func get_segurando_valido() -> bool:
+	if (not segurando) or (not is_instance_valid(segurando)):
+		return false
+	return true
+
 # ------ Usar -------
 func usar_ferramenta(body : Node2D) -> void:
 	# se nao tiver segurando uma ferramenta
-	if (not segurando) or (not is_instance_valid(segurando)): return
+	if not get_segurando_valido(): return
 	# usar a ferramenta
 	segurando.usar_ferramenta(body, self)
 	
@@ -243,7 +248,7 @@ func usar_ferramenta(body : Node2D) -> void:
 
 func balancar_ferramenta() -> void:
 	# se nao tiver segurando uma ferramenta
-	if (not segurando) or (not is_instance_valid(segurando)): return
+	if not get_segurando_valido(): return
 	# balancar a ferramenta
 	segurando.balancar_ferramenta()
 	# animacao de usar ferramenta
@@ -313,7 +318,7 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 # ------ Dropar -------
 func drop_ferramenta(global_pos_ferramenta := Vector2.ZERO) -> void:
 	# se n tiver segurando nenhuma ferramenta -> nao faca nada
-	if (not segurando) or (not is_instance_valid(segurando)): return
+	if not get_segurando_valido(): return
 	# desliga a mira manual
 	_turn_off_manual_aim()
 	
@@ -342,7 +347,7 @@ func _limpar_jogador_ferramenta(ferramenta : Ferramenta) -> void:
 # ---- Jogar da ferramenta ----
 func _throw_ferramenta_segurando(delta : float) -> void:
 	# se nao estiver segurando nada -> nao faca nada
-	if (not segurando) or (not is_instance_valid(segurando)): 
+	if not get_segurando_valido(): 
 		return
 	# se o throw foi cancelado, mas o botao ainda esta sendo segurado -> nao faca nada
 	if is_throw_cancelado:
@@ -365,7 +370,7 @@ func _throw_ferramenta_segurando(delta : float) -> void:
 var throw_segurando_charge : bool = false
 func _throw_ferramenta_segurando_charge(charge_input : float) -> void:
 	# se nao estiver segurando nada -> nao faca nada
-	if (not segurando) or (not is_instance_valid(segurando)): return
+	if not get_segurando_valido(): return
 	# se o throw foi cancelado, mas o botao ainda esta sendo segurado -> nao faca nada
 	if is_throw_cancelado: return
 	# deixa o controle da mira ser do jogador
@@ -385,7 +390,7 @@ func _mostrar_throw_ferramenta_previsao(charge : float) -> void:
 
 func _throw_ferramenta_jogar() -> void:
 	# se nao estiver segurando nada -> nao faca nada
-	if (not segurando) or (not is_instance_valid(segurando)): 
+	if not get_segurando_valido(): 
 		return
 	# se foi cancelado -> nao jogue a ferramenta
 	if is_throw_cancelado:
