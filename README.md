@@ -1,7 +1,48 @@
 # Desmanguezados
-jogo da disciplina projeto de jogos
+Jogo desenvolvido para disciplina **Projeto de Jogos e Entretenimento Digital - 2025.1**
 
 Acesse o [site do projeto](https://paulobfalmeida.github.io/desmanguezados/)
+
+
+
+# Licença - PT BR
+
+Este projeto possui diferentes licenças para código e assets:
+
+## Código (GDScript) - Unlicense
+
+**Todo o código-fonte escrito em GDScript está licenciado sob a Unlicense.**
+Isso significa que você é livre para copiar, modificar, distribuir ou usar o código como quiser, inclusive para fins comerciais, sem nenhuma restrição.
+
+Para mais detalhes, acesse [The Unlicense](https://unlicense.org).
+
+## Assets (Artes e Áudios) - Uso Proprietário
+
+**Todos os assets visuais e sonoros (imagens, sprites, tiles, músicas, efeitos sonoros, etc.) presentes neste projeto são de uso proprietário.**
+
+Não é permitido copiar, redistribuir ou reutilizar essas artes e áudios em outros projetos, comerciais ou não.
+
+
+
+# License - EN
+
+This project uses different licenses for code and assets:
+
+## Code (GDScript) - Unlicense
+
+**All GDScript source code is licensed under the Unlicense.**
+This means you are free to copy, modify, distribute, or use the code for any purpose, including commercial projects, without any restrictions.
+
+For more details, visit [The Unlicense](https://unlicense.org).
+
+## Assets (Art and Audio) - Proprietary
+
+**All visual and audio assets (images, sprites, music, sound effects, etc.) used in this project are proprietary.**
+
+You are not allowed to copy, redistribute, or reuse any of these assets in other projects, whether for commercial or non-commercial purposes.
+
+
+
 
 # Guia de Desenvolvimento
 
