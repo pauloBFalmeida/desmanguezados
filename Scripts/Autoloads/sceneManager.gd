@@ -1,14 +1,14 @@
 extends Node
 
-const MENUS_PATH := "res://Cenas/Menus/mainMenus.tscn"
-const MENU_PRINCIPAL_PATH := "res://Cenas/Menus/menuPrincipal.tscn"
-const MENU_SELECAO_PATH := "res://Cenas/Menus/menuSelecao.tscn"
-const MENU_MENU_ZEN_PATH := "res://Cenas/Menus/menuZen.tscn"
-const MENU_CONFIGURACAO_PATH := "res://Cenas/Menus/menuConfiguracao.tscn"
-const MENU_CREDITOS_PATH := "res://Cenas/Menus/menuCreditos.tscn"
-const MENU_ESTATISTICAS_PATH := "res://Cenas/Menus/menuEstatisticas.tscn"
-const MENU_INFORMACOES_PATH := "res://Cenas/Menus/menuInfo.tscn"
-
+const MENUS_PATH 				:= "res://Cenas/Menus/mainMenus.tscn"
+const MENU_PRINCIPAL_PATH 		:= "res://Cenas/Menus/menuPrincipal.tscn"
+const MENU_SELECAO_PATH 		:= "res://Cenas/Menus/menuSelecao.tscn"
+const MENU_ONLINE_PATH 			:= "res://Cenas/Menus/menuOnline.tscn"
+const MENU_MENU_ZEN_PATH 		:= "res://Cenas/Menus/menuZen.tscn"
+const MENU_CONFIGURACAO_PATH	:= "res://Cenas/Menus/menuConfiguracao.tscn"
+const MENU_CREDITOS_PATH 		:= "res://Cenas/Menus/menuCreditos.tscn"
+const MENU_ESTATISTICAS_PATH	:= "res://Cenas/Menus/menuEstatisticas.tscn"
+const MENU_INFORMACOES_PATH 	:= "res://Cenas/Menus/menuInfo.tscn"
 
 func goto_menu():
 	change_scene(MENUS_PATH)
@@ -18,6 +18,9 @@ func goto_menu_principal():
 
 func goto_selecao():
 	change_menu(MENU_SELECAO_PATH)
+
+func goto_online():
+	change_menu(MENU_ONLINE_PATH)
 
 func goto_menu_zen():
 	change_menu(MENU_MENU_ZEN_PATH)

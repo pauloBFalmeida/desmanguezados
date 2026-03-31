@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://4k8drpikovn2"]
+[gd_scene format=3 uid="uid://4k8drpikovn2"]
 
 [ext_resource type="Script" uid="uid://bbcxwtqia30uw" path="res://Scripts/Menus/main_menus.gd" id="1_rvni6"]
 [ext_resource type="PackedScene" uid="uid://e0hvhpdu6hbn" path="res://Cenas/Menus/menuPrincipal.tscn" id="2_fecgd"]
@@ -115,16 +115,16 @@ _data = {
 &"show": SubResource("Animation_6x3w5")
 }
 
-[node name="MainMenus" type="Node"]
+[node name="MainMenus" type="Node" unique_id=1905592950]
 script = ExtResource("1_rvni6")
 
-[node name="MenuPrincipal" parent="." instance=ExtResource("2_fecgd")]
+[node name="MenuPrincipal" parent="." unique_id=905256519 instance=ExtResource("2_fecgd")]
 
-[node name="AudioStreamPlayerMusicaMenu" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayerMusicaMenu" type="AudioStreamPlayer" parent="." unique_id=114278645]
 stream = ExtResource("3_fecgd")
 volume_db = -20.0
 
-[node name="LogosInicio" type="Control" parent="."]
+[node name="LogosInicio" type="Control" parent="." unique_id=286221854]
 visible = false
 z_index = 20
 layout_mode = 3
@@ -132,19 +132,17 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="SplatterVulpe" type="Sprite2D" parent="LogosInicio"]
+[node name="SplatterVulpe" type="Sprite2D" parent="LogosInicio" unique_id=93297045]
 visible = false
 position = Vector2(625, 364)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("4_ik0y3")
 
-[node name="SplatterCubanos" type="Sprite2D" parent="LogosInicio"]
+[node name="SplatterCubanos" type="Sprite2D" parent="LogosInicio" unique_id=667569697]
 visible = false
 position = Vector2(647.667, 362)
 scale = Vector2(0.339815, 0.339815)
 texture = ExtResource("5_i8q7x")
 
-[node name="AnimationPlayerLogos" type="AnimationPlayer" parent="LogosInicio"]
-libraries = {
-&"": SubResource("AnimationLibrary_e4wjp")
-}
+[node name="AnimationPlayerLogos" type="AnimationPlayer" parent="LogosInicio" unique_id=2114847339]
+libraries/ = SubResource("AnimationLibrary_e4wjp")
