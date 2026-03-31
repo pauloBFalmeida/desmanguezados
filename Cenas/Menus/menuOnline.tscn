@@ -57,6 +57,32 @@ grow_vertical = 0
 theme = ExtResource("4_wrgqt")
 text = "Voltar"
 
+[node name="LinkButton" type="LinkButton" parent="." unique_id=550069764]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 41.0
+offset_top = 649.0
+offset_right = -898.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_bkqf8")
+theme_override_colors/font_color = Color(0.43199998, 0.89839995, 0.96, 1)
+text = "Godot Docs Multiplayer"
+uri = "https://docs.godotengine.org/pt-br/4.x/tutorials/networking/high_level_multiplayer.html"
+
+[node name="Label" type="Label" parent="LinkButton" unique_id=1672234213]
+layout_mode = 0
+offset_left = -16.0
+offset_top = -40.0
+offset_right = 486.0
+offset_bottom = 1.0
+theme = ExtResource("5_bkqf8")
+theme_override_font_sizes/font_size = 30
+text = "Entenda mais sobre conexões em:"
+
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1762244106]
 layout_mode = 1
 anchors_preset = 8
@@ -150,7 +176,6 @@ value = 45678.0
 rounded = true
 allow_greater = true
 allow_lesser = true
-editable = false
 
 [node name="VSeparator2" type="VSeparator" parent="VBox" unique_id=1462861300]
 self_modulate = Color(1, 1, 1, 0)
