@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cdnvbxaocdap8"]
+[gd_resource type="TileSet" format=3 uid="uid://cdnvbxaocdap8"]
 
 [ext_resource type="Texture2D" uid="uid://bbuyad0mhse1y" path="res://Assets/Cenario/Tiles/Solo_Raizes.png" id="1_2u6f3"]
 

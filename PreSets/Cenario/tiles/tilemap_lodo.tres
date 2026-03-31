@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://psbefoliis5m"]
+[gd_resource type="TileSet" format=3 uid="uid://psbefoliis5m"]
 
 [ext_resource type="Texture2D" uid="uid://buiwr3qhdeds3" path="res://Assets/Cenario/Tiles/Lodo.png" id="1_3sk12"]
 
