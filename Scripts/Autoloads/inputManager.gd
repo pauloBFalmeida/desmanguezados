@@ -41,6 +41,9 @@ var controles_conectados : Dictionary[int, PlayerId] = {}
 
 var players_no_controle : Array[PlayerId]
 
+func get_other_player_id(id: PlayerId) -> PlayerId:
+	return PlayerId.P1 if id == PlayerId.P2 else PlayerId.P2
+
 func _ready() -> void:
 	set_default_keyboard()
 

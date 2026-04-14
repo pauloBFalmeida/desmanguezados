@@ -43,7 +43,7 @@ func _on_button_comecar_pressed() -> void:
 	pop_up_conectando.show()
 	v_box.hide()
 	# -- nome jogador --
-	NetworkingGame.nome_jogador = _get_nome_jogador()
+	NetworkingGame.jogador_nome = _get_nome_jogador()
 	# -- conexao --
 	Networking.ip_addr = text_ip.text
 	Networking.port = text_port.value

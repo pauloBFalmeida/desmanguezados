@@ -1,7 +1,10 @@
 extends Node
 
-var nome_jogador : String
 var nomes_por_id : Dictionary[int, String] = {}
+var jogador_nome : String
+var jogador_player_id := InputManager.PlayerId.P1
+
+var is_game_online: bool = false
 
 func _ready() -> void:
 	Networking.client_connected_to_server.connect(_chamar_registrar_jogador)
@@ -18,7 +21,7 @@ func _client_conectado() -> void:
 	iniciar_selecao_jogo.rpc_id(Networking.companion_peer_id)
 
 func _chamar_registrar_jogador() -> void:
-	registrar_jogador.rpc_id(Networking.companion_peer_id, nome_jogador)
+	registrar_jogador.rpc_id(Networking.companion_peer_id, jogador_nome)
 
 @rpc("any_peer", "call_remote", "reliable")
 func registrar_jogador(nome: String) -> void:
@@ -27,11 +30,11 @@ func registrar_jogador(nome: String) -> void:
 	nomes_por_id[id] = nome
 	# adiciona o proprio nome na lista
 	id = multiplayer.get_unique_id()
-	nomes_por_id[id] = nome_jogador
+	nomes_por_id[id] = jogador_nome
 	
 	# servidor envia seu nome e comeca a partida
 	if multiplayer.is_server():
-		registrar_jogador.rpc_id(Networking.companion_peer_id, nome_jogador)
+		registrar_jogador.rpc_id(Networking.companion_peer_id, jogador_nome)
 		_chamar_iniciar_selecao_jogo()
 
 func _chamar_iniciar_selecao_jogo() -> void:
@@ -42,8 +45,14 @@ func _chamar_iniciar_selecao_jogo() -> void:
 
 @rpc("authority", "call_local", "reliable")
 func iniciar_selecao_jogo() -> void:
+	# ajusta os valores
+	is_game_online = true
+	jogador_player_id = InputManager.PlayerId.P1 if multiplayer.is_server() else InputManager.PlayerId.P2
+	
 	if multiplayer.is_server():
 		print("iniciar_selecao_jogo server")
 	else:
 		print("iniciar_selecao_jogo client")
+	# inicia selecao de partida
 	SceneManager.goto_selecao()
+	
