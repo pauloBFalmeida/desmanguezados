@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bk32qrjnda8ni"]
+[gd_scene format=3 uid="uid://bk32qrjnda8ni"]
 
 [ext_resource type="Script" uid="uid://dhnahj2fjb3et" path="res://Scripts/Menus/UsadosMenus/controles_conectados.gd" id="1_aei4g"]
 [ext_resource type="Script" uid="uid://sj5rgpesy5f8" path="res://Scripts/Menus/UsadosMenus/controles_manager.gd" id="1_lo6xx"]
@@ -7,7 +7,7 @@
 [ext_resource type="SpriteFrames" uid="uid://jnoa6d6fhquu" path="res://PreSets/Siri/blue/animBlueNormal.tres" id="3_aei4g"]
 [ext_resource type="SpriteFrames" uid="uid://cwkg5jiumd2mg" path="res://PreSets/Siri/red/animRedNormal.tres" id="3_fkpf5"]
 
-[node name="ControlesConectados" type="Control"]
+[node name="ControlesConectados" type="Control" unique_id=1518211444]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 3
 anchors_preset = 12
@@ -19,27 +19,27 @@ grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("1_aei4g")
 
-[node name="ControlesManager" type="Node" parent="."]
+[node name="ControlesManager" type="Node" parent="." unique_id=1427189604]
 script = ExtResource("1_lo6xx")
 
-[node name="AnimatedBlue" type="AnimatedSprite2D" parent="."]
-position = Vector2(295, 74)
+[node name="AnimatedBlue" type="AnimatedSprite2D" parent="." unique_id=226955231]
+position = Vector2(295, 49)
 scale = Vector2(3, 3)
 sprite_frames = ExtResource("3_aei4g")
 animation = &"parado"
 autoplay = "parado"
 
-[node name="LabelP1" type="Label" parent="."]
+[node name="LabelP1" type="Label" parent="." unique_id=2028556729]
 layout_mode = 1
 offset_left = 145.0
-offset_top = 41.0
-offset_right = 204.0
-offset_bottom = 110.0
+offset_top = 76.0
+offset_right = 479.0
+offset_bottom = 145.0
 size_flags_horizontal = 0
 theme = ExtResource("2_fkpf5")
 text = "P1"
 
-[node name="LabelStatusP1" type="Label" parent="."]
+[node name="LabelStatusP1" type="Label" parent="." unique_id=1431557526]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -55,28 +55,28 @@ size_flags_horizontal = 0
 theme = ExtResource("3_5qhow")
 text = "Controle Conectado"
 
-[node name="AnimatedRed" type="AnimatedSprite2D" parent="."]
-position = Vector2(985, 70)
+[node name="AnimatedRed" type="AnimatedSprite2D" parent="." unique_id=413780204]
+position = Vector2(985, 45)
 scale = Vector2(3, 3)
 sprite_frames = ExtResource("3_fkpf5")
 animation = &"parado"
 autoplay = "parado"
 
-[node name="LabelP2" type="Label" parent="."]
+[node name="LabelP2" type="Label" parent="." unique_id=1058601378]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -445.0
-offset_top = 41.0
-offset_right = -386.0
-offset_bottom = 110.0
+offset_top = 76.0
+offset_right = -77.0
+offset_bottom = 145.0
 grow_horizontal = 0
 size_flags_horizontal = 0
 theme = ExtResource("2_fkpf5")
 text = "P2"
 
-[node name="LabelStatusP2" type="Label" parent="."]
+[node name="LabelStatusP2" type="Label" parent="." unique_id=1830759787]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

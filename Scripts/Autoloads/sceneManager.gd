@@ -1,14 +1,14 @@
 extends Node
 
-const MENUS_PATH 				:= "res://Cenas/Menus/mainMenus.tscn"
-const MENU_PRINCIPAL_PATH 		:= "res://Cenas/Menus/menuPrincipal.tscn"
-const MENU_SELECAO_PATH 		:= "res://Cenas/Menus/menuSelecao.tscn"
-const MENU_ONLINE_PATH 			:= "res://Cenas/Menus/menuOnline.tscn"
-const MENU_MENU_ZEN_PATH 		:= "res://Cenas/Menus/menuZen.tscn"
-const MENU_CONFIGURACAO_PATH	:= "res://Cenas/Menus/menuConfiguracao.tscn"
-const MENU_CREDITOS_PATH 		:= "res://Cenas/Menus/menuCreditos.tscn"
-const MENU_ESTATISTICAS_PATH	:= "res://Cenas/Menus/menuEstatisticas.tscn"
-const MENU_INFORMACOES_PATH 	:= "res://Cenas/Menus/menuInfo.tscn"
+const MENUS_PATH 				:= "uid://4k8drpikovn2"
+const MENU_PRINCIPAL_PATH 		:= "uid://e0hvhpdu6hbn"
+const MENU_SELECAO_PATH 		:= "uid://d1fhoosfw8cye"
+const MENU_ONLINE_PATH 			:= "uid://cbwykhriort25"
+const MENU_MENU_ZEN_PATH 		:= "uid://c5wshuf5fpmi2"
+const MENU_CONFIGURACAO_PATH	:= "uid://dl22uju6ygrp0"
+const MENU_CREDITOS_PATH 		:= "uid://65vehrxtpinv"
+const MENU_ESTATISTICAS_PATH	:= "uid://nbn4suesoxxx"
+const MENU_INFORMACOES_PATH 	:= "uid://icyktkxgwl6u"
 
 func goto_menu():
 	change_scene(MENUS_PATH)
