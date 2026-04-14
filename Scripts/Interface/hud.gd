@@ -216,7 +216,7 @@ func _on_button_prox_pressed() -> void:
 	_goto_selecao()
 
 func _on_button_menu_pressed() -> void:
-	_goto_menu()
+	_goto_selecao()
 
 # ---------------------------------
 # Funcoes de Trocar de Cena
