@@ -98,6 +98,19 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
+[node name="TextNome" type="LineEdit" parent="VBox" unique_id=122293029]
+layout_mode = 2
+theme = ExtResource("5_bkqf8")
+placeholder_text = "Nome do Jogador"
+alignment = 1
+max_length = 15
+emoji_menu_enabled = false
+
+[node name="VSeparator" type="VSeparator" parent="VBox" unique_id=684683298]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
 [node name="HBoxJog" type="HBoxContainer" parent="VBox" unique_id=1007810447]
 layout_mode = 2
 alignment = 1
@@ -135,9 +148,16 @@ theme_override_colors/font_pressed_color = Color(0.764706, 1, 0.517647, 1)
 toggle_mode = true
 text = "Join"
 
-[node name="VSeparator" type="VSeparator" parent="VBox" unique_id=684683298]
+[node name="LabelInstrucao" type="Label" parent="VBox" unique_id=1471671655]
+layout_mode = 2
+theme = ExtResource("5_bkqf8")
+theme_override_font_sizes/font_size = 31
+text = "Inicie primeiro o host e depois de join"
+horizontal_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="VBox" unique_id=1462861300]
 self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
 [node name="GridContainer" type="GridContainer" parent="VBox" unique_id=50666579]
@@ -177,15 +197,75 @@ rounded = true
 allow_greater = true
 allow_lesser = true
 
-[node name="VSeparator2" type="VSeparator" parent="VBox" unique_id=1462861300]
+[node name="VSeparator3" type="VSeparator" parent="VBox" unique_id=2111733050]
 self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
 [node name="ButtonComecar" type="Button" parent="VBox" unique_id=805609784]
 layout_mode = 2
 theme = ExtResource("4_wrgqt")
 text = "Conectar"
+
+[node name="PopUpConectando" type="Control" parent="." unique_id=1313018371]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -342.0
+offset_top = -201.0
+offset_right = 342.0
+offset_bottom = 201.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PopUpConectando" unique_id=1013642194]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.9137255)
+
+[node name="RichTextConectando" type="RichTextLabel" parent="PopUpConectando" unique_id=789449168]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_wrgqt")
+bbcode_enabled = true
+text = "[wave amp=100.0 freq=4.0 connected=1]. . .[/wave]
+
+Esperando "
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PopupError" type="Popup" parent="." unique_id=2120323267]
+disable_3d = true
+oversampling_override = 1.0
+title = "Error"
+initial_position = 2
+size = Vector2i(300, 200)
+borderless = false
+always_on_top = true
+
+[node name="LabelPopupError" type="Label" parent="PopupError" unique_id=386839727]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_bkqf8")
+text = "Conection Error:
+"
+autowrap_mode = 2
 
 [connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]
 [connection signal="pressed" from="VBox/HBoxJog/ButtonHost" to="." method="_on_button_host_pressed"]

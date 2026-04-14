@@ -29,6 +29,8 @@ SceneManager="*res://Scripts/Autoloads/sceneManager.gd"
 InputManager="*res://Scripts/Autoloads/inputManager.gd"
 SaveManager="*res://Scripts/Autoloads/saveManager.gd"
 LevelManager="*res://Scripts/Autoloads/levelManager.gd"
+Networking="*uid://blmba3m2eljx1"
+NetworkingGame="*uid://bvl15ds5b23o1"
 
 [display]
 
