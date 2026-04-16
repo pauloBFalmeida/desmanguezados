@@ -59,7 +59,7 @@ func player_votou_level(level_id : int, player_id: InputManager.PlayerId) -> voi
 	# posiciona dependendo do player
 	if player_id == InputManager.PlayerId.P1:
 		sticker.rotation_degrees = -5.0
-		sticker.position.x += sticker_offset_x
+		sticker.position.x = sticker_offset_x
 	else:
 		sticker.rotation_degrees = 5.0
 		sticker.position.x = level.size.x
