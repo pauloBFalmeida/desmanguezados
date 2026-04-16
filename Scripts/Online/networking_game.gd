@@ -13,6 +13,10 @@ var is_game_online: bool = false
 func _ready() -> void:
 	Networking.client_connected_to_server.connect(_chamar_registrar_jogador)
 
+# ------------------------------------------------------------------------------
+# Conexao inicial entre jogadores
+# ------------------------------------------------------------------------------
+
 ## Ao cliente conectar ao servidor, pede para o servidor registrar_jogador
 func _chamar_registrar_jogador() -> void:
 	registrar_jogador.rpc_id(Networking.companion_peer_id, jogador_nome)
@@ -33,6 +37,11 @@ func registrar_jogador(nome: String) -> void:
 		registrar_jogador.rpc_id(Networking.companion_peer_id, jogador_nome)
 		_chamar_iniciar_selecao_jogo()
 
+# ------------------------------------------------------------------------------
+# Selecao de Level
+# ------------------------------------------------------------------------------
+var helper_selecao_level : OnlineHelperSelecaoLevel
+
 ## Se for o servidor, inicia a selecao de level (servidor e cliente)
 func _chamar_iniciar_selecao_jogo() -> void:
 	if not multiplayer.is_server(): return
@@ -48,3 +57,7 @@ func iniciar_selecao_jogo() -> void:
 	jogador_player_id = InputManager.PlayerId.P1 if multiplayer.is_server() else InputManager.PlayerId.P2
 	# inicia selecao de partida
 	SceneManager.goto_selecao()
+
+@rpc("any_peer", "call_local", "reliable")
+func votar_level(level_id: int, player_id: InputManager.PlayerId) -> void:
+	helper_selecao_level.player_votou_level(level_id, player_id)

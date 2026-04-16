@@ -1,6 +1,12 @@
 [gd_scene format=3 uid="uid://bexmg8hvs1d3b"]
 
 [ext_resource type="Script" uid="uid://50hoc4y4vde4" path="res://Scripts/Online/online_helper_selecao_level.gd" id="1_e5f5n"]
+[ext_resource type="PackedScene" uid="uid://b6rljuob8hvj5" path="res://PreSets/Menus/sticker_animated_blue.tscn" id="2_2qt07"]
+[ext_resource type="PackedScene" uid="uid://3msa4hadxgqu" path="res://PreSets/Menus/sticker_animated_red.tscn" id="3_xe7oh"]
 
 [node name="HelperSelecao" type="Node" unique_id=21509229]
 script = ExtResource("1_e5f5n")
+stickers_por_player_id = Dictionary[int, PackedScene]({
+0: ExtResource("2_2qt07"),
+1: ExtResource("3_xe7oh")
+})

@@ -1,8 +1,9 @@
 extends Node
 class_name OnlineHelperSelecaoLevel
 
-@export var menu_selecao : MenuSelecao
+var menu_selecao : MenuSelecao
 
+## Cria o OnlineHelperSelecaoLevel
 static func criar(_menu_selecao : MenuSelecao) -> OnlineHelperSelecaoLevel:
 	# cria o OnlineHelperSelecaoLevel
 	var node_ref = load("uid://bexmg8hvs1d3b")
@@ -10,7 +11,56 @@ static func criar(_menu_selecao : MenuSelecao) -> OnlineHelperSelecaoLevel:
 	# ajusta o menu selecao
 	var helperSelecao : OnlineHelperSelecaoLevel = new_node
 	helperSelecao.menu_selecao = _menu_selecao
+	# se adiciona no network game
+	NetworkingGame.helper_selecao_level = helperSelecao
+	# retorna o node 
 	return helperSelecao
 
+
+@export var sticker_offset_x : int = 75
+@export var stickers_por_player_id : Dictionary[InputManager.PlayerId, PackedScene]
+
+var stickers : Dictionary[InputManager.PlayerId, AnimatedSprite2D]
+
 func _ready() -> void:
-	print(menu_selecao)
+	# cria os stickers
+	for player_id in [InputManager.PlayerId.P1, InputManager.PlayerId.P2]:
+		var sticker_pkd := stickers_por_player_id[player_id]
+		var sticker : AnimatedSprite2D = sticker_pkd.instantiate()
+		stickers[player_id] = sticker
+		sticker.hide()
+		add_child(sticker)
+	
+	# percorre todos os itens de leveis
+	for level_item : LevelItem in menu_selecao.leveis_itens:
+		# remove o sinal de apertar o botao com iniciar o level
+		_disconnect_signal(level_item, "pressed")
+		
+		# conecta o apertar o botao do level, com _votar_level
+		level_item.pressed.connect(_votar_level.bind(level_item.level_id))
+
+func _disconnect_signal(node: Node, signal_name: String) -> void:
+	var connections = node.get_signal_connection_list(signal_name)
+	for connection in connections:
+		node.disconnect(signal_name, connection["callable"])
+
+func _votar_level(level_id : int) -> void:
+	print(level_id)
+	player_votou_level(level_id, NetworkingGame.jogador_player_id)
+
+func player_votou_level(level_id : int, player_id: InputManager.PlayerId) -> void:
+	var sticker := stickers[player_id]
+	sticker.show()
+	# remove o pai do sticker
+	sticker.get_parent().remove_child(stickers[player_id])
+	# adiciona como filho do level
+	var level : LevelItem = menu_selecao.leveis_itens_por_level_id[level_id]
+	level.add_child(sticker)
+	# posiciona dependendo do player
+	if player_id == InputManager.PlayerId.P1:
+		sticker.rotation_degrees = -5.0
+		sticker.position.x += sticker_offset_x
+	else:
+		sticker.rotation_degrees = 5.0
+		sticker.position.x = level.size.x
+		sticker.position.x -= sticker_offset_x
