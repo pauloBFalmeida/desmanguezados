@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b6rljuob8hvj5"]
+
+[ext_resource type="Shader" uid="uid://cw712yn14yynr" path="res://Scripts/Shaders/outline.gdshader" id="1_g6rki"]
+[ext_resource type="SpriteFrames" uid="uid://jnoa6d6fhquu" path="res://PreSets/Siri/blue/animBlueNormal.tres" id="2_j2ka3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sape2"]
+resource_local_to_scene = true
+shader = ExtResource("1_g6rki")
+shader_parameter/cor = Color(0, 0, 0, 1)
+shader_parameter/type = 2
+shader_parameter/thickness = 1.0
+
+[node name="StickerAnimatedBlue" type="AnimatedSprite2D" unique_id=1518377928]
+material = SubResource("ShaderMaterial_sape2")
+scale = Vector2(3, 3)
+sprite_frames = ExtResource("2_j2ka3")
+animation = &"andar"
+autoplay = "andar"
+frame_progress = 0.26656464
