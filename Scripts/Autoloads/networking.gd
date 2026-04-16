@@ -8,15 +8,19 @@ signal server_disconnected
 
 signal display_error(error_code)
 
+# -- Configuracoes da conexao --
 var ip_addr : String = "localhost"
 var port : int = 45678
 
+# -- Configuracoes do server --
 const MAX_CLIENTS := 1
 const SERVER_ID := 1
 
+## Peer_id do outro jogador conectado (server ou cliente)
 var companion_peer_id : int = -1
 
 func _ready() -> void:
+	# conectar os sinais da conexao multiplayer
 	multiplayer.peer_connected.connect(_peer_connected)
 	multiplayer.peer_disconnected.connect(_peer_disconnected)
 	multiplayer.connected_to_server.connect(_connected_to_server)
@@ -25,30 +29,37 @@ func _ready() -> void:
 
 # ------------------ Lobby
 
+## Cria um servidor
 func create_server() -> void:
+	# cria o peer
 	var network_peer := ENetMultiplayerPeer.new()
+	# cria o server
 	var err := network_peer.create_server(port, MAX_CLIENTS)
 	if err == OK:
 		print("server criado")
 	else:
+		# caso ocorra um erro, mostrar o codigo de erro
 		emit_signal("display_error", "server error code: %d" % err)
 		return
-	
+	# guarda o peer, no multiplayer
 	multiplayer.multiplayer_peer = network_peer
-	print ("is server ", multiplayer.is_server())
 
+## Cria um cliente conectando no servidor
 func create_client() -> void:
+	# cria o peer
 	var network_peer := ENetMultiplayerPeer.new()
+	# conecta o cliente no servidor
 	var err := network_peer.create_client(ip_addr, port)
 	if err == OK:
 		print("cliente criado")
 	else:
+		# caso ocorra um erro, mostrar o codigo de erro
 		emit_signal("display_error", "cliente error code: %d" % err)
 		return
-	
+	# guarda o peer, no multiplayer
 	multiplayer.multiplayer_peer = network_peer
-	print ("is server ", multiplayer.is_server())
 
+## Termina a conexao online, e desfaz o cliente ou servidor
 func close_connection() -> void:
 	if multiplayer.multiplayer_peer:
 		multiplayer.multiplayer_peer.close()
@@ -82,10 +93,11 @@ func _server_disconnected():
 
 # ------------------ Outras
 
-# verifica se tem uma conexao funcionando
+## Retorna se tem uma conexao funcionando
 func is_network_connected() -> bool:
 	return multiplayer.multiplayer_peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED
 
+## Retorna o texto do IPv4
 func get_local_ipv4() -> String:
 	for address in IP.get_local_addresses():
 		# pega enderecos IP v4
