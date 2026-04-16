@@ -1,4 +1,5 @@
 extends Menu
+class_name MenuSelecao
 
 @onready var container_leveis := $ScrollContainerLeveis/HBoxContainer
 @onready var scroll_container := $ScrollContainerLeveis
@@ -9,6 +10,9 @@ var leveis_itens_por_level_id : Dictionary[LevelManager.Level_id, LevelItem] = {
 func _ready() -> void:
 	# cria os displays de cada level
 	_criar_level_itens()
+	# -- Online --
+	if NetworkingGame.is_game_online: 
+		add_child(OnlineHelperSelecaoLevel.criar(self))
 
 # --- Voltar ---
 func _on_button_voltar_pressed() -> void:

@@ -68,12 +68,3 @@ func change_menu(path: String):
 	var scene_ref = load(path)
 	var new_scene = scene_ref.instantiate()
 	main_menus.add_child(new_scene)
-
-# ------ Add helpers na scene ---------
-func _add_node_to_scene(path: String) -> void:
-	var node_ref = load(path)
-	var new_node = node_ref.instantiate()
-	get_tree().current_scene.add_child(new_node)
-
-func add_helper_selecao_to_scene() -> void:
-	_add_node_to_scene("uid://bexmg8hvs1d3b")

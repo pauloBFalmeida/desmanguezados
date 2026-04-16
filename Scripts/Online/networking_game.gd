@@ -48,7 +48,3 @@ func iniciar_selecao_jogo() -> void:
 	jogador_player_id = InputManager.PlayerId.P1 if multiplayer.is_server() else InputManager.PlayerId.P2
 	# inicia selecao de partida
 	SceneManager.goto_selecao()
-	# adicionar online helper ao menu de selecao
-	await get_tree().process_frame
-	SceneManager.add_helper_selecao_to_scene()
-	
