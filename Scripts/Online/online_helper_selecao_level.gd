@@ -18,16 +18,16 @@ static func criar(_menu_selecao : MenuSelecao) -> OnlineHelperSelecaoLevel:
 
 
 @export var sticker_offset_x : int = 75
-@export var stickers_por_player_id : Dictionary[InputManager.PlayerId, PackedScene]
+@export var stickers_pck_por_player_id : Dictionary[InputManager.PlayerId, PackedScene]
 
 var stickers : Dictionary[InputManager.PlayerId, AnimatedSprite2D]
 
 func _ready() -> void:
 	# cria os stickers
 	for player_id in [InputManager.PlayerId.P1, InputManager.PlayerId.P2]:
-		var sticker_pkd := stickers_por_player_id[player_id]
+		var sticker_pkd := stickers_pck_por_player_id[player_id]
 		var sticker : AnimatedSprite2D = sticker_pkd.instantiate()
-		stickers[player_id] = sticker
+		stickers_por_player_id[player_id] = sticker
 		sticker.hide()
 		add_child(sticker)
 	
@@ -45,17 +45,17 @@ func _disconnect_signal(node: Node, signal_name: String) -> void:
 		node.disconnect(signal_name, connection["callable"])
 
 func _votar_level(level_id : int) -> void:
-	print(level_id)
 	player_votou_level(level_id, NetworkingGame.jogador_player_id)
+	NetworkingGame.votar_level.rpc_id(Networking.companion_peer_id, level_id, NetworkingGame.jogador_player_id)
 
 func player_votou_level(level_id : int, player_id: InputManager.PlayerId) -> void:
-	var sticker := stickers[player_id]
-	sticker.show()
+	var sticker := stickers_por_player_id[player_id]
 	# remove o pai do sticker
-	sticker.get_parent().remove_child(stickers[player_id])
+	sticker.get_parent().remove_child(sticker)
 	# adiciona como filho do level
 	var level : LevelItem = menu_selecao.leveis_itens_por_level_id[level_id]
 	level.add_child(sticker)
+	sticker.show()
 	# posiciona dependendo do player
 	if player_id == InputManager.PlayerId.P1:
 		sticker.rotation_degrees = -5.0
