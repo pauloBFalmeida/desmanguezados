@@ -6,8 +6,11 @@
 
 [node name="HelperSelecao" type="Node" unique_id=21509229]
 script = ExtResource("1_e5f5n")
-sticker_offset_x = null
 stickers_pck_por_player_id = Dictionary[int, PackedScene]({
 0: ExtResource("2_2qt07"),
 1: ExtResource("3_xe7oh")
 })
+
+[node name="TimerVotos" type="Timer" parent="." unique_id=1393580545]
+wait_time = 1.5
+one_shot = true

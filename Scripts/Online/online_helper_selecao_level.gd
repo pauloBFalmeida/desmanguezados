@@ -20,9 +20,14 @@ static func criar(_menu_selecao : MenuSelecao) -> OnlineHelperSelecaoLevel:
 @export var sticker_offset_x : int = 75
 @export var stickers_pck_por_player_id : Dictionary[InputManager.PlayerId, PackedScene]
 
-var stickers : Dictionary[InputManager.PlayerId, AnimatedSprite2D]
+@onready var timer_votos: Timer = $TimerVotos
+
+var stickers_por_player_id : Dictionary[InputManager.PlayerId, AnimatedSprite2D]
+var level_votado_por_player_id : Dictionary[InputManager.PlayerId, LevelManager.Level_id]
 
 func _ready() -> void:
+	timer_votos.timeout.connect(_encerrar_votacao)
+	
 	# cria os stickers
 	for player_id in [InputManager.PlayerId.P1, InputManager.PlayerId.P2]:
 		var sticker_pkd := stickers_pck_por_player_id[player_id]
@@ -49,6 +54,10 @@ func _votar_level(level_id : int) -> void:
 	NetworkingGame.votar_level.rpc_id(Networking.companion_peer_id, level_id, NetworkingGame.jogador_player_id)
 
 func player_votou_level(level_id : int, player_id: InputManager.PlayerId) -> void:
+	# -- conta o voto --
+	level_votado_por_player_id[player_id] = level_id
+	_verificar_votos()
+	# -- Mostra o sticker --
 	var sticker := stickers_por_player_id[player_id]
 	# remove o pai do sticker
 	sticker.get_parent().remove_child(sticker)
@@ -64,3 +73,20 @@ func player_votou_level(level_id : int, player_id: InputManager.PlayerId) -> voi
 		sticker.rotation_degrees = 5.0
 		sticker.position.x = level.size.x
 		sticker.position.x -= sticker_offset_x
+
+func _verificar_votos() -> void:
+	# se nao tiver os 2 votos, pare
+	if not ( level_votado_por_player_id.has(InputManager.PlayerId.P1) and 
+			 level_votado_por_player_id.has(InputManager.PlayerId.P2) ):
+		return
+	
+	# se votaram no mesmo, inicie o timer 
+	if level_votado_por_player_id[InputManager.PlayerId.P1] == level_votado_por_player_id[InputManager.PlayerId.P2]:
+		timer_votos.start(timer_votos.wait_time)
+	else:
+		# se votaram em diferentes pare o timer
+		timer_votos.stop()
+
+func _encerrar_votacao() -> void:
+	# iniciar partida
+	NetworkingGame.iniciar_partida(level_votado_por_player_id[InputManager.PlayerId.P1])

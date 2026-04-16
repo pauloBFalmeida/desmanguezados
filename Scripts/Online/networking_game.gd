@@ -58,6 +58,23 @@ func iniciar_selecao_jogo() -> void:
 	# inicia selecao de partida
 	SceneManager.goto_selecao()
 
+## Jogador vota no level que quer jogar
 @rpc("any_peer", "call_local", "reliable")
 func votar_level(level_id: int, player_id: InputManager.PlayerId) -> void:
 	helper_selecao_level.player_votou_level(level_id, player_id)
+
+# ------------------------------------------------------------------------------
+# Partida
+# ------------------------------------------------------------------------------
+
+## Inicia a partida do level
+func iniciar_partida(level_id: LevelManager.Level_id) -> void:
+	if not multiplayer.is_server(): return
+	# chama nos 2
+	_peer_iniciar_partida(level_id)
+	_peer_iniciar_partida.rpc_id(Networking.companion_peer_id, level_id)
+
+## Inicia a partida do level para o peer
+@rpc("authority", "call_local", "reliable")
+func _peer_iniciar_partida(level_id: LevelManager.Level_id) -> void:
+	SceneManager.goto_level(level_id)
