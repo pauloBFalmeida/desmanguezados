@@ -86,7 +86,6 @@ func _mudar_nome_player(player_id : InputManager.PlayerId, nome : String) -> voi
 	label.text = nome
 
 func _flash_node(node : Node) -> void:
-	print('flash')
 	var tween := create_tween().set_loops()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_CUBIC)
