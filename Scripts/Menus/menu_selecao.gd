@@ -18,13 +18,15 @@ func _on_button_voltar_pressed() -> void:
 func _criar_level_itens() -> void:
 	var item_ref = preload("res://Cenas/Menus/SubItems/level_item.tscn")
 	for level_id in LevelManager.LEVEIS_SELECAO_ORDEM:
-		var item = item_ref.instantiate()
+		var item : LevelItem = item_ref.instantiate()
 		leveis_itens.append(item)
 		container_leveis.add_child(item)
 		# add no dicionario
 		leveis_itens_por_level_id[level_id] = item
 		# link botao com inicio do level
 		item.ajust(level_id)
+		# conecta o apertar com chamar iniciar o level
+		item.pressed.connect(SceneManager.goto_level.bind(level_id))
 	# pre seleciona o proximo level (ou o inicial se acabou de abrir)
 	if leveis_itens_por_level_id.has(Globais.current_level_id):
 		var item_focus = leveis_itens_por_level_id[Globais.current_level_id]

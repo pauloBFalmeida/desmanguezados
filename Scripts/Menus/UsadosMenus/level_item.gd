@@ -1,6 +1,5 @@
-extends Control
+extends BaseButton
 class_name LevelItem
-
 
 @export var medalha_cor : Dictionary[LevelManager.Medalha_tipo, Color]
 ## texto antes do tempo, com espaco no final
@@ -17,9 +16,6 @@ var level_id : LevelManager.Level_id
 
 func btn_grab_focus() -> void:
 	grab_focus()
-
-func _on_pressed() -> void:
-	SceneManager.goto_level(level_id)
 
 func ajust(_level_id : int) -> void:
 	level_id = _level_id
