@@ -9,36 +9,40 @@ extends Control
 }
 
 func _ready() -> void:
-	# controle conectado -> atualiza as informacoes de controles conectados
-	InputManager.controle_added.connect(update_conectados)
-	update_conectados() # atualiza no inicio
 	# online
 	if NetworkingGame.is_game_online:
 		_pegar_nomes_online()
+		InputManager.controle_added.connect(_pegar_nomes_online)
+		return
+	
+	# controle conectado -> atualiza as informacoes de controles conectados
+	InputManager.controle_added.connect(update_conectados)
+	update_conectados() # atualiza no inicio
 
 # --- Controles Conectados ---
 func update_conectados():
-	# dict de quais controles foram conectados
-	var is_controle_conectado := {
-		InputManager.PlayerId.P1: false,
-		InputManager.PlayerId.P2: false
-	}
+	# -- atualiza as labels --
+	label_status_P1.text = _get_texto_input_player(InputManager.PlayerId.P1)
+	label_status_P2.text = _get_texto_input_player(InputManager.PlayerId.P2)
+
+func _get_texto_input_player(player_id : InputManager.PlayerId) -> String:
+	var is_controle_conectado : bool = false
 	# Encontra os players com os controles conectados
 	for device_id in InputManager.controles_conectados:
-		var player_id = InputManager.controles_conectados[device_id]
-		is_controle_conectado[player_id] = true
+		var controle_player_id = InputManager.controles_conectados[device_id]
+		if player_id == controle_player_id:
+			is_controle_conectado = true
+			break
+	# se tiver controle conectado pro player, retorna o texto do controle
+	if is_controle_conectado:
+		return _get_controle_texto(player_id)
+	# se nao tiver controle, retorna WASD pro P1, Setas pro P2
+	if   player_id == InputManager.PlayerId.P1:
+		return "WASD"
+	elif player_id == InputManager.PlayerId.P2:
+		return "Setas"
 	
-	# -- atualiza as labels --
-	# Player 1
-	if is_controle_conectado[InputManager.PlayerId.P1]:
-		label_status_P1.text = _get_controle_texto(InputManager.PlayerId.P1)
-	else:
-		label_status_P1.text = "WASD"
-	# Player 2
-	if is_controle_conectado[InputManager.PlayerId.P2]:
-		label_status_P2.text = _get_controle_texto(InputManager.PlayerId.P2)
-	else:
-		label_status_P2.text = "Setas"
+	return ""
 
 func _get_controle_texto(player_id : InputManager.PlayerId) -> String:
 	var controle_tipo :	InputManager.Controle_tipo
@@ -49,15 +53,24 @@ func _get_controle_texto(player_id : InputManager.PlayerId) -> String:
 
 # --- Online ---
 func _pegar_nomes_online() -> void:
+	# --- Jogador principal (desse computador) ---
 	# pega o PlayerId
 	var player_id : InputManager.PlayerId = NetworkingGame.jogador_player_id
 	var nome: String = NetworkingGame.jogador_nome
 	_mudar_nome_player(player_id, nome)
 	
-	# efeito no nome do proprio jogador
+	# coloca efeito de flash no nome do jogador
 	_flash_node(label_por_player_id[player_id])
 	
-	# do outro jogador
+	# mostra os controles do P1 para o jogador (independente se online ele eh o P2)
+	if player_id == InputManager.PlayerId.P1:
+		label_status_P1.text = _get_texto_input_player(InputManager.PlayerId.P1)
+	else:
+		label_status_P2.text = _get_texto_input_player(InputManager.PlayerId.P1)
+	
+	# --- Jogador companion (online) ---
+	
+	# pega os dados
 	player_id = InputManager.get_other_player_id(player_id)
 	nome = NetworkingGame.nomes_por_id[Networking.companion_peer_id]
 	_mudar_nome_player(player_id, nome)
