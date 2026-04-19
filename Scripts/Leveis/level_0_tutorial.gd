@@ -1,4 +1,3 @@
-#extends Level
 extends Node
 
 @export var ui_infos : Array[Informacao]
