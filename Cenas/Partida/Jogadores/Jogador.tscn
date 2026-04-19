@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c38kt6bogw2mq"]
+[gd_scene format=3 uid="uid://c38kt6bogw2mq"]
 
 [ext_resource type="Script" uid="uid://wmjg8xw6jhs4" path="res://Scripts/Partida/Jogador/jogador.gd" id="1_hjt1h"]
 [ext_resource type="Texture2D" uid="uid://bnsy7do16v8k5" path="res://Assets/Ferramentas/circle.png" id="2_lwruk"]
@@ -14,6 +14,7 @@
 [ext_resource type="SpriteFrames" uid="uid://cdexo8h6qc0w2" path="res://PreSets/Siri/red/animRedPlantar.tres" id="11_fcesn"]
 [ext_resource type="SpriteFrames" uid="uid://byblmr7crn60o" path="res://PreSets/Siri/red/animRedPlantarHatless.tres" id="12_bwm6k"]
 [ext_resource type="SpriteFrames" uid="uid://dqlyfypamxduq" path="res://PreSets/Siri/red/animRedRecolher.tres" id="13_rc2x6"]
+[ext_resource type="Script" uid="uid://bcyeeaendscus" path="res://Scripts/Online/jogador_online.gd" id="15_5j7pe"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qpddn"]
 radius = 17.0
@@ -26,7 +27,18 @@ height = 46.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_hjt1h"]
 radius = 75.0
 
-[node name="Jogador" type="CharacterBody2D"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_icl4y"]
+properties/0/path = NodePath("..:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("..:player_id")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath("../JogadorAnimation:curr_skin")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="Jogador" type="CharacterBody2D" unique_id=232935885]
 z_index = 5
 collision_layer = 2
 collision_mask = 3
@@ -35,13 +47,13 @@ script = ExtResource("1_hjt1h")
 slowdown_lodo = 0.65
 max_water_time = 0.5
 
-[node name="SpriteSombra" type="Sprite2D" parent="."]
+[node name="SpriteSombra" type="Sprite2D" parent="." unique_id=2033656344]
 self_modulate = Color(0, 0, 0, 0.670588)
 position = Vector2(2, 0)
 scale = Vector2(0.6, 0.3)
 texture = ExtResource("2_lwruk")
 
-[node name="JogadorAnimation" type="AnimatedSprite2D" parent="."]
+[node name="JogadorAnimation" type="AnimatedSprite2D" parent="." unique_id=176615731]
 position = Vector2(-63, -63)
 scale = Vector2(3, 3)
 sprite_frames = ExtResource("3_t8i7p")
@@ -63,32 +75,38 @@ anim_red = Dictionary[int, SpriteFrames]({
 4: ExtResource("3_t8i7p")
 })
 
-[node name="CollisionCorpo" type="CollisionShape2D" parent="."]
+[node name="CollisionCorpo" type="CollisionShape2D" parent="." unique_id=1116307288]
 z_index = 100
 position = Vector2(1, -18)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_qpddn")
 debug_color = Color(0.717647, 0.411765, 0.654902, 0.247059)
 
-[node name="CollisionGarra" type="CollisionShape2D" parent="."]
+[node name="CollisionGarra" type="CollisionShape2D" parent="." unique_id=1143830732]
 z_index = 100
 position = Vector2(1, 4)
 rotation = 1.57079
 shape = SubResource("CapsuleShape2D_una1k")
 debug_color = Color(0.670588, 0.419608, 0.74902, 0.137255)
 
-[node name="AreaInteracao" type="Area2D" parent="."]
+[node name="AreaInteracao" type="Area2D" parent="." unique_id=127601376]
 position = Vector2(0, -9)
 collision_layer = 0
 collision_mask = 68
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaInteracao"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaInteracao" unique_id=970967508]
 shape = SubResource("CircleShape2D_hjt1h")
 debug_color = Color(0.466667, 0.764706, 0.909804, 0.0509804)
 
-[node name="IndicadorDirecao" parent="." instance=ExtResource("4_t8i7p")]
+[node name="IndicadorDirecao" parent="." unique_id=2032477467 instance=ExtResource("4_t8i7p")]
 z_index = -1
 position = Vector2(0, -9)
+
+[node name="JogadorOnline" type="Node" parent="." unique_id=415594316]
+script = ExtResource("15_5j7pe")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="JogadorOnline" unique_id=573288041]
+replication_config = SubResource("SceneReplicationConfig_icl4y")
 
 [connection signal="body_entered" from="AreaInteracao" to="." method="_on_area_interacao_body_entered"]
 [connection signal="body_exited" from="AreaInteracao" to="." method="_on_area_interacao_body_exited"]

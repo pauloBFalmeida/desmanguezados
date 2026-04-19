@@ -14,10 +14,19 @@ var curr_mov : Movimento_tipo = Movimento_tipo.NULL
 var prev_mov_duracao_ms : int = 0
 var prev_mov_start_ms : int = 0
 
+@export var curr_skin : Skin_tipo = Skin_tipo.NORMAL :
+	set(skin):
+		curr_skin = skin
+		_display_mudar_skin(skin)
+
 func set_cor(_cor : Jogador.Jogador_cor_id) -> void:
 	cor = _cor
 
 func mudar_skin(skin : Skin_tipo) -> void:
+	curr_skin = skin
+	_display_mudar_skin(skin)
+
+func _display_mudar_skin(skin : Skin_tipo) -> void:
 	# se a cor do jogador seja azul -> pega do dict azul
 	if cor == Jogador.Jogador_cor_id.BLUE:
 		sprite_frames = anim_blue[skin]
