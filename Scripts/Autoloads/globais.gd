@@ -80,5 +80,4 @@ func verif_rem_efeito(nodo : Node2D) -> void:
 	# se nao for para remover os efeitos graficos -> nao faca nada
 	if not remov_efeitos_graf: return
 	
-	print(nodo)
 	nodo.material = CanvasItemMaterial.new()

@@ -35,9 +35,7 @@ func create_server() -> void:
 	var network_peer := ENetMultiplayerPeer.new()
 	# cria o server
 	var err := network_peer.create_server(port, MAX_CLIENTS)
-	if err == OK:
-		print("server criado")
-	else:
+	if err != OK:
 		# caso ocorra um erro, mostrar o codigo de erro
 		emit_signal("display_error", "server error code: %d" % err)
 		return
@@ -50,9 +48,7 @@ func create_client() -> void:
 	var network_peer := ENetMultiplayerPeer.new()
 	# conecta o cliente no servidor
 	var err := network_peer.create_client(ip_addr, port)
-	if err == OK:
-		print("cliente criado")
-	else:
+	if err != OK:
 		# caso ocorra um erro, mostrar o codigo de erro
 		emit_signal("display_error", "cliente error code: %d" % err)
 		return
