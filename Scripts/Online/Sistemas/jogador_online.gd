@@ -10,4 +10,8 @@ func iniciar_online_config() -> void:
 	
 	# se nao for o jogador do player que esta online
 	if jogador.player_id != NetworkingGame.jogador_player_id:
+		# desliga jogador
 		Networking.node_turn_off(jogador)
+		# desliga e esconde indicador de direcao
+		Networking.node_turn_off(jogador.indicador_direcao)
+		jogador.indicador_direcao.hide()
