@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://efg3xq81sgtt"]
+
+[ext_resource type="Script" uid="uid://b43x617rof80c" path="res://Scripts/Leveis/usadoLevel/mare.gd" id="1_ihtm3"]
+
+[node name="Mare" type="Node" unique_id=1302744313 node_paths=PackedStringArray("tile_mare", "tilemaps_sobre_chao")]
+script = ExtResource("1_ihtm3")
+tile_mare = NodePath("")
+mare_andavel_min_color = Color(1, 1, 1, 0.4)
+tilemaps_sobre_chao = NodePath("")
+
+[node name="TimerMare" type="Timer" parent="." unique_id=1052078187]

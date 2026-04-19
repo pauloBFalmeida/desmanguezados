@@ -6,7 +6,7 @@ signal jogou_ferramenta
 
 var tilemaps_chao : TileMapsChao
 var locais_plantar_colecao : LocalPlantarColecao
-var level : Level
+var gerenciador_partida : GerenciadorPartida
 
 @export var mudas_referencias : Array[PackedScene]
 @export var dropar_offset_jogador := Vector2(-15, 40)
@@ -45,7 +45,7 @@ func set_locais_plantar_colecao(_locais_plantar_colecao : LocalPlantarColecao) -
 	#var muda : Arvore = muda_ref.instantiate()
 	## ajustes para muda funcionar
 	#muda.global_position = local_plantar.global_position
-	#level.plantada_arvore_nativa(muda)
+	#gerenciador_partida.plantada_arvore_nativa(muda)
 	## retira o local de plantar para colocar a muda
 	#locais_plantar_colecao.remove_local_plantar(local_plantar)
 	
@@ -55,7 +55,7 @@ func plantar_muda(global_pos : Vector2) -> void:
 	var muda : Arvore = muda_ref.instantiate()
 	# ajustes para muda funcionar
 	muda.global_position = global_pos
-	level.plantada_arvore_nativa(muda)
+	gerenciador_partida.plantada_arvore_nativa(muda)
 
 # -----------------------------------------------
 # Pegar e Largar ferramenta

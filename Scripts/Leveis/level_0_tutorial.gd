@@ -1,10 +1,10 @@
-extends Level
+#extends Level
+extends Node
 
 @export var ui_infos : Array[Informacao]
 var info_por_jogador : Dictionary[Jogador, Informacao] = {}
 
 func _ready() -> void:
-	super()
 	# preprar o dict info_por_jogador
 	for info in ui_infos:
 		var jogador : Jogador = info.get_parent()

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://c1s0pksofyykg"]
+
+[ext_resource type="Script" uid="uid://damhq86gpxn4x" path="res://Scripts/Leveis/usadoLevel/gerenciador_partida.gd" id="1_x5uov"]
+
+[node name="GerenciadorPartida" type="Node" unique_id=1429047279 node_paths=PackedStringArray("spawn_jogadores", "ferramenta_mgmt", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "hud")]
+script = ExtResource("1_x5uov")
+spawn_jogadores = NodePath("")
+ferramenta_mgmt = NodePath("")
+arvores_colecao = NodePath("")
+lixos_colecao = NodePath("")
+locais_plantar_colecao = NodePath("")
+hud = NodePath("")
