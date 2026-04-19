@@ -83,10 +83,12 @@ func _verificar_votos() -> void:
 	# se votaram no mesmo, inicie o timer 
 	if level_votado_por_player_id[InputManager.PlayerId.P1] == level_votado_por_player_id[InputManager.PlayerId.P2]:
 		timer_votos.start(timer_votos.wait_time)
+		
 	else:
 		# se votaram em diferentes pare o timer
 		timer_votos.stop()
 
 func _encerrar_votacao() -> void:
+	print("TODO: tela de iniciando partida, esperar 1 seg")
 	# iniciar partida
 	NetworkingGame.iniciar_partida(level_votado_por_player_id[InputManager.PlayerId.P1])
