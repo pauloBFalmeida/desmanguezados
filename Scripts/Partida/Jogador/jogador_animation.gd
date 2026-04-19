@@ -9,7 +9,10 @@ enum Movimento_tipo {ACAO, ANDAR, PARADO, NULL}
 
 var cor : Jogador.Jogador_cor_id
 
-var curr_mov : Movimento_tipo = Movimento_tipo.NULL
+@export var curr_mov : Movimento_tipo = Movimento_tipo.NULL :
+	set(mov):
+		curr_mov = mov
+		_update_animacao()
 
 var prev_mov_duracao_ms : int = 0
 var prev_mov_start_ms : int = 0
@@ -58,12 +61,14 @@ func mudar_movimento(mov : Movimento_tipo, duracao : float = 0.2) -> void:
 	set_movimento(mov)
 
 func set_movimento(mov : Movimento_tipo) -> void:
-	match mov:
+	# salva o movimento atual
+	curr_mov = mov
+
+func _update_animacao() -> void:
+	match curr_mov:
 		Movimento_tipo.ACAO:
 			play("acao")
 		Movimento_tipo.ANDAR:
 			play("andar")
 		Movimento_tipo.PARADO:
 			play("parado")
-	# salva o movimento atual
-	curr_mov = mov

@@ -107,3 +107,11 @@ func get_local_ipv4() -> String:
 				return address
 	# IP para localhost, ambos jogos rodando no mesmo PC
 	return "127.0.0.1"
+
+func node_turn_off(nodo : Node) -> void:
+	nodo.set_process(false)
+	nodo.set_physics_process(false)
+	nodo.set_process_input(false)
+	nodo.set_process_shortcut_input(false)
+	nodo.set_process_unhandled_input(false)
+	nodo.set_process_unhandled_key_input(false)

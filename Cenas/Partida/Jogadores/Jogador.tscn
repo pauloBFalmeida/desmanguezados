@@ -36,7 +36,10 @@ properties/1/spawn = true
 properties/1/replication_mode = 2
 properties/2/path = NodePath("../JogadorAnimation:curr_skin")
 properties/2/spawn = true
-properties/2/replication_mode = 1
+properties/2/replication_mode = 2
+properties/3/path = NodePath("../JogadorAnimation:curr_mov")
+properties/3/spawn = true
+properties/3/replication_mode = 2
 
 [node name="Jogador" type="CharacterBody2D" unique_id=232935885]
 z_index = 5
@@ -102,8 +105,10 @@ debug_color = Color(0.466667, 0.764706, 0.909804, 0.0509804)
 z_index = -1
 position = Vector2(0, -9)
 
-[node name="JogadorOnline" type="Node" parent="." unique_id=415594316]
+[node name="JogadorOnline" type="Node" parent="." unique_id=415594316 node_paths=PackedStringArray("jogador", "jogador_anim")]
 script = ExtResource("15_5j7pe")
+jogador = NodePath("..")
+jogador_anim = NodePath("../JogadorAnimation")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="JogadorOnline" unique_id=573288041]
 replication_config = SubResource("SceneReplicationConfig_icl4y")

@@ -94,14 +94,9 @@ func get_ferramentas_mgmt() -> FerramentaMgmt:
 
 # ------------------------------------
 func pausar_jogadores(pausar : bool = true) -> void:
-	var executar := not pausar
-	set_physics_process(executar)
+	set_physics_process(not pausar)
 	for jog in jogadores:
-		jog.set_physics_process(executar)
-		jog.set_process(executar)
-		jog.set_process_input(executar)
 		if pausar:
-			jog.jogador_anim.stop()
+			jog.process_mode = Node.PROCESS_MODE_DISABLED
 		else:
-			jog.jogador_anim.play()
-	
+			jog.process_mode = Node.PROCESS_MODE_INHERIT
