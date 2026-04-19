@@ -14,7 +14,7 @@
 [ext_resource type="SpriteFrames" uid="uid://cdexo8h6qc0w2" path="res://PreSets/Siri/red/animRedPlantar.tres" id="11_fcesn"]
 [ext_resource type="SpriteFrames" uid="uid://byblmr7crn60o" path="res://PreSets/Siri/red/animRedPlantarHatless.tres" id="12_bwm6k"]
 [ext_resource type="SpriteFrames" uid="uid://dqlyfypamxduq" path="res://PreSets/Siri/red/animRedRecolher.tres" id="13_rc2x6"]
-[ext_resource type="Script" uid="uid://bcyeeaendscus" path="res://Scripts/Online/jogador_online.gd" id="15_5j7pe"]
+[ext_resource type="Script" uid="uid://bcyeeaendscus" path="res://Scripts/Online/Sistemas/jogador_online.gd" id="15_5j7pe"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qpddn"]
 radius = 17.0
