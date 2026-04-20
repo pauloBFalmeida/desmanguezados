@@ -2,6 +2,7 @@ extends Node2D
 class_name FerramentaMgmt
 
 signal pegou_ferramenta(jogador: Jogador, ferramenta: Ferramenta)
+signal dropou_ferramenta(jogador: Jogador, ferramenta: Ferramenta, global_pos_ferramenta: Vector2)
 signal jogou_ferramenta(jogador: Jogador, ferramenta: Ferramenta)
 
 var tilemaps_chao : TileMapsChao
@@ -88,6 +89,8 @@ func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta,
 	
 	# tira a ferramenta do jogador
 	_retirar_ferramenta_jogador(jogador, ferramenta)
+	# emite o sinal que ele dropou
+	emit_signal("dropou_ferramenta", jogador, ferramenta, global_pos_ferramenta)
 	
 	# lidar com plantar uso unico -> deve parar o resto da funcao
 	if _lidar_dropar_plantar_unico(jogador, ferramenta):
