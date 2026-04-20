@@ -37,7 +37,7 @@ func cortar_arvore(arvore_id : int) -> void:
 	var arvore := arvore_por_id[arvore_id]
 	# se a arvore ainda nao morreu -> mate
 	if is_instance_valid(arvore):
-		arvore.morrer()
+		arvore.cortar()
 	# remover do dict
 	arvore_por_id.erase(arvore_id)
 
