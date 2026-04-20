@@ -54,6 +54,7 @@ folder_colors={
 "res://PreSets/Siri/blue/": "blue",
 "res://PreSets/Siri/red/": "red",
 "res://Scripts/": "purple",
+"res://Scripts/Online/": "blue",
 "res://addons/": "blue"
 }
 

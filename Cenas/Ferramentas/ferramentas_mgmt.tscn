@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://mvp5raoekisy"]
+[gd_scene format=3 uid="uid://mvp5raoekisy"]
 
 [ext_resource type="Script" uid="uid://2fhnrkqasfgs" path="res://Scripts/Ferramentas/ferramentas_mgmt.gd" id="1_iomgt"]
 [ext_resource type="PackedScene" uid="uid://cedrrktxte7k6" path="res://Cenas/Partida/Arvores/arvore_mangue.tscn" id="2_in2xe"]
@@ -10,24 +10,30 @@
 [ext_resource type="Curve" uid="uid://cwa1fmwmf2yff" path="res://PreSets/Ferramentas/curvaThrowLinhaWidth.tres" id="5_4sgsw"]
 [ext_resource type="PackedScene" uid="uid://bcgkqnqdxu4g" path="res://Cenas/Ferramentas/Itens/Recolher.tscn" id="5_7l7v4"]
 [ext_resource type="Curve" uid="uid://divy7561cwr15" path="res://PreSets/Ferramentas/curvaCurvaturaJogar.tres" id="6_4sgsw"]
+[ext_resource type="Script" uid="uid://wotytdurauc2" path="res://Scripts/Online/Sistemas/ferramentas_mgmt_online.gd" id="8_gf2la"]
 
-[node name="FerramentasMgmt" type="Node2D"]
+[node name="FerramentasMgmt" type="Node2D" unique_id=1801365024]
 z_index = 2
 script = ExtResource("1_iomgt")
 mudas_referencias = Array[PackedScene]([ExtResource("2_in2xe")])
 
-[node name="JogarFerramentaMgmt" type="Node" parent="."]
+[node name="JogarFerramentaMgmt" type="Node" parent="." unique_id=443255327]
 script = ExtResource("3_7l7v4")
 distancia_por_tempo = ExtResource("3_ty6u0")
 velocidade_ferramenta_na_curva = ExtResource("4_7l7v4")
 curvatura_jogar_por_eixo = ExtResource("6_4sgsw")
 linha_width_curve = ExtResource("5_4sgsw")
 
-[node name="Corte" parent="." groups=["Ferramentas"] instance=ExtResource("3_b6hl8")]
+[node name="FerramentasMgmtOnline" type="Node" parent="." unique_id=1372005282 node_paths=PackedStringArray("ferramentas_mgmt", "jogar_ferramenta_mgmt")]
+script = ExtResource("8_gf2la")
+ferramentas_mgmt = NodePath("..")
+jogar_ferramenta_mgmt = NodePath("../JogarFerramentaMgmt")
+
+[node name="Corte" parent="." unique_id=865516367 groups=["Ferramentas"] instance=ExtResource("3_b6hl8")]
 position = Vector2(31, 44)
 
-[node name="Plantar" parent="." instance=ExtResource("4_ty6u0")]
+[node name="Plantar" parent="." unique_id=577821889 instance=ExtResource("4_ty6u0")]
 position = Vector2(121, 46)
 
-[node name="Recolhe" parent="." instance=ExtResource("5_7l7v4")]
+[node name="Recolhe" parent="." unique_id=2119422727 instance=ExtResource("5_7l7v4")]
 position = Vector2(217, 33)
