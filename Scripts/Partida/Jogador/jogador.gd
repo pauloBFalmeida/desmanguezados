@@ -325,9 +325,11 @@ func drop_ferramenta(global_pos_ferramenta := Vector2.ZERO) -> void:
 	var ferramenta : Ferramenta = segurando
 	
 	ferramentas_mgmt.jogador_dropar_ferramenta(self, ferramenta, global_pos_ferramenta)
-	_limpar_jogador_ferramenta(ferramenta)
+	limpar_jogador_ferramenta()
+	# sinal que largou a ferramenta
+	emit_signal("largou_ferramenta")
 
-func _limpar_jogador_ferramenta(ferramenta : Ferramenta) -> void:
+func limpar_jogador_ferramenta() -> void:
 	# limpa a mao
 	segurando = null
 	
@@ -340,9 +342,6 @@ func _limpar_jogador_ferramenta(ferramenta : Ferramenta) -> void:
 	
 	# volta a animao para siri sem ferramenta
 	anim_idle()
-	
-	# sinal que largou a ferramenta
-	emit_signal("largou_ferramenta")
 
 # ---- Jogar da ferramenta ----
 func _throw_ferramenta_segurando(delta : float) -> void:
@@ -404,7 +403,7 @@ func _throw_ferramenta_jogar() -> void:
 	# jogue a ferramenta
 	ferramentas_mgmt.jogador_throw_ferramenta_jogar(self, segurando)
 	# jogador parar de segurar ferramenta
-	_limpar_jogador_ferramenta(segurando)
+	limpar_jogador_ferramenta()
 	
 	# reset dps de jogar
 	_throw_ferramenta_reset()

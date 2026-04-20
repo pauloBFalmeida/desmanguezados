@@ -14,28 +14,23 @@ func iniciar_online_config() -> void:
 # -----------------------------------------------------------------------------
 
 func _pegou_ferramenta(jogador: Jogador, ferramenta: Ferramenta) -> void:
-	pegou_ferramenta.rpc_id(Networking.companion_peer_id, 
+	pegar_ferramenta.rpc_id(Networking.companion_peer_id, 
 							jogador.player_id,
-							ferramenta.tipo
-							)
+							ferramenta.tipo )
 
 @rpc("any_peer", "call_remote", "reliable")
-func pegou_ferramenta(jogador_id: InputManager.PlayerId, 
+func pegar_ferramenta(jogador_id: InputManager.PlayerId, 
 						ferramenta_tipo: Ferramenta.Ferramenta_tipo) -> void:
 	var jogador : Jogador = _encontrar_jogador(jogador_id)
 	var ferramenta : Ferramenta = _encontrar_ferramenta(ferramenta_tipo)
 	var valido: bool = _valido_pegar_ferramenta(jogador, ferramenta)
-	if valido:
-		ferramentas_mgmt.jogador_pegar_ferramenta(jogador, ferramenta)
-	else:
-		if not multiplayer.is_server():
-			#NetworkingGame.jogador_siri.drop_ferramenta()
-			NetworkingGame.jogador.drop_ferramenta()
-
-@rpc("authority", "call_remote", "reliable")
-func negar_pegar_ferramenta() -> void:
-	#TODO
-	pass
+	ferramentas_mgmt.jogador_pegar_ferramenta(jogador, ferramenta)
+	#if valido:
+		#ferramentas_mgmt.jogador_pegar_ferramenta(jogador, ferramenta)
+	#else:
+		## se for o client, nao tem prioridade, nao pegou a ferramenta
+		#if not multiplayer.is_server():
+			#NetworkingGame.jogador_siri.limpar_jogador_ferramenta()
 
 func _valido_pegar_ferramenta(jogador_req: Jogador, ferramenta: Ferramenta) -> bool:
 	print("_valido_pegar_ferramenta")
@@ -46,15 +41,7 @@ func _valido_pegar_ferramenta(jogador_req: Jogador, ferramenta: Ferramenta) -> b
 		# 	outro jogador ja esta segurando a ferramenta
 		if jog != jogador_req and ferram == ferramenta:
 			print("jog != jogador_req")
-			# se for o server
-			#if multiplayer.is_server():
-				#print("multiplayer.is_server")
-				## entao tem a prioridade, e pode pegar a ferramenta
-				#return true
-			## se for o cliente
-			#else:
-				#print("not multiplayer.is_server")
-				## nao tem prioridade, largue a ferramenta
+			print(ferramentas_mgmt.jogadores_segurando_ferramenta)
 			return false
 	print("return true")
 	# caso nao tenha retornado antes, entao tudo certo, pode pegar a ferramenta
