@@ -1,8 +1,8 @@
 extends Node2D
 class_name FerramentaMgmt
 
-signal pegou_ferramenta
-signal jogou_ferramenta
+signal pegou_ferramenta(jogador: Jogador, ferramenta: Ferramenta)
+signal jogou_ferramenta(jogador: Jogador, ferramenta: Ferramenta)
 
 var tilemaps_chao : TileMapsChao
 var locais_plantar_colecao : LocalPlantarColecao
@@ -82,6 +82,11 @@ func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> boo
 
 func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta, 
 								global_pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
+	# se o jogador nao esta segurando essa ferramenta, pare
+	if not jogadores_segurando_ferramenta.has(jogador): return
+	if jogadores_segurando_ferramenta[jogador] != ferramenta: return
+	
+	# tira a ferramenta do jogador
 	_retirar_ferramenta_jogador(jogador, ferramenta)
 	
 	# lidar com plantar uso unico -> deve parar o resto da funcao
