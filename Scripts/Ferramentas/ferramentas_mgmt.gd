@@ -39,15 +39,6 @@ func set_locais_plantar_colecao(_locais_plantar_colecao : LocalPlantarColecao) -
 # -----------------------------------------------
 # Plantar Muda
 # -----------------------------------------------
-#func plantar_muda(local_plantar : Node2D) -> void:
-	## instancia uma muda
-	#var muda_ref = mudas_referencias.pick_random()
-	#var muda : Arvore = muda_ref.instantiate()
-	## ajustes para muda funcionar
-	#muda.global_position = local_plantar.global_position
-	#gerenciador_partida.plantada_arvore_nativa(muda)
-	## retira o local de plantar para colocar a muda
-	#locais_plantar_colecao.remove_local_plantar(local_plantar)
 	
 func plantar_muda(global_pos : Vector2) -> void:
 	# instancia uma muda
