@@ -5,6 +5,9 @@ var ferramenta_mgmt : FerramentaMgmt
 
 var sprite_chao_ref := "res://Cenas/Ferramentas/throw_sprite_chao.tscn"
 
+signal jogador_mirando(jogador : Jogador, global_end_pos : Vector2)
+signal jogador_jogou_ferramenta(jogador : Jogador, ferramenta : Ferramenta)
+
 ## distancia maxima que a ferramenta via ser jogada
 @export var max_distancia : float = 450.0
 ## curva de como crece a distancia ao segurar por segundo
@@ -35,6 +38,8 @@ func mirando(jogador : Jogador,
 					charge : float) -> void:
 	var distancia := max_distancia * distancia_por_tempo.sample(charge)
 	var global_end_pos := jogador.global_position + (direcao * distancia)
+	
+	emit_signal("jogador_mirando", jogador, global_end_pos)
 	
 	mostrar_mira(jogador, global_end_pos)
 

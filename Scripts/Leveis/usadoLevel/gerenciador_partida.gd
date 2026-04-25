@@ -15,6 +15,8 @@ extends Node
 @export_category("UI")
 @export var hud : Hud
 
+var jogadores_por_player_id : Dictionary[InputManager.PlayerId, Jogador]
+
 var temporizador : Temporizador
 
 var qtd_arvores_invasoras : int = 0 # que existem atualmente no mapa
@@ -35,6 +37,11 @@ func _input(event: InputEvent) -> void:
 func _ready() -> void:
 	await get_tree().process_frame
 	
+	# ajustar jogadores
+	for jog : Jogador in spawn_jogadores.jogadores:
+		jogadores_por_player_id[jog.player_id] = jog
+	
+	# ajusta o processamento dos nodos durante o pause
 	_ajustar_pause()
 	# ferramentas
 	locais_plantar_colecao.esconder()
