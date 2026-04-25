@@ -29,13 +29,16 @@ func _process(delta: float) -> void:
 func set_ferramenta_mgmt(_ferram_mgmt : FerramentaMgmt) -> void:
 	ferramenta_mgmt = _ferram_mgmt
 
-# charge de [0.0, 1.0] para quanto porcento esta carregado 
-func segurando(jogador : Jogador, 
+## charge de [0.0, 1.0] para quanto porcento esta carregado 
+func mirando(jogador : Jogador, 
 					direcao : Vector2, 
 					charge : float) -> void:
 	var distancia := max_distancia * distancia_por_tempo.sample(charge)
 	var global_end_pos := jogador.global_position + (direcao * distancia)
 	
+	mostrar_mira(jogador, global_end_pos)
+
+func mostrar_mira(jogador : Jogador, global_end_pos: Vector2) -> void:
 	# jogador nao tem uma curva de previsao ainda -> criar uma
 	if not previsao_paths.has(jogador):
 		_montar_previsao(jogador)

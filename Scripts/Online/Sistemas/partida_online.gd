@@ -72,4 +72,3 @@ func coletar_lixo(lixo_id: int) -> void:
 		lixo.recolher()
 	# remover do dict
 	lixo_por_id.erase(lixo_id)
-

@@ -181,11 +181,12 @@ func _lidar_dropar_plantar_unico(jogador : Jogador, ferramenta : Ferramenta) -> 
 # -----------------------------------------------
 # Jogar / Throw ferramenta
 # -----------------------------------------------
-# charge de [0.0, 1.0] para quanto porcento esta carregado 
+
+## charge de [0.0, 1.0] para quanto porcento esta carregado 
 func jogador_throw_ferramenta_segurando(jogador : Jogador, 
 										direcao : Vector2, 
 										charge : float) -> void:
-	jogar_ferramenta_mgmt.segurando(jogador, direcao, charge)
+	jogar_ferramenta_mgmt.mirando(jogador, direcao, charge)
 	
 func jogador_throw_ferramenta_jogar(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	if not jogar_ferramenta_mgmt.previsao_exist(jogador): return
