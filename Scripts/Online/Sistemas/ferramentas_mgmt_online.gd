@@ -26,8 +26,10 @@ func pegar_ferramenta(jogador_id: InputManager.PlayerId,
 						ferramenta_tipo: Ferramenta.Ferramenta_tipo) -> void:
 	var jogador : Jogador = _encontrar_jogador(jogador_id)
 	var ferramenta : Ferramenta = _encontrar_ferramenta(ferramenta_tipo)
-	var valido: bool = _valido_pegar_ferramenta(jogador, ferramenta)
+	_lidar_plantar_unico(jogador, ferramenta)
+	
 	# se for valido pega a ferramenta, se nao for lide com isso
+	var valido: bool = _valido_pegar_ferramenta(jogador, ferramenta)
 	if valido:
 		ferramentas_mgmt.jogador_pegar_ferramenta(jogador, ferramenta)
 	else:
@@ -195,4 +197,11 @@ func _encontrar_ferramenta(ferramenta_tipo: Ferramenta.Ferramenta_tipo) -> Ferra
 	for ferram : Ferramenta in ferramentas_mgmt.ferramentas_level:
 		if ferram.tipo == ferramenta_tipo:
 			return ferram
+	# se nao tiver na lista
+	if ferramenta_tipo == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
+		return ferramentas_mgmt._fabricar_ferramenta_plantar_unico(null)
 	return null
+
+func _lidar_plantar_unico(jogador: Jogador, ferramenta: Ferramenta) -> void:
+	if ferramenta.tipo == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
+		jogador.add_child(ferramenta)

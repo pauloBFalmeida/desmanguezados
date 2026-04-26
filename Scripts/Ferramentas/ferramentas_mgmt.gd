@@ -145,14 +145,18 @@ func _criar_ferramenta_plantar_unico(jogador : Jogador, ferramenta_plantar : Pla
 		# se for ser deletado -> entao crie outro
 		if not plantar_unico.is_queued_for_deletion():
 			return
-	
-	plantar_unico = plantar_unico_ref.instantiate()
-	plantar_unico.iniciar(ferramenta_plantar)
-	plantar_unico.set_ferramenta_mgmt(self) # necessario para funcionar
-	# esconde a ferramenta mas deixa que o outro jogador possa pegar
-	plantar_unico.hide_manter_pegavel_ferramenta()
+	# fabrica a ferramenta
+	plantar_unico = _fabricar_ferramenta_plantar_unico(ferramenta_plantar)
 	# adiciona ao jogador
 	jogador.add_child(plantar_unico)
+
+func _fabricar_ferramenta_plantar_unico(ferramenta_plantar : Plantar) -> PlantarUnico:
+	var _plantar_unico : PlantarUnico = PLANTAR_UNICO_REF.instantiate()
+	_plantar_unico.iniciar(ferramenta_plantar)
+	_plantar_unico.set_ferramenta_mgmt(self) # necessario para funcionar
+	# esconde a ferramenta mas deixa que o outro jogador possa pegar
+	_plantar_unico.hide_manter_pegavel_ferramenta()
+	return _plantar_unico
 
 func _deletar_ferramenta_plantar_unico(ferramenta : Ferramenta, criar_outra : bool = true) -> void:
 	ferramenta.hide_ferramenta()
