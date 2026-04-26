@@ -1,3 +1,4 @@
+class_name FerramentaMgmtOnline
 extends SistemaOnline
 
 @export var ferramentas_mgmt: FerramentaMgmt
@@ -73,47 +74,43 @@ func dropou_ferramenta(jogador_id: InputManager.PlayerId,
 # Jogar Ferramenta
 # -----------------------------------------------------------------------------
 
-enum EstadoJogarFerramenta {NENHUM, MIRANDO, JOGANDO}
-@export var estado_jogar_player : Dictionary[InputManager.PlayerId, EstadoJogarFerramenta] = {
-	InputManager.PlayerId.P1: EstadoJogarFerramenta.NENHUM,
-	InputManager.PlayerId.P2: EstadoJogarFerramenta.NENHUM,
-} :
-	set(_novo_estado):
-		estado_jogar_player = _novo_estado
-		_update_estado_jogar()
-
-@export var posicao_mira_player : Dictionary[InputManager.PlayerId, Vector2] = {
-	InputManager.PlayerId.P1: Vector2.ZERO,
-	InputManager.PlayerId.P2: Vector2.ZERO,
-} :
-	set(_nova_posicao):
-		posicao_mira_player = _nova_posicao
-		_update_posicao_mira()
-
-func _update_estado_jogar() -> void:
-	for player_id in [InputManager.PlayerId.P1, InputManager.PlayerId.P2]:
-		if estado_jogar_player[player_id] == EstadoJogarFerramenta.MIRANDO:
-			pass
-
-func _update_posicao_mira() -> void:
-	for player_id in [InputManager.PlayerId.P1, InputManager.PlayerId.P2]:
-		if estado_jogar_player[player_id] == EstadoJogarFerramenta.MIRANDO:
-			var jog: Jogador = gerenciador_partida.jogadores_por_player_id[player_id]
-			var glob_pos: Vector2 =  posicao_mira_player[player_id]
-			jogar_ferramenta_mgmt.mostrar_mira(jog, glob_pos)
-
 func _atualizar_mirando_pos(jogador: Jogador, global_end_pos: Vector2) -> void:
 	var player_id : InputManager.PlayerId = jogador. player_id
-	# atualizo a posicao da mira
-	posicao_mira_player[player_id] = global_end_pos
-	# marca que esta mirando
-	if estado_jogar_player[player_id] != EstadoJogarFerramenta.MIRANDO:
-		estado_jogar_player[player_id] = EstadoJogarFerramenta.MIRANDO
+	var jogar_ferramenta := jogar_ferramenta_por_jogador_id[player_id]
+	jogar_ferramenta.atualizar_mirando_pos(global_end_pos)
 
+const JOGAR_FERRAMENTA_PLAYER_ONLINE_REF = "uid://bsnryjjdcnpem"
+var jogar_ferramenta_por_jogador_id : Dictionary[InputManager.PlayerId, JogarFerramentaPlayer] = {}
 
 func _iniciar_jogar_ferramenta() -> void:
 	jogar_ferramenta_mgmt.jogador_mirando.connect(_atualizar_mirando_pos)
+	
+	_criar_jogar_ferramenta_jogador(InputManager.PlayerId.P1)
+	_criar_jogar_ferramenta_jogador(InputManager.PlayerId.P2)
 
+## Cria um Jogar Ferram Player para cada jogador
+func _criar_jogar_ferramenta_jogador(jog_id: InputManager.PlayerId) -> void:
+	var jogar_ferramenta_jogador = load(JOGAR_FERRAMENTA_PLAYER_ONLINE_REF).instantiate()
+	# rename
+	var base_name := "JogarFerramentaPlayerOnline_"
+	if jog_id == InputManager.PlayerId.P1:
+		jogar_ferramenta_jogador.name = base_name + "1"
+	else:
+		jogar_ferramenta_jogador.name = base_name + "2"
+	# adiciona em cada jogador
+	_add_jogar_ferramenta_jogador(jog_id, jogar_ferramenta_jogador)
+
+func _add_jogar_ferramenta_jogador(jog_id: InputManager.PlayerId, jogar_ferramenta: JogarFerramentaPlayer) -> void:
+	# salva no dict
+	jogar_ferramenta_por_jogador_id[jog_id] = jogar_ferramenta
+	# adiciona no jogador
+	var jog: Jogador = gerenciador_partida.jogadores_por_player_id[jog_id]
+	jog.add_child(jogar_ferramenta)
+	# ajusta
+	jogar_ferramenta.jogador = jog
+	jogar_ferramenta.jogar_ferramenta_mgmt = jogar_ferramenta_mgmt
+	print("criada jogar_ferramenta ", jogar_ferramenta)
+	jogar_ferramenta.set_multiplayer_authority(NetworkingGame.peer_id_por_jogador_id[jog_id])
 
 # Funcoes Gerais
 # -----------------------------------------------------------------------------

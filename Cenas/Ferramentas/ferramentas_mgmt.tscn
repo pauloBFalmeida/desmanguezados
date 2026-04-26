@@ -12,14 +12,6 @@
 [ext_resource type="Curve" uid="uid://divy7561cwr15" path="res://PreSets/Ferramentas/curvaCurvaturaJogar.tres" id="6_4sgsw"]
 [ext_resource type="Script" uid="uid://wotytdurauc2" path="res://Scripts/Online/Sistemas/ferramentas_mgmt_online.gd" id="8_gf2la"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gf2la"]
-properties/0/path = NodePath("FerramentasMgmtOnline:posicao_mira_player")
-properties/0/spawn = true
-properties/0/replication_mode = 2
-properties/1/path = NodePath("FerramentasMgmtOnline:estado_jogar_player")
-properties/1/spawn = true
-properties/1/replication_mode = 2
-
 [node name="FerramentasMgmt" type="Node2D" unique_id=1801365024]
 z_index = 2
 script = ExtResource("1_iomgt")
@@ -36,10 +28,6 @@ linha_width_curve = ExtResource("5_4sgsw")
 script = ExtResource("8_gf2la")
 ferramentas_mgmt = NodePath("..")
 jogar_ferramenta_mgmt = NodePath("../JogarFerramentaMgmt")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="FerramentasMgmtOnline" unique_id=281686142]
-root_path = NodePath("../..")
-replication_config = SubResource("SceneReplicationConfig_gf2la")
 
 [node name="Corte" parent="." unique_id=865516367 groups=["Ferramentas"] instance=ExtResource("3_b6hl8")]
 position = Vector2(31, 44)
