@@ -126,6 +126,7 @@ func _add_jogar_ferramenta_jogador(jog_id: InputManager.PlayerId, jogar_ferramen
 	# ajusta atributos
 	jogar_ferramenta.jogador = jog
 	jogar_ferramenta.jogar_ferramenta_mgmt = jogar_ferramenta_mgmt
+	jogar_ferramenta.ferramenta_mgmt = ferramentas_mgmt
 	# ajusta autoridade para o jogador poder ter controle sobre
 	jogar_ferramenta.set_multiplayer_authority(NetworkingGame.peer_id_por_jogador_id[jog_id])
 
@@ -154,12 +155,18 @@ func jogador_jogou_ferramenta(jogador_id: InputManager.PlayerId,
 	jogar_ferramenta_mgmt.jogar_ferramenta_criar_curva(jogador, ferramenta, global_end_pos)
 
 func _jogador_cancelou_jogar(jogador: Jogador) -> void:
+	var jogador_id := jogador.player_id
+	var jogar_ferramenta := jogar_ferramenta_por_jogador_id[jogador_id]
+	# marca que nao esta mais mirando
+	jogar_ferramenta.estado_jogar = JogarFerramentaPlayer.EstadoJogarFerramenta.CANCELAR
+	# faz o rpc para corrigir o bug, que apos lancar e pegar outra ferramenta nao exibe novamente a curva
+	#	pois ao cancelar throw em um PC ele nao tem autoridade para mudar o estado_jogador do PC (dono do jogar_ferramenta)
 	jogador_cancelou_jogar.rpc_id(Networking.companion_peer_id, jogador.player_id)
 
-@rpc("any_peer", "call_remote", "reliable")
+@rpc("any_peer", "call_remote", "unreliable")
 func jogador_cancelou_jogar(jogador_id: InputManager.PlayerId) -> void:
-	var jogador : Jogador = _encontrar_jogador(jogador_id)
-	ferramentas_mgmt.jogador_throw_limpar_predicao(jogador)
+	var jogar_ferramenta := jogar_ferramenta_por_jogador_id[jogador_id]
+	jogar_ferramenta.estado_jogar = JogarFerramentaPlayer.EstadoJogarFerramenta.CANCELAR
 
 func _ferramenta_caiu_chao(ferramenta: Ferramenta, global_pos_ferramenta: Vector2) -> void:
 	if not jogador_por_ferramentas_jogadas.has(ferramenta): return
