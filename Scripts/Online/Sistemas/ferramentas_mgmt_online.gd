@@ -6,6 +6,10 @@ extends SistemaOnline
 
 @onready var gerenciador_partida : GerenciadorPartida
 
+# Evita receber o RPC e executar novamente a func que chama o RPC
+enum Request {PEGAR, DROPAR}
+var ignorar_request : Dictionary[Request, Dictionary]= {}
+
 func iniciar_online_config() -> void:
 	gerenciador_partida = ferramentas_mgmt.gerenciador_partida
 	ferramentas_mgmt.pegou_ferramenta.connect(_pegou_ferramenta)
@@ -17,6 +21,7 @@ func iniciar_online_config() -> void:
 # -----------------------------------------------------------------------------
 
 func _pegou_ferramenta(jogador: Jogador, ferramenta: Ferramenta) -> void:
+	if _ignorar_resquest(Request.PEGAR, jogador, ferramenta): return
 	pegar_ferramenta.rpc_id(Networking.companion_peer_id, 
 							jogador.player_id,
 							ferramenta.tipo )
@@ -31,6 +36,7 @@ func pegar_ferramenta(jogador_id: InputManager.PlayerId,
 	# se for valido pega a ferramenta, se nao for lide com isso
 	var valido: bool = _valido_pegar_ferramenta(jogador, ferramenta)
 	if valido:
+		_criar_ignorar_resquest(Request.PEGAR, jogador, ferramenta)
 		ferramentas_mgmt.jogador_pegar_ferramenta(jogador, ferramenta)
 	else:
 		# jogador host do servidor fica com a ferramenta
@@ -70,6 +76,7 @@ func cancelar_pegar_ferramenta(jogador_id: InputManager.PlayerId,
 func _dropou_ferramenta(jogador: Jogador,
 						ferramenta: Ferramenta, 
 						global_pos_ferramenta: Vector2) -> void:
+	if _ignorar_resquest(Request.DROPAR, jogador, ferramenta): return
 	dropou_ferramenta.rpc_id(Networking.companion_peer_id, 
 							jogador.player_id,
 							ferramenta.tipo,
@@ -83,6 +90,7 @@ func dropou_ferramenta(jogador_id: InputManager.PlayerId,
 						_forcar: bool = false) -> void:
 	var jogador : Jogador = _encontrar_jogador(jogador_id)
 	var ferramenta : Ferramenta = _encontrar_ferramenta(ferramenta_tipo)
+	_criar_ignorar_resquest(Request.DROPAR, jogador, ferramenta)
 	ferramentas_mgmt.jogador_dropar_ferramenta(jogador, ferramenta, global_pos_ferramenta, _forcar)
 
 # Jogar Ferramenta
@@ -205,3 +213,21 @@ func _encontrar_ferramenta(ferramenta_tipo: Ferramenta.Ferramenta_tipo) -> Ferra
 func _lidar_plantar_unico(jogador: Jogador, ferramenta: Ferramenta) -> void:
 	if ferramenta.tipo == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO:
 		jogador.add_child(ferramenta)
+
+func _criar_ignorar_resquest(request: Request, jogador: Jogador, ferramenta: Ferramenta) -> void:
+	var dados := {
+		"jogador": jogador,
+		"ferramenta": ferramenta
+	}
+	ignorar_request[request] = dados
+
+func _ignorar_resquest(request: Request, jogador: Jogador, ferramenta: Ferramenta) -> bool:
+	# se nao tem a requisao desse tipo -> retorne false
+	if not ignorar_request.has(request): return false
+	# se tiver uma requesicao desse tipo
+	var dados : Dictionary = ignorar_request[request]
+	# verificar se os dados sao iguais, se forem diferentes -> retorne false
+	if dados["jogador"] != jogador: return false
+	if dados["ferramenta"] != ferramenta: return false
+	# se os dados sao iguais -> retorne true
+	return true
