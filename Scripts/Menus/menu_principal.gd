@@ -3,7 +3,7 @@ extends Control
 func _ready() -> void:
 	$GridContainer/ButtonJogar.grab_focus()
 	# -- conexao de network
-	Networking.close_connection()
+	NetworkingGame.desligar_conexao()
 
 func _on_button_sair_pressed() -> void:
 	get_tree().quit()

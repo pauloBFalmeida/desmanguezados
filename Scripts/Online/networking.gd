@@ -57,11 +57,12 @@ func create_client() -> void:
 
 ## Termina a conexao online, e desfaz o cliente ou servidor
 func close_connection() -> void:
+	companion_peer_id = -1
+	# fecha a conexao do peer, e deixa offline
 	if multiplayer.multiplayer_peer:
 		multiplayer.multiplayer_peer.close()
 	#
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
-	companion_peer_id = -1
 
 # ------------------ Conection Signals
 

@@ -15,6 +15,10 @@ var is_game_online: bool = false
 func _ready() -> void:
 	Networking.client_connected_to_server.connect(_chamar_registrar_jogador)
 
+func desligar_conexao() -> void:
+	Networking.close_connection()
+	is_game_online = false
+
 # ------------------------------------------------------------------------------
 # Conexao inicial entre jogadores
 # ------------------------------------------------------------------------------
