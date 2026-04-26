@@ -77,10 +77,11 @@ func _dropou_ferramenta(jogador: Jogador,
 @rpc("any_peer", "call_remote", "reliable")
 func dropou_ferramenta(jogador_id: InputManager.PlayerId, 
 						ferramenta_tipo: Ferramenta.Ferramenta_tipo,
-						global_pos_ferramenta: Vector2) -> void:
+						global_pos_ferramenta: Vector2,
+						_forcar: bool = false) -> void:
 	var jogador : Jogador = _encontrar_jogador(jogador_id)
 	var ferramenta : Ferramenta = _encontrar_ferramenta(ferramenta_tipo)
-	ferramentas_mgmt.jogador_dropar_ferramenta(jogador, ferramenta, global_pos_ferramenta)
+	ferramentas_mgmt.jogador_dropar_ferramenta(jogador, ferramenta, global_pos_ferramenta, _forcar)
 
 # Jogar Ferramenta
 # -----------------------------------------------------------------------------
@@ -170,14 +171,17 @@ func jogador_cancelou_jogar(jogador_id: InputManager.PlayerId) -> void:
 
 func _ferramenta_caiu_chao(ferramenta: Ferramenta, global_pos_ferramenta: Vector2) -> void:
 	if not jogador_por_ferramentas_jogadas.has(ferramenta): return
-	
+	# pego o jogador que jogou a ferramenta
 	var jogador: Jogador = jogador_por_ferramentas_jogadas[ferramenta]
+	# removo da lista de ferramentas sendo jogadas
 	jogador_por_ferramentas_jogadas.erase(ferramenta)
+	
 	# certifica que o jogador vai dropar a ferramenta para ambos os players
 	dropou_ferramenta.rpc_id(Networking.companion_peer_id, 
 							jogador.player_id,
 							ferramenta.tipo,
-							global_pos_ferramenta
+							global_pos_ferramenta,
+							true
 							)
 
 # Funcoes Gerais

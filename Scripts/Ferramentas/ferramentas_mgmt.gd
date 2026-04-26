@@ -82,13 +82,17 @@ func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> boo
 	return true # retorne que pegou a ferramenta
 
 func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta, 
-								global_pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
-	# se o jogador nao esta segurando essa ferramenta, pare
-	if not jogadores_segurando_ferramenta.has(jogador): return
-	if jogadores_segurando_ferramenta[jogador] != ferramenta: return
+								global_pos_ferramenta : Vector2 = Vector2.ZERO,
+								forcar: bool = false) -> void:
+	# se forcar, ignore as verificacoes
+	if not forcar:
+		# se o jogador nao esta segurando essa ferramenta, pare
+		if not jogadores_segurando_ferramenta.has(jogador): return
+		if jogadores_segurando_ferramenta[jogador] != ferramenta: return
 	
 	# tira a ferramenta do jogador
 	_retirar_ferramenta_jogador(jogador, ferramenta)
+	
 	# emite o sinal que ele dropou
 	emit_signal("dropou_ferramenta", jogador, ferramenta, global_pos_ferramenta)
 	
@@ -190,6 +194,7 @@ func jogador_throw_ferramenta_segurando(jogador : Jogador,
 	
 func jogador_throw_ferramenta_jogar(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	if not jogar_ferramenta_mgmt.previsao_exist(jogador): return
+	
 	# lidar com plantar uso unico -> deve parar o resto da funcao
 	if _lidar_dropar_plantar_unico(jogador, ferramenta):
 		return
