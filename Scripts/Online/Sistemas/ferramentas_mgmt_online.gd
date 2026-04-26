@@ -74,19 +74,22 @@ func dropou_ferramenta(jogador_id: InputManager.PlayerId,
 # Jogar Ferramenta
 # -----------------------------------------------------------------------------
 
-func _atualizar_mirando_pos(jogador: Jogador, global_end_pos: Vector2) -> void:
-	var player_id : InputManager.PlayerId = jogador. player_id
-	var jogar_ferramenta := jogar_ferramenta_por_jogador_id[player_id]
-	jogar_ferramenta.atualizar_mirando_pos(global_end_pos)
-
 const JOGAR_FERRAMENTA_PLAYER_ONLINE_REF = "uid://bsnryjjdcnpem"
 var jogar_ferramenta_por_jogador_id : Dictionary[InputManager.PlayerId, JogarFerramentaPlayer] = {}
 
 func _iniciar_jogar_ferramenta() -> void:
 	jogar_ferramenta_mgmt.jogador_mirando.connect(_atualizar_mirando_pos)
+	jogar_ferramenta_mgmt.jogador_jogou_ferramenta.connect(_jogador_jogou_ferramenta)
 	
 	_criar_jogar_ferramenta_jogador(InputManager.PlayerId.P1)
 	_criar_jogar_ferramenta_jogador(InputManager.PlayerId.P2)
+
+# --- Mirando ---
+
+func _atualizar_mirando_pos(jogador: Jogador, global_end_pos: Vector2) -> void:
+	var player_id : InputManager.PlayerId = jogador.player_id
+	var jogar_ferramenta := jogar_ferramenta_por_jogador_id[player_id]
+	jogar_ferramenta.atualizar_mirando_pos(global_end_pos)
 
 ## Cria um Jogar Ferram Player para cada jogador
 func _criar_jogar_ferramenta_jogador(jog_id: InputManager.PlayerId) -> void:
@@ -111,6 +114,27 @@ func _add_jogar_ferramenta_jogador(jog_id: InputManager.PlayerId, jogar_ferramen
 	jogar_ferramenta.jogar_ferramenta_mgmt = jogar_ferramenta_mgmt
 	print("criada jogar_ferramenta ", jogar_ferramenta)
 	jogar_ferramenta.set_multiplayer_authority(NetworkingGame.peer_id_por_jogador_id[jog_id])
+
+# --- Jogando pela mira ---
+
+func _jogador_jogou_ferramenta(jogador : Jogador,
+								ferramenta : Ferramenta, 
+								global_end_pos: Vector2) -> void:
+	# chama o rpc
+	jogador_jogou_ferramenta.rpc_id(Networking.companion_peer_id, 
+									jogador.player_id,
+									ferramenta.tipo,
+									global_end_pos
+									)
+
+@rpc("any_peer", "call_remote", "reliable")
+func jogador_jogou_ferramenta(jogador_id: InputManager.PlayerId, 
+								ferramenta_tipo: Ferramenta.Ferramenta_tipo,
+								global_end_pos: Vector2) -> void:
+	# recupera os valores
+	var jogador : Jogador = _encontrar_jogador(jogador_id)
+	var ferramenta : Ferramenta = _encontrar_ferramenta(ferramenta_tipo)
+	jogar_ferramenta_mgmt.jogar_ferramenta_criar_curva(jogador, ferramenta, global_end_pos)
 
 # Funcoes Gerais
 # -----------------------------------------------------------------------------
