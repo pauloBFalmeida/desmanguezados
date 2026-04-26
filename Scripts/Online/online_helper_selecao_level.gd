@@ -58,7 +58,7 @@ func _ready() -> void:
 	button_voltar.pressed.connect(menu_selecao._on_button_voltar_pressed)
 
 func _mostrar_popup_voltar() -> void:
-	popup_voltar.show()
+	popup_voltar.popup_centered_clamped()
 	button_ficar.grab_focus()
 
 func _esconder_popup_voltar() -> void:
