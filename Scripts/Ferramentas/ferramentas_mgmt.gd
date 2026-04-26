@@ -17,8 +17,8 @@ var jogadores_segurando_ferramenta : Dictionary[Jogador, Ferramenta]
 
 @onready var jogar_ferramenta_mgmt : JogarFerramentaMgmt = $JogarFerramentaMgmt
 
-var plantar_unico_ref := preload("res://Cenas/Ferramentas/Itens/PlantarUnico.tscn")
-var plantar_unico : Plantar
+const PLANTAR_UNICO_REF := preload("uid://yowio7owqi8y")
+var plantar_unico : PlantarUnico
 
 func _ready() -> void:
 	# passa a referencia do FerramentaMgmt para todas as ferramentas
