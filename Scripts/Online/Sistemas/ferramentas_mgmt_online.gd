@@ -28,13 +28,14 @@ func pegar_ferramenta(jogador_id: InputManager.PlayerId,
 	var jogador : Jogador = _encontrar_jogador(jogador_id)
 	var ferramenta : Ferramenta = _encontrar_ferramenta(ferramenta_tipo)
 	var valido: bool = _valido_pegar_ferramenta(jogador, ferramenta)
-	ferramentas_mgmt.jogador_pegar_ferramenta(jogador, ferramenta)
-	#if valido:
-		#ferramentas_mgmt.jogador_pegar_ferramenta(jogador, ferramenta)
-	#else:
-		## se for o client, nao tem prioridade, nao pegou a ferramenta
-		#if not multiplayer.is_server():
-			#NetworkingGame.jogador_siri.limpar_jogador_ferramenta()
+	# se for valido pega a ferramenta, se nao for lide com isso
+	if valido:
+		ferramentas_mgmt.jogador_pegar_ferramenta(jogador, ferramenta)
+	else:
+		# jogador host do servidor fica com a ferramenta
+		# envia pro client cancelar o pegar a ferramenta dele
+		if multiplayer.is_server():
+			cancelar_pegar_ferramenta.rpc_id(Networking.companion_peer_id, jogador_id, ferramenta_tipo)
 
 func _valido_pegar_ferramenta(jogador_req: Jogador, ferramenta: Ferramenta) -> bool:
 	print("_valido_pegar_ferramenta")
@@ -50,6 +51,21 @@ func _valido_pegar_ferramenta(jogador_req: Jogador, ferramenta: Ferramenta) -> b
 	print("return true")
 	# caso nao tenha retornado antes, entao tudo certo, pode pegar a ferramenta
 	return true
+
+## Cancela a operacao de pegar a ferramenta
+@rpc("authority", "call_remote", "reliable")
+func cancelar_pegar_ferramenta(jogador_id: InputManager.PlayerId, 
+								ferramenta_tipo: Ferramenta.Ferramenta_tipo) -> void:
+	# converte de volta
+	var jogador : Jogador = _encontrar_jogador(jogador_id)
+	var ferramenta : Ferramenta = _encontrar_ferramenta(ferramenta_tipo)
+	# jogador que pegou ilegalmente larga a ferramenta (cliente)
+	jogador.drop_ferramenta()
+	ferramenta.hide()
+	# da a ferramenta pro outro jogador (servidor)
+	var outro_jogador_id := InputManager.get_other_player_id(jogador_id)
+	var outro_jogador : Jogador = gerenciador_partida.jogadores_por_player_id[outro_jogador_id]
+	ferramentas_mgmt.jogador_pegar_ferramenta(outro_jogador, ferramenta)
 
 # Largar Ferramenta
 # -----------------------------------------------------------------------------
