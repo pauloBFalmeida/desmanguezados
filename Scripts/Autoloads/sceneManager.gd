@@ -62,7 +62,7 @@ func change_scene(path: String) -> void:
 	get_tree().current_scene = new_scene
 
 func change_menu(path: String) -> void:
-	var main_menus = get_tree().root.get_node("MainMenus")
+	var main_menus = get_tree().current_scene
 	# Clean up current scene
 	for child in main_menus.get_children():
 		child.queue_free()
