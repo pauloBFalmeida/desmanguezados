@@ -17,7 +17,7 @@ var level_id : LevelManager.Level_id
 func btn_grab_focus() -> void:
 	grab_focus()
 
-func ajust(_level_id : int) -> void:
+func ajust(_level_id : LevelManager.Level_id) -> void:
 	level_id = _level_id
 	# Nome do level
 	var texto_btn : String = "Sem_Nome" 

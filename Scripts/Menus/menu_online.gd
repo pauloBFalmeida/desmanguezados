@@ -46,7 +46,7 @@ func _on_button_comecar_pressed() -> void:
 	NetworkingGame.jogador_nome = _get_nome_jogador()
 	# -- conexao --
 	Networking.ip_addr = text_ip.text
-	Networking.port = text_port.value
+	Networking.port = int(text_port.value)
 	if is_host:
 		Networking.create_server()
 	else:

@@ -70,11 +70,11 @@ func _disconnect_signal(node: Node, signal_name: String) -> void:
 	for connection in connections:
 		node.disconnect(signal_name, connection["callable"])
 
-func _votar_level(level_id : int) -> void:
+func _votar_level(level_id : LevelManager.Level_id) -> void:
 	player_votou_level(level_id, NetworkingGame.jogador_player_id)
 	NetworkingGame.votar_level.rpc_id(Networking.companion_peer_id, level_id, NetworkingGame.jogador_player_id)
 
-func player_votou_level(level_id : int, player_id: InputManager.PlayerId) -> void:
+func player_votou_level(level_id : LevelManager.Level_id, player_id: InputManager.PlayerId) -> void:
 	# -- conta o voto --
 	level_votado_por_player_id[player_id] = level_id
 	_verificar_votos()

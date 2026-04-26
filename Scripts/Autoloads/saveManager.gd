@@ -54,6 +54,7 @@ func _ajustar_globais(file : ConfigFile) -> void:
 	# - Controles -
 	for player in InputManager.PlayerId.values():
 		var tipo : int = file.get_value("controle", "tipo_"+str(player), 0)
+		Globais.controle_tipo_player[player] = tipo as InputManager.Controle_tipo  
 	# - Gameplay -
 	Globais.possivel_aim_all_time = file.get_value("config", "possivel_aim_all_time", false)
 	Globais.indicador_direcao_transparente_sem_target = file.get_value("config", "indicador_direcao_transparente_sem_target", true)

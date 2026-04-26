@@ -114,5 +114,5 @@ func usar_generico(body : Node2D) -> void:
 	emit_signal("usou", body)
 
 # --- Abstrato ---
-func usar_ferramenta(alvo : Node2D, jogador : Jogador) -> void:
+func usar_ferramenta(_alvo : Node2D, _jogador : Jogador) -> void:
 	pass

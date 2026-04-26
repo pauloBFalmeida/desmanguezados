@@ -280,7 +280,7 @@ func dentro_area_interacao(jogador : Jogador) -> void:
 	if not func_entrar_area.is_null():
 		func_entrar_area.call()
 
-func saiu_area_interacao(jogador : Jogador) -> void:
+func saiu_area_interacao(_jogador : Jogador) -> void:
 	emit_signal("saiu_area")
 	if not func_sair_area.is_null():
 		func_sair_area.call()

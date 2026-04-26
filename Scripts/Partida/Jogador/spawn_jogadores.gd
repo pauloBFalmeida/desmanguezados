@@ -21,7 +21,7 @@ func _ready() -> void:
 		jogadores_spawns[jogador] = jogador.global_position
 		jogadores_atras_pos[jogador] = [] # lista nova de posicoes
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	for jogador in jogadores:
 		# -- jogador na agua --
 		var on_water : bool = tilemaps_chao.jogador_pos_on_water(jogador.global_position)

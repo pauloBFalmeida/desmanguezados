@@ -4,7 +4,7 @@ class_name Plantar
 func _ready() -> void:
 	super() # chama _ready da classe Ferramenta
 
-func usar_ferramenta(alvo : Node2D, jogador : Jogador) -> void:
+func usar_ferramenta(alvo : Node2D, _jogador : Jogador) -> void:
 	# se estiver no cooldown -> nao faca nada
 	if is_on_cooldown: return
 	# se nao for local de plantar -> nao faca nada

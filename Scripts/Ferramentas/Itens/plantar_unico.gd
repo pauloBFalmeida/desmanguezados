@@ -1,11 +1,11 @@
 extends Plantar
 
-func iniciar(plantar : Plantar) -> void:
-	layer_acao = plantar.layer_acao
+func iniciar(_plantar : Plantar) -> void:
+	layer_acao = _plantar.layer_acao
 	tipo = Ferramenta_tipo.PLANTAR_UNICO
-	duracao_cooldown = plantar.duracao_cooldown
-	acontecer_offset = plantar.acontecer_offset
-	sons = plantar.sons.duplicate(true)
+	duracao_cooldown = _plantar.duracao_cooldown
+	acontecer_offset = _plantar.acontecer_offset
+	sons = _plantar.sons.duplicate(true)
 	
 	super._ready()
 
