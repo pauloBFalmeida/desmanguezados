@@ -6,7 +6,9 @@
 [ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_wrgqt"]
 [ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="5_bkqf8"]
 
-[node name="MenuOnline" type="Control" unique_id=722731762]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_16dev"]
+
+[node name="MenuOnline" type="Control" unique_id=722731762 node_paths=PackedStringArray("button_sair_explicacao")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +16,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_16dev")
+button_sair_explicacao = NodePath("Explicacao/Panel/VBox/ButtonSairExplicacao")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=720311047]
 layout_mode = 1
@@ -54,34 +57,34 @@ offset_top = -77.0
 offset_right = 77.0
 grow_horizontal = 2
 grow_vertical = 0
+focus_neighbor_top = NodePath("../VBox/ButtonComecar")
+focus_neighbor_right = NodePath("../ButtonExplicacao")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../VBox/ButtonComecar")
 theme = ExtResource("4_wrgqt")
 text = "Voltar"
 
-[node name="LinkButton" type="LinkButton" parent="." unique_id=550069764]
+[node name="ButtonExplicacao" type="Button" parent="." unique_id=2069367278]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 41.0
-offset_top = 649.0
-offset_right = -898.0
-offset_bottom = -30.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -331.0
+offset_top = -77.0
+offset_right = -22.0
+offset_bottom = -28.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_neighbor_top = NodePath("../VBox/ButtonComecar")
+focus_neighbor_right = NodePath("../ButtonVoltar")
+focus_neighbor_bottom = NodePath("../ButtonVoltar")
+focus_next = NodePath("../VBox/ButtonComecar")
+focus_previous = NodePath("../ButtonVoltar")
 theme = ExtResource("5_bkqf8")
-theme_override_colors/font_color = Color(0.43199998, 0.89839995, 0.96, 1)
-text = "Godot Docs Multiplayer"
-uri = "https://docs.godotengine.org/pt-br/4.x/tutorials/networking/high_level_multiplayer.html"
-
-[node name="Label" type="Label" parent="LinkButton" unique_id=1672234213]
-layout_mode = 0
-offset_left = -16.0
-offset_top = -40.0
-offset_right = 486.0
-offset_bottom = 1.0
-theme = ExtResource("5_bkqf8")
-theme_override_font_sizes/font_size = 30
-text = "Entenda mais sobre conexões em:"
+text = "Confuso nos termos? 
+Clique aqui"
 
 [node name="VBox" type="VBoxContainer" parent="." unique_id=1762244106]
 layout_mode = 1
@@ -204,6 +207,9 @@ layout_mode = 2
 
 [node name="ButtonComecar" type="Button" parent="VBox" unique_id=805609784]
 layout_mode = 2
+focus_neighbor_right = NodePath("../../ButtonExplicacao")
+focus_neighbor_bottom = NodePath("../../ButtonVoltar")
+focus_previous = NodePath("../../ButtonVoltar")
 theme = ExtResource("4_wrgqt")
 text = "Conectar"
 
@@ -247,6 +253,339 @@ scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Explicacao" type="Control" parent="." unique_id=1280812292]
+z_index = 10
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_behavior_recursive = 2
+
+[node name="Panel" type="Panel" parent="Explicacao" unique_id=1051029729]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_16dev")
+
+[node name="ColorRectBG" type="ColorRect" parent="Explicacao/Panel" unique_id=230649379]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.90000004)
+
+[node name="VBox" type="VBoxContainer" parent="Explicacao/Panel" unique_id=1200311079]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -558.0
+offset_top = -719.0
+offset_right = 558.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Explicacao/Panel/VBox" unique_id=391244551]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="Explicacao/Panel/VBox/ScrollContainer" unique_id=2137881555]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/v_separation = 15
+columns = 3
+
+[node name="TamH" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=302330136]
+custom_minimum_size = Vector2(500, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TamSepar" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1233618305]
+custom_minimum_size = Vector2(100, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TamJ" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=581933909]
+custom_minimum_size = Vector2(500, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Separador7" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1458374796]
+clip_contents = true
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control2" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=367133779]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="LabelComo" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer/Control2" unique_id=1177981282]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -198.0
+offset_right = 302.0
+offset_bottom = 56.0
+grow_horizontal = 2
+theme = ExtResource("4_wrgqt")
+text = "Como Jogar"
+horizontal_alignment = 1
+
+[node name="Separador8" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=838241093]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=584578306]
+custom_minimum_size = Vector2(10, 400)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="LabelComo2" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer/Control" unique_id=1888249571]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 0
+offset_left = 18.0
+offset_top = 17.0
+offset_right = 1083.0
+offset_bottom = 153.0
+theme = ExtResource("5_bkqf8")
+theme_override_colors/font_color = Color(0.728822, 0.728822, 0.728822, 1)
+theme_override_font_sizes/font_size = 35
+text = "Primeiro um jogador seleciona que vai ser o Host.
+(Pode ajustar o valor da \"Port\" se necessário)
+Depois clica em Começar
+
+O outro jogador, seleciona Join.
+Ajusta os valores do Endereço IP e Port para serem iguais os do Host.
+Depois clica em Começar
+
+Se tudo ocorrer corretamente ambos os jogadores serão levados para a seleção de partida"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Separador9" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=202195147]
+layout_mode = 2
+
+[node name="Separador10" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1329377003]
+layout_mode = 2
+
+[node name="SeparadorH" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1266489547]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SeparadorH2" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1212402702]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SeparadorH3" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1178559253]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LabelH" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1672234213]
+layout_mode = 2
+theme = ExtResource("4_wrgqt")
+text = "Host"
+horizontal_alignment = 1
+
+[node name="Separador" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=83347501]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelJ" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1818726501]
+layout_mode = 2
+theme = ExtResource("4_wrgqt")
+text = "Join"
+horizontal_alignment = 1
+
+[node name="LabelH2" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1655707081]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("5_bkqf8")
+theme_override_colors/font_color = Color(0.728822, 0.728822, 0.728822, 1)
+theme_override_font_sizes/font_size = 35
+text = "Quem cria o Servidor que o outro jogador vai se conectar"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Separador2" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=937531499]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelJ2" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1646922369]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("5_bkqf8")
+theme_override_colors/font_color = Color(0.7294118, 0.7294118, 0.7294118, 1)
+theme_override_font_sizes/font_size = 35
+text = "Quem se conecta no Servidor"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="LabelH3" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=212972173]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("5_bkqf8")
+theme_override_colors/font_color = Color(0.728822, 0.728822, 0.728822, 1)
+theme_override_font_sizes/font_size = 35
+text = "Tem a prioridade no controle do jogo"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Separador3" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1654216358]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LabelJ3" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1845333796]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("5_bkqf8")
+theme_override_colors/font_color = Color(0.7294118, 0.7294118, 0.7294118, 1)
+theme_override_font_sizes/font_size = 35
+text = "Recebe comandos do Servidor"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="SeparadorH4" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=930914763]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SeparadorH5" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=411243639]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SeparadorH6" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1704474624]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LabelIp" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1297692292]
+layout_mode = 2
+theme = ExtResource("4_wrgqt")
+text = "Endereço IP"
+horizontal_alignment = 1
+
+[node name="Separador4" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=851611352]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelP" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=707846814]
+layout_mode = 2
+theme = ExtResource("4_wrgqt")
+text = "Port"
+horizontal_alignment = 1
+
+[node name="LabelIp2" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=551942800]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("5_bkqf8")
+theme_override_colors/font_color = Color(0.728822, 0.728822, 0.728822, 1)
+theme_override_font_sizes/font_size = 30
+text = "Identificador do computador na rede"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Separador5" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=924325792]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelP2" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1630761579]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("5_bkqf8")
+theme_override_colors/font_color = Color(0.7294118, 0.7294118, 0.7294118, 1)
+theme_override_font_sizes/font_size = 30
+text = "Indentificador do programa no Computador"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="LabelIp3" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=236950817]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("5_bkqf8")
+theme_override_colors/font_color = Color(0.728822, 0.728822, 0.728822, 1)
+theme_override_font_sizes/font_size = 30
+text = "\"Fixo\" (Escolhido pelo Roteador)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Separador6" type="Control" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=536884424]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelP3" type="Label" parent="Explicacao/Panel/VBox/ScrollContainer/GridContainer" unique_id=1270853285]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = ExtResource("5_bkqf8")
+theme_override_colors/font_color = Color(0.7294118, 0.7294118, 0.7294118, 1)
+theme_override_font_sizes/font_size = 30
+text = "Pode ser alterado nos valores 1024 até 49151
+São valores seguros para conexões UDP"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Separador" type="Control" parent="Explicacao/Panel/VBox" unique_id=1626503775]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Explicacao/Panel/VBox" unique_id=78074787]
+layout_mode = 2
+theme = ExtResource("5_bkqf8")
+theme_override_font_sizes/font_size = 30
+text = "Entenda mais sobre conexões em:"
+horizontal_alignment = 1
+
+[node name="LinkButton" type="LinkButton" parent="Explicacao/Panel/VBox" unique_id=550069764]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("5_bkqf8")
+theme_override_colors/font_color = Color(0.43199998, 0.89839995, 0.96, 1)
+text = "Godot Docs Multiplayer"
+uri = "https://docs.godotengine.org/pt-br/4.x/tutorials/networking/high_level_multiplayer.html"
+
+[node name="Separador2" type="Control" parent="Explicacao/Panel/VBox" unique_id=158989040]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="ButtonSairExplicacao" type="Button" parent="Explicacao/Panel/VBox" unique_id=421373042]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+theme = ExtResource("5_bkqf8")
+text = "Fechar explicação"
+
+[node name="Separador3" type="Control" parent="Explicacao/Panel/VBox" unique_id=450004241]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
 [node name="PopupError" type="Popup" parent="." unique_id=2120323267]
 disable_3d = true
 oversampling_override = 1.0
@@ -268,6 +607,8 @@ text = "Conection Error:
 autowrap_mode = 2
 
 [connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]
+[connection signal="pressed" from="ButtonExplicacao" to="." method="_on_button_explicacao_pressed"]
 [connection signal="pressed" from="VBox/HBoxJog/ButtonHost" to="." method="_on_button_host_pressed"]
 [connection signal="pressed" from="VBox/HBoxJog/ButtonJoin" to="." method="_on_button_join_pressed"]
 [connection signal="pressed" from="VBox/ButtonComecar" to="." method="_on_button_comecar_pressed"]
+[connection signal="pressed" from="Explicacao/Panel/VBox/ButtonSairExplicacao" to="." method="_on_button_sair_explicacao_pressed"]

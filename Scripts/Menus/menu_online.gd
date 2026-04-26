@@ -14,6 +14,10 @@ extends Menu
 @onready var rich_text_conectando: RichTextLabel = $PopUpConectando/RichTextConectando
 @onready var v_box: VBoxContainer = $VBox
 
+@onready var explicacao: Control = $Explicacao
+@onready var button_explicacao: Button = $ButtonExplicacao
+@export var button_sair_explicacao: Button
+
 @onready var popup_error: Popup = $PopupError
 @onready var label_popup_error: Label = $PopupError/LabelPopupError
 
@@ -28,11 +32,20 @@ func _ready() -> void:
 	button_host.grab_focus()
 	# ---
 	pop_up_conectando.hide()
+	explicacao.hide()
 	# ---
 	text_ip.placeholder_text = Networking.get_local_ipv4()
 	update_button_server_visual()
 	# ---
 	Networking.display_error.connect(_display_error)
+
+func _on_button_explicacao_pressed() -> void:
+	explicacao.show()
+	button_sair_explicacao.grab_focus()
+
+func _on_button_sair_explicacao_pressed() -> void:
+	explicacao.hide()
+	button_explicacao.grab_focus()
 
 func _on_button_comecar_pressed() -> void:
 	# -- visual --
