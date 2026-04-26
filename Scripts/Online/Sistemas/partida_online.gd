@@ -4,11 +4,13 @@ extends SistemaOnline
 
 var arvore_por_id : Dictionary[int, Arvore] = {}
 var lixo_por_id : Dictionary[int, Lixo] = {}
+var locais_plantar_por_id : Dictionary[int, Node2D] = {}
 
 func iniciar_online_config() -> void:
 	iniciar_arvores()
 	iniciar_lixo()
-
+	iniciar_locais_plantar()
+# marca que essa ferramenta esta sendo jogada
 
 #-------------------------------------------------------------------------------
 # Arvores
@@ -72,3 +74,22 @@ func coletar_lixo(lixo_id: int) -> void:
 		lixo.recolher()
 	# remover do dict
 	lixo_por_id.erase(lixo_id)
+
+
+#-------------------------------------------------------------------------------
+# Locais Plantar Arvores
+#-------------------------------------------------------------------------------
+
+func iniciar_locais_plantar() -> void:
+	#for arvore : Arvore in gerenciador_partida.arvores_colecao.get_children():
+		#arvore.cortada.connect(_atualizar_locais_plantar)
+	gerenciador_partida.locais_plantar_colecao.plantar.connect(plantar_muda)
+
+#func _atualizar_locais_plantar() -> void:
+	## espera 1 frame, pra caso rode d
+	#await get_tree().process_frame
+	#for 
+
+func plantar_muda(x) -> void:
+	print('plantar_muda')
+	print(x)

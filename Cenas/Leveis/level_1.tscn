@@ -17,6 +17,7 @@
 [node name="Level_1" type="Node" unique_id=39888598]
 
 [node name="GerenciadorPartida" parent="." unique_id=1429047279 node_paths=PackedStringArray("spawn_jogadores", "ferramenta_mgmt", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "hud") instance=ExtResource("2_o11j3")]
+duracao_partida_segundos = 500
 spawn_jogadores = NodePath("../SpawnJogadores")
 ferramenta_mgmt = NodePath("../FerramentasMgmt")
 arvores_colecao = NodePath("../ArvoresColecao")
