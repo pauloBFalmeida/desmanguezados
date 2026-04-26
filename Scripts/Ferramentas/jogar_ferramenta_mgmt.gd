@@ -7,6 +7,7 @@ var sprite_chao_ref := "res://Cenas/Ferramentas/throw_sprite_chao.tscn"
 
 signal jogador_mirando(jogador : Jogador, global_end_pos : Vector2)
 signal jogador_jogou_ferramenta(jogador : Jogador, ferramenta : Ferramenta, global_end_pos: Vector2)
+signal ferramenta_caiu_chao(ferramenta : Ferramenta, global_pos: Vector2)
 
 ## distancia maxima que a ferramenta via ser jogada
 @export var max_distancia : float = 450.0
@@ -310,6 +311,7 @@ func _ferramenta_fim(ferramenta : Ferramenta, path_follow : Node2D) -> void:
 	
 	# posiciona ferramenta no chao
 	ferramenta_mgmt.posicionar_ferramenta(ferramenta, global_pos_ferramenta)
+	emit_signal("ferramenta_caiu_chao", ferramenta, global_pos_ferramenta)
 	
 	# aparece de volta (visivel no chao)
 	ferramenta.show_ferramenta()

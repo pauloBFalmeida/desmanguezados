@@ -80,6 +80,7 @@ var jogar_ferramenta_por_jogador_id : Dictionary[InputManager.PlayerId, JogarFer
 func _iniciar_jogar_ferramenta() -> void:
 	jogar_ferramenta_mgmt.jogador_mirando.connect(_atualizar_mirando_pos)
 	jogar_ferramenta_mgmt.jogador_jogou_ferramenta.connect(_jogador_jogou_ferramenta)
+	jogar_ferramenta_mgmt.ferramenta_caiu_chao.connect(_ferramenta_caiu_chao)
 	
 	_criar_jogar_ferramenta_jogador(InputManager.PlayerId.P1)
 	_criar_jogar_ferramenta_jogador(InputManager.PlayerId.P2)
@@ -109,17 +110,20 @@ func _add_jogar_ferramenta_jogador(jog_id: InputManager.PlayerId, jogar_ferramen
 	# adiciona no jogador
 	var jog: Jogador = gerenciador_partida.jogadores_por_player_id[jog_id]
 	jog.add_child(jogar_ferramenta)
-	# ajusta
+	# ajusta atributos
 	jogar_ferramenta.jogador = jog
 	jogar_ferramenta.jogar_ferramenta_mgmt = jogar_ferramenta_mgmt
-	print("criada jogar_ferramenta ", jogar_ferramenta)
+	# ajusta autoridade para o jogador poder ter controle sobre
 	jogar_ferramenta.set_multiplayer_authority(NetworkingGame.peer_id_por_jogador_id[jog_id])
 
 # --- Jogando pela mira ---
+var jogador_por_ferramentas_jogadas: Dictionary[Ferramenta, Jogador] = {}
 
 func _jogador_jogou_ferramenta(jogador : Jogador,
 								ferramenta : Ferramenta, 
 								global_end_pos: Vector2) -> void:
+	# marca que jogou a ferramenta
+	jogador_por_ferramentas_jogadas[ferramenta] = jogador
 	# chama o rpc
 	jogador_jogou_ferramenta.rpc_id(Networking.companion_peer_id, 
 									jogador.player_id,
@@ -135,6 +139,18 @@ func jogador_jogou_ferramenta(jogador_id: InputManager.PlayerId,
 	var jogador : Jogador = _encontrar_jogador(jogador_id)
 	var ferramenta : Ferramenta = _encontrar_ferramenta(ferramenta_tipo)
 	jogar_ferramenta_mgmt.jogar_ferramenta_criar_curva(jogador, ferramenta, global_end_pos)
+
+func _ferramenta_caiu_chao(ferramenta: Ferramenta, global_pos_ferramenta: Vector2) -> void:
+	if not jogador_por_ferramentas_jogadas.has(ferramenta): return
+	
+	var jogador: Jogador = jogador_por_ferramentas_jogadas[ferramenta]
+	jogador_por_ferramentas_jogadas.erase(ferramenta)
+	# certifica que o jogador vai dropar a ferramenta para ambos os players
+	dropou_ferramenta.rpc_id(Networking.companion_peer_id, 
+							jogador.player_id,
+							ferramenta.tipo,
+							global_pos_ferramenta
+							)
 
 # Funcoes Gerais
 # -----------------------------------------------------------------------------
