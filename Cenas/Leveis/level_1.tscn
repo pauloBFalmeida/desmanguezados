@@ -96,13 +96,13 @@ tilemaps_chao = NodePath("../TileMaps")
 
 [node name="FerramentasMgmt" parent="." unique_id=2119335458 instance=ExtResource("6_poegd")]
 
-[node name="Corte" parent="FerramentasMgmt" index="1"]
+[node name="Corte" parent="FerramentasMgmt" index="2" unique_id=865516367]
 position = Vector2(851, 227)
 
-[node name="Plantar" parent="FerramentasMgmt" index="2"]
+[node name="Plantar" parent="FerramentasMgmt" index="3" unique_id=577821889]
 position = Vector2(1203, 435)
 
-[node name="Recolhe" parent="FerramentasMgmt" index="3"]
+[node name="Recolhe" parent="FerramentasMgmt" index="4" unique_id=2119422727]
 position = Vector2(794, 413)
 
 [node name="LixosColecao" type="CanvasGroup" parent="." unique_id=1440177359]
