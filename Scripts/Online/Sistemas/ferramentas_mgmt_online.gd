@@ -38,17 +38,13 @@ func pegar_ferramenta(jogador_id: InputManager.PlayerId,
 			cancelar_pegar_ferramenta.rpc_id(Networking.companion_peer_id, jogador_id, ferramenta_tipo)
 
 func _valido_pegar_ferramenta(jogador_req: Jogador, ferramenta: Ferramenta) -> bool:
-	print("_valido_pegar_ferramenta")
 	for jog : Jogador in ferramentas_mgmt.jogadores_segurando_ferramenta.keys():
 		# ferramenta que jog esta segurando
 		var ferram : Ferramenta = ferramentas_mgmt.jogadores_segurando_ferramenta[jog]
 		# jogador diferente do que requisitou o pegar ferramenta, esta segurando a ferramenta
 		# 	outro jogador ja esta segurando a ferramenta
 		if jog != jogador_req and ferram == ferramenta:
-			print("jog != jogador_req")
-			print(ferramentas_mgmt.jogadores_segurando_ferramenta)
 			return false
-	print("return true")
 	# caso nao tenha retornado antes, entao tudo certo, pode pegar a ferramenta
 	return true
 

@@ -70,13 +70,10 @@ func jogar(jogador : Jogador, ferramenta : Ferramenta) -> void:
 
 func jogar_ferramenta_criar_curva(jogador : Jogador, ferramenta : Ferramenta,
 								global_end_pos: Vector2) -> void:
-	print("jogar_ferramenta_criar_curva")
 	limpar_predicao(jogador, true)
 	
 	# -- criar o path da curva de jogar --
 	var path = _criar_curva()
-	print("aux: ", path.curve.get_point_out(0) )
-	print("end: ",path.curve.get_point_out(1) )
 	# criar linha de arremesso
 	var linha = _criar_visual(jogador)
 	path.add_child(linha)
@@ -84,8 +81,6 @@ func jogar_ferramenta_criar_curva(jogador : Jogador, ferramenta : Ferramenta,
 	path.global_position = jogador.global_position
 	# cria a curvatura com posicao final
 	_update_curva_previsao(path, global_end_pos)
-	print("aux: ", path.curve.get_point_out(0) )
-	print("end: ",path.curve.get_point_out(1) )
 	
 	# -- 
 	# filha do ferramenta_mgmt
