@@ -2,7 +2,9 @@ extends Node2D
 class_name LocalPlantarColecao
 
 signal comecou_mostrar
-signal plantar
+signal plantar(global_pos: Vector2)
+signal criado_local_plantar(local_plantar : Node2D)
+signal plantado_local_plantar(local_plantar : Node2D)
 
 var is_mostrando : bool = false
 
@@ -20,6 +22,7 @@ func _ready() -> void:
 func plantar_muda(local_plantar : Node2D) -> void:
 	var global_pos := local_plantar.global_position
 	emit_signal("plantar", global_pos)
+	emit_signal("plantado_local_plantar", local_plantar)
 	remove_local_plantar(local_plantar)
 
 # --------------
@@ -27,9 +30,11 @@ func plantar_muda(local_plantar : Node2D) -> void:
 # --------------
 func add_local_plantar(local_plantar : Node2D) -> void:
 	add_child(local_plantar)
+	emit_signal("criado_local_plantar", local_plantar)
 	var anim : AnimatedSprite2D = local_plantar.get_node("AnimatedSprite2D")
 	animation_nodes.append(anim)
 	_update_anim()
+	
 
 func remove_local_plantar(local_plantar : Node2D) -> void:
 	# remove da lista

@@ -28,4 +28,3 @@ func usar_ferramenta(alvo : Node2D, _jogador : Jogador) -> void:
 func plantar(local_plantar : Node2D) -> void:
 	var local_plantar_colecao : LocalPlantarColecao = local_plantar.get_parent()
 	local_plantar_colecao.plantar_muda(local_plantar)
-	#ferramenta_mgmt.plantar_muda(local_plantar)

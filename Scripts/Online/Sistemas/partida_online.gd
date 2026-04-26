@@ -10,7 +10,6 @@ func iniciar_online_config() -> void:
 	iniciar_arvores()
 	iniciar_lixo()
 	iniciar_locais_plantar()
-# marca que essa ferramenta esta sendo jogada
 
 #-------------------------------------------------------------------------------
 # Arvores
@@ -80,16 +79,63 @@ func coletar_lixo(lixo_id: int) -> void:
 # Locais Plantar Arvores
 #-------------------------------------------------------------------------------
 
+# ==== Explicacao do plantar
+#	Usar a ferramenta de plantar -- chama --> LocalPlantarColecao.plantar_muda(local_plantar)
+#	O LocalPlantarColecao emite os sinais:
+#			plantar(global_position) -> pego pelo ferramentaMgmt
+#			plantado_local_plantar(local_plantar) -> pego pelo PartidaOnline (aqui)
+#	
+#	plantado_local_plantar -- conectado --> _plantar
+#	_plantar -- envia --> RPC plantar_id
+#	RPC plantar_id -- chama --> chama LocalPlantarColecao.plantar_muda(local_plantar)
+#	
+#	Isso cria um ciclo, por isso ter essas multiplas verificacoes
+#		pra ver se o local que estamos falando eh valido ou eh repetido (neste caso, ignorar)
+# ====
+
+
+var curr_locais_plantar_id: int = 0
+
 func iniciar_locais_plantar() -> void:
-	#for arvore : Arvore in gerenciador_partida.arvores_colecao.get_children():
-		#arvore.cortada.connect(_atualizar_locais_plantar)
-	gerenciador_partida.locais_plantar_colecao.plantar.connect(plantar_muda)
+	# criar o dict de locais de plantar
+	curr_locais_plantar_id = 0
+	for local : Node2D in gerenciador_partida.locais_plantar_colecao.get_children():
+		_ajustar_local_plantar(local)
+	gerenciador_partida.locais_plantar_colecao.criado_local_plantar.connect(_ajustar_local_plantar)
+	# ato de plantar a muda
+	gerenciador_partida.locais_plantar_colecao.plantado_local_plantar.connect(_plantar)
 
-#func _atualizar_locais_plantar() -> void:
-	## espera 1 frame, pra caso rode d
-	#await get_tree().process_frame
-	#for 
+## Para cada local, coloca o id mais atual no meta data, e salva no dict locais_plantar_por_id
+func _ajustar_local_plantar(local: Node2D) -> void:
+	var id: int = curr_locais_plantar_id
+	# coloca o id no meta data
+	local.set_meta("id", id)
+	# adiciona no dict
+	locais_plantar_por_id[id] = local
+	# avanca 1 no id
+	curr_locais_plantar_id = id + 1
 
-func plantar_muda(x) -> void:
-	print('plantar_muda')
-	print(x)
+## Recebe o sinal que foi plantado, e envia o RPC
+func _plantar(local: Node2D) -> void:
+	# pega o id no local de plantar
+	var id : int = local.get_meta("id", -1)
+	# se nao tiver o id do local para plantar, pare a funcao
+	if (id < 0) or (not locais_plantar_por_id.has(id)): return
+	# envia para o outro jogador
+	plantar_id.rpc_id(Networking.companion_peer_id, id)
+
+## Recebe que um local foi plantado no outro jogador, e replica a acao neste jogador
+@rpc("any_peer", "call_remote", "reliable")
+func plantar_id(local_id: int) -> void:
+	# se nao tiver o id no dict, pare
+	if not locais_plantar_por_id.has(local_id): return
+	# pega o local pelo id recebido
+	var local: Node2D = locais_plantar_por_id[local_id]
+	
+	# se ja tiver sido liberado o node, pare
+	#	ou o id do node nao eh o mesmo do id recebido, pare
+	if not is_instance_valid(local): return
+	if local.get_meta("id", -1) != local_id: return
+	
+	# planta a muda no local de plantar 
+	gerenciador_partida.locais_plantar_colecao.plantar_muda(local)
