@@ -117,7 +117,9 @@ func _retirar_ferramenta_jogador(jogador : Jogador, ferramenta : Ferramenta) -> 
 	if ferramenta.tipo == Ferramenta.Ferramenta_tipo.PLANTAR:
 		# se ainda tem algum jogador segurando uma ferramenta tipo PLANTAR
 		var ainda_segurando : bool = false 
-		for _ferram in jogadores_segurando_ferramenta .values():
+		for _ferram in jogadores_segurando_ferramenta.values():
+			if not is_instance_valid(_ferram): continue
+			# ferramenta de plantar
 			if (_ferram.tipo == Ferramenta.Ferramenta_tipo.PLANTAR or 
 			_ferram.tipo == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO):
 				ainda_segurando = true
