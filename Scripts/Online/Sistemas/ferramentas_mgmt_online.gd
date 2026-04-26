@@ -12,7 +12,6 @@ func iniciar_online_config() -> void:
 	ferramentas_mgmt.dropou_ferramenta.connect(_dropou_ferramenta)
 	# --- Jogar Ferramenta ---
 	_iniciar_jogar_ferramenta()
-	
 
 # Pegar Ferramenta
 # -----------------------------------------------------------------------------
@@ -92,7 +91,9 @@ var jogar_ferramenta_por_jogador_id : Dictionary[InputManager.PlayerId, JogarFer
 func _iniciar_jogar_ferramenta() -> void:
 	jogar_ferramenta_mgmt.jogador_mirando.connect(_atualizar_mirando_pos)
 	jogar_ferramenta_mgmt.jogador_jogou_ferramenta.connect(_jogador_jogou_ferramenta)
+	jogar_ferramenta_mgmt.jogador_cancelou_jogar.connect(_jogador_cancelou_jogar)
 	jogar_ferramenta_mgmt.ferramenta_caiu_chao.connect(_ferramenta_caiu_chao)
+	
 	
 	_criar_jogar_ferramenta_jogador(InputManager.PlayerId.P1)
 	_criar_jogar_ferramenta_jogador(InputManager.PlayerId.P2)
@@ -151,6 +152,14 @@ func jogador_jogou_ferramenta(jogador_id: InputManager.PlayerId,
 	var jogador : Jogador = _encontrar_jogador(jogador_id)
 	var ferramenta : Ferramenta = _encontrar_ferramenta(ferramenta_tipo)
 	jogar_ferramenta_mgmt.jogar_ferramenta_criar_curva(jogador, ferramenta, global_end_pos)
+
+func _jogador_cancelou_jogar(jogador: Jogador) -> void:
+	jogador_cancelou_jogar.rpc_id(Networking.companion_peer_id, jogador.player_id)
+
+@rpc("any_peer", "call_remote", "reliable")
+func jogador_cancelou_jogar(jogador_id: InputManager.PlayerId) -> void:
+	var jogador : Jogador = _encontrar_jogador(jogador_id)
+	ferramentas_mgmt.jogador_throw_limpar_predicao(jogador)
 
 func _ferramenta_caiu_chao(ferramenta: Ferramenta, global_pos_ferramenta: Vector2) -> void:
 	if not jogador_por_ferramentas_jogadas.has(ferramenta): return
