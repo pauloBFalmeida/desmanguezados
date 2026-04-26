@@ -3,6 +3,7 @@ class_name MenuSelecao
 
 @onready var container_leveis := $ScrollContainerLeveis/HBoxContainer
 @onready var scroll_container := $ScrollContainerLeveis
+@onready var button_voltar: Button = $ButtonVoltar
 
 var leveis_itens = []
 var leveis_itens_por_level_id : Dictionary[LevelManager.Level_id, LevelItem] = {}

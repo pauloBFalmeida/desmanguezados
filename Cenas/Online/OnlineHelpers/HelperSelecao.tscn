@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://50hoc4y4vde4" path="res://Scripts/Online/online_helper_selecao_level.gd" id="1_e5f5n"]
 [ext_resource type="PackedScene" uid="uid://b6rljuob8hvj5" path="res://PreSets/Menus/sticker_animated_blue.tscn" id="2_2qt07"]
 [ext_resource type="PackedScene" uid="uid://3msa4hadxgqu" path="res://PreSets/Menus/sticker_animated_red.tscn" id="3_xe7oh"]
+[ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_ajdsn"]
+[ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="5_x2s8c"]
 
 [node name="HelperSelecao" type="Node" unique_id=21509229]
 script = ExtResource("1_e5f5n")
@@ -14,3 +16,60 @@ stickers_pck_por_player_id = Dictionary[int, PackedScene]({
 [node name="TimerVotos" type="Timer" parent="." unique_id=1393580545]
 wait_time = 1.5
 one_shot = true
+
+[node name="PopupPanelVoltar" type="PopupPanel" parent="." unique_id=15889799]
+disable_3d = true
+transparent_bg = false
+oversampling_override = 1.0
+initial_position = 1
+size = Vector2i(950, 391)
+visible = true
+always_on_top = true
+
+[node name="MarginContainer" type="MarginContainer" parent="PopupPanelVoltar" unique_id=167944373]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 946.0
+offset_bottom = 387.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="PopupPanelVoltar/MarginContainer" unique_id=256701467]
+layout_mode = 2
+
+[node name="LabelTitulo" type="Label" parent="PopupPanelVoltar/MarginContainer/VBox" unique_id=48828438]
+layout_mode = 2
+theme = ExtResource("4_ajdsn")
+text = "Voltar ao menu vai desfazer a conexão Online"
+
+[node name="LabelCerteza" type="Label" parent="PopupPanelVoltar/MarginContainer/VBox" unique_id=1996204973]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme = ExtResource("5_x2s8c")
+text = "Tem certeza que deseja Voltar ao Menu?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Separador" type="Control" parent="PopupPanelVoltar/MarginContainer/VBox" unique_id=453477894]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonFicar" type="Button" parent="PopupPanelVoltar/MarginContainer/VBox" unique_id=1911843982]
+layout_mode = 2
+theme = ExtResource("4_ajdsn")
+theme_override_colors/font_focus_color = Color(0.7019608, 1, 0.12941177, 1)
+text = "Ficar"
+
+[node name="Separador2" type="Control" parent="PopupPanelVoltar/MarginContainer/VBox" unique_id=1958818848]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonVoltar" type="Button" parent="PopupPanelVoltar/MarginContainer/VBox" unique_id=1630262102]
+layout_mode = 2
+theme = ExtResource("4_ajdsn")
+theme_override_colors/font_focus_color = Color(0.7019608, 1, 0.12941177, 1)
+text = "Desconectar e Voltar ao Menu"
