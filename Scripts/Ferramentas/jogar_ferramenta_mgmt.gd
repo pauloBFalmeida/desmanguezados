@@ -123,8 +123,12 @@ func _ajusta_anim_jogar(jogador: Jogador, ferramenta : Ferramenta, path: Path2D)
 	# ajusta para manter a posicao inicial saindo do jogador
 	path.global_position = jogador.global_position
 	
+	# 
+	var global_end_pos_ferramenta := _get_final_global_pos(path)
+	var indo_esq: bool = jogador.global_position.x > global_end_pos_ferramenta.x
+	
 	# cria a imagem da ferramenta para percorrer a curva
-	var pathFollow = _criar_path_follow_ferramenta(ferramenta)
+	var pathFollow = _criar_path_follow_ferramenta(ferramenta, indo_esq)
 	
 	# adiciona na cena
 	path.add_child(pathFollow)
@@ -157,7 +161,7 @@ func _montar_previsao(jogador : Jogador) -> void:
 	sprite_fora.hide()
 
 
-func _criar_path_follow_ferramenta(ferramenta : Ferramenta) -> PathFollow2D:
+func _criar_path_follow_ferramenta(ferramenta : Ferramenta, indo_esq: bool = false) -> PathFollow2D:
 	# cria o que percorre a curva
 	var pathFollow := PathFollow2D.new()
 	pathFollow.loop = false
@@ -166,6 +170,9 @@ func _criar_path_follow_ferramenta(ferramenta : Ferramenta) -> PathFollow2D:
 	var ferram_sprite : Sprite2D = ferramenta.sprite.duplicate()
 	ferram_sprite.material = null # remove a outline
 	ferram_sprite.z_index = 20
+	# se estiver indo para esquerda, espelhe a sprite
+	if indo_esq:
+		ferram_sprite.flip_v = true
 	
 	pathFollow.add_child(ferram_sprite)
 	
