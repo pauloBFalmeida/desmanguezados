@@ -10,8 +10,12 @@ const MENU_CREDITOS_PATH 		:= "uid://65vehrxtpinv"
 const MENU_ESTATISTICAS_PATH	:= "uid://nbn4suesoxxx"
 const MENU_INFORMACOES_PATH 	:= "uid://icyktkxgwl6u"
 
-func goto_menu():
+func full_goto_menu() -> void:
 	change_scene(MENUS_PATH)
+
+func full_goto_selecao() -> void:
+	change_scene(MENU_SELECAO_PATH)
+
 
 func goto_menu_principal() -> void:
 	change_menu(MENU_PRINCIPAL_PATH)

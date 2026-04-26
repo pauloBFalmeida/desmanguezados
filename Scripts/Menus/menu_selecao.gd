@@ -16,6 +16,9 @@ func _ready() -> void:
 
 # --- Voltar ---
 func _on_button_voltar_pressed() -> void:
+	if NetworkingGame.is_game_online:
+		SceneManager.full_goto_menu()
+		return
 	voltar_menu_principal()
 
 # --- Leveis ---

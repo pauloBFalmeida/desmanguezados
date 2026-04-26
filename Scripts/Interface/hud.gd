@@ -223,11 +223,14 @@ func _on_button_menu_pressed() -> void:
 # ---------------------------------
 func _goto_menu() -> void:
 	get_tree().paused = false
-	SceneManager.goto_menu()
+	SceneManager.full_goto_menu()
 
 func _goto_selecao() -> void:
 	get_tree().paused = false
-	SceneManager.goto_menu()
+	if NetworkingGame.is_game_online:
+		SceneManager.full_goto_selecao()
+		return
+	SceneManager.full_goto_menu()
 	SceneManager.goto_selecao()
 
 func _replay() -> void:
