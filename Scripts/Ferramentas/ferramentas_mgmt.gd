@@ -15,7 +15,7 @@ var gerenciador_partida : GerenciadorPartida
 var ferramentas_level : Array[Ferramenta]
 var jogadores_segurando_ferramenta : Dictionary[Jogador, Ferramenta]
 
-@onready var jogar_ferramenta_mgmt := $JogarFerramentaMgmt
+@onready var jogar_ferramenta_mgmt : JogarFerramentaMgmt = $JogarFerramentaMgmt
 
 var plantar_unico_ref := preload("res://Cenas/Ferramentas/Itens/PlantarUnico.tscn")
 var plantar_unico : Plantar

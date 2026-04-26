@@ -135,7 +135,7 @@ var jogador_por_ferramentas_jogadas: Dictionary[Ferramenta, Jogador] = {}
 func _jogador_jogou_ferramenta(jogador : Jogador,
 								ferramenta : Ferramenta, 
 								global_end_pos: Vector2) -> void:
-	# marca que jogou a ferramenta
+	# marca que essa ferramenta esta sendo jogada
 	jogador_por_ferramentas_jogadas[ferramenta] = jogador
 	# chama o rpc
 	jogador_jogou_ferramenta.rpc_id(Networking.companion_peer_id, 
