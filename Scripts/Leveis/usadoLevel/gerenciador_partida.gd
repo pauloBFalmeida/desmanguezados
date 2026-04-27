@@ -15,6 +15,8 @@ extends Node
 @export_category("UI")
 @export var hud : Hud
 
+@onready var level = get_parent()
+
 var jogadores_por_player_id : Dictionary[InputManager.PlayerId, Jogador]
 
 var temporizador : Temporizador
@@ -120,10 +122,17 @@ func ajustar_barra_progresso() -> void:
 
 func _ajustar_pause() -> void:
 	# set o node Nivel (pai da cena) como processar sempre
-	set_process_mode(Node.PROCESS_MODE_ALWAYS)
+	level.set_process_mode(Node.PROCESS_MODE_ALWAYS)
+
 	# set todos os outros nodes como processar exceto no pause
-	for node : Node in get_children():
+	for node : Node in level.get_children():
 		node.set_process_mode(Node.PROCESS_MODE_PAUSABLE)
+	
+	# set o esse node (gerenciador) e filhos como processar sempre
+	set_process_mode(Node.PROCESS_MODE_ALWAYS)
+	for node : Node in get_children():
+		node.set_process_mode(Node.PROCESS_MODE_ALWAYS)
+	
 	# set HUD (e filhos) como processar sempre
 	hud.set_process_mode(Node.PROCESS_MODE_ALWAYS)
 
