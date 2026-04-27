@@ -52,6 +52,19 @@ func set_default_keyboard() -> void:
 	for player_id in PlayerId.values():
 		add_keyboard(player_id, player_id)
 
+## Coloca os controles padroes de ambos os jogadores, e desconecta controles
+func reset() -> void:
+	_clear()
+	set_default_keyboard()
+
+## Limpa os actionMaps de ambos os jogadores, e desconecta controles
+func _clear() -> void:
+	for player_id: PlayerId in PlayerId.values():
+		actionMap_players[player_id] = {}
+	# limpa controles
+	controles_conectados.clear()
+	players_no_controle.clear()
+
 # ----- Adiciona as actionMap para o teclado ----
 ## Adiciona as keys_player_id para o player_id
 func add_keyboard(player_id: PlayerId, keys_player_id: PlayerId):

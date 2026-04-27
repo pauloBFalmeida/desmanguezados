@@ -18,6 +18,11 @@ func _ready() -> void:
 	Networking.client_disconnected.connect(_client_disconnected)
 
 func desligar_conexao() -> void:
+	# se estava estava jogando online
+	if is_game_online:
+		# limpa os comandos do jogados, pois podem ter sido alterados
+		InputManager.reset()
+	
 	Networking.close_connection()
 	is_game_online = false
 
