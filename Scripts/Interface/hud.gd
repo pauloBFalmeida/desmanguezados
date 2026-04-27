@@ -22,7 +22,7 @@ signal despausado
 
 # -- pause --
 @onready var pause_menu := $PauseMenu
-@onready var pause_menu_btn_jogo := $PauseMenu/VBoxContainer/ButtonJogo
+@onready var pause_menu_btn_jogo : Button = $PauseMenu/VBoxContainer/ButtonJogo
 
 # -- Restart e Menu --
 @onready var button_restart: Button = $PauseMenu/VBoxContainer/ButtonRestart
@@ -123,6 +123,30 @@ func comecar_partida() -> void:
 	temporizador.comecar()
 
 # ---------------------------------
+# Botoes da Hud
+# ---------------------------------
+
+# -- Pause Menu --
+func _on_button_jogo_pressed() -> void:
+	_despausar()
+
+func _on_button_restart_pressed() -> void:
+	_replay()
+
+func _on_button_menu_pressed() -> void:
+	if Globais.current_level_id == LevelManager.Level_id.ZEN:
+		_goto_zen_menu()
+		return
+	_goto_selecao()
+
+# -- Game Over Menu --
+func _on_button_prox_pressed() -> void:
+	# atualiza para pre-selecionar o proximo level no menu de selecao
+	Globais.current_level_id = LevelManager.get_next_level(Globais.current_level_id)
+	# vai para o menu de selecao
+	_goto_selecao()
+
+# ---------------------------------
 # Menu de GameOver
 # ---------------------------------
 func show_tela_fim(tipo : GerenciadorPartida.TipoFim, tempo_partida : int = -1) -> void:
@@ -174,13 +198,6 @@ func show_tela_fim(tipo : GerenciadorPartida.TipoFim, tempo_partida : int = -1) 
 		game_over_btn_replay.show()
 		game_over_btn_replay.grab_focus()
 
-
-func _on_button_replay_pressed() -> void:
-	_replay()
-
-func _on_button_menu_gameover_pressed() -> void:
-	_goto_selecao()
-
 # ---------------------------------
 # Pausar Partida
 # ---------------------------------
@@ -219,25 +236,6 @@ func _despausar() -> void:
 	despausado_recente = true
 	get_tree().create_timer(0.5, true).timeout.connect(func(): despausado_recente = false )
 
-func _on_button_jogo_pressed() -> void:
-	_despausar()
-
-func _on_button_restart_pressed() -> void:
-	_replay()
-
-func _on_button_prox_pressed() -> void:
-	# atualiza para pre-selecionar o proximo level no menu de selecao
-	Globais.current_level_id = LevelManager.get_next_level(Globais.current_level_id)
-	# vai para o menu de selecao
-	_goto_selecao()
-
-func _on_button_menu_pressed() -> void:
-	if Globais.current_level_id == LevelManager.Level_id.ZEN:
-		_goto_menu()
-		SceneManager.goto_menu_zen()
-		return
-	_goto_selecao()
-
 # ---------------------------------
 # Funcoes de Trocar de Cena
 # ---------------------------------
@@ -252,6 +250,12 @@ func _goto_selecao() -> void:
 		return
 	SceneManager.full_goto_menu()
 	SceneManager.goto_selecao()
+
+# -- Modo Zen --
+func _goto_zen_menu() -> void:
+	_goto_menu()
+	SceneManager.goto_menu_zen()
+
 
 func _replay() -> void:
 	get_tree().paused = false

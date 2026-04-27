@@ -359,6 +359,6 @@ volume_db = -25.0
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonJogo" to="." method="_on_button_jogo_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonRestart" to="." method="_on_button_restart_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonMenu" to="." method="_on_button_menu_pressed"]
-[connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonMenu" to="." method="_on_button_menu_gameover_pressed"]
-[connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonReplay" to="." method="_on_button_replay_pressed"]
+[connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonMenu" to="." method="_on_button_menu_pressed"]
+[connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonReplay" to="." method="_on_button_restart_pressed"]
 [connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonProx" to="." method="_on_button_prox_pressed"]
