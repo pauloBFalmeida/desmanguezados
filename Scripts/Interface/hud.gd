@@ -2,6 +2,8 @@ extends Control
 class_name Hud
 
 signal partida_comecando
+signal pausado
+signal despausado
 
 # -- hud in game --
 @onready var label_cronometro := $LabelTempo
@@ -192,11 +194,13 @@ func toggle_pausar() -> void:
 
 func _pausar() -> void:
 	if despausado_recente: return # se tiver despausado recente -> nao pause
+	emit_signal("pausado")
 	get_tree().paused = true
 	pause_menu.show()
 	pause_menu_btn_jogo.grab_focus()
 	
 func _despausar() -> void:
+	emit_signal("despausado")
 	pause_menu.hide()
 	get_tree().paused = false
 	# se foi despausado recentemente

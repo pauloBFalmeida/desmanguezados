@@ -11,5 +11,6 @@ script = ExtResource("1_x5uov")
 script = ExtResource("2_owm51")
 gerenciador_partida = NodePath("..")
 
-[node name="PartidaOnline" type="Node" parent="." unique_id=331312771]
+[node name="PartidaOnline" type="Node" parent="." unique_id=331312771 node_paths=PackedStringArray("gerenciador_partida")]
 script = ExtResource("3_inj38")
+gerenciador_partida = NodePath("..")
