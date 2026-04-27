@@ -27,7 +27,7 @@ signal despausado
 @export var start_count_num : int = 3
 var is_comecando_contar : bool = false
 
-@onready var temporizador := $Temporizador
+@onready var temporizador : Temporizador = $Temporizador
 
 # -- musica de fundo --
 @export var musica_level : AudioStream
