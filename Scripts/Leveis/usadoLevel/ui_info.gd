@@ -103,7 +103,7 @@ func _info_usar_ferramenta() -> void:
 	# quando o jogador nao pode interagir com algo -> esconde a info com minimo de tempo
 	curr_jogador.area_interacao.body_exited.connect( _callable_esconder )
 	# largar ferramenta -> voltar para pegar
-	curr_jogador.largou_ferramenta.connect( func(_ferr): _callable_info_pegar )
+	curr_jogador.largou_ferramenta.connect( _callable_info_pegar )
 		
 	# -- condicoes para proxima info --
 	# usar 3 vezes
