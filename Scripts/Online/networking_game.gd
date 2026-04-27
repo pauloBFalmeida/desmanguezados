@@ -19,6 +19,11 @@ func desligar_conexao() -> void:
 	Networking.close_connection()
 	is_game_online = false
 
+func disconnect_signal(node: Node, signal_name: String) -> void:
+	var connections = node.get_signal_connection_list(signal_name)
+	for connection in connections:
+		node.disconnect(signal_name, connection["callable"])
+
 # ------------------------------------------------------------------------------
 # Conexao inicial entre jogadores
 # ------------------------------------------------------------------------------

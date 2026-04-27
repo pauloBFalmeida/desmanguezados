@@ -43,7 +43,7 @@ func _ready() -> void:
 	# percorre todos os itens de leveis, trocando o iniciar partida por votar
 	for level_item : LevelItem in menu_selecao.leveis_itens:
 		# remove o sinal de apertar o botao com iniciar o level
-		_disconnect_signal(level_item, "pressed")
+		NetworkingGame.disconnect_signal(level_item, "pressed")
 		
 		# conecta o apertar o botao do level, com _votar_level
 		level_item.pressed.connect(_votar_level.bind(level_item.level_id))
@@ -51,7 +51,7 @@ func _ready() -> void:
 	# exibe pop up no botao de voltar
 	popup_voltar.hide()
 	var btn_voltar : Button = menu_selecao.button_voltar
-	_disconnect_signal(btn_voltar, "pressed")
+	NetworkingGame.disconnect_signal(btn_voltar, "pressed")
 	btn_voltar.pressed.connect(_mostrar_popup_voltar)
 	# conecta os botoes do popup
 	button_ficar.pressed.connect(_esconder_popup_voltar)
@@ -64,11 +64,6 @@ func _mostrar_popup_voltar() -> void:
 func _esconder_popup_voltar() -> void:
 	popup_voltar.hide()
 	menu_selecao.button_voltar.grab_focus()
-
-func _disconnect_signal(node: Node, signal_name: String) -> void:
-	var connections = node.get_signal_connection_list(signal_name)
-	for connection in connections:
-		node.disconnect(signal_name, connection["callable"])
 
 func _votar_level(level_id : LevelManager.Level_id) -> void:
 	player_votou_level(level_id, NetworkingGame.jogador_player_id)

@@ -13,10 +13,11 @@ func iniciar_online_config() -> void:
 	# pausar despausar
 	hud.pausado.connect(_pausado)
 	hud.despausado.connect(_despausado)
-	#
+	# menu restart
 	hud.button_menu.pressed.connect(_button_menu_pressed)
 	hud.button_restart.pressed.connect(_button_restart_pressed)
-
+	# mostrar tela fim
+	_ajustar_tela_fim()
 
 # Comecar Partida
 # -----------------------------------------------------------------------------
@@ -63,3 +64,24 @@ func button_restart_pressed() -> void:
 @rpc("any_peer", "call_remote", "reliable")
 func button_menu_pressed() -> void:
 	hud._on_button_menu_pressed()
+# Mostrar tela final da partida
+# -----------------------------------------------------------------------------
+func _ajustar_tela_fim() -> void:
+	# espera 5 seg antes de fazer as configuracoes de fim de partida
+	await get_tree().create_timer(5.0, true, false, true).timeout
+	
+	# desconecta o sinal final_partida do cliente
+	if not multiplayer.is_server():
+		NetworkingGame.disconnect_signal(gerenciador_partida, "final_partida")
+		return
+	
+	# server
+	gerenciador_partida.final_partida.connect(server_final_partida)
+
+func server_final_partida(tipo : GerenciadorPartida.TipoFim, tempo_partida : int = -1) -> void:
+	client_final_partida.rpc_id(Networking.companion_peer_id, tipo, tempo_partida)
+
+@rpc("authority", "call_remote", "reliable")
+func client_final_partida(tipo : GerenciadorPartida.TipoFim, tempo_partida : int = -1) -> void:
+	gerenciador_partida.fim_partida()
+	hud.show_tela_fim(tipo, tempo_partida)
