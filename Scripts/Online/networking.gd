@@ -1,10 +1,9 @@
 extends Node
 
 signal client_connected_to_server
-signal server_disconnected
 
-#signal player_connected(peer_id, player_info)
-#signal player_disconnected(peer_id)
+signal server_disconnected
+signal client_disconnected
 
 signal display_error(error_code)
 
@@ -73,6 +72,7 @@ func _peer_connected(id : int):
 func _peer_disconnected(id : int):
 	print("peer_disconnected id: ", id)
 	companion_peer_id = -1
+	emit_signal("client_disconnected")
 
 func _connected_to_server():
 	print("connected_to_server")
@@ -87,6 +87,7 @@ func _connection_failed():
 func _server_disconnected():
 	print("server_disconnected")
 	companion_peer_id = -1
+	emit_signal("server_disconnected")
 
 # ------------------ Outras
 

@@ -14,6 +14,8 @@ var is_game_online: bool = false
 
 func _ready() -> void:
 	Networking.client_connected_to_server.connect(_chamar_registrar_jogador)
+	Networking.server_disconnected.connect(_server_disconnected)
+	Networking.client_disconnected.connect(_client_disconnected)
 
 func desligar_conexao() -> void:
 	Networking.close_connection()
@@ -103,3 +105,26 @@ func iniciar_partida(level_id: LevelManager.Level_id) -> void:
 @rpc("authority", "call_local", "reliable")
 func _peer_iniciar_partida(level_id: LevelManager.Level_id) -> void:
 	SceneManager.goto_level(level_id)
+
+# ------------------------------------------------------------------------------
+# Partida
+# ------------------------------------------------------------------------------
+var POP_UP_CONECTION_FAILED_REF = "uid://swjd1ii57ao4"
+
+func _create_show_popup_conection_failed(txt: String) -> void:
+	# faz o load
+	var pop_up_conection_failed : PopupConectionFailed
+	pop_up_conection_failed = load(POP_UP_CONECTION_FAILED_REF).instantiate()
+	# atualiza o texto
+	txt = txt + "\nModo Online encerrado\nVoltando para o Menu"
+	pop_up_conection_failed.set_texto(txt)
+	# mostra o pop up
+	get_tree().current_scene.add_child(pop_up_conection_failed)
+	pop_up_conection_failed.popup_centered()
+	
+func _server_disconnected() -> void:
+	_create_show_popup_conection_failed("Host desconectado")
+
+func _client_disconnected() -> void:
+	_create_show_popup_conection_failed("Client desconectado")
+	
