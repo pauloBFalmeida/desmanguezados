@@ -96,6 +96,12 @@ func coletar_lixo(lixo_id: int) -> void:
 
 var curr_locais_plantar_id: int = 0
 
+## Salva acoes de plantar na queue[local_id] = local.global_position
+## Atualmente apenas checando o local_id
+## Nao verificando se a posicao eh proxima (para garantir que o local salvo eh o mesmo local atual)
+var queue_plantar : Dictionary[int, Vector2] = {}
+const DIST_MAX_SQUARED : int = 16
+
 func iniciar_locais_plantar() -> void:
 	# criar o dict de locais de plantar
 	curr_locais_plantar_id = 0
@@ -112,6 +118,11 @@ func _ajustar_local_plantar(local: Node2D) -> void:
 	local.set_meta("id", id)
 	# adiciona no dict
 	locais_plantar_por_id[id] = local
+	
+	# verifica se tem o local na queue
+	if queue_plantar.has(id):
+		gerenciador_partida.locais_plantar_colecao.plantar_muda(local)
+	
 	# avanca 1 no id
 	curr_locais_plantar_id = id + 1
 
@@ -122,20 +133,29 @@ func _plantar(local: Node2D) -> void:
 	# se nao tiver o id do local para plantar, pare a funcao
 	if (id < 0) or (not locais_plantar_por_id.has(id)): return
 	# envia para o outro jogador
-	plantar_id.rpc_id(Networking.companion_peer_id, id)
+	plantar_id.rpc_id(Networking.companion_peer_id, id, local.global_position)
 
 ## Recebe que um local foi plantado no outro jogador, e replica a acao neste jogador
 @rpc("any_peer", "call_remote", "reliable")
-func plantar_id(local_id: int) -> void:
+func plantar_id(local_id: int, global_pos: Vector2) -> void:
 	# se nao tiver o id no dict, pare
-	if not locais_plantar_por_id.has(local_id): return
+	if not locais_plantar_por_id.has(local_id):
+		# algum que ainda nao foi criado
+		if local_id >= curr_locais_plantar_id:
+			queue_plantar[local_id] = global_pos
+		# independente pare aqui
+		return
 	# pega o local pelo id recebido
 	var local: Node2D = locais_plantar_por_id[local_id]
 	
 	# se ja tiver sido liberado o node, pare
-	#	ou o id do node nao eh o mesmo do id recebido, pare
 	if not is_instance_valid(local): return
-	if local.get_meta("id", -1) != local_id: return
+	# o id do node nao eh o mesmo do id recebido 
+	# 	OU se a distancia for maior que max permitida,
+	#	entao nao eh o mesmo local, adicione na queue
+	if (	local.get_meta("id", -1) != local_id or 
+			local.global_position.distance_squared_to(global_pos) < DIST_MAX_SQUARED):
+		queue_plantar[local_id] = global_pos
 	
 	# planta a muda no local de plantar 
 	gerenciador_partida.locais_plantar_colecao.plantar_muda(local)
