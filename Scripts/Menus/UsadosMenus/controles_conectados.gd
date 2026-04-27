@@ -75,11 +75,11 @@ func _pegar_nomes_online() -> void:
 	nome = NetworkingGame.nomes_por_id[Networking.companion_peer_id]
 	_mudar_nome_player(player_id, nome)
 	
-	# esconder os controles do outro player
+	# Mostra como online o outro player
 	if player_id == InputManager.PlayerId.P1:
-		label_status_P1.hide()
+		label_status_P1.text = "Online"
 	else:
-		label_status_P2.hide()
+		label_status_P2.text = "Online"
 
 func _mudar_nome_player(player_id : InputManager.PlayerId, nome : String) -> void:
 	var label : Label = label_por_player_id[player_id]
