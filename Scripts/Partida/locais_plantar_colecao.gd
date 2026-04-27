@@ -64,18 +64,26 @@ func _update_anim() -> void:
 
 func _esconder() -> void:
 	for anim in animation_nodes:
-		anim.stop()
-		anim.hide()
+		# meh fix para problema de internet
+		if is_instance_valid(anim):
+			anim.stop()
+			anim.hide()
 
 func _mostrar() -> void:
-	var frame_inicio := 0
-	# se (lista nao esta vazia) e ja tem animacao visivel em andamento
-	if (not animation_nodes.is_empty()) and animation_nodes[0].visible:
-		# pega o frame atual como referencia para iniciar as outras
-		frame_inicio = animation_nodes[0].frame
-		
+	# se a lista nao esta vazia, pare
+	if animation_nodes.is_empty(): return
+	
+	# frame para igual todos
+	var frame_sync : int = -1
+	
 	for anim in animation_nodes:
-		anim.play("default")
-		anim.show()
-		# sincroniza todas as animacoes
-		anim.frame = frame_inicio
+		if is_instance_valid(anim):
+			# se nao tem um frame de referencia ainda, pegue da primeira anim valida
+			if frame_sync < 0:
+				# pega o frame atual como referencia para sincronizar com as outras anim
+				frame_sync = anim.frame
+			# play animacao
+			anim.play("default")
+			anim.show()
+			# sincroniza todas as animacoes
+			anim.frame = frame_sync
