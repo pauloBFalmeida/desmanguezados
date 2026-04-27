@@ -26,16 +26,10 @@ func update_conectados():
 	label_status_P2.text = _get_texto_input_player(InputManager.PlayerId.P2)
 
 func _get_texto_input_player(player_id : InputManager.PlayerId) -> String:
-	var is_controle_conectado : bool = false
-	# Encontra os players com os controles conectados
-	for device_id in InputManager.controles_conectados:
-		var controle_player_id = InputManager.controles_conectados[device_id]
-		if player_id == controle_player_id:
-			is_controle_conectado = true
-			break
 	# se tiver controle conectado pro player, retorna o texto do controle
-	if is_controle_conectado:
+	if _is_controle_conectado_player(player_id):
 		return _get_controle_texto(player_id)
+	
 	# se nao tiver controle, retorna WASD pro P1, Setas pro P2
 	if   player_id == InputManager.PlayerId.P1:
 		return "WASD"
@@ -43,6 +37,14 @@ func _get_texto_input_player(player_id : InputManager.PlayerId) -> String:
 		return "Setas"
 	
 	return ""
+
+func _is_controle_conectado_player(player_id : InputManager.PlayerId) -> bool:
+	# Encontra os players com os controles conectados
+	for device_id in InputManager.controles_conectados:
+		var controle_player_id = InputManager.controles_conectados[device_id]
+		if player_id == controle_player_id:
+			return true
+	return false
 
 func _get_controle_texto(player_id : InputManager.PlayerId) -> String:
 	var controle_tipo :	InputManager.Controle_tipo
@@ -62,11 +64,20 @@ func _pegar_nomes_online() -> void:
 	# coloca efeito de flash no nome do jogador
 	_flash_node(label_por_player_id[player_id])
 	
-	# mostra os controles do P1 para o jogador (independente se online ele eh o P2)
-	if player_id == InputManager.PlayerId.P1:
-		label_status_P1.text = _get_texto_input_player(InputManager.PlayerId.P1)
+	# mostra os comandos do P1 para o jogador
+	var texto_comandos : String = ""
+	# se ele tiver de controle -> mostra o controle
+	if _is_controle_conectado_player(player_id):
+		texto_comandos = _get_controle_texto(player_id)
+	# se nao tiver controle -> mostra os comandos do player 1 (independente se online ele eh o P2)
 	else:
-		label_status_P2.text = _get_texto_input_player(InputManager.PlayerId.P1)
+		texto_comandos = _get_texto_input_player(InputManager.PlayerId.P1)
+	
+	# atualiza a label
+	if player_id == InputManager.PlayerId.P1:
+		label_status_P1.text = texto_comandos
+	else:
+		label_status_P2.text = texto_comandos
 	
 	# --- Jogador companion (online) ---
 	
