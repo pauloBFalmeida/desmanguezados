@@ -1,6 +1,10 @@
 class_name GerenciadorPartida
 extends Node
 
+signal final_partida(tipo : Tipo_fim, tempo_partida : int)
+
+enum TipoFim {DERROTA_TEMPO, VITORIA_SUJO, VITORIA_LIMPO}
+
 @export_category("Partida")
 ## duracao da partida em segundos
 @export var duracao_partida_segundos : int = 70
@@ -38,6 +42,9 @@ func _input(event: InputEvent) -> void:
 
 func _ready() -> void:
 	await get_tree().process_frame
+	
+	# passa ref propria para hud
+	hud.gerenciador_partida = self
 	
 	# ajustar jogadores
 	for jog : Jogador in spawn_jogadores.jogadores:
@@ -81,12 +88,13 @@ func fim_partida() -> void:
 	# -- muda a imagem dependendo das condicoes de final --
 	
 	if qtd_mudas_necessitam_plantar() > 0: # nao plantou tudo
-		hud.show_tela_fim(Hud.Tipo_fim.DERROTA_TEMPO)
+		#emit_signal("final_partida", tipo, tempo_partida)
+		hud.show_tela_fim(TipoFim.DERROTA_TEMPO)
 	else: # quantidade suficiente de mudas plantadas
 		if qtd_lixo > 0: # deixou lixo
-			hud.show_tela_fim(Hud.Tipo_fim.VITORIA_SUJO)
+			hud.show_tela_fim(TipoFim.VITORIA_SUJO)
 		else: # limpou tudo
-			hud.show_tela_fim(Hud.Tipo_fim.VITORIA_LIMPO, tempo_partida)
+			hud.show_tela_fim(TipoFim.VITORIA_LIMPO, tempo_partida)
 	
 
 func verificar_fim() -> void:

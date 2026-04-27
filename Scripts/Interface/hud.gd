@@ -5,6 +5,8 @@ signal partida_comecando
 signal pausado
 signal despausado
 
+var gerenciador_partida : GerenciadorPartida
+
 # -- hud in game --
 @onready var label_cronometro := $LabelTempo
 @onready var barra_progresso := $BarraProgresso
@@ -37,9 +39,7 @@ var is_comecando_contar : bool = false
 @export var musica_level : AudioStream
 @onready var audio_player_musica := $AudioStreamPlayer
 
-enum Tipo_fim {DERROTA_TEMPO, VITORIA_SUJO, VITORIA_LIMPO}
-
-@export var imagens_fim_jogo : Dictionary[Tipo_fim, CompressedTexture2D]
+@export var imagens_fim_jogo : Dictionary[GerenciadorPartida.TipoFim, CompressedTexture2D]
 
 var despausado_recente : bool = false
 
@@ -117,7 +117,7 @@ func comecar_partida() -> void:
 # ---------------------------------
 # Menu de GameOver
 # ---------------------------------
-func show_tela_fim(tipo : Tipo_fim, tempo_partida : int = -1) -> void:
+func show_tela_fim(tipo : GerenciadorPartida.TipoFim, tempo_partida : int = -1) -> void:
 	# para a musica (tb para restart do level n comecar tocando a musica)
 	audio_player_musica.stop()
 	
@@ -145,7 +145,7 @@ func show_tela_fim(tipo : Tipo_fim, tempo_partida : int = -1) -> void:
 	# espera a imagem ficar do tamanho da tela
 	await tween.finished
 	
-	if tipo == Tipo_fim.VITORIA_LIMPO and tempo_partida != -1:
+	if tipo == GerenciadorPartida.TipoFim.VITORIA_LIMPO and tempo_partida != -1:
 		game_over_label_tempo.show()
 		game_over_label_tempo.text  = "Tempo Partida: "
 		game_over_label_tempo.text += str(tempo_partida) + " segundos"
@@ -157,7 +157,7 @@ func show_tela_fim(tipo : Tipo_fim, tempo_partida : int = -1) -> void:
 	await get_tree().create_timer(1.0, true).timeout
 	game_over_btns.show()
 	
-	if tipo == Tipo_fim.VITORIA_LIMPO:
+	if tipo == GerenciadorPartida.TipoFim.VITORIA_LIMPO:
 		game_over_btn_replay.hide()
 		game_over_btn_prox.show()
 		game_over_btn_prox.grab_focus()
