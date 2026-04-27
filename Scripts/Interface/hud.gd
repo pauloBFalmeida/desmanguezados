@@ -21,6 +21,10 @@ signal despausado
 @onready var pause_menu := $PauseMenu
 @onready var pause_menu_btn_jogo := $PauseMenu/VBoxContainer/ButtonJogo
 
+# -- Restart e Menu --
+@onready var button_restart: Button = $PauseMenu/VBoxContainer/ButtonRestart
+@onready var button_menu: Button = $PauseMenu/VBoxContainer/ButtonMenu
+
 # -- contagem do comeco de partida --
 @onready var start_menu := $StartMenu
 @onready var start_label_count := $StartMenu/VBoxContainer/LabelStartCount

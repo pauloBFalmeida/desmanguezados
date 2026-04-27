@@ -8,9 +8,15 @@ var partida_comecou : bool = false
 
 func iniciar_online_config() -> void:
 	hud = gerenciador_partida.hud
+	# comecar partida
 	hud.partida_comecando.connect(_partida_comecando)
+	# pausar despausar
 	hud.pausado.connect(_pausado)
 	hud.despausado.connect(_despausado)
+	#
+	hud.button_menu.pressed.connect(_button_menu_pressed)
+	hud.button_restart.pressed.connect(_button_restart_pressed)
+
 
 # Comecar Partida
 # -----------------------------------------------------------------------------
@@ -41,3 +47,19 @@ func pedir_pause() -> void:
 @rpc("any_peer", "call_remote", "reliable")
 func pedir_despause() -> void:
 	hud.despausar()
+
+# Reiniciar e Voltar ao menu
+# -----------------------------------------------------------------------------
+func _button_restart_pressed() -> void:
+	button_restart_pressed.rpc_id(Networking.companion_peer_id)
+
+func _button_menu_pressed() -> void:
+	button_menu_pressed.rpc_id(Networking.companion_peer_id)
+
+@rpc("any_peer", "call_remote", "reliable")
+func button_restart_pressed() -> void:
+	hud._on_button_restart_pressed()
+
+@rpc("any_peer", "call_remote", "reliable")
+func button_menu_pressed() -> void:
+	hud._on_button_menu_pressed()
