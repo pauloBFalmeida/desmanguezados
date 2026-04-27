@@ -50,15 +50,16 @@ func _ready() -> void:
 # padrao do keyboard para ambos os players
 func set_default_keyboard() -> void:
 	for player_id in PlayerId.values():
-		add_keyboard(player_id)
+		add_keyboard(player_id, player_id)
 
 # ----- Adiciona as actionMap para o teclado ----
-func add_keyboard(player_id: PlayerId):
+## Adiciona as keys_player_id para o player_id
+func add_keyboard(player_id: PlayerId, keys_player_id: PlayerId):
 	# se nao tiver mapa de acoes pro player -> crie
 	if not actionMap_players.has(player_id):
 		actionMap_players[player_id] = {}
 	# add as acoes do keyboard para esse player
-	var prefix = "key_1_" if player_id == PlayerId.P1 else "key_2_"
+	var prefix = "key_1_" if keys_player_id == PlayerId.P1 else "key_2_"
 	for action_name in action_names:
 		var ref_name: String = prefix + action_name
 		actionMap_players[player_id][action_name] = ref_name

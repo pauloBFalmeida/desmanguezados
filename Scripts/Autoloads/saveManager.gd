@@ -153,9 +153,9 @@ func _ler_input_player(file : ConfigFile, player : InputManager.PlayerId, on_con
 	var colocou_alguma_acao : bool = false
 	for action : String in InputManager.action_names:
 		# criar o section do configFile
-		var section : String
+		var section : String 	# ex: player_2_k_move_left
 		section  = "player_" + str(player+1)
-		section += "_c" if on_controle else "_k"
+		section += "_c" if on_controle else "_k" # controle: _c 	keyboard: _k
 		section += "_" + action
 		# pega a quantidade de eventos que tem na acao
 		var amount = file.get_value(section, "amount", 0)
