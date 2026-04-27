@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://c1s0pksofyykg"]
 
 [ext_resource type="Script" uid="uid://damhq86gpxn4x" path="res://Scripts/Leveis/usadoLevel/gerenciador_partida.gd" id="1_x5uov"]
-[ext_resource type="Script" uid="uid://opss4umj7q7g" path="res://Scripts/Online/Sistemas/partida_online.gd" id="2_owm51"]
+[ext_resource type="Script" uid="uid://opss4umj7q7g" path="res://Scripts/Online/Sistemas/objetivos_online.gd" id="2_owm51"]
 
 [node name="GerenciadorPartida" type="Node" unique_id=1429047279]
 script = ExtResource("1_x5uov")
 
-[node name="PartidaOnline" type="Node" parent="." unique_id=2103916540 node_paths=PackedStringArray("gerenciador_partida")]
+[node name="ObjetivosOnline" type="Node" parent="." unique_id=2103916540 node_paths=PackedStringArray("gerenciador_partida")]
 script = ExtResource("2_owm51")
 gerenciador_partida = NodePath("..")
