@@ -58,7 +58,7 @@ func change_scene(path: String) -> void:
 	
 	# Load new scene
 	var new_scene = _load_scene(path)
-	get_tree().root.add_child(new_scene)
+	get_tree().root.add_child(new_scene, true)
 	get_tree().current_scene = new_scene
 
 func change_menu(path: String) -> void:

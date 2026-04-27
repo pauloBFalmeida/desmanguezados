@@ -24,7 +24,7 @@ func _partida_comecando() -> void:
 func partida_comecando() -> void:
 	# se ja tiver comecado, volta o relogio
 	if partida_comecou:
-		hud.temporizador.set_duracao(hud.duracao_partida_segundos)
+		hud.temporizador.set_duracao(gerenciador_partida.duracao_partida_segundos)
 
 # Pausar e Despausar
 # -----------------------------------------------------------------------------
