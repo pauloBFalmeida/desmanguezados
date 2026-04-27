@@ -12,6 +12,8 @@ func iniciar_online_config() -> void:
 	hud.pausado.connect(_pausado)
 	hud.despausado.connect(_despausado)
 
+# Comecar Partida
+# -----------------------------------------------------------------------------
 func _partida_comecando() -> void:
 	partida_comecou = true
 	# se for server, enviar que comecou
@@ -24,8 +26,18 @@ func partida_comecando() -> void:
 	if partida_comecou:
 		hud.temporizador.set_duracao(hud.duracao_partida_segundos)
 
+# Pausar e Despausar
+# -----------------------------------------------------------------------------
 func _pausado() -> void:
-	print('_pausado')
+	pedir_pause.rpc_id(Networking.companion_peer_id)
 
 func _despausado() -> void:
-	print('_despausado')
+	pedir_despause.rpc_id(Networking.companion_peer_id)
+
+@rpc("any_peer", "call_remote", "reliable")
+func pedir_pause() -> void:
+	hud.pausar()
+
+@rpc("any_peer", "call_remote", "reliable")
+func pedir_despause() -> void:
+	hud.despausar()
