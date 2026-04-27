@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://75r8mn8eb2nt" path="res://Scripts/Leveis/level_zen.gd" id="1_h16eq"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps_chao.tscn" id="2_levs5"]
-[ext_resource type="Script" uid="uid://damhq86gpxn4x" path="res://Scripts/Leveis/usadoLevel/gerenciador_partida.gd" id="2_m27kc"]
 [ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="3_ptk82"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="5_c3vl7"]
 [ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="6_wohbw"]
@@ -14,34 +13,25 @@ _data = [Vector2(0, 0.2), 0.0, 0.484919, 0, 0, Vector2(0.741697, 1), 0.0, 0.0, 0
 point_count = 3
 metadata/_snap_enabled = true
 
-[node name="Level_Zen" type="Node" unique_id=978834285 node_paths=PackedStringArray("camera_target", "spawn_jogadores", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "ferramenta_mgmt", "hud")]
+[node name="Level_Zen" type="Node" unique_id=978834285 node_paths=PackedStringArray("camera_target", "spawn_jogadores", "ferramenta_mgmt", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "hud", "temporizador")]
 script = ExtResource("1_h16eq")
 camera_lerp_speed_curve = SubResource("Curve_h16eq")
 camera_target = NodePath("SpawnJogadores/Jogador2")
+duracao_partida_segundos = 9999
 spawn_jogadores = NodePath("SpawnJogadores")
+ferramenta_mgmt = NodePath("FerramentasMgmt")
 arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
-ferramenta_mgmt = NodePath("FerramentasMgmt")
 hud = NodePath("Camera2D/HUD")
-duracao_partida_segundos = 9999
-
-[node name="GerenciadorPartida" type="Node" parent="." unique_id=132364394 node_paths=PackedStringArray("spawn_jogadores", "ferramenta_mgmt", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "hud")]
-script = ExtResource("2_m27kc")
-duracao_partida_segundos = 9999
-spawn_jogadores = NodePath("../SpawnJogadores")
-ferramenta_mgmt = NodePath("../FerramentasMgmt")
-arvores_colecao = NodePath("../ArvoresColecao")
-lixos_colecao = NodePath("../LixosColecao")
-locais_plantar_colecao = NodePath("../LocaisPlantarColecao")
-hud = NodePath("../Camera2D/HUD")
-metadata/_custom_type_script = "uid://damhq86gpxn4x"
+temporizador = NodePath("Camera2D/HUD/Temporizador")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1876487090]
 position = Vector2(642, 361)
 position_smoothing_speed = 1.0
 
-[node name="HUD" parent="Camera2D" unique_id=1897931918 instance=ExtResource("13_gupm4")]
+[node name="HUD" parent="Camera2D" unique_id=1897931918 node_paths=PackedStringArray("gerenciador_partida") instance=ExtResource("13_gupm4")]
+gerenciador_partida = NodePath("../..")
 
 [node name="ColorCorrectionEffect" parent="Camera2D/HUD" index="1" unique_id=942191635]
 offset_left = -646.0

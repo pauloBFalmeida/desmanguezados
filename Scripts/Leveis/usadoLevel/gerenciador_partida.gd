@@ -18,12 +18,12 @@ enum TipoFim {DERROTA_TEMPO, VITORIA_SUJO, VITORIA_LIMPO}
 @export var locais_plantar_colecao : LocalPlantarColecao
 @export_category("UI")
 @export var hud : Hud
+@export var temporizador : Temporizador
 
 @onready var level = get_parent()
 
 var jogadores_por_player_id : Dictionary[InputManager.PlayerId, Jogador]
 
-var temporizador : Temporizador
 
 var qtd_arvores_invasoras : int = 0 # que existem atualmente no mapa
 var qtd_arvores_nativas : int = 0 # que existem atualmente no mapa

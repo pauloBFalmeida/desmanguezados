@@ -5,7 +5,7 @@ signal partida_comecando
 signal pausado
 signal despausado
 
-var gerenciador_partida : GerenciadorPartida
+@export var gerenciador_partida : GerenciadorPartida
 
 # -- hud in game --
 @onready var label_cronometro := $LabelTempo
@@ -232,6 +232,10 @@ func _on_button_prox_pressed() -> void:
 	_goto_selecao()
 
 func _on_button_menu_pressed() -> void:
+	if Globais.current_level_id == LevelManager.Level_id.ZEN:
+		_goto_menu()
+		SceneManager.goto_menu_zen()
+		return
 	_goto_selecao()
 
 # ---------------------------------
