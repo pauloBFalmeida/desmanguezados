@@ -16,6 +16,10 @@ func iniciar_online_config() -> void:
 	# menu restart
 	hud.button_menu.pressed.connect(_button_menu_pressed)
 	hud.button_restart.pressed.connect(_button_restart_pressed)
+	# botoes fim partida
+	hud.game_over_btn_replay.pressed.connect(_game_over_btn_replay)
+	hud.game_over_btn_prox.pressed.connect(_game_over_btn_prox)
+	hud.game_over_btn_menu.pressed.connect(_game_over_btn_menu)
 	# mostrar tela fim
 	_ajustar_tela_fim()
 
@@ -64,6 +68,21 @@ func button_restart_pressed() -> void:
 @rpc("any_peer", "call_remote", "reliable")
 func button_menu_pressed() -> void:
 	hud._on_button_menu_pressed()
+
+# Botoes Fim de Partida
+# -----------------------------------------------------------------------------
+
+func _game_over_btn_replay() -> void:
+	button_restart_pressed.rpc_id(Networking.companion_peer_id)
+func _game_over_btn_prox() -> void:
+	button_prox_pressed.rpc_id(Networking.companion_peer_id)
+func _game_over_btn_menu() -> void:
+	button_menu_pressed.rpc_id(Networking.companion_peer_id)
+
+@rpc("any_peer", "call_remote", "reliable")
+func button_prox_pressed() -> void:
+	hud._on_button_prox_pressed()
+
 # Mostrar tela final da partida
 # -----------------------------------------------------------------------------
 func _ajustar_tela_fim() -> void:

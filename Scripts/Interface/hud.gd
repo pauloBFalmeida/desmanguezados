@@ -16,8 +16,9 @@ var gerenciador_partida : GerenciadorPartida
 @onready var game_over_sprite := $GameOverMenu/ImagemFim
 @onready var game_over_label_tempo := $GameOverMenu/LabelTempoPartida
 @onready var game_over_btns := $GameOverMenu/ControlBtns
-@onready var game_over_btn_replay := $GameOverMenu/ControlBtns/ButtonReplay
-@onready var game_over_btn_prox := $GameOverMenu/ControlBtns/ButtonProx
+@onready var game_over_btn_replay : Button = $GameOverMenu/ControlBtns/ButtonReplay
+@onready var game_over_btn_prox :   Button = $GameOverMenu/ControlBtns/ButtonProx
+@onready var game_over_btn_menu:    Button = $GameOverMenu/ControlBtns/ButtonMenu
 
 # -- pause --
 @onready var pause_menu := $PauseMenu
