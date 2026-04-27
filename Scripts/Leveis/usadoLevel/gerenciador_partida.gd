@@ -1,7 +1,7 @@
 class_name GerenciadorPartida
 extends Node
 
-signal final_partida(tipo : Tipo_fim, tempo_partida : int)
+signal final_partida(tipo : TipoFim, tempo_partida : int)
 
 enum TipoFim {DERROTA_TEMPO, VITORIA_SUJO, VITORIA_LIMPO}
 
@@ -88,13 +88,12 @@ func fim_partida() -> void:
 	# -- muda a imagem dependendo das condicoes de final --
 	
 	if qtd_mudas_necessitam_plantar() > 0: # nao plantou tudo
-		#emit_signal("final_partida", tipo, tempo_partida)
-		hud.show_tela_fim(TipoFim.DERROTA_TEMPO)
+		emit_signal("final_partida", TipoFim.DERROTA_TEMPO)
 	else: # quantidade suficiente de mudas plantadas
 		if qtd_lixo > 0: # deixou lixo
-			hud.show_tela_fim(TipoFim.VITORIA_SUJO)
+			emit_signal("final_partida", TipoFim.VITORIA_SUJO)
 		else: # limpou tudo
-			hud.show_tela_fim(TipoFim.VITORIA_LIMPO, tempo_partida)
+			emit_signal("final_partida", TipoFim.VITORIA_LIMPO, tempo_partida)
 	
 
 func verificar_fim() -> void:
