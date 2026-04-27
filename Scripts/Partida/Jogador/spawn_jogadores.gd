@@ -18,8 +18,13 @@ func _ready() -> void:
 	
 	for jogador : Jogador in get_children():
 		jogadores.append(jogador)
-		jogadores_spawns[jogador] = jogador.global_position
 		jogadores_atras_pos[jogador] = [] # lista nova de posicoes
+	# ajusta os spawns
+	set_spawn_point()
+
+func set_spawn_point() -> void:
+	for jogador: Jogador in jogadores:
+		jogadores_spawns[jogador] = jogador.global_position
 
 func _physics_process(_delta: float) -> void:
 	for jogador in jogadores:

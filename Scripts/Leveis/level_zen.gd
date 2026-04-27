@@ -154,6 +154,8 @@ func camera_zoom_in() -> void:
 	
 	# reativa movimento dos jogadores
 	spawn_jogadores.pausar_jogadores(false)
+	# salva o spawnpoint
+	spawn_jogadores.set_spawn_point()
 	# tem certeza que desligou o que nao eh camera target
 	_turn_off_jog_not_cam_target()
 
