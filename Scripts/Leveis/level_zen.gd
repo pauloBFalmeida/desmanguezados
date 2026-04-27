@@ -4,7 +4,14 @@ extends GerenciadorPartida
 @onready var button_prox: Button = $Camera2D/HUD/GameOverMenu/ControlBtns/ButtonProx
 
 func _ready() -> void:
-	super()
+	# -- super() --
+	await get_tree().process_frame
+	iniciar_basicos()
+	# 
+	_ajustar_temporizador()
+	# contagem inicial para comecar o jogo
+	contagem_inicio()
+	# --
 	
 	temporizador.parar() # para de contar o tempo
 	# gera o mapa aleatoriamente

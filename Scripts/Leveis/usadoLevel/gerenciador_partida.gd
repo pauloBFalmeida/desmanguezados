@@ -42,7 +42,15 @@ func _input(event: InputEvent) -> void:
 
 func _ready() -> void:
 	await get_tree().process_frame
-	
+	iniciar_basicos()
+	#
+	ajustar_objetivos()
+	# 
+	_ajustar_temporizador()
+	# contagem inicial para comecar o jogo
+	contagem_inicio()
+
+func iniciar_basicos() -> void:
 	# passa ref propria para hud
 	hud.gerenciador_partida = self
 	
@@ -56,12 +64,6 @@ func _ready() -> void:
 	locais_plantar_colecao.esconder()
 	ferramenta_mgmt.gerenciador_partida = self
 	ferramenta_mgmt.set_locais_plantar_colecao(locais_plantar_colecao)
-	#
-	ajustar_objetivos()
-	# 
-	_ajustar_temporizador()
-	# contagem inicial para comecar o jogo
-	contagem_inicio()
 
 func ajustar_objetivos() -> void:
 	ajustar_arvores()
