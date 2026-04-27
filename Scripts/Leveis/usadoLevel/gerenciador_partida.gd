@@ -29,7 +29,7 @@ var qtd_lixo : int = 0  # que exist atualmente no mapa
 
 var is_fim_partida : bool = false
 
-const local_plantar_ref := preload("res://Cenas/Partida/local_plantar.tscn")
+const LOCAL_PLANTAR_REF = preload("uid://bxemk6uv78eif")
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and (not is_fim_partida):
@@ -194,7 +194,7 @@ func _update_arvore_cortada(arvore : Arvore) -> void:
 	_update_hud_mudas()
 
 func spawn_local_plantar(global_pos : Vector2) -> void:
-	var local_plantar = local_plantar_ref.instantiate()
+	var local_plantar = LOCAL_PLANTAR_REF.instantiate()
 	local_plantar.global_position = global_pos
 	locais_plantar_colecao.add_local_plantar(local_plantar)
 
