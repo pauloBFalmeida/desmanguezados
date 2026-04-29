@@ -42,11 +42,18 @@ func _input(event: InputEvent) -> void:
 
 func _ready() -> void:
 	await get_tree().process_frame
+	
+	# pausa os jogadores
+	spawn_jogadores.pausar_jogadores(true)
+	
 	iniciar_basicos()
 	#
 	ajustar_objetivos()
 	# 
 	_ajustar_temporizador()
+	
+	await get_tree().process_frame
+	await get_tree().process_frame
 	# contagem inicial para comecar o jogo
 	contagem_inicio()
 
@@ -146,8 +153,6 @@ func _ajustar_pause() -> void:
 	hud.set_process_mode(Node.PROCESS_MODE_ALWAYS)
 
 func contagem_inicio() -> void:
-	# pausa os jogadores
-	spawn_jogadores.pausar_jogadores(true)
 	# faz a contagem de comeco de partida
 	hud.comecar_contar()
 	await hud.partida_comecando
