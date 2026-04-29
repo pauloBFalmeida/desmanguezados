@@ -80,7 +80,8 @@ func _dropou_ferramenta(jogador: Jogador,
 	dropou_ferramenta.rpc_id(Networking.companion_peer_id, 
 							jogador.player_id,
 							ferramenta.tipo,
-							global_pos_ferramenta
+							global_pos_ferramenta,
+							true
 							)
 
 @rpc("any_peer", "call_remote", "reliable")
