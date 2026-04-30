@@ -31,14 +31,20 @@ func is_abrindo_jogo() -> bool:
 var possivel_aim_all_time : bool = false
 var indicador_direcao_transparente_sem_target : bool = true
 
+## Tipo de controle que cada player esta usando, [PlayerId] -> Controle_tipo
 var controle_tipo_player : Dictionary[InputManager.PlayerId, InputManager.Controle_tipo]={
 	InputManager.PlayerId.P1 : DEFAULT_CONTROLE_TIPO, 
 	InputManager.PlayerId.P2 : DEFAULT_CONTROLE_TIPO }
 
+## Ajustado os controles do jogador ao abrir o ControlesConectados pela primeira vez
+var ajustado_keyboard_controles: bool = false
+
+# Audio
 var volume_musica_menu : float = -20.0
 var volume_musica_partida : float = -25.0
 var volume_efeitos_partida : float = 0.0
 
+# Graficos
 var tela_cheia := false
 var remov_efeitos_graf := false
 var remov_logo_intro := false

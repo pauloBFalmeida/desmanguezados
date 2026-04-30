@@ -101,8 +101,10 @@ func _get_controle_texto(player_id : InputManager.PlayerId) -> String:
 
 ## Coloca os controles do P1 no siri que o jogador esta controlando
 func _set_P1_keyboard() -> void:
-	var player_id : InputManager.PlayerId = NetworkingGame.jogador_player_id
-	InputManager.add_keyboard(player_id, InputManager.PlayerId.P1)
+	if not Globais.ajustado_keyboard_controles:
+		Globais.ajustado_keyboard_controles = true
+		var player_id : InputManager.PlayerId = NetworkingGame.jogador_player_id
+		InputManager.add_keyboard(player_id, InputManager.PlayerId.P1)
 
 func _pegar_nomes_online() -> void:
 	# --- Jogador principal (desse computador) ---
