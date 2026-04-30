@@ -22,6 +22,22 @@ script = ExtResource("1_aei4g")
 [node name="ControlesManager" type="Node" parent="." unique_id=1427189604]
 script = ExtResource("1_lo6xx")
 
+[node name="LabelInfo" type="Label" parent="." unique_id=405435227]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -186.0
+offset_top = 8.0
+offset_right = 186.0
+offset_bottom = 93.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme = ExtResource("3_5qhow")
+text = "Conecte o controle com
+Start"
+horizontal_alignment = 1
+
 [node name="AnimatedBlue" type="AnimatedSprite2D" parent="." unique_id=226955231]
 position = Vector2(295, 49)
 scale = Vector2(3, 3)

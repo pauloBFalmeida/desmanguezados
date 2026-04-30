@@ -8,7 +8,12 @@ extends Control
 	InputManager.PlayerId.P2: $LabelP2,
 }
 
+@onready var controles_manager: ControlesManager = $ControlesManager
+@onready var label_info: Label = $LabelInfo
+
 func _ready() -> void:
+	label_info.hide()
+	
 	# online
 	if NetworkingGame.is_game_online:
 		_pegar_nomes_online()
@@ -18,13 +23,51 @@ func _ready() -> void:
 	
 	# controle conectado -> atualiza as informacoes de controles conectados
 	InputManager.controle_added.connect(update_conectados)
-	update_conectados() # atualiza no inicio
+	
+	# verifica se tem controles
+	verificar_controle_contectado()
+	
+	# atualiza no inicio
+	update_conectados()
+
+## Verifica se tem controles conectados no PC, mas nao controlando os siris
+## 	Se tiver controles nessa condicao, execute show_info_conectar_controle()
+func verificar_controle_contectado() -> void:
+	# se nao tem nenhum controle ligado no pc, pare
+	if Input.get_connected_joypads().is_empty():
+		return
+	
+	# se ja tem um controle conectado e ajustado pro jogo, pare
+	if not InputManager.controles_conectados.is_empty():
+		return
+	
+	# se tem exatamente 1 controle, adicione ao automaticamente, e pare
+	if Input.get_connected_joypads().size() == 1:
+		controles_manager.add_controller(Input.get_connected_joypads()[0])
+		return
+	
+	# se tiver mais de 1 controle
+	show_info_conectar_controle()
+
+## Mostra o info com qual botao apertar para conectar o controle
+func show_info_conectar_controle() -> void:
+	# pega o botao que conecta o controle no jogo
+	var conectar_btn : String = InputManager.get_text_controle_btn(InputManager.PlayerId.P1, InputManager.Controle_btn.START)
+	# atualiza o texto
+	label_info.text = "Conecte o controle com\n" + conectar_btn
+	_flash_node(label_info)
+	# mostre a label
+	label_info.show()
 
 # --- Controles Conectados ---
 func update_conectados():
 	# -- atualiza as labels --
 	label_status_P1.text = _get_texto_input_player(InputManager.PlayerId.P1)
 	label_status_P2.text = _get_texto_input_player(InputManager.PlayerId.P2)
+	# -- esconde a label se ja tiver um controle --
+	if (_is_controle_conectado_player(InputManager.PlayerId.P1) or 
+			_is_controle_conectado_player(InputManager.PlayerId.P2) ):
+		label_info.hide()
 
 func _get_texto_input_player(player_id : InputManager.PlayerId) -> String:
 	# se tiver controle conectado pro player, retorna o texto do controle

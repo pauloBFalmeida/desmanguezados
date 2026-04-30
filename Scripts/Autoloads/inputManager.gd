@@ -154,6 +154,16 @@ func get_text_action(player_id: PlayerId, action_name: String) -> String:
 	var texto : String     = get_texto_acao(data,   player_id)
 	return texto
 
+## retorna o texto do icone do botao, para dado jogador, e o controle btn
+func get_text_controle_btn(player_id: PlayerId, controle_btn: Controle_btn)-> String:
+	var data  : Dictionary = {
+		"on_controle": true,
+		"controle_tipo": Globais.controle_tipo_player[player_id],
+		"button": controle_btn
+	}
+	var texto : String = get_texto_acao(data,   player_id)
+	return texto
+
 # ---------- Nomes Botoes ---------------
 enum Controle_btn {
 	A, B, X, Y,

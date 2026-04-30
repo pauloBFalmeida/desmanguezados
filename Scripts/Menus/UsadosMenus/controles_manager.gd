@@ -1,3 +1,4 @@
+class_name ControlesManager
 extends Node
 
 func _input(event):
@@ -7,10 +8,10 @@ func _input(event):
 		# se o controle nao foi adicionado ainda
 		if not InputManager.controles_conectados.has(device_id):
 			# adiciona o controle
-			_add_controller(device_id)
+			add_controller(device_id)
 
 ## Associa o controle para um dos jogadores
-func _add_controller(device_id: int) -> void:
+func add_controller(device_id: int) -> void:
 	# Decide pra qual jogar vai o controle
 	var player_id := _decidir_jogador()
 	# adiciona o inputmap pro controle
