@@ -238,8 +238,8 @@ const Switch_btn_nomes : Dictionary[Controle_btn, String] = {
 
 const controle_btn_indexes : Dictionary[Controle_tipo, Dictionary] = {
 	Controle_tipo.PS: PS_btn_index,
-	#Controle_tipo.XBOX: PS_btn_index,
-	#Controle_tipo.SWITCH: PS_btn_index,
+	Controle_tipo.XBOX: PS_btn_index,
+	Controle_tipo.SWITCH: PS_btn_index,
 }
 
 const PS_btn_index : Dictionary[int, Controle_btn] = {

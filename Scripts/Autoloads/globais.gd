@@ -4,6 +4,8 @@ extends Node
 #	-entao-> usamos um valor alto para os leveis sem highscore ainda
 const no_highscore_value : int = 999
 
+const DEFAULT_CONTROLE_TIPO : InputManager.Controle_tipo = InputManager.Controle_tipo.PS
+
 func _ready() -> void:
 	# ajusta o valor dos que leveis sem highscore ainda 
 	for id in LevelManager.Level_id.values():
@@ -30,8 +32,8 @@ var possivel_aim_all_time : bool = false
 var indicador_direcao_transparente_sem_target : bool = true
 
 var controle_tipo_player : Dictionary[InputManager.PlayerId, InputManager.Controle_tipo]={
-	InputManager.PlayerId.P1 : InputManager.Controle_tipo.PS, 
-	InputManager.PlayerId.P2 : InputManager.Controle_tipo.PS }
+	InputManager.PlayerId.P1 : DEFAULT_CONTROLE_TIPO, 
+	InputManager.PlayerId.P2 : DEFAULT_CONTROLE_TIPO }
 
 var volume_musica_menu : float = -20.0
 var volume_musica_partida : float = -25.0
