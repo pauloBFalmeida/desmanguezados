@@ -5,7 +5,6 @@
 [ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_utp8p"]
 [ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_1yk6f"]
 [ext_resource type="PackedScene" uid="uid://bk32qrjnda8ni" path="res://Cenas/Menus/SubItems/controles_conectados.tscn" id="4_utp8p"]
-[ext_resource type="PackedScene" uid="uid://cciukv0gmo85j" path="res://Cenas/Menus/SubItems/level_item.tscn" id="5_utp8p"]
 
 [node name="MenuSelecao" type="Control" unique_id=640649270]
 layout_mode = 3
@@ -67,9 +66,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 alignment = 1
-
-[node name="Level_Item" parent="ScrollContainerLeveis/HBoxContainer" unique_id=32849767 instance=ExtResource("5_utp8p")]
-layout_mode = 2
 
 [node name="ButtonVoltar" type="Button" parent="." unique_id=666661674]
 layout_mode = 1
