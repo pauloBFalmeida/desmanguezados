@@ -14,6 +14,8 @@ func _ready() -> void:
 	# -- Online --
 	if NetworkingGame.is_game_online: 
 		add_child(OnlineHelperSelecaoLevel.criar(self))
+		## Desliga o input de voltar pro menu principal (ui_back -> Esc ou PS_bolinha) 
+		set_process_input(false)
 
 # --- Voltar ---
 func _on_button_voltar_pressed() -> void:
