@@ -1,6 +1,5 @@
-extends Control
+extends BaseButton
 class_name LevelItem
-
 
 @export var medalha_cor : Dictionary[LevelManager.Medalha_tipo, Color]
 ## texto antes do tempo, com espaco no final
@@ -18,10 +17,7 @@ var level_id : LevelManager.Level_id
 func btn_grab_focus() -> void:
 	grab_focus()
 
-func _on_pressed() -> void:
-	SceneManager.goto_level(level_id)
-
-func ajust(_level_id : int) -> void:
+func ajust(_level_id : LevelManager.Level_id) -> void:
 	level_id = _level_id
 	# Nome do level
 	var texto_btn : String = "Sem_Nome" 
@@ -51,7 +47,12 @@ func _load_info() -> void:
 	# ajusta o texto do tempo
 	var minuto  : int = highscore / 60
 	var segundo : int = highscore % 60
-	label_info.text = tempo_text + str(minuto) + ":" + str(segundo)
+	# lida com colocar o 0 na frente se for menos que 10 
+	var str_segundo : String = str(segundo)
+	if segundo < 10: 
+		str_segundo = "0" + str_segundo
+	# atualiza a label
+	label_info.text = tempo_text + str(minuto) + ":" + str_segundo
 	
 	# ajusta imagem
 	var medalha : LevelManager.Medalha_tipo = LevelManager.get_medalha_level(level_id, highscore)

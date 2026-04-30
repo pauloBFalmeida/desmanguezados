@@ -18,10 +18,15 @@ func _ready() -> void:
 	
 	for jogador : Jogador in get_children():
 		jogadores.append(jogador)
-		jogadores_spawns[jogador] = jogador.global_position
 		jogadores_atras_pos[jogador] = [] # lista nova de posicoes
+	# ajusta os spawns
+	set_spawn_point()
 
-func _physics_process(delta: float) -> void:
+func set_spawn_point() -> void:
+	for jogador: Jogador in jogadores:
+		jogadores_spawns[jogador] = jogador.global_position
+
+func _physics_process(_delta: float) -> void:
 	for jogador in jogadores:
 		# -- jogador na agua --
 		var on_water : bool = tilemaps_chao.jogador_pos_on_water(jogador.global_position)
@@ -94,14 +99,9 @@ func get_ferramentas_mgmt() -> FerramentaMgmt:
 
 # ------------------------------------
 func pausar_jogadores(pausar : bool = true) -> void:
-	var executar := not pausar
-	set_physics_process(executar)
+	set_physics_process(not pausar)
 	for jog in jogadores:
-		jog.set_physics_process(executar)
-		jog.set_process(executar)
-		jog.set_process_input(executar)
 		if pausar:
-			jog.jogador_anim.stop()
+			jog.process_mode = Node.PROCESS_MODE_DISABLED
 		else:
-			jog.jogador_anim.play()
-	
+			jog.process_mode = Node.PROCESS_MODE_INHERIT

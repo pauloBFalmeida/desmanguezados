@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://bihajaisgd8ms"]
+[gd_resource type="TileSet" format=3 uid="uid://bihajaisgd8ms"]
 
 [ext_resource type="Texture2D" uid="uid://b4rlhqxr88kr0" path="res://Assets/Cenario/Tiles/Areia.png" id="1_yocjo"]
 

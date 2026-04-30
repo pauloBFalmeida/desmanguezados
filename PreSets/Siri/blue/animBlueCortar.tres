@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=21 format=3 uid="uid://btjqiptymedg7"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://btjqiptymedg7"]
 
 [ext_resource type="Texture2D" uid="uid://p0dxr61onviu" path="res://Assets/Siris/blue/action/blue_axe_action.png" id="1_1gbv0"]
 [ext_resource type="Texture2D" uid="uid://das3tlaa2fctb" path="res://Assets/Siris/blue/walker/blue_axe_walker.png" id="2_lmwuv"]

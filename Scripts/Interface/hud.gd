@@ -2,6 +2,10 @@ extends Control
 class_name Hud
 
 signal partida_comecando
+signal pausado
+signal despausado
+
+@export var gerenciador_partida : GerenciadorPartida
 
 # -- hud in game --
 @onready var label_cronometro := $LabelTempo
@@ -12,12 +16,17 @@ signal partida_comecando
 @onready var game_over_sprite := $GameOverMenu/ImagemFim
 @onready var game_over_label_tempo := $GameOverMenu/LabelTempoPartida
 @onready var game_over_btns := $GameOverMenu/ControlBtns
-@onready var game_over_btn_replay := $GameOverMenu/ControlBtns/ButtonReplay
-@onready var game_over_btn_prox := $GameOverMenu/ControlBtns/ButtonProx
+@onready var game_over_btn_replay : Button = $GameOverMenu/ControlBtns/ButtonReplay
+@onready var game_over_btn_prox :   Button = $GameOverMenu/ControlBtns/ButtonProx
+@onready var game_over_btn_menu:    Button = $GameOverMenu/ControlBtns/ButtonMenu
 
 # -- pause --
 @onready var pause_menu := $PauseMenu
-@onready var pause_menu_btn_jogo := $PauseMenu/VBoxContainer/ButtonJogo
+@onready var pause_menu_btn_jogo : Button = $PauseMenu/VBoxContainer/ButtonJogo
+
+# -- Restart e Menu --
+@onready var button_restart: Button = $PauseMenu/VBoxContainer/ButtonRestart
+@onready var button_menu: Button = $PauseMenu/VBoxContainer/ButtonMenu
 
 # -- contagem do comeco de partida --
 @onready var start_menu := $StartMenu
@@ -25,15 +34,13 @@ signal partida_comecando
 @export var start_count_num : int = 3
 var is_comecando_contar : bool = false
 
-@onready var temporizador := $Temporizador
+@onready var temporizador : Temporizador = $Temporizador
 
 # -- musica de fundo --
 @export var musica_level : AudioStream
 @onready var audio_player_musica := $AudioStreamPlayer
 
-enum Tipo_fim {DERROTA_TEMPO, VITORIA_SUJO, VITORIA_LIMPO}
-
-@export var imagens_fim_jogo : Dictionary[Tipo_fim, CompressedTexture2D]
+@export var imagens_fim_jogo : Dictionary[GerenciadorPartida.TipoFim, CompressedTexture2D]
 
 var despausado_recente : bool = false
 
@@ -43,14 +50,21 @@ func _input(event: InputEvent) -> void:
 
 func _ready() -> void:
 	_despausar()
+	
+	# esconde as telas
+	start_menu.hide()
+	game_over_menu.hide()
+	
+	# espera 1 frame
+	await get_tree().process_frame
+	
 	# ajusta o audio
 	audio_player_musica.stream = musica_level
 	audio_player_musica.stop()
 	audio_player_musica.process_mode = Node.PROCESS_MODE_PAUSABLE
 	audio_player_musica.volume_db = Globais.volume_musica_partida
-	# esconde as telas
-	start_menu.hide()
-	game_over_menu.hide()
+	# conecta o fim de partida
+	gerenciador_partida.final_partida.connect(show_tela_fim)
 
 func get_temporizador() -> Temporizador:
 	return temporizador
@@ -109,9 +123,33 @@ func comecar_partida() -> void:
 	temporizador.comecar()
 
 # ---------------------------------
+# Botoes da Hud
+# ---------------------------------
+
+# -- Pause Menu --
+func _on_button_jogo_pressed() -> void:
+	_despausar()
+
+func _on_button_restart_pressed() -> void:
+	_replay()
+
+func _on_button_menu_pressed() -> void:
+	if Globais.current_level_id == LevelManager.Level_id.ZEN:
+		_goto_zen_menu()
+		return
+	_goto_selecao()
+
+# -- Game Over Menu --
+func _on_button_prox_pressed() -> void:
+	# atualiza para pre-selecionar o proximo level no menu de selecao
+	Globais.current_level_id = LevelManager.get_next_level(Globais.current_level_id)
+	# vai para o menu de selecao
+	_goto_selecao()
+
+# ---------------------------------
 # Menu de GameOver
 # ---------------------------------
-func show_tela_fim(tipo : Tipo_fim, tempo_partida : int = -1) -> void:
+func show_tela_fim(tipo : GerenciadorPartida.TipoFim, tempo_partida : int = -1) -> void:
 	# para a musica (tb para restart do level n comecar tocando a musica)
 	audio_player_musica.stop()
 	
@@ -139,7 +177,7 @@ func show_tela_fim(tipo : Tipo_fim, tempo_partida : int = -1) -> void:
 	# espera a imagem ficar do tamanho da tela
 	await tween.finished
 	
-	if tipo == Tipo_fim.VITORIA_LIMPO and tempo_partida != -1:
+	if tipo == GerenciadorPartida.TipoFim.VITORIA_LIMPO and tempo_partida != -1:
 		game_over_label_tempo.show()
 		game_over_label_tempo.text  = "Tempo Partida: "
 		game_over_label_tempo.text += str(tempo_partida) + " segundos"
@@ -151,7 +189,7 @@ func show_tela_fim(tipo : Tipo_fim, tempo_partida : int = -1) -> void:
 	await get_tree().create_timer(1.0, true).timeout
 	game_over_btns.show()
 	
-	if tipo == Tipo_fim.VITORIA_LIMPO:
+	if tipo == GerenciadorPartida.TipoFim.VITORIA_LIMPO:
 		game_over_btn_replay.hide()
 		game_over_btn_prox.show()
 		game_over_btn_prox.grab_focus()
@@ -159,13 +197,6 @@ func show_tela_fim(tipo : Tipo_fim, tempo_partida : int = -1) -> void:
 		game_over_btn_prox.hide()
 		game_over_btn_replay.show()
 		game_over_btn_replay.grab_focus()
-
-
-func _on_button_replay_pressed() -> void:
-	_replay()
-
-func _on_button_menu_gameover_pressed() -> void:
-	_goto_selecao()
 
 # ---------------------------------
 # Pausar Partida
@@ -192,43 +223,39 @@ func toggle_pausar() -> void:
 
 func _pausar() -> void:
 	if despausado_recente: return # se tiver despausado recente -> nao pause
+	emit_signal("pausado")
 	get_tree().paused = true
 	pause_menu.show()
 	pause_menu_btn_jogo.grab_focus()
 	
 func _despausar() -> void:
+	emit_signal("despausado")
 	pause_menu.hide()
 	get_tree().paused = false
 	# se foi despausado recentemente
 	despausado_recente = true
 	get_tree().create_timer(0.5, true).timeout.connect(func(): despausado_recente = false )
 
-func _on_button_jogo_pressed() -> void:
-	_despausar()
-
-func _on_button_restart_pressed() -> void:
-	_replay()
-
-func _on_button_prox_pressed() -> void:
-	# atualiza para pre-selecionar o proximo level no menu de selecao
-	Globais.current_level_id = LevelManager.get_next_level(Globais.current_level_id)
-	# vai para o menu de selecao
-	_goto_selecao()
-
-func _on_button_menu_pressed() -> void:
-	_goto_menu()
-
 # ---------------------------------
 # Funcoes de Trocar de Cena
 # ---------------------------------
 func _goto_menu() -> void:
 	get_tree().paused = false
-	SceneManager.goto_menu()
+	SceneManager.full_goto_menu()
 
 func _goto_selecao() -> void:
 	get_tree().paused = false
-	SceneManager.goto_menu()
+	if NetworkingGame.is_game_online:
+		SceneManager.full_goto_selecao()
+		return
+	SceneManager.full_goto_menu()
 	SceneManager.goto_selecao()
+
+# -- Modo Zen --
+func _goto_zen_menu() -> void:
+	_goto_menu()
+	SceneManager.goto_menu_zen()
+
 
 func _replay() -> void:
 	get_tree().paused = false

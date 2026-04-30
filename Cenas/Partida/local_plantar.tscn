@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bxemk6uv78eif"]
+[gd_scene format=3 uid="uid://bxemk6uv78eif"]
 
 [ext_resource type="Texture2D" uid="uid://bnsy7do16v8k5" path="res://Assets/Ferramentas/circle.png" id="1_uyc3p"]
 [ext_resource type="Texture2D" uid="uid://cc4b48si41pof" path="res://Assets/Ferramentas/seta.png" id="2_uyc3p"]
@@ -84,22 +84,22 @@ animations = [{
 "speed": 6.0
 }]
 
-[node name="LocalPlantar" type="StaticBody2D" groups=["LocalPlantar", "Marcador"]]
+[node name="LocalPlantar" type="StaticBody2D" unique_id=794312374 groups=["LocalPlantar", "Marcador"]]
 collision_layer = 16
 collision_mask = 0
 
-[node name="Icon" type="Sprite2D" parent="."]
+[node name="Icon" type="Sprite2D" parent="." unique_id=1011889784]
 modulate = Color(0.075, 0.45, 0, 0.823529)
 position = Vector2(2, 6)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_uyc3p")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1749530939]
 position = Vector2(2, 3)
 shape = SubResource("CircleShape2D_ank1a")
 debug_color = Color(0.492033, 0.58, 0.174, 0.196078)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=61543667]
 z_index = 15
 position = Vector2(4, -32)
 scale = Vector2(3, 3)

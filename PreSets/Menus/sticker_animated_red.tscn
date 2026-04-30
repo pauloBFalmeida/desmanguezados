@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://3msa4hadxgqu"]
+
+[ext_resource type="Shader" uid="uid://cw712yn14yynr" path="res://Scripts/Shaders/outline.gdshader" id="1_1f20m"]
+[ext_resource type="SpriteFrames" uid="uid://cwkg5jiumd2mg" path="res://PreSets/Siri/red/animRedNormal.tres" id="2_t2ljp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yevo8"]
+resource_local_to_scene = true
+shader = ExtResource("1_1f20m")
+shader_parameter/cor = Color(0, 0, 0, 1)
+shader_parameter/type = 2
+shader_parameter/thickness = 1.0
+
+[node name="StickerAnimatedRed" type="AnimatedSprite2D" unique_id=505289148]
+material = SubResource("ShaderMaterial_yevo8")
+scale = Vector2(3, 3)
+sprite_frames = ExtResource("2_t2ljp")
+animation = &"andar"
+autoplay = "andar"

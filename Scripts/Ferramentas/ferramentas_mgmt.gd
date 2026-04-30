@@ -1,12 +1,13 @@
 extends Node2D
 class_name FerramentaMgmt
 
-signal pegou_ferramenta
-signal jogou_ferramenta
+signal pegou_ferramenta(jogador: Jogador, ferramenta: Ferramenta)
+signal dropou_ferramenta(jogador: Jogador, ferramenta: Ferramenta, global_pos_ferramenta: Vector2)
+signal jogou_ferramenta(jogador: Jogador, ferramenta: Ferramenta)
 
 var tilemaps_chao : TileMapsChao
 var locais_plantar_colecao : LocalPlantarColecao
-var level : Level
+var gerenciador_partida : GerenciadorPartida
 
 @export var mudas_referencias : Array[PackedScene]
 @export var dropar_offset_jogador := Vector2(-15, 40)
@@ -14,10 +15,10 @@ var level : Level
 var ferramentas_level : Array[Ferramenta]
 var jogadores_segurando_ferramenta : Dictionary[Jogador, Ferramenta]
 
-@onready var jogar_ferramenta_mgmt := $JogarFerramentaMgmt
+@onready var jogar_ferramenta_mgmt : JogarFerramentaMgmt = $JogarFerramentaMgmt
 
-var plantar_unico_ref := preload("res://Cenas/Ferramentas/Itens/PlantarUnico.tscn")
-var plantar_unico : Plantar
+const PLANTAR_UNICO_REF := preload("uid://yowio7owqi8y")
+var plantar_unico : PlantarUnico
 
 func _ready() -> void:
 	# passa a referencia do FerramentaMgmt para todas as ferramentas
@@ -39,15 +40,6 @@ func set_locais_plantar_colecao(_locais_plantar_colecao : LocalPlantarColecao) -
 # -----------------------------------------------
 # Plantar Muda
 # -----------------------------------------------
-#func plantar_muda(local_plantar : Node2D) -> void:
-	## instancia uma muda
-	#var muda_ref = mudas_referencias.pick_random()
-	#var muda : Arvore = muda_ref.instantiate()
-	## ajustes para muda funcionar
-	#muda.global_position = local_plantar.global_position
-	#level.plantada_arvore_nativa(muda)
-	## retira o local de plantar para colocar a muda
-	#locais_plantar_colecao.remove_local_plantar(local_plantar)
 	
 func plantar_muda(global_pos : Vector2) -> void:
 	# instancia uma muda
@@ -55,7 +47,7 @@ func plantar_muda(global_pos : Vector2) -> void:
 	var muda : Arvore = muda_ref.instantiate()
 	# ajustes para muda funcionar
 	muda.global_position = global_pos
-	level.plantada_arvore_nativa(muda)
+	gerenciador_partida.plantada_arvore_nativa(muda)
 
 # -----------------------------------------------
 # Pegar e Largar ferramenta
@@ -90,8 +82,19 @@ func jogador_pegar_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> boo
 	return true # retorne que pegou a ferramenta
 
 func jogador_dropar_ferramenta(jogador : Jogador, ferramenta : Ferramenta, 
-								global_pos_ferramenta : Vector2 = Vector2.ZERO) -> void:
+								global_pos_ferramenta : Vector2 = Vector2.ZERO,
+								forcar: bool = false) -> void:
+	# se forcar, ignore as verificacoes
+	if not forcar:
+		# se o jogador nao esta segurando essa ferramenta, pare
+		if not jogadores_segurando_ferramenta.has(jogador): return
+		if jogadores_segurando_ferramenta[jogador] != ferramenta: return
+	
+	# tira a ferramenta do jogador
 	_retirar_ferramenta_jogador(jogador, ferramenta)
+	
+	# emite o sinal que ele dropou
+	emit_signal("dropou_ferramenta", jogador, ferramenta, global_pos_ferramenta)
 	
 	# lidar com plantar uso unico -> deve parar o resto da funcao
 	if _lidar_dropar_plantar_unico(jogador, ferramenta):
@@ -114,7 +117,9 @@ func _retirar_ferramenta_jogador(jogador : Jogador, ferramenta : Ferramenta) -> 
 	if ferramenta.tipo == Ferramenta.Ferramenta_tipo.PLANTAR:
 		# se ainda tem algum jogador segurando uma ferramenta tipo PLANTAR
 		var ainda_segurando : bool = false 
-		for _ferram in jogadores_segurando_ferramenta .values():
+		for _ferram in jogadores_segurando_ferramenta.values():
+			if not is_instance_valid(_ferram): continue
+			# ferramenta de plantar
 			if (_ferram.tipo == Ferramenta.Ferramenta_tipo.PLANTAR or 
 			_ferram.tipo == Ferramenta.Ferramenta_tipo.PLANTAR_UNICO):
 				ainda_segurando = true
@@ -140,14 +145,18 @@ func _criar_ferramenta_plantar_unico(jogador : Jogador, ferramenta_plantar : Pla
 		# se for ser deletado -> entao crie outro
 		if not plantar_unico.is_queued_for_deletion():
 			return
-	
-	plantar_unico = plantar_unico_ref.instantiate()
-	plantar_unico.iniciar(ferramenta_plantar)
-	plantar_unico.set_ferramenta_mgmt(self) # necessario para funcionar
-	# esconde a ferramenta mas deixa que o outro jogador possa pegar
-	plantar_unico.hide_manter_pegavel_ferramenta()
+	# fabrica a ferramenta
+	plantar_unico = _fabricar_ferramenta_plantar_unico(ferramenta_plantar)
 	# adiciona ao jogador
 	jogador.add_child(plantar_unico)
+
+func _fabricar_ferramenta_plantar_unico(ferramenta_plantar : Plantar) -> PlantarUnico:
+	var _plantar_unico : PlantarUnico = PLANTAR_UNICO_REF.instantiate()
+	_plantar_unico.iniciar(ferramenta_plantar)
+	_plantar_unico.set_ferramenta_mgmt(self) # necessario para funcionar
+	# esconde a ferramenta mas deixa que o outro jogador possa pegar
+	_plantar_unico.hide_manter_pegavel_ferramenta()
+	return _plantar_unico
 
 func _deletar_ferramenta_plantar_unico(ferramenta : Ferramenta, criar_outra : bool = true) -> void:
 	ferramenta.hide_ferramenta()
@@ -182,14 +191,16 @@ func _lidar_dropar_plantar_unico(jogador : Jogador, ferramenta : Ferramenta) -> 
 # -----------------------------------------------
 # Jogar / Throw ferramenta
 # -----------------------------------------------
-# charge de [0.0, 1.0] para quanto porcento esta carregado 
+
+## charge de [0.0, 1.0] para quanto porcento esta carregado 
 func jogador_throw_ferramenta_segurando(jogador : Jogador, 
 										direcao : Vector2, 
 										charge : float) -> void:
-	jogar_ferramenta_mgmt.segurando(jogador, direcao, charge)
+	jogar_ferramenta_mgmt.mirando(jogador, direcao, charge)
 	
 func jogador_throw_ferramenta_jogar(jogador : Jogador, ferramenta : Ferramenta) -> void:
 	if not jogar_ferramenta_mgmt.previsao_exist(jogador): return
+	
 	# lidar com plantar uso unico -> deve parar o resto da funcao
 	if _lidar_dropar_plantar_unico(jogador, ferramenta):
 		return

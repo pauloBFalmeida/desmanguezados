@@ -4,6 +4,8 @@ extends Node
 #	-entao-> usamos um valor alto para os leveis sem highscore ainda
 const no_highscore_value : int = 999
 
+const DEFAULT_CONTROLE_TIPO : InputManager.Controle_tipo = InputManager.Controle_tipo.PS
+
 func _ready() -> void:
 	# ajusta o valor dos que leveis sem highscore ainda 
 	for id in LevelManager.Level_id.values():
@@ -29,14 +31,20 @@ func is_abrindo_jogo() -> bool:
 var possivel_aim_all_time : bool = false
 var indicador_direcao_transparente_sem_target : bool = true
 
+## Tipo de controle que cada player esta usando, [PlayerId] -> Controle_tipo
 var controle_tipo_player : Dictionary[InputManager.PlayerId, InputManager.Controle_tipo]={
-	InputManager.PlayerId.P1 : InputManager.Controle_tipo.PS, 
-	InputManager.PlayerId.P2 : InputManager.Controle_tipo.PS }
+	InputManager.PlayerId.P1 : DEFAULT_CONTROLE_TIPO, 
+	InputManager.PlayerId.P2 : DEFAULT_CONTROLE_TIPO }
 
+## Ajustado os controles do jogador ao abrir o ControlesConectados pela primeira vez
+var ajustado_keyboard_controles: bool = false
+
+# Audio
 var volume_musica_menu : float = -20.0
 var volume_musica_partida : float = -25.0
 var volume_efeitos_partida : float = 0.0
 
+# Graficos
 var tela_cheia := false
 var remov_efeitos_graf := false
 var remov_logo_intro := false
@@ -80,5 +88,4 @@ func verif_rem_efeito(nodo : Node2D) -> void:
 	# se nao for para remover os efeitos graficos -> nao faca nada
 	if not remov_efeitos_graf: return
 	
-	print(nodo)
 	nodo.material = CanvasItemMaterial.new()

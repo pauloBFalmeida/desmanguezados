@@ -1,11 +1,14 @@
+class_name PlantarUnico
 extends Plantar
 
-func iniciar(plantar : Plantar) -> void:
-	layer_acao = plantar.layer_acao
+func iniciar(_plantar : Plantar) -> void:
 	tipo = Ferramenta_tipo.PLANTAR_UNICO
-	duracao_cooldown = plantar.duracao_cooldown
-	acontecer_offset = plantar.acontecer_offset
-	sons = plantar.sons.duplicate(true)
+	# copia a referencia
+	if is_instance_valid(_plantar):
+		layer_acao = _plantar.layer_acao
+		duracao_cooldown = _plantar.duracao_cooldown
+		acontecer_offset = _plantar.acontecer_offset
+		sons = _plantar.sons.duplicate(true)
 	
 	super._ready()
 

@@ -5,6 +5,11 @@ var ferramenta_mgmt : FerramentaMgmt
 
 var sprite_chao_ref := "res://Cenas/Ferramentas/throw_sprite_chao.tscn"
 
+signal jogador_mirando(jogador : Jogador, global_end_pos : Vector2)
+signal jogador_jogou_ferramenta(jogador : Jogador, ferramenta : Ferramenta, global_end_pos: Vector2)
+signal jogador_cancelou_jogar(jogador : Jogador)
+signal ferramenta_caiu_chao(ferramenta : Ferramenta, global_pos: Vector2)
+
 ## distancia maxima que a ferramenta via ser jogada
 @export var max_distancia : float = 450.0
 ## curva de como crece a distancia ao segurar por segundo
@@ -29,13 +34,18 @@ func _process(delta: float) -> void:
 func set_ferramenta_mgmt(_ferram_mgmt : FerramentaMgmt) -> void:
 	ferramenta_mgmt = _ferram_mgmt
 
-# charge de [0.0, 1.0] para quanto porcento esta carregado 
-func segurando(jogador : Jogador, 
+## charge de [0.0, 1.0] para quanto porcento esta carregado 
+func mirando(jogador : Jogador, 
 					direcao : Vector2, 
 					charge : float) -> void:
 	var distancia := max_distancia * distancia_por_tempo.sample(charge)
 	var global_end_pos := jogador.global_position + (direcao * distancia)
 	
+	emit_signal("jogador_mirando", jogador, global_end_pos)
+	
+	mostrar_mira(jogador, global_end_pos)
+
+func mostrar_mira(jogador : Jogador, global_end_pos: Vector2) -> void:
 	# jogador nao tem uma curva de previsao ainda -> criar uma
 	if not previsao_paths.has(jogador):
 		_montar_previsao(jogador)
@@ -46,42 +56,81 @@ func segurando(jogador : Jogador,
 func previsao_exist(jogador : Jogador) -> bool:
 	return previsao_paths.has(jogador)
 
+## curva de previsao do jogador -- vira --> curva de lancamento
 func jogar(jogador : Jogador, ferramenta : Ferramenta) -> void:
-	# curva de previsao do jogador -- vira --> curva de lancamento
+	_emitir_jogador_jogou_ferramenta(jogador, ferramenta)
+	
 	var path = previsao_paths[jogador]
-	previsao_paths.erase(jogador) # remove da lista de previsao
+	# remove da lista de previsao
+	limpar_predicao(jogador, false)
+	# passa o path da curva, do jogador para ferramenta_mgmt
+	jogador.remove_child(path)
+	add_child(path)
+	# ajusta a curva para a animacao de jogar
+	_ajusta_anim_jogar(jogador, ferramenta, path)
+
+func jogar_ferramenta_criar_curva(jogador : Jogador, ferramenta : Ferramenta,
+								global_end_pos: Vector2) -> void:
+	limpar_predicao(jogador, true)
+	
+	# -- criar o path da curva de jogar --
+	var path = _criar_curva()
+	# criar linha de arremesso
+	var linha = _criar_visual(jogador)
+	path.add_child(linha)
+	# certifica da posicao
+	path.global_position = jogador.global_position
+	# cria a curvatura com posicao final
+	_update_curva_previsao(path, global_end_pos)
+	
+	# -- 
+	# filha do ferramenta_mgmt
+	add_child(path)
+	# ajusta a curva para a animacao de jogar
+	_ajusta_anim_jogar(jogador, ferramenta, path)
+
+## libera a curva de previsao desse jogador
+func limpar_predicao(jogador : Jogador, apagar_curva: bool = true) -> void:
+	if not previsao_paths.has(jogador): return
+	
+	var path = previsao_paths[jogador] # pega o path
+	# remove da lista de previsao
+	previsao_paths.erase(jogador)
+	# apaga os sub-itens
+	if previsao_subitens.has(path):
+		previsao_subitens.erase(path)
 	# apaga os filhos
 	for child in path.get_children():
 		child.queue_free()
-	# passa o path da curva para ferramenta_mgmt
-	jogador.remove_child(path)
-	add_child(path)
+	# apaga a curva de path (se for requesitado)
+	if apagar_curva:
+		emit_signal("jogador_cancelou_jogar", jogador)
+		path.queue_free() # libera a memoria
+
+# -
+# Privadas
+#- 
+
+func _emitir_jogador_jogou_ferramenta(jogador : Jogador, ferramenta : Ferramenta) -> void:
+	var path = previsao_paths[jogador]
+	var global_end_pos := _get_final_global_pos(path)
+	emit_signal("jogador_jogou_ferramenta", jogador, ferramenta, global_end_pos)
+
+func _ajusta_anim_jogar(jogador: Jogador, ferramenta : Ferramenta, path: Path2D) -> void:
 	# ajusta para manter a posicao inicial saindo do jogador
 	path.global_position = jogador.global_position
 	
+	# 
+	var global_end_pos_ferramenta := _get_final_global_pos(path)
+	var indo_esq: bool = jogador.global_position.x > global_end_pos_ferramenta.x
+	
 	# cria a imagem da ferramenta para percorrer a curva
-	var pathFollow = _criar_path_follow_ferramenta(ferramenta)
+	var pathFollow = _criar_path_follow_ferramenta(ferramenta, indo_esq)
 	
 	# adiciona na cena
 	path.add_child(pathFollow)
 	# salva o pathFollow e a ferramenta nesse dict
 	ferramentas_jogadas_followpaths[ferramenta] = pathFollow
-
-## libera a curva de previsao desse jogador
-func limpar_predicao(jogador : Jogador) -> void:
-	if previsao_paths.has(jogador):
-		var path = previsao_paths[jogador] # pega o path
-		# apaga os sub-itens
-		if previsao_subitens.has(path):
-			previsao_subitens.erase(path)
-		# apaga a curva de path
-		previsao_paths.erase(jogador)
-		path.queue_free() # libera a memoria
-
-
-# -
-# Privadas
-#- 
 
 func _montar_previsao(jogador : Jogador) -> void:
 	# criar o path da curva de jogar
@@ -109,7 +158,7 @@ func _montar_previsao(jogador : Jogador) -> void:
 	sprite_fora.hide()
 
 
-func _criar_path_follow_ferramenta(ferramenta : Ferramenta) -> PathFollow2D:
+func _criar_path_follow_ferramenta(ferramenta : Ferramenta, indo_esq: bool = false) -> PathFollow2D:
 	# cria o que percorre a curva
 	var pathFollow := PathFollow2D.new()
 	pathFollow.loop = false
@@ -118,6 +167,9 @@ func _criar_path_follow_ferramenta(ferramenta : Ferramenta) -> PathFollow2D:
 	var ferram_sprite : Sprite2D = ferramenta.sprite.duplicate()
 	ferram_sprite.material = null # remove a outline
 	ferram_sprite.z_index = 20
+	# se estiver indo para esquerda, espelhe a sprite
+	if indo_esq:
+		ferram_sprite.flip_v = true
 	
 	pathFollow.add_child(ferram_sprite)
 	
@@ -160,7 +212,8 @@ func _update_curva_previsao(path : Path2D, global_pos_fim_curva : Vector2) -> vo
 	path.curve.set_point_position(1, final_pos)
 	
 	# update visual
-	_update_visual(path, 
+	if previsao_subitens.has(path):
+		_update_visual(path, 
 						previsao_subitens[path]["linha"],
 						previsao_subitens[path]["sprite_fim"],
 						previsao_subitens[path]["sprite_fora"] )
@@ -249,9 +302,7 @@ func _ferramenta_fim(ferramenta : Ferramenta, path_follow : Node2D) -> void:
 	
 	var path : Path2D = path_follow.get_parent()
 	# posicao onde a ferramenta caiu no chao
-	var global_pos_ferramenta : Vector2
-	global_pos_ferramenta  = path.global_position
-	global_pos_ferramenta += path.curve.get_point_position(1)
+	var global_pos_ferramenta : Vector2 = _get_final_global_pos(path)
 	
 	# se a posicao que caiu for invalida -> pega outra posicao
 	if not ferramenta_mgmt.is_global_pos_valida_ferramenta(global_pos_ferramenta):
@@ -264,9 +315,17 @@ func _ferramenta_fim(ferramenta : Ferramenta, path_follow : Node2D) -> void:
 	
 	# posiciona ferramenta no chao
 	ferramenta_mgmt.posicionar_ferramenta(ferramenta, global_pos_ferramenta)
+	emit_signal("ferramenta_caiu_chao", ferramenta, global_pos_ferramenta)
 	
 	# aparece de volta (visivel no chao)
 	ferramenta.show_ferramenta()
 	
 	# deleta a curva e os filhos
 	path.queue_free()
+
+func _get_final_global_pos(path: Path2D) -> Vector2:
+	var global_pos : Vector2
+	global_pos  = path.global_position
+	global_pos += path.curve.get_point_position(1)
+	return global_pos
+	

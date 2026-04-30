@@ -1,13 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1fhoosfw8cye"]
+[gd_scene format=3 uid="uid://d1fhoosfw8cye"]
 
 [ext_resource type="Script" uid="uid://c08mirq3yalv1" path="res://Scripts/Menus/menu_selecao.gd" id="1_nmwf3"]
 [ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/Menu/CartazDesmangezados.png" id="3_1yk6f"]
-[ext_resource type="PackedScene" uid="uid://cciukv0gmo85j" path="res://Cenas/Menus/SubItems/level_item.tscn" id="3_ijvx7"]
 [ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_utp8p"]
 [ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_1yk6f"]
 [ext_resource type="PackedScene" uid="uid://bk32qrjnda8ni" path="res://Cenas/Menus/SubItems/controles_conectados.tscn" id="4_utp8p"]
 
-[node name="MenuSelecao" type="Control"]
+[node name="MenuSelecao" type="Control" unique_id=640649270]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,7 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nmwf3")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2057460055]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,13 +24,13 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.617928, 0.557354, 1)
 
-[node name="CartazDesmangezados" type="Sprite2D" parent="."]
+[node name="CartazDesmangezados" type="Sprite2D" parent="." unique_id=923059292]
 modulate = Color(0.15, 0.15, 0.15, 1)
 position = Vector2(641, 361.5)
 scale = Vector2(0.597222, 0.452469)
 texture = ExtResource("3_1yk6f")
 
-[node name="LabelTitulo" type="Label" parent="."]
+[node name="LabelTitulo" type="Label" parent="." unique_id=1838844027]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -43,10 +42,10 @@ grow_horizontal = 2
 theme = ExtResource("3_utp8p")
 text = "Níveis"
 
-[node name="ControlesConectados" parent="." instance=ExtResource("4_utp8p")]
+[node name="ControlesConectados" parent="." unique_id=1518211444 instance=ExtResource("4_utp8p")]
 layout_mode = 1
 
-[node name="ScrollContainerLeveis" type="ScrollContainer" parent="."]
+[node name="ScrollContainerLeveis" type="ScrollContainer" parent="." unique_id=614646880]
 custom_minimum_size = Vector2(0, 350)
 layout_mode = 1
 anchors_preset = 14
@@ -62,17 +61,13 @@ grow_vertical = 2
 follow_focus = true
 vertical_scroll_mode = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainerLeveis"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainerLeveis" unique_id=2055474715]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 6
 alignment = 1
 
-[node name="LevelItem" parent="ScrollContainerLeveis/HBoxContainer" instance=ExtResource("3_ijvx7")]
-visible = false
-layout_mode = 2
-
-[node name="ButtonVoltar" type="Button" parent="."]
+[node name="ButtonVoltar" type="Button" parent="." unique_id=666661674]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

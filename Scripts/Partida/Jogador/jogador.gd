@@ -1,9 +1,9 @@
 extends CharacterBody2D
 class_name Jogador
 
-signal pegou_ferramenta
-signal usou_ferramenta
-signal largou_ferramenta
+signal pegou_ferramenta(ferramenta: Ferramenta)
+signal usou_ferramenta(ferramenta: Ferramenta, body: Node2D)
+signal largou_ferramenta(ferramenta: Ferramenta)
 
 @export var player_id := InputManager.PlayerId.P1
 var is_usando_controle : bool = false
@@ -244,7 +244,7 @@ func usar_ferramenta(body : Node2D) -> void:
 	cooldown_jogador(duracao_cooldown)
 	
 	# sinal que usou a ferramenta
-	emit_signal("usou_ferramenta")
+	emit_signal("usou_ferramenta", segurando, body)
 
 func balancar_ferramenta() -> void:
 	# se nao tiver segurando uma ferramenta
@@ -307,7 +307,7 @@ func pegar_ferramenta(ferramenta : Ferramenta) -> void:
 	anim_segurar_ferramenta(segurando)
 	
 	# sinal que pegou a ferramenta
-	emit_signal("pegou_ferramenta")
+	emit_signal("pegou_ferramenta", segurando)
 	
 	# remove a ferramenta dos bodies dentro da area de interacao do jogador
 	bodys_dentro_area.erase(ferramenta)
@@ -325,9 +325,11 @@ func drop_ferramenta(global_pos_ferramenta := Vector2.ZERO) -> void:
 	var ferramenta : Ferramenta = segurando
 	
 	ferramentas_mgmt.jogador_dropar_ferramenta(self, ferramenta, global_pos_ferramenta)
-	_limpar_jogador_ferramenta(ferramenta)
+	limpar_jogador_ferramenta()
+	# sinal que largou a ferramenta
+	emit_signal("largou_ferramenta", ferramenta)
 
-func _limpar_jogador_ferramenta(ferramenta : Ferramenta) -> void:
+func limpar_jogador_ferramenta() -> void:
 	# limpa a mao
 	segurando = null
 	
@@ -340,9 +342,6 @@ func _limpar_jogador_ferramenta(ferramenta : Ferramenta) -> void:
 	
 	# volta a animao para siri sem ferramenta
 	anim_idle()
-	
-	# sinal que largou a ferramenta
-	emit_signal("largou_ferramenta")
 
 # ---- Jogar da ferramenta ----
 func _throw_ferramenta_segurando(delta : float) -> void:
@@ -404,7 +403,7 @@ func _throw_ferramenta_jogar() -> void:
 	# jogue a ferramenta
 	ferramentas_mgmt.jogador_throw_ferramenta_jogar(self, segurando)
 	# jogador parar de segurar ferramenta
-	_limpar_jogador_ferramenta(segurando)
+	limpar_jogador_ferramenta()
 	
 	# reset dps de jogar
 	_throw_ferramenta_reset()

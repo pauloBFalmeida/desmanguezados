@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b6sdx5v5l772m"]
+[gd_scene format=3 uid="uid://b6sdx5v5l772m"]
 
 [ext_resource type="Script" uid="uid://brncsdifpd8ke" path="res://Scripts/Interface/hud.gd" id="1_toh8p"]
 [ext_resource type="Texture2D" uid="uid://clny3k8wxq5x1" path="res://Assets/Interface/Partida/GameOverImage.jpg" id="2_7b8ht"]
@@ -21,7 +21,7 @@ shader_parameter/brightness = 1.1
 shader_parameter/contrast = 1.1
 shader_parameter/saturation = 1.1
 
-[node name="HUD" type="Control"]
+[node name="HUD" type="Control" unique_id=1881761060]
 z_index = 199
 layout_mode = 3
 anchors_preset = 15
@@ -37,13 +37,13 @@ imagens_fim_jogo = Dictionary[int, CompressedTexture2D]({
 2: ExtResource("4_k3s11")
 })
 
-[node name="Temporizador" type="Node" parent="."]
+[node name="Temporizador" type="Node" parent="." unique_id=1145999959]
 script = ExtResource("5_wa2qo")
 
-[node name="AudioPlayerFinalTempo" type="AudioStreamPlayer" parent="Temporizador"]
+[node name="AudioPlayerFinalTempo" type="AudioStreamPlayer" parent="Temporizador" unique_id=432576082]
 stream = ExtResource("7_insla")
 
-[node name="ColorCorrectionEffect" type="TextureRect" parent="."]
+[node name="ColorCorrectionEffect" type="TextureRect" parent="." unique_id=942191635]
 material = SubResource("ShaderMaterial_pqhgn")
 layout_mode = 1
 anchors_preset = 15
@@ -53,7 +53,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("8_pqhgn")
 
-[node name="LabelMudas" type="Label" parent="."]
+[node name="LabelMudas" type="Label" parent="." unique_id=235147309]
 visible = false
 layout_mode = 0
 offset_right = 40.0
@@ -63,7 +63,7 @@ theme_override_constants/outline_size = 8
 theme_override_font_sizes/font_size = 25
 text = "Arvores a serem plantadas: "
 
-[node name="LabelTempo" type="Label" parent="."]
+[node name="LabelTempo" type="Label" parent="." unique_id=1035436573]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -81,7 +81,7 @@ horizontal_alignment = 1
 visible_characters = 6
 visible_ratio = 1.2
 
-[node name="ColorRect" type="ColorRect" parent="LabelTempo"]
+[node name="ColorRect" type="ColorRect" parent="LabelTempo" unique_id=1564965949]
 modulate = Color(0.51, 0.51, 0.51, 0.513726)
 z_index = -1
 layout_mode = 0
@@ -89,7 +89,7 @@ offset_left = -5.0
 offset_right = 92.0
 offset_bottom = 47.0
 
-[node name="BarraProgresso" type="Control" parent="."]
+[node name="BarraProgresso" type="Control" parent="." unique_id=1721965228]
 modulate = Color(1, 1, 1, 0.588235)
 layout_mode = 1
 anchors_preset = 12
@@ -101,7 +101,7 @@ grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("10_uk2xs")
 
-[node name="ProgColorBase" type="ColorRect" parent="BarraProgresso"]
+[node name="ProgColorBase" type="ColorRect" parent="BarraProgresso" unique_id=1406199419]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -110,7 +110,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.24, 0.24, 0.24, 1)
 
-[node name="ProgColorTop" type="ColorRect" parent="BarraProgresso"]
+[node name="ProgColorTop" type="ColorRect" parent="BarraProgresso" unique_id=660654594]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,13 +118,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="mostradores" type="Node2D" parent="BarraProgresso"]
+[node name="mostradores" type="Node2D" parent="BarraProgresso" unique_id=1686194977]
 position = Vector2(0, 15)
 
-[node name="pivot" type="Node2D" parent="BarraProgresso/mostradores"]
+[node name="pivot" type="Node2D" parent="BarraProgresso/mostradores" unique_id=1238482671]
 position = Vector2(1233, 0)
 
-[node name="Lixo" type="Sprite2D" parent="BarraProgresso/mostradores/pivot"]
+[node name="Lixo" type="Sprite2D" parent="BarraProgresso/mostradores/pivot" unique_id=1558822378]
 modulate = Color(0.35, 0.35, 0.35, 1)
 position = Vector2(13, 0)
 scale = Vector2(1.18334, 1.17375)
@@ -132,7 +132,7 @@ texture = ExtResource("12_nmlv5")
 region_enabled = true
 region_rect = Rect2(0, 0, 15, 19)
 
-[node name="ArvoresMangue" type="Sprite2D" parent="BarraProgresso/mostradores/pivot"]
+[node name="ArvoresMangue" type="Sprite2D" parent="BarraProgresso/mostradores/pivot" unique_id=1835975623]
 modulate = Color(0.35, 0.35, 0.35, 1)
 position = Vector2(35, 0)
 scale = Vector2(1.23334, 1.25)
@@ -140,7 +140,7 @@ texture = ExtResource("11_42fxd")
 region_enabled = true
 region_rect = Rect2(0, 17, 15, 20)
 
-[node name="PauseMenu" type="Control" parent="."]
+[node name="PauseMenu" type="Control" parent="." unique_id=2138057114]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -151,7 +151,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="PauseMenu"]
+[node name="ColorRect" type="ColorRect" parent="PauseMenu" unique_id=340798623]
 modulate = Color(0.117, 0.27795, 0.45, 0.745098)
 layout_mode = 0
 offset_left = -300.0
@@ -159,7 +159,7 @@ offset_top = -200.0
 offset_right = 300.0
 offset_bottom = 200.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu" unique_id=163513969]
 custom_minimum_size = Vector2(400, 350)
 layout_mode = 1
 anchors_preset = 13
@@ -173,47 +173,47 @@ offset_bottom = 175.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelTit" type="Label" parent="PauseMenu/VBoxContainer"]
+[node name="LabelTit" type="Label" parent="PauseMenu/VBoxContainer" unique_id=772442538]
 layout_mode = 2
 theme = ExtResource("13_nmlv5")
 theme_override_font_sizes/font_size = 65
 text = "Pausado"
 horizontal_alignment = 1
 
-[node name="VSeparator" type="VSeparator" parent="PauseMenu/VBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="PauseMenu/VBoxContainer" unique_id=1288698506]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="ButtonJogo" type="Button" parent="PauseMenu/VBoxContainer"]
+[node name="ButtonJogo" type="Button" parent="PauseMenu/VBoxContainer" unique_id=1628081698]
 layout_mode = 2
 theme = ExtResource("13_nmlv5")
 theme_override_font_sizes/font_size = 50
 text = "Continuar Jogo"
 
-[node name="VSeparator2" type="VSeparator" parent="PauseMenu/VBoxContainer"]
+[node name="VSeparator2" type="VSeparator" parent="PauseMenu/VBoxContainer" unique_id=553363734]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="ButtonRestart" type="Button" parent="PauseMenu/VBoxContainer"]
+[node name="ButtonRestart" type="Button" parent="PauseMenu/VBoxContainer" unique_id=1943955543]
 layout_mode = 2
 theme = ExtResource("14_rsky8")
 theme_override_font_sizes/font_size = 50
 text = "Reiniciar Level"
 
-[node name="VSeparator3" type="VSeparator" parent="PauseMenu/VBoxContainer"]
+[node name="VSeparator3" type="VSeparator" parent="PauseMenu/VBoxContainer" unique_id=742497297]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="ButtonMenu" type="Button" parent="PauseMenu/VBoxContainer"]
+[node name="ButtonMenu" type="Button" parent="PauseMenu/VBoxContainer" unique_id=1321615766]
 layout_mode = 2
 theme = ExtResource("14_rsky8")
 theme_override_font_sizes/font_size = 50
 text = "Voltar Menu"
 
-[node name="StartMenu" type="Control" parent="."]
+[node name="StartMenu" type="Control" parent="." unique_id=762415027]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -228,7 +228,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="StartMenu"]
+[node name="ColorRect" type="ColorRect" parent="StartMenu" unique_id=168506028]
 modulate = Color(0.225724, 0.46692, 0.315934, 0.643137)
 layout_mode = 0
 offset_left = -205.0
@@ -237,7 +237,7 @@ offset_right = -165.0
 offset_bottom = -10.0
 scale = Vector2(11.3826, 3.75964)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="StartMenu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="StartMenu" unique_id=2093422443]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -248,21 +248,21 @@ offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelStartText" type="Label" parent="StartMenu/VBoxContainer"]
+[node name="LabelStartText" type="Label" parent="StartMenu/VBoxContainer" unique_id=1736990198]
 layout_mode = 2
 theme = ExtResource("14_rsky8")
 theme_override_font_sizes/font_size = 60
 text = "Jogo começa em"
 horizontal_alignment = 1
 
-[node name="LabelStartCount" type="Label" parent="StartMenu/VBoxContainer"]
+[node name="LabelStartCount" type="Label" parent="StartMenu/VBoxContainer" unique_id=1923235707]
 layout_mode = 2
 theme = ExtResource("14_rsky8")
 theme_override_font_sizes/font_size = 70
 text = "0"
 horizontal_alignment = 1
 
-[node name="GameOverMenu" type="Control" parent="."]
+[node name="GameOverMenu" type="Control" parent="." unique_id=1206270631]
 visible = false
 z_index = 99
 layout_mode = 1
@@ -272,12 +272,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ImagemFim" type="Sprite2D" parent="GameOverMenu"]
+[node name="ImagemFim" type="Sprite2D" parent="GameOverMenu" unique_id=436369975]
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("4_k3s11")
 centered = false
 
-[node name="LabelTempoPartida" type="Label" parent="GameOverMenu"]
+[node name="LabelTempoPartida" type="Label" parent="GameOverMenu" unique_id=1303609806]
 visible = false
 layout_mode = 1
 anchors_preset = 7
@@ -297,7 +297,7 @@ theme_override_constants/outline_size = 11
 theme_override_font_sizes/font_size = 50
 text = "Tempo Partida: 00 segundos"
 
-[node name="ControlBtns" type="Control" parent="GameOverMenu"]
+[node name="ControlBtns" type="Control" parent="GameOverMenu" unique_id=1217708155]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -305,7 +305,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ButtonMenu" type="Button" parent="GameOverMenu/ControlBtns"]
+[node name="ButtonMenu" type="Button" parent="GameOverMenu/ControlBtns" unique_id=903224500]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -319,11 +319,11 @@ offset_bottom = -39.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("14_rsky8")
-theme_override_colors/font_hover_color = Color(1, 0.878431, 0.101961, 1)
 theme_override_colors/font_focus_color = Color(1, 0.878431, 0.101961, 1)
+theme_override_colors/font_hover_color = Color(1, 0.878431, 0.101961, 1)
 text = "Voltar Menu"
 
-[node name="ButtonReplay" type="Button" parent="GameOverMenu/ControlBtns"]
+[node name="ButtonReplay" type="Button" parent="GameOverMenu/ControlBtns" unique_id=192489606]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -334,11 +334,11 @@ offset_right = 310.0
 offset_bottom = -39.0
 grow_vertical = 0
 theme = ExtResource("14_rsky8")
-theme_override_colors/font_hover_color = Color(1, 0.88, 0.1, 1)
 theme_override_colors/font_focus_color = Color(1, 0.878431, 0.101961, 1)
+theme_override_colors/font_hover_color = Color(1, 0.88, 0.1, 1)
 text = "Jogar de Novo"
 
-[node name="ButtonProx" type="Button" parent="GameOverMenu/ControlBtns"]
+[node name="ButtonProx" type="Button" parent="GameOverMenu/ControlBtns" unique_id=1561834259]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -349,16 +349,16 @@ offset_right = 310.0
 offset_bottom = -39.0
 grow_vertical = 0
 theme = ExtResource("14_rsky8")
-theme_override_colors/font_hover_color = Color(1, 0.88, 0.1, 1)
 theme_override_colors/font_focus_color = Color(1, 0.878431, 0.101961, 1)
+theme_override_colors/font_hover_color = Color(1, 0.88, 0.1, 1)
 text = "Próximo Nível"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1226384942]
 volume_db = -25.0
 
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonJogo" to="." method="_on_button_jogo_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonRestart" to="." method="_on_button_restart_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/ButtonMenu" to="." method="_on_button_menu_pressed"]
-[connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonMenu" to="." method="_on_button_menu_gameover_pressed"]
-[connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonReplay" to="." method="_on_button_replay_pressed"]
+[connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonMenu" to="." method="_on_button_menu_pressed"]
+[connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonReplay" to="." method="_on_button_restart_pressed"]
 [connection signal="pressed" from="GameOverMenu/ControlBtns/ButtonProx" to="." method="_on_button_prox_pressed"]

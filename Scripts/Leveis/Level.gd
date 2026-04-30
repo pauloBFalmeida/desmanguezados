@@ -31,7 +31,6 @@ func _ready() -> void:
 	_ajustar_pause()
 	# ferramentas
 	locais_plantar_colecao.esconder()
-	ferramenta_mgmt.level = self
 	ferramenta_mgmt.set_locais_plantar_colecao(locais_plantar_colecao)
 	#
 	ajustar_objetivos()
@@ -66,12 +65,12 @@ func fim_partida() -> void:
 	# -- muda a imagem dependendo das condicoes de final --
 	
 	if qtd_mudas_necessitam_plantar() > 0: # nao plantou tudo
-		hud.show_tela_fim(Hud.Tipo_fim.DERROTA_TEMPO)
+		hud.show_tela_fim(GerenciadorPartida.TipoFim.DERROTA_TEMPO)
 	else: # quantidade suficiente de mudas plantadas
 		if qtd_lixo > 0: # deixou lixo
-			hud.show_tela_fim(Hud.Tipo_fim.VITORIA_SUJO)
+			hud.show_tela_fim(GerenciadorPartida.TipoFim.VITORIA_SUJO)
 		else: # limpou tudo
-			hud.show_tela_fim(Hud.Tipo_fim.VITORIA_LIMPO, tempo_partida)
+			hud.show_tela_fim(GerenciadorPartida.TipoFim.VITORIA_LIMPO, tempo_partida)
 	
 
 func verificar_fim() -> void:

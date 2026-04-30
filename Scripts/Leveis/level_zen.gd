@@ -1,7 +1,18 @@
-extends Level
+#extends Level
+extends GerenciadorPartida
+
+@onready var button_prox: Button = $Camera2D/HUD/GameOverMenu/ControlBtns/ButtonProx
 
 func _ready() -> void:
-	super()
+	# -- super() --
+	await get_tree().process_frame
+	iniciar_basicos()
+	# 
+	_ajustar_temporizador()
+	# contagem inicial para comecar o jogo
+	contagem_inicio()
+	# --
+	
 	temporizador.parar() # para de contar o tempo
 	# gera o mapa aleatoriamente
 	ler_globais_ajustes()
@@ -18,7 +29,7 @@ func fim_partida() -> void:
 	# 		salvo a nova estatisca no disco
 	SaveManager.save_game()
 	# esconde o botao de proximo nivel da hud
-	$Camera2D/HUD/GameOverMenu/ControlBtns/ButtonProx.hide()
+	button_prox.hide()
 	
 	# termino a partida
 	super.fim_partida()
@@ -45,7 +56,7 @@ func _on_button_respawn_ferramentas_pressed() -> void:
 	hud.despausar()
 
 # --------------------------------------------- Qtd de jogadores
-@onready var jogadores := $SpawnJogadores.get_children()
+@onready var jogadores : Array[Jogador] = spawn_jogadores.jogadores
 
 var jogadores_jogando : Array = []
 
@@ -143,6 +154,8 @@ func camera_zoom_in() -> void:
 	
 	# reativa movimento dos jogadores
 	spawn_jogadores.pausar_jogadores(false)
+	# salva o spawnpoint
+	spawn_jogadores.set_spawn_point()
 	# tem certeza que desligou o que nao eh camera target
 	_turn_off_jog_not_cam_target()
 

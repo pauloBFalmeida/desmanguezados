@@ -1,29 +1,41 @@
-extends Level
+extends Node
 
+@export var gerenciador_partida : GerenciadorPartida
+
+@export_group("Mare Timing")
 @export var duracao_mare_subir_block    : float = 3.0
 @export var duracao_mare_cheia          : float = 3.0
 @export var duracao_mare_descer_block   : float = 3.0
 @export var duracao_mare_descer_andavel : float = 4.0
 @export var duracao_mare_vazia          : float = 4.0
 @export var duracao_mare_subir_andavel  : float = 4.0
+@export_group("Mare Config")
 @export var tile_mare : TileMapLayer
 
 @export var mare_andavel_min_color : Color
 @onready var mare_cheia_color : Color = tile_mare.modulate
 
-@onready var timer_mare := $TimerMare
-@onready var area_2d_mare := $Area2DMare
-
 @export var tilemaps_sobre_chao : TileMapsChao
+@export var area_2d_mare: Area2D
+
+@onready var timer_mare: Timer = $TimerMare
 
 enum Mare {CHEIA, DESCENDO_BLOCK, DESCENDO_ANDAVEL, VAZIA, SUBINDO_ANDAVEL, SUBINDO_BLOCK}
 var mare_atual : Mare = Mare.CHEIA
 
 func _ready() -> void:
-	super()
+	await get_tree().create_timer(0.5, true).timeout
+	iniciar()
+
+func iniciar() -> void:
+	# ajusta o timer da mare
+	timer_mare.timeout.connect(_on_timer_agua_timeout)
 	timer_mare.start(duracao_mare_cheia)
+	# ajusta o area da agua 
+	area_2d_mare.body_entered.connect(_on_area_2d_mare_body_entered)
+	area_2d_mare.body_exited.connect(_on_area_2d_mare_body_exited)
 	# ajusta para ter mais de 1 set_on_water
-	for jogador in spawn_jogadores.jogadores:
+	for jogador in gerenciador_partida.spawn_jogadores.jogadores:
 		jogador.use_set_on_water_queue = true
 
 func _physics_process(delta: float) -> void:
@@ -38,7 +50,7 @@ func _physics_process(delta: float) -> void:
 			pass
 
 func _verificar_jogadores_na_agua_mare() -> void:
-	for jogador in spawn_jogadores.jogadores:
+	for jogador in gerenciador_partida.spawn_jogadores.jogadores:
 		# -- jogador na agua da mare --
 		var on_water : bool = tilemaps_sobre_chao.jogador_pos_on_water(jogador.global_position)
 		jogador.set_on_water(on_water)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cciukv0gmo85j"]
+[gd_scene format=3 uid="uid://cciukv0gmo85j"]
 
 [ext_resource type="Script" uid="uid://cipaecfgi6vb2" path="res://Scripts/Menus/UsadosMenus/level_item.gd" id="1_ggp4t"]
 [ext_resource type="Texture2D" uid="uid://c40pbr4o7v5ia" path="res://Assets/Interface/leveis_thumbnails/lv1.png" id="2_gd4ua"]
@@ -31,7 +31,7 @@ shader_parameter/twist_speed = 0.765
 shader_parameter/rota_speed = 1.672
 shader_parameter/curve_ci = 0.258
 
-[node name="Level_Item" type="Button"]
+[node name="Level_Item" type="Button" unique_id=32849767]
 custom_minimum_size = Vector2(330, 290)
 anchors_preset = 5
 anchor_left = 0.5
@@ -49,7 +49,7 @@ medalha_cor = Dictionary[int, Color]({
 2: Color(0.6, 0.54902, 0.431373, 1)
 })
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1469045934]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -62,14 +62,14 @@ grow_horizontal = 2
 scale = Vector2(0.26, 0.26)
 texture = ExtResource("2_gd4ua")
 
-[node name="Info" type="Control" parent="."]
+[node name="Info" type="Control" parent="." unique_id=1302024989]
 anchors_preset = 0
 offset_left = 18.0
 offset_top = 170.0
 offset_right = 58.0
 offset_bottom = 210.0
 
-[node name="LabelTempo" type="Label" parent="Info"]
+[node name="LabelTempo" type="Label" parent="Info" unique_id=2107011882]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -86,18 +86,18 @@ theme = ExtResource("3_gd4ua")
 theme_override_font_sizes/font_size = 25
 text = "Melhor Tempo: "
 
-[node name="Concha" type="Sprite2D" parent="Info"]
+[node name="Concha" type="Sprite2D" parent="Info" unique_id=867894574]
 position = Vector2(264, 32.2744)
 scale = Vector2(0.102098, 0.102098)
 texture = ExtResource("3_lyv4a")
 
-[node name="Perola" type="Sprite2D" parent="Info"]
+[node name="Perola" type="Sprite2D" parent="Info" unique_id=301288031]
 material = SubResource("ShaderMaterial_hspar")
 position = Vector2(264, 32.2744)
 scale = Vector2(0.102098, 0.102098)
 texture = ExtResource("5_gd4ua")
 
-[node name="Brilho" type="ColorRect" parent="Info"]
+[node name="Brilho" type="ColorRect" parent="Info" unique_id=1218778979]
 material = SubResource("ShaderMaterial_gd4ua")
 layout_mode = 0
 offset_left = 239.0
@@ -105,7 +105,7 @@ offset_top = 15.0
 offset_right = 279.0
 offset_bottom = 55.0
 
-[node name="LevelName" type="Label" parent="."]
+[node name="LevelName" type="Label" parent="." unique_id=457890640]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -120,5 +120,3 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("3_gd4ua")
 text = "Level 1"
-
-[connection signal="pressed" from="." to="." method="_on_pressed"]

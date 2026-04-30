@@ -41,21 +41,38 @@ var controles_conectados : Dictionary[int, PlayerId] = {}
 
 var players_no_controle : Array[PlayerId]
 
+func get_other_player_id(id: PlayerId) -> PlayerId:
+	return PlayerId.P1 if id == PlayerId.P2 else PlayerId.P2
+
 func _ready() -> void:
 	set_default_keyboard()
 
 # padrao do keyboard para ambos os players
 func set_default_keyboard() -> void:
 	for player_id in PlayerId.values():
-		add_keyboard(player_id)
+		add_keyboard(player_id, player_id)
+
+## Coloca os controles padroes de ambos os jogadores, e desconecta controles
+func reset() -> void:
+	_clear()
+	set_default_keyboard()
+
+## Limpa os actionMaps de ambos os jogadores, e desconecta controles
+func _clear() -> void:
+	for player_id: PlayerId in PlayerId.values():
+		actionMap_players[player_id] = {}
+	# limpa controles
+	controles_conectados.clear()
+	players_no_controle.clear()
 
 # ----- Adiciona as actionMap para o teclado ----
-func add_keyboard(player_id: PlayerId):
+## Adiciona as keys_player_id para o player_id
+func add_keyboard(player_id: PlayerId, keys_player_id: PlayerId):
 	# se nao tiver mapa de acoes pro player -> crie
 	if not actionMap_players.has(player_id):
 		actionMap_players[player_id] = {}
 	# add as acoes do keyboard para esse player
-	var prefix = "key_1_" if player_id == PlayerId.P1 else "key_2_"
+	var prefix = "key_1_" if keys_player_id == PlayerId.P1 else "key_2_"
 	for action_name in action_names:
 		var ref_name: String = prefix + action_name
 		actionMap_players[player_id][action_name] = ref_name
@@ -137,6 +154,16 @@ func get_text_action(player_id: PlayerId, action_name: String) -> String:
 	var texto : String     = get_texto_acao(data,   player_id)
 	return texto
 
+## retorna o texto do icone do botao, para dado jogador, e o controle btn
+func get_text_controle_btn(player_id: PlayerId, controle_btn: Controle_btn)-> String:
+	var data  : Dictionary = {
+		"on_controle": true,
+		"controle_tipo": Globais.controle_tipo_player[player_id],
+		"button": controle_btn
+	}
+	var texto : String = get_texto_acao(data,   player_id)
+	return texto
+
 # ---------- Nomes Botoes ---------------
 enum Controle_btn {
 	A, B, X, Y,
@@ -211,8 +238,8 @@ const Switch_btn_nomes : Dictionary[Controle_btn, String] = {
 
 const controle_btn_indexes : Dictionary[Controle_tipo, Dictionary] = {
 	Controle_tipo.PS: PS_btn_index,
-	#Controle_tipo.XBOX: PS_btn_index,
-	#Controle_tipo.SWITCH: PS_btn_index,
+	Controle_tipo.XBOX: PS_btn_index,
+	Controle_tipo.SWITCH: PS_btn_index,
 }
 
 const PS_btn_index : Dictionary[int, Controle_btn] = {
