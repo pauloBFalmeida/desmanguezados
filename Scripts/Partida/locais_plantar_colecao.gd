@@ -15,6 +15,7 @@ func _ready() -> void:
 		if child.is_in_group("LocalPlantar"):
 			var anim : AnimatedSprite2D = child.get_node("AnimatedSprite2D")
 			animation_nodes.append(anim)
+	esconder()
 
 # --------------
 # Plantar

@@ -12,6 +12,7 @@ enum TipoFim {DERROTA_TEMPO, VITORIA_SUJO, VITORIA_LIMPO}
 @export_category("Jogadores")
 @export var spawn_jogadores : SpawnJogadores
 @export var ferramenta_mgmt : FerramentaMgmt
+@export var tilemaps_chao : TileMapsChao
 @export_category("Objetivos")
 @export var arvores_colecao : CanvasGroup
 @export var lixos_colecao : CanvasGroup
@@ -41,12 +42,17 @@ func _input(event: InputEvent) -> void:
 			hud.pausar()
 
 func _ready() -> void:
+	get_tree().paused = false
+	
+	iniciar_basicos()
+	
 	await get_tree().process_frame
 	
 	# pausa os jogadores
 	spawn_jogadores.pausar_jogadores(true)
 	
-	iniciar_basicos()
+	# ajusta o processamento dos nodos durante o pause
+	_ajustar_pause()
 	#
 	ajustar_objetivos()
 	# 
@@ -58,19 +64,20 @@ func _ready() -> void:
 	contagem_inicio()
 
 func iniciar_basicos() -> void:
-	# passa ref propria para hud
+	# passa ref propria
 	hud.gerenciador_partida = self
+	spawn_jogadores.gerenciador_partida = self
 	
 	# ajustar jogadores
+	spawn_jogadores.iniciar_jogadores()
 	for jog : Jogador in spawn_jogadores.jogadores:
 		jogadores_por_player_id[jog.player_id] = jog
 	
-	# ajusta o processamento dos nodos durante o pause
-	_ajustar_pause()
 	# ferramentas
 	locais_plantar_colecao.esconder()
 	ferramenta_mgmt.gerenciador_partida = self
 	ferramenta_mgmt.set_locais_plantar_colecao(locais_plantar_colecao)
+	ferramenta_mgmt.set_tilemaps_chao(tilemaps_chao)
 
 func ajustar_objetivos() -> void:
 	ajustar_arvores()

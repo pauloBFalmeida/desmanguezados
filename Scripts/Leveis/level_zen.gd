@@ -5,10 +5,20 @@ extends GerenciadorPartida
 
 func _ready() -> void:
 	# -- super() --
-	await get_tree().process_frame
+	get_tree().paused = false
 	iniciar_basicos()
+	await get_tree().process_frame
+	
+	# pausa os jogadores
+	spawn_jogadores.pausar_jogadores(true)
+	
+	# ajusta o processamento dos nodos durante o pause
+	_ajustar_pause()
 	# 
 	_ajustar_temporizador()
+	
+	await get_tree().process_frame
+	await get_tree().process_frame
 	# contagem inicial para comecar o jogo
 	contagem_inicio()
 	# --
