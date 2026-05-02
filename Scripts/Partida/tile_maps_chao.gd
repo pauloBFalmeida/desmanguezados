@@ -12,6 +12,13 @@ func _ready() -> void:
 	# verificar remover efeitos graficos
 	if tilemap_agua and is_instance_valid(tilemap_agua):
 		Globais.verif_rem_efeito(tilemap_agua)
+	
+	await get_tree().process_frame
+	for child in get_children():
+		if child is TileMapDual:
+			var map: TileMapDual = child
+			map.enabled = false
+			map.enabled = true
 
 func jogador_pos_on_water(global_pos_jog : Vector2) -> bool:
 	# pega o tile de agua que o jogador esta em cima
