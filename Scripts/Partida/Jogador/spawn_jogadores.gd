@@ -2,7 +2,7 @@ extends Node2D
 class_name SpawnJogadores
 
 @export var ferramentas_mgmt : FerramentaMgmt
-@export var tilemaps_chao : TileMapsChao
+var gerenciador_partida: GerenciadorPartida
 
 ## quanto segundos atras vai ser buscada a posicao para respawnar o jogador se ele morrer
 @export var respawn_tempo_atras : float = 1.0
@@ -14,11 +14,7 @@ var jogadores_atras_pos : Dictionary[Jogador, Array]
 @onready var max_respawn_tempo_atras_ms := int(1.5 * respawn_tempo_atras * 1000)
 
 func _ready() -> void:
-	ferramentas_mgmt.set_tilemaps_chao(tilemaps_chao)
-	
-	for jogador : Jogador in get_children():
-		jogadores.append(jogador)
-		jogadores_atras_pos[jogador] = [] # lista nova de posicoes
+	iniciar_jogadores()
 	# ajusta os spawns
 	set_spawn_point()
 
@@ -26,14 +22,19 @@ func set_spawn_point() -> void:
 	for jogador: Jogador in jogadores:
 		jogadores_spawns[jogador] = jogador.global_position
 
+func iniciar_jogadores() -> void:
+	for jogador : Jogador in get_children():
+		jogadores.append(jogador)
+		jogadores_atras_pos[jogador] = [] # lista nova de posicoes
+
 func _physics_process(_delta: float) -> void:
 	for jogador in jogadores:
 		# -- jogador na agua --
-		var on_water : bool = tilemaps_chao.jogador_pos_on_water(jogador.global_position)
+		var on_water : bool = gerenciador_partida.tilemaps_chao.jogador_pos_on_water(jogador.global_position)
 		jogador.set_on_water(on_water)
 		
 		# -- jogador no lodo --
-		var speed_modifier : float = tilemaps_chao.jogador_pos_speed_lodo(jogador.global_position)
+		var speed_modifier : float = gerenciador_partida.tilemaps_chao.jogador_pos_speed_lodo(jogador.global_position)
 		# coloca no jogador o speed modifier
 		jogador.set_speed_modifier_terreno(speed_modifier)
 		
@@ -77,7 +78,7 @@ func _find_global_pos_mais_prox(lista_pos: Array, default_global_pos : Vector2) 
 	var closest_diff : float = INF
 	
 	for atras_pos in lista_pos:
-		var on_water : bool = tilemaps_chao.jogador_pos_on_water(atras_pos["global_pos"])
+		var on_water : bool = gerenciador_partida.tilemaps_chao.jogador_pos_on_water(atras_pos["global_pos"])
 		if on_water: # se estava na agua
 			continue # pula essa opcao
 		

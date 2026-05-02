@@ -13,13 +13,14 @@ _data = [Vector2(0, 0.2), 0.0, 0.484919, 0, 0, Vector2(0.741697, 1), 0.0, 0.0, 0
 point_count = 3
 metadata/_snap_enabled = true
 
-[node name="Level_Zen" type="Node" unique_id=978834285 node_paths=PackedStringArray("camera_target", "spawn_jogadores", "ferramenta_mgmt", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "hud", "temporizador")]
+[node name="Level_Zen" type="Node" unique_id=978834285 node_paths=PackedStringArray("camera_target", "spawn_jogadores", "ferramenta_mgmt", "tilemaps_chao", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "hud", "temporizador")]
 script = ExtResource("1_h16eq")
 camera_lerp_speed_curve = SubResource("Curve_h16eq")
 camera_target = NodePath("SpawnJogadores/Jogador2")
 duracao_partida_segundos = 9999
 spawn_jogadores = NodePath("SpawnJogadores")
 ferramenta_mgmt = NodePath("FerramentasMgmt")
+tilemaps_chao = NodePath("TileMaps")
 arvores_colecao = NodePath("ArvoresColecao")
 lixos_colecao = NodePath("LixosColecao")
 locais_plantar_colecao = NodePath("LocaisPlantarColecao")
@@ -75,22 +76,21 @@ offset_bottom = 354.0
 
 [node name="TileMaps" parent="." unique_id=1420046205 instance=ExtResource("2_levs5")]
 
-[node name="TileMapLayerAgua" parent="TileMaps" index="0"]
+[node name="TileMapLayerAgua" parent="TileMaps" index="0" unique_id=1542095364]
 tile_map_data = PackedByteArray()
 
-[node name="TileMapDualAreia" parent="TileMaps" index="1"]
+[node name="TileMapDualAreia" parent="TileMaps" index="1" unique_id=1270163408]
 tile_map_data = PackedByteArray()
 
-[node name="TileMapDualRaizes" parent="TileMaps" index="2"]
+[node name="TileMapDualRaizes" parent="TileMaps" index="2" unique_id=266088678]
 tile_map_data = PackedByteArray()
 
-[node name="TileMapDualLodo" parent="TileMaps" index="3"]
+[node name="TileMapDualLodo" parent="TileMaps" index="3" unique_id=45672977]
 tile_map_data = PackedByteArray()
 
-[node name="SpawnJogadores" parent="." unique_id=1114707383 node_paths=PackedStringArray("ferramentas_mgmt", "tilemaps_chao") instance=ExtResource("5_c3vl7")]
+[node name="SpawnJogadores" parent="." unique_id=1114707383 node_paths=PackedStringArray("ferramentas_mgmt") instance=ExtResource("5_c3vl7")]
 position = Vector2(518, 343)
 ferramentas_mgmt = NodePath("../FerramentasMgmt")
-tilemaps_chao = NodePath("../TileMaps")
 
 [node name="FerramentasMgmt" parent="." unique_id=910713732 instance=ExtResource("6_wohbw")]
 
