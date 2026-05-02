@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b6fqbdb1cd3kc" path="res://Cenas/Partida/Arvores/arvore_pinos.tscn" id="3_82qpd"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="4_027or"]
 [ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="5_0h4uu"]
-[ext_resource type="PackedScene" uid="uid://cg8j3m8bt5io6" path="res://PreSets/ui_info.tscn" id="6_sd4mf"]
+[ext_resource type="PackedScene" uid="uid://cg8j3m8bt5io6" path="res://PreSets/UI/ui_info.tscn" id="6_sd4mf"]
 [ext_resource type="Script" uid="uid://ymebirrcc0d3" path="res://Scripts/Partida/locais_plantar_colecao.gd" id="7_uvuqj"]
 [ext_resource type="PackedScene" uid="uid://bxemk6uv78eif" path="res://Cenas/Partida/local_plantar.tscn" id="8_e0n50"]
 [ext_resource type="PackedScene" uid="uid://b6sdx5v5l772m" path="res://Cenas/Interface/hud.tscn" id="9_iffja"]
