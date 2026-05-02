@@ -1,7 +1,6 @@
-## Caches the sprite location and terrains of each tile in the TileMapDual world grid.
 class_name TileCache
 extends Resource
-
+## Caches the sprite location and terrains of each tile in the TileMapDual world grid.
 
 ##[br] Maps a cell coordinate to the stored tile data.
 ##[codeblock]
@@ -14,30 +13,33 @@ extends Resource
 ##    } = # The data stored at this tile.
 ##  }
 ##[/codeblock]
-var cells := {}
+var cells: Dictionary[Vector2i, Dictionary] = { }
+
+
 func _init() -> void:
 	pass
 
+
 ##[br] Updates specific cells of the TileCache based on the current layer data at those points.
 ##[br] Makes corrections in case the user accidentally places invalid tiles.
-func update(world: TileMapLayer, edited: Array = cells.keys()) -> void:
-	var tile_set := world.tile_set
+func update(world: TileMapLayer, edited: Array[Vector2i] = cells.keys()) -> void:
+	var tile_set: TileSet = world.tile_set
 	if tile_set == null:
 		push_error('Attempted to update TileCache while tile set was null')
 		return
-	for cell in edited:
+	for cell: Vector2i in edited:
 		# Invalid cells will be treated as empty and ignored
-		var sid := world.get_cell_source_id(cell)
+		var sid: int = world.get_cell_source_id(cell)
 		if sid == -1:
 			cells.erase(cell)
 			continue
 		if not tile_set.has_source(sid):
 			continue
 		var src = tile_set.get_source(sid)
-		var tile := world.get_cell_atlas_coords(cell)
+		var tile: Vector2i = world.get_cell_atlas_coords(cell)
 		if not src.has_tile(tile):
 			continue
-		var data := world.get_cell_tile_data(cell)
+		var data: TileData = world.get_cell_tile_data(cell)
 		if data == null:
 			continue
 		# Accidental cells should be reset to their previous value
@@ -51,7 +53,7 @@ func update(world: TileMapLayer, edited: Array = cells.keys()) -> void:
 			tile = cached.tile
 			world.set_cell(cell, sid, tile)
 			data = world.get_cell_tile_data(cell)
-		cells[cell] = {'sid': sid, 'tile': tile, 'terrain': data.terrain}
+		cells[cell] = { 'sid': sid, 'tile': tile, 'terrain': data.terrain }
 
 
 ## Returns the symmetric difference (xor) of two tile caches.

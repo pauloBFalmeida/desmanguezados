@@ -1,26 +1,24 @@
+class_name DisplayLayer
+extends TileMapLayer
 ##[br] A single TileMapLayer whose purpose is to display tiles to maintain the Dual Grid illusion.
 ##[br] Its contents are automatically computed and updated based on:
 ##[br] - the contents of the parent TileMapDual
 ##[br] - the rules set in its assigned TerrainLayer
-class_name DisplayLayer
-extends TileMapLayer
-
 
 ##[br] How much to offset this DisplayLayer relative to the main TileMapDual grid.
 ##[br] This is independent of tile size.
 var offset: Vector2
-
-## See TileSetWatcher.gd
+## See [TileSetWatcher]
 var _tileset_watcher: TileSetWatcher
-
-## See TerrainDual.gd
+## See [TerrainDual]
 var _terrain: TerrainLayer
 
+
 func _init(
-	world: TileMapDual,
-	tileset_watcher: TileSetWatcher,
-	fields: Dictionary,
-	layer: TerrainLayer
+		world: TileMapDual,
+		tileset_watcher: TileSetWatcher,
+		fields: Dictionary,
+		layer: TerrainLayer,
 ) -> void:
 	#print('initializing Layer...')
 	update_properties(world)
@@ -61,7 +59,8 @@ func update_properties(parent: TileMapDual) -> void:
 	self.y_sort_enabled = parent.y_sort_enabled
 	self.modulate = parent.modulate
 	self.self_modulate = parent.self_modulate
-	# NOTE: parent material takes priority over the current shaders, causing the world tiles to show up
+	# NOTE: parent material takes priority over the current shaders,
+	# causing the world tiles to show up
 	self.use_parent_material = parent.use_parent_material
 
 	# Save any manually introduced Material change:
@@ -80,16 +79,19 @@ func update_tiles(cache: TileCache, updated_world_cells: Array) -> void:
 	for path: Array in _terrain.display_to_world_neighborhood:
 		path = path.map(Util.reverse_neighbor)
 		for world_cell: Vector2i in updated_world_cells:
-			var display_cell := follow_path(world_cell, path)
+			var display_cell: Vector2i = follow_path(world_cell, path)
 			if already_updated.insert(display_cell):
 				update_tile(cache, display_cell)
 
 
 ## Updates a specific world cell.
 func update_tile(cache: TileCache, cell: Vector2i) -> void:
-	var get_cell_at_path := func(path): return cache.get_terrain_at(follow_path(cell, path))
-	var terrain_neighbors := _terrain.display_to_world_neighborhood.map(get_cell_at_path)
-	var mapping: Dictionary = _terrain.apply_rule(terrain_neighbors)
+	var get_cell_at_path: Callable = func(
+			path,
+	):
+		return cache.get_terrain_at(follow_path(cell, path))
+	var terrain_neighbors: Array = _terrain.display_to_world_neighborhood.map(get_cell_at_path)
+	var mapping: Dictionary = _terrain.apply_rule(terrain_neighbors, cell)
 	var sid: int = mapping.sid
 	var tile: Vector2i = mapping.tile
 	set_cell(cell, sid, tile)

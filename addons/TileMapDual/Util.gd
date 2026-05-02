@@ -1,10 +1,10 @@
-## Utility functions.
 class_name Util
+## Utility functions.
 
 
 ## Merges an Array of keys and an Array of values into a Dictionary.
 static func arrays_to_dict(keys: Array, values: Array) -> Dictionary:
-	var out := {}
+	var out := { }
 	for i in keys.size():
 		out[keys[i]] = values[i]
 	return out
@@ -16,8 +16,6 @@ static func transpose_vec(v: Vector2i) -> Vector2i:
 
 
 # TODO: transposed(TileSet.CellNeighbor) -> Tileset.CellNeighbor
-
-
 ## Reverses the direction of a CellNeighbor.
 static func reverse_neighbor(neighbor: TileSet.CellNeighbor) -> TileSet.CellNeighbor:
 	return (neighbor + 8) % 16
@@ -53,6 +51,7 @@ static func neighborhood_str(neighborhood: Array) -> String:
 		"%2s  C %2s\n" % [w, e] +
 		"%2s %2s %2s\n" % [sw, s, se]
 	)
+
 
 ## Returns an Array of the given size, all filled with the given value.
 static func array_of(value: Variant, size: int) -> Array[Variant]:
