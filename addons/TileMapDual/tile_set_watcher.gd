@@ -1,6 +1,25 @@
-## Provides information about a TileSet and sends signals when it changes.
 class_name TileSetWatcher
 extends Resource
+## Provides information about a TileSet and sends signals when it changes.
+
+## Emitted when the parent TileMapDual's tile_set is cleared or replaced.
+signal tileset_deleted
+## Emitted when the parent TileMapDual's tile_set is created or replaced.
+signal tileset_created
+## Emitted when tile_set.tile_size is changed.
+signal tileset_resized
+## Emitted when the GridShape of the TileSet would be different.
+signal tileset_reshaped
+## Emitted when a new Atlas is added to this TileSet.
+## Does not react to Scenes being added to the TileSet.
+signal atlas_added(source_id: int, atlas: TileSetAtlasSource)
+## Emitted when the watcher thinks that "Yes" was clicked for:
+## 'Would you like to automatically create tiles in the atlas?'
+signal atlas_autotiled(source_id: int, atlas: TileSetAtlasSource)
+## Emitted when an atlas is added or removed,
+## or when the terrains change in one of the Atlases.
+## NOTE: Prefer connecting to TerrainDual.changed instead of TileSetWatcher.terrains_changed.
+signal terrains_changed
 
 ## Caches the previous tile_set to see when it changes.
 var tile_set: TileSet
@@ -8,6 +27,18 @@ var tile_set: TileSet
 var tile_size: Vector2i
 ## caches the previous result of display.tileset_grid_shape(tile_set) to see when it changes.
 var grid_shape: Display.GridShape
+var _flag_tileset_deleted: bool = false
+var _flag_tileset_created: bool = false
+var _flag_tileset_resized: bool = false
+var _flag_tileset_reshaped: bool = false
+var _flag_atlas_added: bool = false
+var _flag_terrains_changed: bool = false
+var _flag_tileset_changed: bool = false
+# Cached variables from the previous frame
+# These are used to compare what changed between frames
+var _cached_source_count: int = 0
+var _cached_sids: Dictionary[int, AtlasWatcher] = { }
+
 
 func _init(tile_set: TileSet) -> void:
 	# tileset_deleted.connect(func(): print('tileset_deleted'), 1)
@@ -16,43 +47,6 @@ func _init(tile_set: TileSet) -> void:
 	# tileset_reshaped.connect(func(): print('tileset_reshaped'), 1)
 	atlas_added.connect(_atlas_added, 1)
 	update(tile_set)
-
-
-var _flag_tileset_deleted := false
-## Emitted when the parent TileMapDual's tile_set is cleared or replaced.
-signal tileset_deleted
-
-var _flag_tileset_created := false
-## Emitted when the parent TileMapDual's tile_set is created or replaced.
-signal tileset_created
-
-var _flag_tileset_resized := false
-## Emitted when tile_set.tile_size is changed.
-signal tileset_resized
-
-var _flag_tileset_reshaped := false
-## Emitted when the GridShape of the TileSet would be different.
-signal tileset_reshaped
-
-var _flag_atlas_added := false
-## Emitted when a new Atlas is added to this TileSet.
-## Does not react to Scenes being added to the TileSet.
-signal atlas_added(source_id: int, atlas: TileSetAtlasSource)
-func _atlas_added(source_id: int, atlas: TileSetAtlasSource) -> void:
-	_flag_atlas_added = true
-	#print('SIGNAL EMITTED: atlas_added(%s)' % {'source_id': source_id, 'atlas': atlas})
-
-
-## Emitted when the watcher thinks that "Yes" was clicked for:
-## 'Would you like to automatically create tiles in the atlas?'
-signal atlas_autotiled(source_id: int, atlas: TileSetAtlasSource)
-
-
-var _flag_terrains_changed := false
-## Emitted when an atlas is added or removed,
-## or when the terrains change in one of the Atlases.
-## NOTE: Prefer connecting to TerrainDual.changed instead of TileSetWatcher.terrains_changed.
-signal terrains_changed
 
 
 ## Checks if anything about the concerned TileMapDual's tile_set changed.
@@ -108,7 +102,11 @@ func check_tile_set(tile_set: TileSet) -> void:
 	emit_changed()
 
 
-var _flag_tileset_changed := false
+func _atlas_added(_source_id: int, _atlas: TileSetAtlasSource) -> void:
+	_flag_atlas_added = true
+	# print('SIGNAL EMITTED: atlas_added(%s)' % {'source_id': _source_id, 'atlas': _atlas})
+
+
 ## Helper method to be called when the tile_set detects a change.
 ## Must be disconnected when the tile_set is changed.
 func _set_tileset_changed() -> void:
@@ -129,16 +127,12 @@ func _update_tileset() -> void:
 	_update_tileset_atlases()
 
 
-# Cached variables from the previous frame
-# These are used to compare what changed between frames
-var _cached_source_count: int = 0
-var _cached_sids := {}
 # TODO: detect automatic tile creation
 ## Checks if new atlases have been added.
 ## Does not check which ones were deleted.
 func _update_tileset_atlases() -> void:
 	# Update all tileset sources
-	var source_count := tile_set.get_source_count()
+	var source_count: int = tile_set.get_source_count()
 
 	# Only if an asset was added or removed
 	# FIXME?: may break on add+remove in 1 frame
@@ -147,7 +141,7 @@ func _update_tileset_atlases() -> void:
 	_cached_source_count = source_count
 
 	# Process the new atlases in the TileSet
-	var sids := {}
+	var sids: Dictionary[int, AtlasWatcher] = { }
 	for i in source_count:
 		var sid: int = tile_set.get_source_id(i)
 		if sid in _cached_sids:
@@ -157,7 +151,7 @@ func _update_tileset_atlases() -> void:
 		if source is not TileSetAtlasSource:
 			push_warning(
 				"Non-Atlas TileSet found at index %i, source id %i.\n" % [i, source] +
-				"Dual Grids only support Atlas TileSets."
+				"Dual Grids only support Atlas TileSets.",
 			)
 			sids[sid] = null
 			continue

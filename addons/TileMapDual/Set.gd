@@ -1,22 +1,24 @@
-##[br] Real sets don't exist yet.
-##[br] https://github.com/godotengine/godot/pull/94399
 class_name Set
 extends Resource
+##[br] Real sets don't exist yet.
+##[br] https://github.com/godotengine/godot/pull/94399
 
+## A dummy value to put in a slot.
+const DUMMY = null
 
 ## The internal Dictionary that holds this Set's items as keys.
-var data: Dictionary = {}
+var data: Dictionary = { }
+
 
 func _init(initial_data: Variant = []) -> void:
 	union_in_place(initial_data)
+
 
 ## Returns true if the item exists in this Set.
 func has(item: Variant) -> bool:
 	return item in data
 
 
-## A dummy value to put in a slot.
-const DUMMY = null
 ## Returns true if the item was not previously in the Set.
 func insert(item: Variant) -> bool:
 	var out := not has(item)
@@ -31,7 +33,7 @@ func remove(item: Variant) -> bool:
 
 ## Deletes all items in this Set.
 func clear() -> void:
-	data = {}
+	data = { }
 
 
 ## Merges an Array's items or Dict's keys into the Set.
