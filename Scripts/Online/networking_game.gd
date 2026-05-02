@@ -93,7 +93,8 @@ func _atualizar_dados_jogo() -> void:
 ## Jogador vota no level que quer jogar
 @rpc("any_peer", "call_local", "reliable")
 func votar_level(level_id: int, player_id: InputManager.PlayerId) -> void:
-	helper_selecao_level.player_votou_level(level_id, player_id)
+	if helper_selecao_level:
+		helper_selecao_level.player_votou_level(level_id, player_id)
 
 # ------------------------------------------------------------------------------
 # Partida
