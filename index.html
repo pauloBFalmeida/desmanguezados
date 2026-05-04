@@ -160,6 +160,16 @@
         </div>
     </section>
 
+    <!-- Notification Bar -->
+    <div class="bg-red-600 text-white py-3 px-4 cursor-pointer hover:bg-red-700 transition duration-300 text-center" onclick="document.getElementById('online-lan-section').scrollIntoView({behavior: 'smooth'})">
+        <div class="container mx-auto flex justify-center items-center space-x-2">
+            <i class="fas fa-wifi text-xl animate-pulse"></i>
+            <span class="font-semibold">NOVIDADE!</span>
+            <span>Novo Modo Online LAN adicionado! Clique aqui para saber mais.</span>
+            <i class="fas fa-chevron-down ml-2 animate-bounce-slow"></i>
+        </div>
+    </div>
+
     <!-- About Section -->
     <section id="about" class="py-16 bg-white">
         <div class="container mx-auto px-4">
@@ -195,13 +205,6 @@
                         Entre muitas reuniões, discussões de ideias, planilhas, correções de bugs, madrugadas mal dormidas e testagens. 
                         O jogo foi ganhando forma, sendo desenvolvimento com carinho e capricho por cada um dos desenvolvedores.
                     </p>
-                    <!-- <div class="bg-indigo-100 p-4 rounded-lg border-l-4 border-indigo-500">
-                        <p class="text-indigo-800">
-                            <i class="fas fa-info-circle mr-2"></i> 
-                            O jogo foi avaliado com nota máxima pela banca examinadora e selecionado para representar a faculdade 
-                            no Festival Nacional de Jogos Universitários.
-                        </p>
-                    </div> -->
                 </div>
             </div>
 
@@ -281,6 +284,99 @@
     </div>
     </section>
 
+    <!-- Online LAN Section -->
+    <section id="online-lan-section" class="bg-gradient-to-br from-purple-600 to-purple-800 text-white py-16 scroll-mt-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <!-- Top outside white box -->
+                <div class="text-center mb-10">
+                    <i class="fas fa-wifi text-5xl mb-4"></i>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Modo Online Local (LAN)</h2>
+                    <!-- <div class="w-24 h-1 bg-yellow-400 mx-auto mb-6"></div> -->
+                </div>
+                
+                <!-- White box -->
+                <div class="bg-white text-gray-800 rounded-xl p-6 md:p-8 shadow-2xl">
+                    <!-- Tag Line -->
+                    <div class="text-center mb-12">
+                        <div class="inline-flex items-center bg-red-100 text-red-600 px-4 py-2 rounded-full mb-4">
+                            <i class="fas fa-fire mr-1"></i>
+                            <span class="font-bold"> NOVA ATUALIZAÇÃO</span>
+                        </div>
+                        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Conecte-se com amigos em rede local para uma experiência multiplayer expandida!</p>
+                    </div>
+                    
+                    <!-- Two Panels -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <!-- Left Side text -->
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold mb-4">Chega de disputar espaço no sofá!</h3>
+                            <p class="text-gray-600 mb-4 leading-relaxed">
+                                Agora você pode jogar <span class="font-bold text-indigo-600">Desmanguezados</span> online com seus amigos através do 
+                                <span class="font-bold">modo online LAN</span>!
+                                <br>
+                                Conecte-se na mesma internet e experimente a diversão cooperativa sem compartilhar o PC.
+                            </p>
+                            
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center gap-3 text-gray-700">
+                                    <i class="fas fa-check-circle text-green-500"></i>
+                                    <span>Suporte para até 2 jogadores online</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-700">
+                                    <i class="fas fa-check-circle text-green-500"></i>
+                                    <span>Todos os níveis cooperativos funcionando</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-gray-700">
+                                    <i class="fas fa-check-circle text-green-500"></i>
+                                    <span>Progresso sincronizado entre os jogadores</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Right Side Bubbles -->
+                        <div class="space-y-6">
+                            <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-500" style="padding-left: 8px;padding-right: .5rem;padding-top: 8px;padding-bottom: 12px;">
+                                <div class="flex items-start">
+                                    <div class="bg-red-100 p-3 rounded-full mr-4">
+                                        <i class="fas fa-gamepad text-red-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-800 mb-2">Controles diretos</h3>
+                                        <p class="text-gray-600">Cada jogador joga como se fosse o principal</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500" style="padding-left: 8px;padding-right: .5rem;padding-top: 8px;padding-bottom: 12px;">
+                                <div class="flex items-start">
+                                    <div class="bg-green-100 p-3 rounded-full mr-4">
+                                        <i class="fas fa-trophy text-green-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-800 mb-2">Highscore é dos dois</h3>
+                                        <p class="text-gray-600">Progresso sincronizado entre computadores</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500" style="padding-left: 8px;padding-right: .5rem;padding-top: 8px;padding-bottom: 12px;">
+                                <div class="flex items-start">
+                                    <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                        <i class="fas fa-network-wired text-blue-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold text-gray-800 mb-2">Conexão fácil</h3>
+                                        <p class="text-gray-600">Configuração simples de conexão</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Download Section -->
     <section id="download" class="py-16 bg-gradient-to-br from-blue-500 to-blue-900 text-white">
