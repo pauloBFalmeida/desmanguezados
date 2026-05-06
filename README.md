@@ -119,3 +119,8 @@ Não é um plugin, mas o shader da tela veio daqui [Screen Space Shaders](https:
 
 ### Se o plugin não estiver ativo:
 Projeto -> Configurações do Projeto -> Plugins -> Habilitado tem que estar marcado como Ativo
+
+## Outros Softwares
+
+### Online
+[Clumsy](https://jagt.github.io/clumsy/index.html) Para testar delay e perda de pacotes da internet, no próprio pc (localhost).
