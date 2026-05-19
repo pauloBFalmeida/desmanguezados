@@ -3,6 +3,7 @@ extends Menu
 @export var spawn_jogadores : SpawnJogadores
 @export var ferramentas_mgmt : FerramentaMgmt
 @export var locais_plantar_colecao : LocalPlantarColecao
+@export var tilemaps_chao : TileMapsChao
 
 const local_plantar_ref := preload("res://Cenas/Partida/local_plantar.tscn")
 const texto_creditos_ref := preload("res://Cenas/Menus/SubItems/texto_creditos.tscn")
@@ -12,6 +13,8 @@ const texto_creditos_ref := preload("res://Cenas/Menus/SubItems/texto_creditos.t
 var plantar_dados_por_global_pos : Dictionary[Vector2, Dictionary] = {}
 
 func _ready() -> void:
+	_iniciar_spawn_jogadores()
+	# ajusta
 	textos_creditos_pai.get_child(0).get_dados()
 	_ajustar_plantar()
 	# ajusta cada ferramenta para ter um efeito
@@ -27,6 +30,12 @@ func _ready() -> void:
 	
 	for corpo : TextoCreditos in textos_creditos_pai.get_children():
 		corpo.hit.connect(_chamar_spawn_plantar.bind(corpo))
+
+#@export var gerenciador_partida : GerenciadorPartida
+func _iniciar_spawn_jogadores() -> void:
+	spawn_jogadores.tilemaps_chao = tilemaps_chao
+	# -- coisas que o gerenciador de partida faria --
+	spawn_jogadores.iniciar_jogadores()
 
 func _chamar_spawn_plantar(corpo : TextoCreditos) -> void:
 	var global_pos := corpo.start_global_pos
