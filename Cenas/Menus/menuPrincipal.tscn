@@ -126,7 +126,7 @@ animations = [{
 "speed": 3.0
 }]
 
-[node name="MenuPrincipal" type="Control" unique_id=1827880391]
+[node name="MenuPrincipal" type="Control" unique_id=1827880391 node_paths=PackedStringArray("botao_focus")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -134,6 +134,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ntrab")
+botao_focus = NodePath("GridContainer/ButtonJogar")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=189851027]
 layout_mode = 1
