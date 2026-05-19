@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="BotoesAcoesControleRes" format=3 uid="uid://cu6e5pw1ydoyi"]
+
+[ext_resource type="Texture2D" uid="uid://bfwdrpldl3j26" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_button_b.svg" id="1_yqyjr"]
+[ext_resource type="Texture2D" uid="uid://cb3hbh4s6qgns" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_button_a.svg" id="2_sc3no"]
+[ext_resource type="Texture2D" uid="uid://cynstbd4xk88i" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_button_y.svg" id="3_eibit"]
+[ext_resource type="Texture2D" uid="uid://b45g7kaul5q16" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_button_x.svg" id="4_1vvgj"]
+[ext_resource type="Texture2D" uid="uid://b4k7qoc2bpfts" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_button_l.svg" id="5_obfoe"]
+[ext_resource type="Texture2D" uid="uid://iw0a0incynvn" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_button_r.svg" id="6_m3pxg"]
+[ext_resource type="Texture2D" uid="uid://cn57c35cyyrr3" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_button_zl.svg" id="7_2cw0d"]
+[ext_resource type="Texture2D" uid="uid://c5j67l4wmrba0" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_button_zr.svg" id="8_v4bhl"]
+[ext_resource type="Texture2D" uid="uid://dkrr8uycjdq5" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_stick_l_up.svg" id="9_4knve"]
+[ext_resource type="Texture2D" uid="uid://ddhyqlcs5snc5" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_stick_l_down.svg" id="10_5j7mu"]
+[ext_resource type="Texture2D" uid="uid://c4sxh4bbha3t0" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_stick_l_left.svg" id="11_ublyw"]
+[ext_resource type="Texture2D" uid="uid://b5jecavbdu6pt" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_stick_l_right.svg" id="12_xiufo"]
+[ext_resource type="Texture2D" uid="uid://cl6i13jvtw5wv" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_stick_side_l.svg" id="13_3hon4"]
+[ext_resource type="Texture2D" uid="uid://cm5qyo7l8w42w" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_stick_side_r.svg" id="14_28kii"]
+[ext_resource type="Texture2D" uid="uid://bd38d4eu3fup1" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_button_minus.svg" id="15_ue6yx"]
+[ext_resource type="Texture2D" uid="uid://bxtm70vysqw72" path="res://addons/kenney_input_prompts/NintendoSwitch/switch_button_plus.svg" id="16_ojqu2"]
+[ext_resource type="Script" uid="uid://bqdcsvr84uewc" path="res://Scripts/UI/botoes_acoes_controle.gd" id="17_mure6"]
+
+[resource]
+script = ExtResource("17_mure6")
+controle = 2
+imagem_botao = Dictionary[int, Texture]({
+0: ExtResource("1_yqyjr"),
+1: ExtResource("2_sc3no"),
+2: ExtResource("3_eibit"),
+3: ExtResource("4_1vvgj"),
+4: ExtResource("5_obfoe"),
+5: ExtResource("6_m3pxg"),
+6: ExtResource("7_2cw0d"),
+7: ExtResource("8_v4bhl"),
+8: ExtResource("9_4knve"),
+9: ExtResource("10_5j7mu"),
+10: ExtResource("11_ublyw"),
+11: ExtResource("12_xiufo"),
+12: ExtResource("13_3hon4"),
+13: ExtResource("14_28kii"),
+14: ExtResource("15_ue6yx"),
+15: ExtResource("16_ojqu2")
+})
+metadata/_custom_type_script = "uid://bqdcsvr84uewc"
