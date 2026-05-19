@@ -5,6 +5,7 @@
 [ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_46stu"]
 [ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_wrgqt"]
 [ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="5_bkqf8"]
+[ext_resource type="PackedScene" uid="uid://bwgikeqs5kpr2" path="res://Cenas/Menus/SubItems/teclado_virtual.tscn" id="6_g7mu5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_16dev"]
 
@@ -254,6 +255,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Explicacao" type="Control" parent="." unique_id=1280812292]
+visible = false
 z_index = 10
 z_as_relative = false
 layout_mode = 1
@@ -586,6 +588,41 @@ text = "Fechar explicação"
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
+[node name="TecladoVirtualSize" type="Control" parent="." unique_id=306516278]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -254.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="TecladoVirtualSize" unique_id=498224514]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.9529412)
+
+[node name="Margin" type="MarginContainer" parent="TecladoVirtualSize" unique_id=1650191597]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 20
+
+[node name="TecladoVirtual" parent="TecladoVirtualSize/Margin" unique_id=608090575 instance=ExtResource("6_g7mu5")]
+layout_mode = 2
+
 [node name="PopupError" type="Popup" parent="." unique_id=2120323267]
 disable_3d = true
 oversampling_override = 1.0
@@ -610,5 +647,6 @@ autowrap_mode = 2
 [connection signal="pressed" from="ButtonExplicacao" to="." method="_on_button_explicacao_pressed"]
 [connection signal="pressed" from="VBox/HBoxJog/ButtonHost" to="." method="_on_button_host_pressed"]
 [connection signal="pressed" from="VBox/HBoxJog/ButtonJoin" to="." method="_on_button_join_pressed"]
+[connection signal="gui_input" from="VBox/GridContainer/TextIP" to="." method="_on_text_ip_gui_input"]
 [connection signal="pressed" from="VBox/ButtonComecar" to="." method="_on_button_comecar_pressed"]
 [connection signal="pressed" from="Explicacao/Panel/VBox/ButtonSairExplicacao" to="." method="_on_button_sair_explicacao_pressed"]
