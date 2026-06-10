@@ -21,6 +21,7 @@ extends Menu
 @onready var popup_error: Popup = $PopupError
 @onready var label_popup_error: Label = $PopupError/LabelPopupError
 
+@export var teclado_virtual_ui: TecladoVirtualUI
 
 var is_host : bool = true
 
@@ -34,8 +35,10 @@ func _ready() -> void:
 	pop_up_conectando.hide()
 	explicacao.hide()
 	# ---
-	text_ip.placeholder_text = Networking.get_local_ipv4()
+	text_ip.text = Networking.get_local_ipv4()
 	update_button_server_visual()
+	text_ip.gui_input.connect(_on_text_ip_gui_input)
+	text_port.get_line_edit().gui_input.connect(_on_spin_box_port_gui_input)
 	# ---
 	Networking.display_error.connect(_display_error)
 
@@ -114,3 +117,13 @@ func _get_nome_jogador() -> String:
 	if text_nome.text.length() < 1:
 		return nomes_possiveis.pick_random()
 	return text_nome.text
+
+# --- Abrir teclado virtual para o controle ---
+func _on_text_ip_gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept") and text_ip.editable:
+		text_ip.edit()
+		teclado_virtual_ui.mostrar(text_ip)
+
+func _on_spin_box_port_gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept"):
+		teclado_virtual_ui.mostrar(text_port)

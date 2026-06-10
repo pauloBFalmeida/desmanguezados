@@ -5,11 +5,11 @@
 [ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_46stu"]
 [ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_wrgqt"]
 [ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="5_bkqf8"]
-[ext_resource type="PackedScene" uid="uid://bwgikeqs5kpr2" path="res://Cenas/Menus/SubItems/teclado_virtual.tscn" id="6_g7mu5"]
+[ext_resource type="PackedScene" uid="uid://b8awu480qgh5j" path="res://Cenas/Menus/SubItems/teclado_virtual_ui.tscn" id="6_g7mu5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_16dev"]
 
-[node name="MenuOnline" type="Control" unique_id=722731762 node_paths=PackedStringArray("button_sair_explicacao")]
+[node name="MenuOnline" type="Control" unique_id=722731762 node_paths=PackedStringArray("button_sair_explicacao", "teclado_virtual_ui")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_16dev")
 button_sair_explicacao = NodePath("Explicacao/Panel/VBox/ButtonSairExplicacao")
+teclado_virtual_ui = NodePath("TecladoVirtualUI")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=720311047]
 layout_mode = 1
@@ -193,13 +194,17 @@ horizontal_alignment = 2
 
 [node name="SpinBoxPort" type="SpinBox" parent="VBox/GridContainer" unique_id=1679285506]
 layout_mode = 2
+focus_neighbor_left = NodePath("../../ButtonComecar")
+focus_neighbor_top = NodePath("../TextIP")
+focus_neighbor_right = NodePath("../../ButtonComecar")
+focus_neighbor_bottom = NodePath("../../ButtonComecar")
+focus_next = NodePath("../../ButtonComecar")
+focus_previous = NodePath("../TextIP")
 theme = ExtResource("5_bkqf8")
 min_value = 1024.0
 max_value = 49151.0
 value = 45678.0
 rounded = true
-allow_greater = true
-allow_lesser = true
 
 [node name="VSeparator3" type="VSeparator" parent="VBox" unique_id=2111733050]
 self_modulate = Color(1, 1, 1, 0)
@@ -588,40 +593,9 @@ text = "Fechar explicação"
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="TecladoVirtualSize" type="Control" parent="." unique_id=306516278]
+[node name="TecladoVirtualUI" parent="." unique_id=1338331978 instance=ExtResource("6_g7mu5")]
 visible = false
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -254.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="ColorRect" type="ColorRect" parent="TecladoVirtualSize" unique_id=498224514]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.9529412)
-
-[node name="Margin" type="MarginContainer" parent="TecladoVirtualSize" unique_id=1650191597]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 20
-
-[node name="TecladoVirtual" parent="TecladoVirtualSize/Margin" unique_id=608090575 instance=ExtResource("6_g7mu5")]
-layout_mode = 2
 
 [node name="PopupError" type="Popup" parent="." unique_id=2120323267]
 disable_3d = true
@@ -647,6 +621,5 @@ autowrap_mode = 2
 [connection signal="pressed" from="ButtonExplicacao" to="." method="_on_button_explicacao_pressed"]
 [connection signal="pressed" from="VBox/HBoxJog/ButtonHost" to="." method="_on_button_host_pressed"]
 [connection signal="pressed" from="VBox/HBoxJog/ButtonJoin" to="." method="_on_button_join_pressed"]
-[connection signal="gui_input" from="VBox/GridContainer/TextIP" to="." method="_on_text_ip_gui_input"]
 [connection signal="pressed" from="VBox/ButtonComecar" to="." method="_on_button_comecar_pressed"]
 [connection signal="pressed" from="Explicacao/Panel/VBox/ButtonSairExplicacao" to="." method="_on_button_sair_explicacao_pressed"]

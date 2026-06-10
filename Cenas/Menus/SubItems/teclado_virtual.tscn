@@ -3,11 +3,10 @@
 [ext_resource type="Script" uid="uid://cqjja48yb0to4" path="res://Scripts/Menus/UsadosMenus/teclado_virtual.gd" id="1_cl5rw"]
 [ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="1_w6qx0"]
 
-[node name="TecladoVirtual" type="Control" unique_id=608090575 node_paths=PackedStringArray("foco")]
+[node name="TecladoVirtual" type="Control" unique_id=608090575]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_cl5rw")
-foco = NodePath("HBoxContainer/Button_Voltar")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=666173958]
 layout_mode = 1
@@ -155,7 +154,7 @@ layout_mode = 2
 size_flags_vertical = 3
 focus_neighbor_left = NodePath("../../GridNumeros/Button_9")
 focus_neighbor_top = NodePath("../Button_0")
-focus_neighbor_right = NodePath("../../Button_Voltar")
+focus_neighbor_right = NodePath("../../VBoxControle/Button_Corrigir")
 focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath("../../VBoxControle/Button_Aceitar")
 focus_previous = NodePath("../../Button_Voltar")
@@ -174,9 +173,9 @@ custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 size_flags_vertical = 3
 focus_neighbor_left = NodePath("../../VBoxNumerosExtra/Button_0")
-focus_neighbor_top = NodePath("../../Button_Voltar")
-focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../../Button_Voltar")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../Button_Voltar")
+focus_neighbor_bottom = NodePath("../Button_Corrigir")
 focus_next = NodePath("../../Button_Voltar")
 focus_previous = NodePath("../../Button_Voltar")
 theme = ExtResource("1_w6qx0")
@@ -188,10 +187,10 @@ layout_mode = 2
 size_flags_vertical = 3
 focus_neighbor_left = NodePath("../../VBoxNumerosExtra/Button_p")
 focus_neighbor_top = NodePath("../Button_Aceitar")
-focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Button_Aceitar")
+focus_neighbor_right = NodePath("../../Button_Voltar")
+focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath("../Button_Aceitar")
-focus_previous = NodePath("../Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
 theme = ExtResource("1_w6qx0")
 text = "Corrigir"
 
@@ -199,12 +198,12 @@ text = "Corrigir"
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 size_flags_vertical = 3
-focus_neighbor_left = NodePath("../VBoxNumerosExtra/Button_p")
-focus_neighbor_top = NodePath("../VBoxControle/Button_Aceitar")
+focus_neighbor_left = NodePath("../VBoxControle/Button_Aceitar")
+focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../VBoxControle/Button_Aceitar")
+focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath("../VBoxControle/Button_Aceitar")
-focus_previous = NodePath("../VBoxControle/Button_Aceitar")
+focus_previous = NodePath(".")
 theme = ExtResource("1_w6qx0")
 text = "Voltar"
 

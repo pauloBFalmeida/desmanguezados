@@ -1,19 +1,16 @@
 class_name TecladoVirtual
 extends Control
 
-signal fechar_pressed(prev_foco: Control)
-signal botao_pressed(char: String)
-
-@export var foco: Control
+signal fechar_pressed
+signal corrigir_pressed
+signal char_pressed(_char: String)
 
 @onready var grid_numeros: GridContainer = $HBoxContainer/GridNumeros
 @onready var button_0: Button = $HBoxContainer/VBoxNumerosExtra/Button_0
 @onready var button_p: Button = $HBoxContainer/VBoxNumerosExtra/Button_p
 
-var prev_foco: Control 
-
+# -----------------------------------------------------------------------------
 func _ready() -> void:
-	hide()
 	# -- sinais
 	# grid numeros
 	for i: int in grid_numeros.get_child_count():
@@ -25,28 +22,21 @@ func _ready() -> void:
 	button_p.pressed.connect(_apertar.bind("."))
 
 # -----------------------------------------------------------------------------
-func abrir(curr_foco: Control) -> void:
-	show()
-	prev_foco = curr_foco
-	foco.grab_focus()
-
-func fechar() -> void:
-	hide()
-
-# -----------------------------------------------------------------------------
 func _fechar_apertado() -> void:
-	fechar()
-	fechar_pressed.emit(prev_foco)
+	fechar_pressed.emit()
+
+func _corrigir_apertado() -> void:
+	corrigir_pressed.emit()
 
 func _apertar(_char: String) -> void:
-	botao_pressed.emit(_char)
+	char_pressed.emit(_char)
 
 # -----------------------------------------------------------------------------
 func _on_button_aceitar_pressed() -> void:
 	_fechar_apertado()
 
 func _on_button_corrigir_pressed() -> void:
-	pass # Replace with function body.
+	_corrigir_apertado()
 	
 func _on_button_voltar_pressed() -> void:
 	_fechar_apertado()
