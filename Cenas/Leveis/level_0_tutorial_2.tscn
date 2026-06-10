@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dpo20c4nlxx5w" path="res://Scripts/Leveis/level_0_tutorial.gd" id="1_q4vnu"]
 [ext_resource type="PackedScene" uid="uid://c1s0pksofyykg" path="res://Cenas/Partida/gerenciador_partida.tscn" id="2_5c6v5"]
 [ext_resource type="PackedScene" uid="uid://db3rkmvcgmotf" path="res://Cenas/Partida/tile_maps_chao.tscn" id="3_u48mx"]
-[ext_resource type="PackedScene" uid="uid://cg8j3m8bt5io6" path="res://PreSets/ui_info.tscn" id="4_0j2hj"]
+[ext_resource type="PackedScene" uid="uid://cg8j3m8bt5io6" path="res://PreSets/UI/ui_info.tscn" id="4_0j2hj"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="5_haxv2"]
 [ext_resource type="PackedScene" uid="uid://mvp5raoekisy" path="res://Cenas/Ferramentas/ferramentas_mgmt.tscn" id="6_0y4l2"]
 [ext_resource type="PackedScene" uid="uid://b22561nl1a3f8" path="res://Cenas/Partida/Lixos/lixo_garrafa.tscn" id="8_slaws"]

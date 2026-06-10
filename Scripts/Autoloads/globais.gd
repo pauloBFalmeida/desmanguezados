@@ -89,3 +89,29 @@ func verif_rem_efeito(nodo : Node2D) -> void:
 	if not remov_efeitos_graf: return
 	
 	nodo.material = CanvasItemMaterial.new()
+
+
+# ---- Constantes ----
+
+const nomes_possiveis : Array[String] = [
+	"Miguel",
+	"Arthur",
+	"Gael",
+	"Heitor",
+	"Helena",
+	"Alice",
+	"Rafa",
+	"Laura",
+	"Davi",
+	"Sophia",
+	"Bernardo",
+	"Valentina",
+	"Gabriel",
+	"Isadora",
+	"Vulpe",
+	"Manuela",
+	"Paulo",
+	"Julia",
+	"Lucas",
+    "Cecilia"
+]

@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="BotoesAcoesControleRes" format=3 uid="uid://b5eoky2b85c48"]
+
+[ext_resource type="Texture2D" uid="uid://p34pfcwcqd44" path="res://addons/kenney_input_prompts/Xbox/xbox_button_color_a.svg" id="1_4vtuf"]
+[ext_resource type="Texture2D" uid="uid://d2qho5ood53bg" path="res://addons/kenney_input_prompts/Xbox/xbox_button_color_b.svg" id="2_fxgob"]
+[ext_resource type="Texture2D" uid="uid://d1stygj0euole" path="res://addons/kenney_input_prompts/Xbox/xbox_button_color_x.svg" id="3_0bf8n"]
+[ext_resource type="Texture2D" uid="uid://byjojhocl3ov6" path="res://addons/kenney_input_prompts/Xbox/xbox_button_color_y.svg" id="4_jnsto"]
+[ext_resource type="Texture2D" uid="uid://cvnmpyoa60ayd" path="res://addons/kenney_input_prompts/Xbox/xbox_lb.svg" id="5_aj4xw"]
+[ext_resource type="Texture2D" uid="uid://bq7c6tg23w2c2" path="res://addons/kenney_input_prompts/Xbox/xbox_rb.svg" id="6_ilxrd"]
+[ext_resource type="Texture2D" uid="uid://cbnkcnq7s2uf7" path="res://addons/kenney_input_prompts/Xbox/xbox_lt.svg" id="7_h20lf"]
+[ext_resource type="Texture2D" uid="uid://571mwj4x5gvf" path="res://addons/kenney_input_prompts/Xbox/xbox_rt.svg" id="8_bowg8"]
+[ext_resource type="Texture2D" uid="uid://c7yvg0xgolsje" path="res://addons/kenney_input_prompts/Xbox/xbox_stick_l_up.svg" id="9_p8bxb"]
+[ext_resource type="Texture2D" uid="uid://hirdgm5k7nar" path="res://addons/kenney_input_prompts/Xbox/xbox_stick_l_down.svg" id="10_1fec7"]
+[ext_resource type="Texture2D" uid="uid://bqjg3oop0dgui" path="res://addons/kenney_input_prompts/Xbox/xbox_stick_l_left.svg" id="11_vee3d"]
+[ext_resource type="Texture2D" uid="uid://ca3yvyshcgoiw" path="res://addons/kenney_input_prompts/Xbox/xbox_stick_l_right.svg" id="12_0jthp"]
+[ext_resource type="Texture2D" uid="uid://dt5vaggkuc262" path="res://addons/kenney_input_prompts/Xbox/xbox_stick_side_l.svg" id="13_12gp4"]
+[ext_resource type="Texture2D" uid="uid://dl2pfplhnqa24" path="res://addons/kenney_input_prompts/Xbox/xbox_stick_side_r.svg" id="14_c5fnb"]
+[ext_resource type="Texture2D" uid="uid://chmpfdjvfhoc7" path="res://addons/kenney_input_prompts/Xbox/xbox_button_menu.svg" id="15_wtcxs"]
+[ext_resource type="Texture2D" uid="uid://cgblydyrx7e0n" path="res://addons/kenney_input_prompts/Xbox/xbox_button_start.svg" id="16_oxrw6"]
+[ext_resource type="Script" uid="uid://bqdcsvr84uewc" path="res://Scripts/UI/botoes_acoes_controle.gd" id="17_evh2m"]
+
+[resource]
+script = ExtResource("17_evh2m")
+controle = 1
+imagem_botao = Dictionary[int, Texture]({
+0: ExtResource("1_4vtuf"),
+1: ExtResource("2_fxgob"),
+2: ExtResource("3_0bf8n"),
+3: ExtResource("4_jnsto"),
+4: ExtResource("5_aj4xw"),
+5: ExtResource("6_ilxrd"),
+6: ExtResource("7_h20lf"),
+7: ExtResource("8_bowg8"),
+8: ExtResource("9_p8bxb"),
+9: ExtResource("10_1fec7"),
+10: ExtResource("11_vee3d"),
+11: ExtResource("12_0jthp"),
+12: ExtResource("13_12gp4"),
+13: ExtResource("14_c5fnb"),
+14: ExtResource("15_wtcxs"),
+15: ExtResource("16_oxrw6")
+})
+metadata/_custom_type_script = "uid://bqdcsvr84uewc"

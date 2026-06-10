@@ -67,6 +67,7 @@ func iniciar_basicos() -> void:
 	# passa ref propria
 	hud.gerenciador_partida = self
 	spawn_jogadores.gerenciador_partida = self
+	spawn_jogadores.tilemaps_chao = tilemaps_chao
 	
 	# ajustar jogadores
 	spawn_jogadores.iniciar_jogadores()

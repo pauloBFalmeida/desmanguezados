@@ -5,10 +5,11 @@
 [ext_resource type="Theme" uid="uid://ctk3744ql206m" path="res://Assets/Interface/Fonts/titulo_theme.tres" id="3_46stu"]
 [ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="4_wrgqt"]
 [ext_resource type="Theme" uid="uid://snjhkfmt2q5i" path="res://Assets/Interface/Fonts/texto_theme.tres" id="5_bkqf8"]
+[ext_resource type="PackedScene" uid="uid://b8awu480qgh5j" path="res://Cenas/Menus/SubItems/teclado_virtual_ui.tscn" id="6_g7mu5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_16dev"]
 
-[node name="MenuOnline" type="Control" unique_id=722731762 node_paths=PackedStringArray("button_sair_explicacao")]
+[node name="MenuOnline" type="Control" unique_id=722731762 node_paths=PackedStringArray("button_sair_explicacao", "teclado_virtual_ui")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_16dev")
 button_sair_explicacao = NodePath("Explicacao/Panel/VBox/ButtonSairExplicacao")
+teclado_virtual_ui = NodePath("TecladoVirtualUI")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=720311047]
 layout_mode = 1
@@ -103,6 +105,12 @@ alignment = 1
 
 [node name="TextNome" type="LineEdit" parent="VBox" unique_id=122293029]
 layout_mode = 2
+focus_neighbor_left = NodePath("../HBoxJog/ButtonHost")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../HBoxJog/ButtonJoin")
+focus_neighbor_bottom = NodePath("../HBoxJog/ButtonHost")
+focus_next = NodePath("../HBoxJog/ButtonHost")
+focus_previous = NodePath("../HBoxJog/ButtonHost")
 theme = ExtResource("5_bkqf8")
 placeholder_text = "Nome do Jogador"
 alignment = 1
@@ -120,11 +128,12 @@ alignment = 1
 
 [node name="ButtonHost" type="Button" parent="VBox/HBoxJog" unique_id=540777876]
 layout_mode = 2
-focus_neighbor_top = NodePath("../ButtonJoin")
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../TextNome")
 focus_neighbor_right = NodePath("../ButtonJoin")
 focus_neighbor_bottom = NodePath("../../GridContainer/TextIP")
 focus_next = NodePath("../../GridContainer/TextIP")
-focus_previous = NodePath("../ButtonJoin")
+focus_previous = NodePath("../../TextNome")
 theme = ExtResource("5_bkqf8")
 theme_override_colors/font_color = Color(0.629675, 0.629675, 0.629675, 1)
 theme_override_colors/font_pressed_color = Color(0.762968, 1, 0.519136, 1)
@@ -140,11 +149,11 @@ layout_mode = 2
 [node name="ButtonJoin" type="Button" parent="VBox/HBoxJog" unique_id=189976727]
 layout_mode = 2
 focus_neighbor_left = NodePath("../ButtonHost")
-focus_neighbor_top = NodePath("../ButtonHost")
-focus_neighbor_right = NodePath("../ButtonHost")
+focus_neighbor_top = NodePath("../../TextNome")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../../GridContainer/TextIP")
 focus_next = NodePath("../../GridContainer/TextIP")
-focus_previous = NodePath("../ButtonHost")
+focus_previous = NodePath("../../TextNome")
 theme = ExtResource("5_bkqf8")
 theme_override_colors/font_color = Color(0.631373, 0.631373, 0.631373, 1)
 theme_override_colors/font_pressed_color = Color(0.764706, 1, 0.517647, 1)
@@ -192,6 +201,12 @@ horizontal_alignment = 2
 
 [node name="SpinBoxPort" type="SpinBox" parent="VBox/GridContainer" unique_id=1679285506]
 layout_mode = 2
+focus_neighbor_left = NodePath("../../ButtonComecar")
+focus_neighbor_top = NodePath("../TextIP")
+focus_neighbor_right = NodePath("../../ButtonComecar")
+focus_neighbor_bottom = NodePath("../../ButtonComecar")
+focus_next = NodePath("../../ButtonComecar")
+focus_previous = NodePath("../TextIP")
 theme = ExtResource("5_bkqf8")
 min_value = 1024.0
 max_value = 49151.0
@@ -254,6 +269,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Explicacao" type="Control" parent="." unique_id=1280812292]
+visible = false
 z_index = 10
 z_as_relative = false
 layout_mode = 1
@@ -585,6 +601,10 @@ text = "Fechar explicação"
 [node name="Separador3" type="Control" parent="Explicacao/Panel/VBox" unique_id=450004241]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
+
+[node name="TecladoVirtualUI" parent="." unique_id=1338331978 instance=ExtResource("6_g7mu5")]
+visible = false
+layout_mode = 1
 
 [node name="PopupError" type="Popup" parent="." unique_id=2120323267]
 disable_3d = true

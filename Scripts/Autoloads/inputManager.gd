@@ -33,6 +33,12 @@ const controle_tipo_string : Dictionary[Controle_tipo, String] = {
 	Controle_tipo.SWITCH : "Switch",
 }
 
+const botoes_acoes_res: Dictionary[Controle_tipo, BotoesAcoesControleRes] = {
+	Controle_tipo.PS     : preload("res://PreSets/UI/BotoesAcoesControle_PS.tres"),
+	Controle_tipo.XBOX   : preload("res://PreSets/UI/BotoesAcoesControle_PS.tres"),
+	Controle_tipo.SWITCH : preload("res://PreSets/UI/BotoesAcoesControle_PS.tres")
+}
+
 # actionMap_players[player id] -> acoes[nome da acao (do action_names)] -> nome da acao pro player no InputMap
 var actionMap_players = {}
 
@@ -142,17 +148,37 @@ func get_action_events(player_id: PlayerId, action_name: String) -> Array[InputE
 		return InputMap.action_get_events(action)
 	return []
 
-## pega o botao do jogador que faz a acao 'action_name'
-func get_text_action(player_id: PlayerId, action_name: String) -> String:
+func _find_data_event(player_id: PlayerId, action_name: String) -> Dictionary:
 	var events : Array[InputEvent] = get_action_events(player_id, action_name)
 	# se nao tem eventos -> retorne nenhum botao '-'
-	if events.is_empty(): return '-'
+	if events.is_empty(): return {}
 	# pega o primeiro evento da lista
 	var evento : InputEvent = events[0]
 	# pega os dados desse evento para conseguir gerar o texto com o botao desse evento
 	var data  : Dictionary = get_event_data(evento, player_id)
+	return data
+
+## pega o botao do jogador que faz a acao 'action_name'
+func get_text_action(player_id: PlayerId, action_name: String) -> String:
+	var data  : Dictionary = _find_data_event(player_id, action_name)
+	if data.is_empty(): return '-'
 	var texto : String     = get_texto_acao(data,   player_id)
 	return texto
+
+
+func get_image_action(player_id: PlayerId, action_name: String) -> Texture:
+	var data  : Dictionary = _find_data_event(player_id, action_name)
+	if data.is_empty(): return null
+	#
+	if data["on_controle"]:
+		# pegar dados do controle
+		var controle_tipo : Controle_tipo = data["controle_tipo"]
+		var controle_btn  : Controle_btn  = data["button"]
+		# acessa o resource de imagens por controle
+		var btn_acoes_res : BotoesAcoesControleRes = botoes_acoes_res[controle_tipo]
+		var texture: Texture = btn_acoes_res.imagem_botao[controle_btn]
+		return texture
+	return null
 
 ## retorna o texto do icone do botao, para dado jogador, e o controle btn
 func get_text_controle_btn(player_id: PlayerId, controle_btn: Controle_btn)-> String:
@@ -265,7 +291,7 @@ func get_texto_acao(data : Dictionary, player : PlayerId) -> String:
 	
 	if data["on_controle"]: # -- controle --
 		# pega o botao do controle
-		var controle_button := InputManager.Controle_btn.NONE
+		var controle_button: InputManager.Controle_btn = InputManager.Controle_btn.NONE
 		controle_button = data["button"]
 		# caso seja invalido
 		if controle_button == InputManager.Controle_btn.NONE:
@@ -303,6 +329,16 @@ func get_texto_acao(data : Dictionary, player : PlayerId) -> String:
 	# nao deve cair aqui
 	return '-'
 
+## Retorna um dicionario com 
+##	on_controle == true
+##		controle_tipo 	<- Controle_tipo
+##		button			<- Controle_btn
+##	on_controle == false
+##		on_mouse == true
+##			button 			 <- MouseButton (InputEventMouseButton.button_index)
+##		on_mouse == false
+##			unicode 		 <- int (InputEventKey.unicode)
+##			physical_keycode <- Key (InputEventKey.physical_keycode)
 func get_event_data(event : InputEvent, player : PlayerId, escutar_input : bool = false) -> Dictionary:
 	var data := {}
 	# controle

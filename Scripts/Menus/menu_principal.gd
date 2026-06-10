@@ -1,7 +1,9 @@
 extends Control
 
+@export var botao_focus : Button
+
 func _ready() -> void:
-	$GridContainer/ButtonJogar.grab_focus()
+	botao_focus.grab_focus()
 	# -- conexao de network
 	NetworkingGame.desligar_conexao()
 

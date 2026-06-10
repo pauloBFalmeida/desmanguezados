@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="BotoesAcoesControleRes" format=3 uid="uid://bb1vt8svdoehm"]
+
+[ext_resource type="Texture2D" uid="uid://bel2iv30al58q" path="res://addons/kenney_input_prompts/PlayStation/playstation_button_color_cross.svg" id="1_ubmr5"]
+[ext_resource type="Texture2D" uid="uid://cnpt5t4lo6hi1" path="res://addons/kenney_input_prompts/PlayStation/playstation_button_color_circle.svg" id="2_g26dg"]
+[ext_resource type="Texture2D" uid="uid://bpct8xdklmv4c" path="res://addons/kenney_input_prompts/PlayStation/playstation_button_color_square.svg" id="3_vfcgi"]
+[ext_resource type="Texture2D" uid="uid://umfddrlyv3l6" path="res://addons/kenney_input_prompts/PlayStation/playstation_button_color_triangle.svg" id="4_asjbh"]
+[ext_resource type="Texture2D" uid="uid://bjp8rbwf3iwwh" path="res://addons/kenney_input_prompts/PlayStation/playstation_trigger_l1_alternative.svg" id="5_knbki"]
+[ext_resource type="Texture2D" uid="uid://dgkre0gyhflty" path="res://addons/kenney_input_prompts/PlayStation/playstation_trigger_r1_alternative.svg" id="6_allux"]
+[ext_resource type="Texture2D" uid="uid://jec4s3101pf" path="res://addons/kenney_input_prompts/PlayStation/playstation_trigger_l2.svg" id="7_g5hx0"]
+[ext_resource type="Texture2D" uid="uid://b4mp54dlh5ieb" path="res://addons/kenney_input_prompts/PlayStation/playstation_trigger_r2.svg" id="8_rywrk"]
+[ext_resource type="Texture2D" uid="uid://c5ms34efo7ifj" path="res://addons/kenney_input_prompts/PlayStation/playstation_stick_l_up.svg" id="9_30gsh"]
+[ext_resource type="Texture2D" uid="uid://de7xah4mhwjpx" path="res://addons/kenney_input_prompts/PlayStation/playstation_stick_l_down.svg" id="10_7ru5o"]
+[ext_resource type="Texture2D" uid="uid://tkq6ovar2iso" path="res://addons/kenney_input_prompts/PlayStation/playstation_stick_l_left.svg" id="11_32nk5"]
+[ext_resource type="Texture2D" uid="uid://dptf7p51fh1rm" path="res://addons/kenney_input_prompts/PlayStation/playstation_stick_l_right.svg" id="12_unwww"]
+[ext_resource type="Texture2D" uid="uid://icxtss5tseqx" path="res://addons/kenney_input_prompts/PlayStation/playstation_stick_side_l.svg" id="13_57o31"]
+[ext_resource type="Texture2D" uid="uid://cfiga0yiurgbt" path="res://addons/kenney_input_prompts/PlayStation/playstation_stick_side_r.svg" id="14_8uq2a"]
+[ext_resource type="Texture2D" uid="uid://jpxbt653qkjr" path="res://addons/kenney_input_prompts/PlayStation/playstation3_button_select.svg" id="15_4oual"]
+[ext_resource type="Texture2D" uid="uid://bpga4jludrokx" path="res://addons/kenney_input_prompts/PlayStation/playstation3_button_start.svg" id="16_ay11x"]
+[ext_resource type="Script" uid="uid://bqdcsvr84uewc" path="res://Scripts/UI/botoes_acoes_controle.gd" id="17_ve2sc"]
+
+[resource]
+script = ExtResource("17_ve2sc")
+imagem_botao = Dictionary[int, Texture]({
+0: ExtResource("1_ubmr5"),
+1: ExtResource("2_g26dg"),
+2: ExtResource("3_vfcgi"),
+3: ExtResource("4_asjbh"),
+4: ExtResource("5_knbki"),
+5: ExtResource("6_allux"),
+6: ExtResource("7_g5hx0"),
+7: ExtResource("8_rywrk"),
+8: ExtResource("9_30gsh"),
+9: ExtResource("10_7ru5o"),
+10: ExtResource("11_32nk5"),
+11: ExtResource("12_unwww"),
+12: ExtResource("13_57o31"),
+13: ExtResource("14_8uq2a"),
+14: ExtResource("15_4oual"),
+15: ExtResource("16_ay11x")
+})
+metadata/_custom_type_script = "uid://bqdcsvr84uewc"

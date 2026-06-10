@@ -1,0 +1,217 @@
+[gd_scene format=3 uid="uid://bwgikeqs5kpr2"]
+
+[ext_resource type="Script" uid="uid://ba2us0teokgfx" path="res://Scripts/Menus/UsadosMenus/teclado_virtual_numerico.gd" id="1_ksdpl"]
+[ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="2_1qfes"]
+
+[node name="TecladoVirtualNumerico" type="Control" unique_id=608090575 node_paths=PackedStringArray("foco_inicial")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ksdpl")
+foco_inicial = NodePath("HBoxContainer/Button_Voltar")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=666173958]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -206.0
+offset_right = 206.0
+offset_bottom = 200.0
+grow_horizontal = 2
+
+[node name="GridNumeros" type="GridContainer" parent="HBoxContainer" unique_id=764023696]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 3
+
+[node name="Button_1" type="Button" parent="HBoxContainer/GridNumeros" unique_id=1180446556]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../Button_2")
+focus_neighbor_bottom = NodePath("../Button_4")
+focus_next = NodePath("../../VBoxControle/Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "1"
+
+[node name="Button_2" type="Button" parent="HBoxContainer/GridNumeros" unique_id=1369371958]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+focus_neighbor_left = NodePath("../Button_1")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../Button_3")
+focus_neighbor_bottom = NodePath("../Button_5")
+focus_next = NodePath("../../VBoxControle/Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "2"
+
+[node name="Button_3" type="Button" parent="HBoxContainer/GridNumeros" unique_id=594109842]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+focus_neighbor_left = NodePath("../Button_2")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../VBoxNumerosExtra/Button_0")
+focus_neighbor_bottom = NodePath("../Button_6")
+focus_next = NodePath("../../VBoxControle/Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "3"
+
+[node name="Button_4" type="Button" parent="HBoxContainer/GridNumeros" unique_id=849520426]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Button_1")
+focus_neighbor_right = NodePath("../Button_5")
+focus_neighbor_bottom = NodePath("../Button_7")
+focus_next = NodePath("../../VBoxControle/Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "4"
+
+[node name="Button_5" type="Button" parent="HBoxContainer/GridNumeros" unique_id=1478604039]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+focus_neighbor_left = NodePath("../Button_4")
+focus_neighbor_top = NodePath("../Button_2")
+focus_neighbor_right = NodePath("../Button_6")
+focus_neighbor_bottom = NodePath("../Button_8")
+focus_next = NodePath("../../VBoxControle/Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "5"
+
+[node name="Button_6" type="Button" parent="HBoxContainer/GridNumeros" unique_id=982112381]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+focus_neighbor_left = NodePath("../Button_5")
+focus_neighbor_top = NodePath("../Button_3")
+focus_neighbor_right = NodePath("../../VBoxNumerosExtra/Button_0")
+focus_neighbor_bottom = NodePath("../Button_9")
+focus_next = NodePath("../../VBoxControle/Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "6"
+
+[node name="Button_7" type="Button" parent="HBoxContainer/GridNumeros" unique_id=2069965100]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Button_4")
+focus_neighbor_right = NodePath("../Button_8")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../VBoxControle/Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "7"
+
+[node name="Button_8" type="Button" parent="HBoxContainer/GridNumeros" unique_id=1954446491]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+focus_neighbor_left = NodePath("../Button_7")
+focus_neighbor_top = NodePath("../Button_5")
+focus_neighbor_right = NodePath("../Button_9")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../VBoxControle/Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "8"
+
+[node name="Button_9" type="Button" parent="HBoxContainer/GridNumeros" unique_id=380173130]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+focus_neighbor_left = NodePath("../Button_8")
+focus_neighbor_top = NodePath("../Button_6")
+focus_neighbor_right = NodePath("../../VBoxNumerosExtra/Button_p")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../VBoxControle/Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "9"
+
+[node name="VBoxNumerosExtra" type="VBoxContainer" parent="HBoxContainer" unique_id=1391021603]
+layout_mode = 2
+
+[node name="Button_0" type="Button" parent="HBoxContainer/VBoxNumerosExtra" unique_id=2119791615]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_vertical = 3
+focus_neighbor_left = NodePath("../../GridNumeros/Button_3")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../VBoxControle/Button_Aceitar")
+focus_neighbor_bottom = NodePath("../Button_p")
+focus_next = NodePath("../../VBoxControle/Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "0"
+
+[node name="Button_p" type="Button" parent="HBoxContainer/VBoxNumerosExtra" unique_id=921452239]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_vertical = 3
+focus_neighbor_left = NodePath("../../GridNumeros/Button_9")
+focus_neighbor_top = NodePath("../Button_0")
+focus_neighbor_right = NodePath("../../VBoxControle/Button_Corrigir")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../VBoxControle/Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "."
+
+[node name="Separador" type="Control" parent="HBoxContainer" unique_id=1553323187]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="VBoxControle" type="VBoxContainer" parent="HBoxContainer" unique_id=1540297597]
+layout_mode = 2
+
+[node name="Button_Aceitar" type="Button" parent="HBoxContainer/VBoxControle" unique_id=483810186]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_vertical = 3
+focus_neighbor_left = NodePath("../../VBoxNumerosExtra/Button_0")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../Button_Voltar")
+focus_neighbor_bottom = NodePath("../Button_Corrigir")
+focus_next = NodePath("../../Button_Voltar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "Aceitar"
+
+[node name="Button_Corrigir" type="Button" parent="HBoxContainer/VBoxControle" unique_id=1185075200]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_vertical = 3
+focus_neighbor_left = NodePath("../../VBoxNumerosExtra/Button_p")
+focus_neighbor_top = NodePath("../Button_Aceitar")
+focus_neighbor_right = NodePath("../../Button_Voltar")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../Button_Aceitar")
+focus_previous = NodePath("../../Button_Voltar")
+theme = ExtResource("2_1qfes")
+text = "Corrigir"
+
+[node name="Button_Voltar" type="Button" parent="HBoxContainer" unique_id=1670696922]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_vertical = 3
+focus_neighbor_left = NodePath("../VBoxControle/Button_Aceitar")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../VBoxControle/Button_Aceitar")
+focus_previous = NodePath(".")
+theme = ExtResource("2_1qfes")
+text = "Voltar"
+
+[connection signal="pressed" from="HBoxContainer/VBoxControle/Button_Aceitar" to="." method="_on_button_aceitar_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxControle/Button_Corrigir" to="." method="_on_button_corrigir_pressed"]
+[connection signal="pressed" from="HBoxContainer/Button_Voltar" to="." method="_on_button_voltar_pressed"]
