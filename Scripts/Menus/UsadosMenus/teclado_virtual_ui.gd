@@ -44,6 +44,7 @@ func _criar_teclados() -> void:
 		teclado.fechar_pressed.connect(_fechar_apertado)
 		teclado.corrigir_pressed.connect(_corrigir_apertado)
 		teclado.char_pressed.connect(_char_apertado)
+		teclado.clear_pressed.connect(_clear_apertado)
 		# adiciona
 		teclados_tipos[tipo] = teclado
 	teclado_virtual = teclados_tipos[0]
@@ -73,6 +74,12 @@ func _get_str_menos_1_char(_text: String) -> String:
 	if _text.length() < 1: return ""
 	return _text.erase(_text.length()-1, 1)
 
+func clear_input() -> void:
+	if input_node is LineEdit:
+		input_node.text = ""
+	elif input_node is SpinBox:
+		input_node.value = 0
+
 # -----------------------------------------------------------------------------
 func _fechar_apertado() -> void:
 	esconder()
@@ -82,3 +89,6 @@ func _corrigir_apertado() -> void:
 
 func _char_apertado(_char: String) -> void:
 	add_char_input(_char)
+
+func _clear_apertado() -> void:
+	clear_input()

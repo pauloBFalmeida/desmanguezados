@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bwgikeqs5kpr2" path="res://Cenas/Menus/SubItems/teclado_virtual_numerico.tscn" id="1_4excx"]
 [ext_resource type="Script" uid="uid://d1roaug2d6l84" path="res://Scripts/Menus/UsadosMenus/teclado_virtual_ui.gd" id="1_ncx0r"]
+[ext_resource type="PackedScene" uid="uid://dojvjqnouvjtq" path="res://Cenas/Menus/SubItems/teclado_virtual_nomes.tscn" id="3_2adqe"]
 
 [node name="TecladoVirtualUI" type="Control" unique_id=1338331978]
 layout_mode = 3
@@ -14,7 +15,8 @@ grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("1_ncx0r")
 teclados_tipos_ref = Dictionary[int, PackedScene]({
-0: ExtResource("1_4excx")
+0: ExtResource("1_4excx"),
+1: ExtResource("3_2adqe")
 })
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=421123402]
@@ -24,7 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.9529412)
+color = Color(0, 0, 0, 0.98039216)
 
 [node name="Margin" type="MarginContainer" parent="." unique_id=1436906613]
 layout_mode = 1

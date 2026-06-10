@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://dojvjqnouvjtq"]
+
+[ext_resource type="Script" uid="uid://cqkcmh0l7kdjo" path="res://Scripts/Menus/UsadosMenus/teclado_virtual_nomes.gd" id="1_nctcn"]
+[ext_resource type="Theme" uid="uid://ch2meoilw7dg2" path="res://Assets/Interface/Fonts/subtitulo_theme.tres" id="2_wlcfp"]
+
+[node name="TecladoVirtualNomes" type="Control" unique_id=608090575 node_paths=PackedStringArray("foco_inicial")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nctcn")
+foco_inicial = NodePath("VBox/Button_Voltar")
+
+[node name="Button_nome_ref" type="Button" parent="." unique_id=380173130]
+visible = false
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 64.0
+focus_neighbor_bottom = NodePath(".")
+focus_previous = NodePath("../VBox/Button_Voltar")
+theme = ExtResource("2_wlcfp")
+text = "9"
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=625319792]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollNomes" type="ScrollContainer" parent="VBox" unique_id=1407724496]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+
+[node name="Margin" type="MarginContainer" parent="VBox/ScrollNomes" unique_id=305883468]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxNomes" type="HBoxContainer" parent="VBox/ScrollNomes/Margin" unique_id=666173958]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="Button_Voltar" type="Button" parent="VBox" unique_id=1670696922]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_vertical = 3
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath(".")
+theme = ExtResource("2_wlcfp")
+text = "Voltar"
+
+[connection signal="pressed" from="VBox/Button_Voltar" to="." method="_on_button_voltar_pressed"]

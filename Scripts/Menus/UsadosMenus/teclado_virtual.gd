@@ -5,6 +5,7 @@ extends Control
 signal fechar_pressed
 signal corrigir_pressed
 signal char_pressed(_char: String)
+signal clear_pressed
 
 enum Tipo {NUMERICO, NOMES}
 
