@@ -37,6 +37,8 @@ func _ready() -> void:
 	# ---
 	text_ip.text = Networking.get_local_ipv4()
 	update_button_server_visual()
+	# --- teclado virtual
+	text_nome.gui_input.connect(_on_text_nome_gui_input)
 	text_ip.gui_input.connect(_on_text_ip_gui_input)
 	text_port.get_line_edit().gui_input.connect(_on_spin_box_port_gui_input)
 	# ---
@@ -119,6 +121,11 @@ func _get_nome_jogador() -> String:
 	return text_nome.text
 
 # --- Abrir teclado virtual para o controle ---
+func _on_text_nome_gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept"):
+		text_nome.edit()
+		teclado_virtual_ui.mostrar(text_nome)
+
 func _on_text_ip_gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and text_ip.editable:
 		text_ip.edit()

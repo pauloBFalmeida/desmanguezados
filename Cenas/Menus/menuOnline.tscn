@@ -105,6 +105,12 @@ alignment = 1
 
 [node name="TextNome" type="LineEdit" parent="VBox" unique_id=122293029]
 layout_mode = 2
+focus_neighbor_left = NodePath("../HBoxJog/ButtonHost")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../HBoxJog/ButtonJoin")
+focus_neighbor_bottom = NodePath("../HBoxJog/ButtonHost")
+focus_next = NodePath("../HBoxJog/ButtonHost")
+focus_previous = NodePath("../HBoxJog/ButtonHost")
 theme = ExtResource("5_bkqf8")
 placeholder_text = "Nome do Jogador"
 alignment = 1
@@ -122,11 +128,12 @@ alignment = 1
 
 [node name="ButtonHost" type="Button" parent="VBox/HBoxJog" unique_id=540777876]
 layout_mode = 2
-focus_neighbor_top = NodePath("../ButtonJoin")
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../TextNome")
 focus_neighbor_right = NodePath("../ButtonJoin")
 focus_neighbor_bottom = NodePath("../../GridContainer/TextIP")
 focus_next = NodePath("../../GridContainer/TextIP")
-focus_previous = NodePath("../ButtonJoin")
+focus_previous = NodePath("../../TextNome")
 theme = ExtResource("5_bkqf8")
 theme_override_colors/font_color = Color(0.629675, 0.629675, 0.629675, 1)
 theme_override_colors/font_pressed_color = Color(0.762968, 1, 0.519136, 1)
@@ -142,11 +149,11 @@ layout_mode = 2
 [node name="ButtonJoin" type="Button" parent="VBox/HBoxJog" unique_id=189976727]
 layout_mode = 2
 focus_neighbor_left = NodePath("../ButtonHost")
-focus_neighbor_top = NodePath("../ButtonHost")
-focus_neighbor_right = NodePath("../ButtonHost")
+focus_neighbor_top = NodePath("../../TextNome")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../../GridContainer/TextIP")
 focus_next = NodePath("../../GridContainer/TextIP")
-focus_previous = NodePath("../ButtonHost")
+focus_previous = NodePath("../../TextNome")
 theme = ExtResource("5_bkqf8")
 theme_override_colors/font_color = Color(0.631373, 0.631373, 0.631373, 1)
 theme_override_colors/font_pressed_color = Color(0.764706, 1, 0.517647, 1)
