@@ -64,11 +64,18 @@ func _on_button_comecar_pressed() -> void:
 	NetworkingGame.jogador_nome = _get_nome_jogador()
 	# -- conexao --
 	Networking.ip_addr = text_ip.text
-	Networking.port = int(text_port.value)
+	var port: int = int(text_port.value)
+	port = min(port, text_port.min_value)
+	port = max(port, text_port.max_value)
+	Networking.port = port
 	if is_host:
 		Networking.create_server()
 	else:
 		Networking.create_client()
+	# foco no voltar se precisar
+	get_tree().create_timer(2.0).timeout.connect(
+		func(): btn_voltar.grab_focus()
+	)
 
 func _display_error(txt : String) -> void:
 	label_popup_error.text = txt
@@ -93,38 +100,16 @@ func _on_button_join_pressed() -> void:
 	is_host = false
 	update_button_server_visual()
 
-const nomes_possiveis : Array[String] = [
-	"Miguel",
-	"Arthur",
-	"Gael",
-	"Heitor",
-	"Helena",
-	"Alice",
-	"Rafa",
-	"Laura",
-	"Davi",
-	"Sophia",
-	"Bernardo",
-	"Valentina",
-	"Gabriel",
-	"Isadora",
-	"Vulpe",
-	"Manuela",
-	"Paulo",
-	"Julia",
-	"Lucas",
-    "Cecilia"
-]
 func _get_nome_jogador() -> String:
 	if text_nome.text.length() < 1:
-		return nomes_possiveis.pick_random()
+		return Globais.nomes_possiveis.pick_random()
 	return text_nome.text
 
 # --- Abrir teclado virtual para o controle ---
 func _on_text_nome_gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		text_nome.edit()
-		teclado_virtual_ui.mostrar(text_nome)
+		teclado_virtual_ui.mostrar(text_nome, TecladoVirtual.Tipo.NOMES)
 
 func _on_text_ip_gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and text_ip.editable:

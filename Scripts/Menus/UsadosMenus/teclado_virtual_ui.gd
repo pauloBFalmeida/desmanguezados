@@ -1,30 +1,52 @@
 class_name TecladoVirtualUI
 extends Control
 
-@onready var teclado_virtual: TecladoVirtual = $Margin/TecladoVirtual
+@export var teclados_tipos_ref: Dictionary[TecladoVirtual.Tipo, PackedScene]
 
-@export var foco_inicial: Control
+var teclados_tipos: Dictionary[TecladoVirtual.Tipo, TecladoVirtual]
+@onready var margin_teclado: MarginContainer = $Margin
+
+var teclado_virtual: TecladoVirtual
 
 var input_node: Control
 
 func _ready() -> void:
 	hide()
-	# sinais
-	teclado_virtual.fechar_pressed.connect(_fechar_apertado)
-	teclado_virtual.corrigir_pressed.connect(_corrigir_apertado)
-	teclado_virtual.char_pressed.connect(_char_apertado)
+	# criar os teclados
+	_criar_teclados()
 
-func mostrar(_input_node: Control) -> void:
+func mostrar(_input_node: Control, 
+				tipo: TecladoVirtual.Tipo = TecladoVirtual.Tipo.NUMERICO) -> void:
 	show()
 	set_input(_input_node)
 	#
+	_mostrar_teclado_tipo(tipo)
 	await get_tree().process_frame
-	foco_inicial.grab_focus()
+	teclado_virtual.foco_inicial.grab_focus()
 
 func esconder() -> void:
 	hide()
 	await get_tree().process_frame
 	input_node.find_next_valid_focus().grab_focus()
+
+
+func _mostrar_teclado_tipo(tipo: TecladoVirtual.Tipo) -> void:
+	teclado_virtual.hide()
+	teclado_virtual = teclados_tipos[tipo]
+	teclado_virtual.show()
+
+func _criar_teclados() -> void:
+	for tipo: TecladoVirtual.Tipo in teclados_tipos_ref.keys():
+		var teclado: TecladoVirtual = teclados_tipos_ref[tipo].instantiate()
+		margin_teclado.add_child(teclado)
+		teclado.hide()
+		# sinais
+		teclado.fechar_pressed.connect(_fechar_apertado)
+		teclado.corrigir_pressed.connect(_corrigir_apertado)
+		teclado.char_pressed.connect(_char_apertado)
+		# adiciona
+		teclados_tipos[tipo] = teclado
+	teclado_virtual = teclados_tipos[0]
 
 # -----------------------------------------------------------------------------
 func set_input(_input_node: Control) -> void:

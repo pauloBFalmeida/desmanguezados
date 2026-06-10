@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://b8awu480qgh5j"]
 
-[ext_resource type="PackedScene" uid="uid://bwgikeqs5kpr2" path="res://Cenas/Menus/SubItems/teclado_virtual.tscn" id="1_4excx"]
-[ext_resource type="Script" uid="uid://4rhl370vmkeb" path="res://Scripts/Menus/UsadosMenus/teclado_virtual_ui.gd" id="1_ncx0r"]
+[ext_resource type="PackedScene" uid="uid://bwgikeqs5kpr2" path="res://Cenas/Menus/SubItems/teclado_virtual_numerico.tscn" id="1_4excx"]
+[ext_resource type="Script" uid="uid://d1roaug2d6l84" path="res://Scripts/Menus/UsadosMenus/teclado_virtual_ui.gd" id="1_ncx0r"]
 
-[node name="TecladoVirtualUI" type="Control" unique_id=1338331978 node_paths=PackedStringArray("foco_inicial")]
+[node name="TecladoVirtualUI" type="Control" unique_id=1338331978]
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
@@ -13,7 +13,9 @@ offset_top = -254.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("1_ncx0r")
-foco_inicial = NodePath("Margin/TecladoVirtual/HBoxContainer/Button_Voltar")
+teclados_tipos_ref = Dictionary[int, PackedScene]({
+0: ExtResource("1_4excx")
+})
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=421123402]
 layout_mode = 1
@@ -35,8 +37,3 @@ theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 20
-
-[node name="TecladoVirtual" parent="Margin" unique_id=608090575 instance=ExtResource("1_4excx")]
-layout_mode = 2
-
-[editable path="Margin/TecladoVirtual"]

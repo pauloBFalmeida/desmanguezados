@@ -212,6 +212,8 @@ min_value = 1024.0
 max_value = 49151.0
 value = 45678.0
 rounded = true
+allow_greater = true
+allow_lesser = true
 
 [node name="VSeparator3" type="VSeparator" parent="VBox" unique_id=2111733050]
 self_modulate = Color(1, 1, 1, 0)
