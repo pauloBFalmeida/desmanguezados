@@ -17,7 +17,7 @@
 [node name="Level_1" type="Node" unique_id=39888598]
 
 [node name="GerenciadorPartida" parent="." unique_id=1429047279 node_paths=PackedStringArray("spawn_jogadores", "ferramenta_mgmt", "tilemaps_chao", "arvores_colecao", "lixos_colecao", "locais_plantar_colecao", "hud") instance=ExtResource("2_o11j3")]
-duracao_partida_segundos = 500
+duracao_partida_segundos = 120
 spawn_jogadores = NodePath("../SpawnJogadores")
 ferramenta_mgmt = NodePath("../FerramentasMgmt")
 tilemaps_chao = NodePath("../TileMaps")
@@ -91,11 +91,10 @@ position = Vector2(1103, 589)
 [node name="ArvorePinos7" parent="ArvoresColecao" unique_id=799763071 instance=ExtResource("3_thw6l")]
 position = Vector2(1177, 326)
 
-[node name="SpawnJogadores" parent="." unique_id=620231980 node_paths=PackedStringArray("ferramentas_mgmt", "tilemaps_chao") instance=ExtResource("1_w1eyt")]
+[node name="SpawnJogadores" parent="." unique_id=620231980 node_paths=PackedStringArray("ferramentas_mgmt") instance=ExtResource("1_w1eyt")]
 position = Vector2(518, 343)
-respawn_tempo_atras = null
 ferramentas_mgmt = NodePath("../FerramentasMgmt")
-tilemaps_chao = NodePath("../TileMaps")
+respawn_tempo_atras = null
 
 [node name="FerramentasMgmt" parent="." unique_id=2119335458 instance=ExtResource("6_poegd")]
 
