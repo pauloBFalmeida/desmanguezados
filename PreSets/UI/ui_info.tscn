@@ -42,14 +42,15 @@ horizontal_alignment = 1
 [node name="LabelTexto" type="Label" parent="Info" unique_id=497881722]
 layout_mode = 0
 offset_left = -77.0
-offset_top = -133.0
+offset_top = -179.0
 offset_right = 86.0
-offset_bottom = -48.0
+offset_bottom = -41.0
 size_flags_horizontal = 4
 theme = ExtResource("3_6dps0")
 theme_override_colors/font_color = Color(0.34902, 0.670588, 0.945098, 1)
 theme_override_constants/outline_size = 8
 text = "
+
 para Pegar"
 horizontal_alignment = 1
 

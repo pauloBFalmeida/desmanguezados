@@ -4,6 +4,7 @@ class_name Jogador
 signal pegou_ferramenta(ferramenta: Ferramenta)
 signal usou_ferramenta(ferramenta: Ferramenta, body: Node2D)
 signal largou_ferramenta(ferramenta: Ferramenta)
+signal jogou_ferramenta
 
 @export var player_id := InputManager.PlayerId.P1
 var is_usando_controle : bool = false
@@ -404,6 +405,8 @@ func _throw_ferramenta_jogar() -> void:
 	ferramentas_mgmt.jogador_throw_ferramenta_jogar(self, segurando)
 	# jogador parar de segurar ferramenta
 	limpar_jogador_ferramenta()
+	
+	jogou_ferramenta.emit()
 	
 	# reset dps de jogar
 	_throw_ferramenta_reset()
