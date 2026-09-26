@@ -8,7 +8,7 @@
 [ext_resource type="Material" uid="uid://cs3v0gkb8rgpw" path="res://PreSets/Cenario/agua_shader_mat.tres" id="4_txcry"]
 [ext_resource type="Material" uid="uid://cmbcfxlkxxnwq" path="res://addons/TileMapDual/ghost_material.tres" id="5_i1lhw"]
 [ext_resource type="TileSet" uid="uid://psbefoliis5m" path="res://PreSets/Cenario/tiles/tilemap_lodo.tres" id="6_34jt2"]
-[ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/TileMapDual.gd" id="7_f6tbh"]
+[ext_resource type="Script" uid="uid://cjk8nronimk5r" path="res://addons/TileMapDual/tile_map_dual.gd" id="7_f6tbh"]
 [ext_resource type="TileSet" uid="uid://cdnvbxaocdap8" path="res://PreSets/Cenario/tiles/tilemap_raizes.tres" id="8_34jt2"]
 [ext_resource type="PackedScene" uid="uid://b6fqbdb1cd3kc" path="res://Cenas/Partida/Arvores/arvore_pinos.tscn" id="9_yoj6l"]
 [ext_resource type="PackedScene" uid="uid://b1mtmyav5n0qq" path="res://Cenas/Partida/Jogadores/spawn_jogadores.tscn" id="10_6rij3"]
