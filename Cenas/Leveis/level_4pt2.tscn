@@ -85,6 +85,11 @@ hud = NodePath("../HUD")
 
 [node name="Mare" parent="." unique_id=1302744313 node_paths=PackedStringArray("gerenciador_partida", "tile_mare", "tilemaps_sobre_chao", "area_2d_mare") instance=ExtResource("3_fkylv")]
 gerenciador_partida = NodePath("../GerenciadorPartida")
+duracao_mare_subir_block = 2.0
+duracao_mare_cheia = 1.0
+duracao_mare_descer_block = 2.0
+duracao_mare_descer_andavel = 3.0
+duracao_mare_vazia = 5.0
 tile_mare = NodePath("TileMapsSobre/TileMapLayerMare")
 tilemaps_sobre_chao = NodePath("TileMapsSobre")
 area_2d_mare = NodePath("Area2DMare")
