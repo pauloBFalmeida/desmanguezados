@@ -1,6 +1,16 @@
 extends Node
 
-enum Level_id {ZEN, TUTORIAL, TUTORIAL_JOGAR, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5}
+enum Level_id {
+	ZEN, 
+	TUTORIAL, 
+	TUTORIAL_JOGAR, 
+	LEVEL_1, 
+	LEVEL_2, 
+	LEVEL_3, 
+	LEVEL_4, 
+	LEVEL_5,
+	LEVEL_6,
+}
 
 enum Medalha_tipo {OURO, PRATA, BRONZE, NENHUMA}
 
@@ -13,6 +23,7 @@ const LEVEIS_REF  : Dictionary[Level_id, String] = {
 	Level_id.LEVEL_3: "res://Cenas/Leveis/level_3.tscn",
 	Level_id.LEVEL_4: "res://Cenas/Leveis/level_4pt2.tscn",
 	Level_id.LEVEL_5: "res://Cenas/Leveis/level_5.tscn",
+	Level_id.LEVEL_6: "res://Cenas/Leveis/level_4.tscn",
 }
 
 const LEVEIS_NOME : Dictionary[Level_id, String] = {
@@ -24,6 +35,7 @@ const LEVEIS_NOME : Dictionary[Level_id, String] = {
 	Level_id.LEVEL_3: "Level Maré",
 	Level_id.LEVEL_4: "Level Ilhas",
 	Level_id.LEVEL_5: "Level Separados",
+	Level_id.LEVEL_6: "Level Arquipélago",
 }
 
 const LEVEIS_SELECAO_ORDEM : Array[Level_id] = [
@@ -34,6 +46,7 @@ const LEVEIS_SELECAO_ORDEM : Array[Level_id] = [
 	Level_id.LEVEL_5,
 	Level_id.LEVEL_3,
 	Level_id.LEVEL_4,
+	Level_id.LEVEL_6,
 ]
 
 const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
@@ -44,6 +57,7 @@ const LEVEIS_IMAGE : Dictionary[Level_id, CompressedTexture2D] = {
 	Level_id.LEVEL_3 : preload("res://Assets/Interface/leveis_thumbnails/lv3.png"),
 	Level_id.LEVEL_4 : preload("res://Assets/Interface/leveis_thumbnails/lv4_2.png"),
 	Level_id.LEVEL_5 : preload("res://Assets/Interface/leveis_thumbnails/lv5.png"),
+	Level_id.LEVEL_6 : preload("res://Assets/Interface/leveis_thumbnails/lv4.png"),
 }
 
 ## tempo para consquistar as medalhas de cada level
@@ -79,11 +93,16 @@ const LEVEIS_MEDALHAS : Dictionary[Level_id, Dictionary] = {
 	Level_id.LEVEL_4: {
 		Medalha_tipo.OURO:   80,
 		Medalha_tipo.PRATA:  90,
-		Medalha_tipo.BRONZE: 105
+		Medalha_tipo.BRONZE: 100
 		},
 	Level_id.LEVEL_5: {
 		Medalha_tipo.OURO:   55,
 		Medalha_tipo.PRATA:  65,
+		Medalha_tipo.BRONZE: 80
+		},
+	Level_id.LEVEL_6: {
+		Medalha_tipo.OURO:   65,
+		Medalha_tipo.PRATA:  70,
 		Medalha_tipo.BRONZE: 80
 		},
 }
