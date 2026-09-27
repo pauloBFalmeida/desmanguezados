@@ -28,6 +28,10 @@ var previsao_subitens : Dictionary[Path2D, Dictionary]
 @export var linha_width : float = 8.0
 @export var linha_width_curve : Curve
 
+func _ready() -> void:
+	# REGISTRAR
+	RegistradorPartida.registrar_jogar_ferramenta_mgmt(self)
+
 func _process(delta: float) -> void:
 	_processar_ferramentas_jogadas(delta)
 

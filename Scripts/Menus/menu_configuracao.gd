@@ -343,3 +343,7 @@ func _on_tag_exibicao_toggled(toggled_on: bool) -> void:
 func _on_tag_save_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		_update_configs_por_tag(Tag.SAVE)
+
+# REGISTRAR
+func _on_button_abrir_pasta_pressed() -> void:
+	RegistradorPartida.abrir_pasta_partidas()

@@ -216,6 +216,7 @@ theme_override_constants/v_separation = 16
 layout_mode = 2
 
 [node name="ButtonJogarOnline" parent="GridContainer" unique_id=150650527 instance=ExtResource("4_xgp53")]
+visible = false
 layout_mode = 2
 text = "Jogar Online"
 

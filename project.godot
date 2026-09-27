@@ -31,6 +31,7 @@ SaveManager="*res://Scripts/Autoloads/saveManager.gd"
 LevelManager="*res://Scripts/Autoloads/levelManager.gd"
 Networking="*uid://blmba3m2eljx1"
 NetworkingGame="*uid://bvl15ds5b23o1"
+RegistradorPartida="*uid://b22fgihfn3q1h"
 
 [display]
 

@@ -32,6 +32,12 @@ func _ready() -> void:
 	lidar_qtd_jogadores_zen()
 	# camera zoom
 	camera_zoom_in()
+	
+	
+	# REGISTRAR
+	RegistradorPartida.iniciar_partida(Globais.current_level_id, self, null)
+	for jogador in jogadores_por_player_id.values():
+		RegistradorPartida.registrar_jogador(jogador)
 
 func fim_partida() -> void:
 	# salvo a quantidade de tiles jogados que foram limpos

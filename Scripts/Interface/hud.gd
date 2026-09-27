@@ -241,6 +241,10 @@ func _despausar() -> void:
 # ---------------------------------
 func _goto_menu() -> void:
 	get_tree().paused = false
+	
+	# REGISTRAR
+	RegistradorPartida.parar_partida()
+	
 	SceneManager.full_goto_menu()
 
 func _goto_selecao() -> void:

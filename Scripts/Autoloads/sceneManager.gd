@@ -47,6 +47,9 @@ func goto_level(level_id : LevelManager.Level_id) -> void:
 		change_scene(LevelManager.LEVEIS_REF[level_id])
 
 func restart_level() -> void:
+	# REGISTRAR
+	RegistradorPartida.parar_partida()
+	
 	goto_level(Globais.current_level_id)
 
 # ------  ---------

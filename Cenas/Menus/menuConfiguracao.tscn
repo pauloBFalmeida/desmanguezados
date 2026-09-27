@@ -637,6 +637,16 @@ theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.95373, 0, 0.316003, 1)
 text = "Sim, Deletar"
 
+[node name="Label" type="Label" parent="VBoxConfigs/GridContainerSave" unique_id=47238186]
+layout_mode = 2
+
+[node name="ButtonAbrirPasta" type="Button" parent="VBoxConfigs/GridContainerSave" unique_id=1522041440]
+layout_mode = 2
+theme = ExtResource("5_eu4q4")
+theme_override_colors/font_color = Color(0.73, 0.45552003, 0.3796, 1)
+theme_override_font_sizes/font_size = 35
+text = "Abrir Pasta"
+
 [connection signal="pressed" from="ButtonVoltar" to="." method="_on_button_voltar_pressed"]
 [connection signal="toggled" from="VBoxTags/TagControles" to="." method="_on_tag_controles_toggled"]
 [connection signal="toggled" from="VBoxTags/TagGameplay" to="." method="_on_tag_gameplay_toggled"]
@@ -672,3 +682,4 @@ text = "Sim, Deletar"
 [connection signal="pressed" from="VBoxConfigs/GridContainerSave/ButtonDeletarPartidaCerteza" to="." method="_on_button_deletar_certeza_pressed"]
 [connection signal="toggled" from="VBoxConfigs/GridContainerSave/ButtonDeletarTodo" to="." method="_on_button_deletar_todo_toggled"]
 [connection signal="pressed" from="VBoxConfigs/GridContainerSave/ButtonDeletarTodoCerteza" to="." method="_on_button_deletar_todo_certeza_pressed"]
+[connection signal="pressed" from="VBoxConfigs/GridContainerSave/ButtonAbrirPasta" to="." method="_on_button_abrir_pasta_pressed"]

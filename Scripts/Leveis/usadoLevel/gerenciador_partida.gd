@@ -62,6 +62,12 @@ func _ready() -> void:
 	await get_tree().process_frame
 	# contagem inicial para comecar o jogo
 	contagem_inicio()
+	
+	# REGISTRAR
+	var controlador_mare : ControladorMare = get_node_or_null("../Mare")
+	RegistradorPartida.iniciar_partida(Globais.current_level_id, self, controlador_mare)
+	for jogador in jogadores_por_player_id.values():
+		RegistradorPartida.registrar_jogador(jogador)
 
 func iniciar_basicos() -> void:
 	# passa ref propria
@@ -105,13 +111,13 @@ func fim_partida() -> void:
 	# -- muda a imagem dependendo das condicoes de final --
 	
 	if qtd_mudas_necessitam_plantar() > 0: # nao plantou tudo
-		emit_signal("final_partida", TipoFim.DERROTA_TEMPO)
+		emit_signal("final_partida", TipoFim.DERROTA_TEMPO, tempo_partida)
 	else: # quantidade suficiente de mudas plantadas
 		if qtd_lixo > 0: # deixou lixo
-			emit_signal("final_partida", TipoFim.VITORIA_SUJO)
+			emit_signal("final_partida", TipoFim.VITORIA_SUJO, tempo_partida)
 		else: # limpou tudo
 			emit_signal("final_partida", TipoFim.VITORIA_LIMPO, tempo_partida)
-	
+
 
 func verificar_fim() -> void:
 	# plantou tudo e recolheu todo o lixo
@@ -184,6 +190,11 @@ func ajustar_arvores() -> void:
 			qtd_arvores_nativas += 1
 			arvore.cortada.connect(_cortada_arvore_nativa)
 			arvore.cortada.connect(_update_arvore_cortada.bind(arvore))
+		
+		# REGISTRAR
+		RegistradorPartida.registrar_objeto_inicial(
+			arvore, "arvore", "invasora" if arvore.is_invasora else "nativa"
+		)
 	_ajustar_arvores_ordem_tela()
 
 func plantada_arvore_nativa(arvore : Arvore) -> void:
@@ -197,6 +208,9 @@ func plantada_arvore_nativa(arvore : Arvore) -> void:
 	_update_hud_mudas()
 	# verifica se acabou o round
 	verificar_fim()
+	
+	# REGISTRAR
+	RegistradorPartida.registrar_objeto_adicionado(arvore, "arvore", "nativa")
 
 func _cortada_arvore_invasora() -> void:
 	qtd_arvores_invasoras -= 1
@@ -210,6 +224,11 @@ func _cortada_arvore_nativa() -> void:
 	# TODO: penalizacao por cortar arvore nativa
 
 func _update_arvore_cortada(arvore : Arvore) -> void:
+	# REGISTRAR
+	RegistradorPartida.registrar_objeto_removido(
+		arvore, "arvore", "invasora" if arvore.is_invasora else "nativa"
+	)
+	
 	# spawn local de plantar no local da arvore cortada
 	spawn_local_plantar(arvore.global_position)
 	# update e hud
@@ -224,14 +243,20 @@ func spawn_local_plantar(global_pos : Vector2) -> void:
 func ajustar_lixo() -> void:
 	for lixo : Lixo in lixos_colecao.get_children():
 		qtd_lixo += 1
-		lixo.coletado.connect(_coletado_lixo)
+		lixo.coletado.connect(_coletado_lixo.bind(lixo))
+		
+		# REGISTRAR
+		RegistradorPartida.registrar_objeto_inicial(lixo, "lixo")
 
 func colocado_lixo(lixo : Lixo) -> void:
 	lixos_colecao.add_child(lixo)
 	qtd_lixo += 1
-	lixo.coletado.connect(_coletado_lixo)
+	lixo.coletado.connect(_coletado_lixo.bind(lixo))
+	
+	# REGISTRAR
+	RegistradorPartida.registrar_objeto_adicionado(lixo, "lixo")
 
-func _coletado_lixo() -> void:
+func _coletado_lixo(lixo : Lixo) -> void:
 	qtd_lixo -= 1
 	# add as estatisticas
 	Globais.stats_lixos_coletados += 1
@@ -239,6 +264,9 @@ func _coletado_lixo() -> void:
 	_update_hud_lixo()
 	# verifica se acabou o round
 	verificar_fim()
+	
+	# REGISTRAR
+	RegistradorPartida.registrar_objeto_removido(lixo, "lixo")
 
 # ----- Locais para plantar Mudas -----
 # chamar dps de ajustar_arvores()
