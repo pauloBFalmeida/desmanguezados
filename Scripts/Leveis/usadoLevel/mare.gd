@@ -1,4 +1,5 @@
 extends Node
+class_name ControladorMare
 
 @export var gerenciador_partida : GerenciadorPartida
 

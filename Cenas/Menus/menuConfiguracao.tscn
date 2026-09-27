@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dl22uju6ygrp0"]
+[gd_scene format=3 uid="uid://dl22uju6ygrp0"]
 
 [ext_resource type="Script" uid="uid://bt6txdh0jok31" path="res://Scripts/Menus/menu_configuracao.gd" id="1_ojjoo"]
 [ext_resource type="Texture2D" uid="uid://dkl6w1n0j51lm" path="res://Assets/Interface/Menu/CartazDesmangezados.png" id="2_gnunr"]
@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://b45rnt8p1oqyy" path="res://Scripts/Menus/UsadosMenus/personalizar_controles.gd" id="6_eu4q4"]
 [ext_resource type="Theme" uid="uid://bgkss7jqb5ycr" path="res://Assets/Interface/Fonts/simbols_theme.tres" id="6_kdt1j"]
 
-[node name="MenuConfiguracao" type="Control"]
+[node name="MenuConfiguracao" type="Control" unique_id=711303620]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ojjoo")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1473394619]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,13 +26,13 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.37488, 0.3692, 0.71, 1)
 
-[node name="CartazDesmangezados" type="Sprite2D" parent="."]
+[node name="CartazDesmangezados" type="Sprite2D" parent="." unique_id=961876734]
 modulate = Color(0.15, 0.15, 0.15, 1)
 position = Vector2(641, 361.5)
 scale = Vector2(0.597222, 0.452469)
 texture = ExtResource("2_gnunr")
 
-[node name="LabelTitulo" type="Label" parent="."]
+[node name="LabelTitulo" type="Label" parent="." unique_id=1933503918]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -44,7 +44,7 @@ grow_horizontal = 2
 theme = ExtResource("3_1s67o")
 text = "Configurações"
 
-[node name="ButtonVoltar" type="Button" parent="."]
+[node name="ButtonVoltar" type="Button" parent="." unique_id=1058746645]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -63,7 +63,7 @@ focus_neighbor_bottom = NodePath("../VBoxTags/TagSave")
 theme = ExtResource("4_kdt1j")
 text = "Voltar"
 
-[node name="VBoxTags" type="VBoxContainer" parent="."]
+[node name="VBoxTags" type="VBoxContainer" parent="." unique_id=960700823]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -74,7 +74,7 @@ offset_right = 247.0
 offset_bottom = 32.0
 grow_vertical = 2
 
-[node name="TagControles" type="Button" parent="VBoxTags"]
+[node name="TagControles" type="Button" parent="VBoxTags" unique_id=1275978644]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_neighbor_left = NodePath("../../ButtonVoltar")
@@ -89,7 +89,7 @@ text = "Controles"
 flat = true
 alignment = 0
 
-[node name="TagGameplay" type="Button" parent="VBoxTags"]
+[node name="TagGameplay" type="Button" parent="VBoxTags" unique_id=552399751]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_neighbor_left = NodePath("../../ButtonVoltar")
@@ -103,7 +103,7 @@ text = "Gameplay"
 flat = true
 alignment = 0
 
-[node name="TagAudio" type="Button" parent="VBoxTags"]
+[node name="TagAudio" type="Button" parent="VBoxTags" unique_id=1515805989]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_neighbor_left = NodePath("../../ButtonVoltar")
@@ -118,7 +118,7 @@ text = "Áudio
 flat = true
 alignment = 0
 
-[node name="TagExibicao" type="Button" parent="VBoxTags"]
+[node name="TagExibicao" type="Button" parent="VBoxTags" unique_id=181410345]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_neighbor_left = NodePath("../../ButtonVoltar")
@@ -132,7 +132,7 @@ text = "Exibição"
 flat = true
 alignment = 0
 
-[node name="TagSave" type="Button" parent="VBoxTags"]
+[node name="TagSave" type="Button" parent="VBoxTags" unique_id=850672268]
 layout_mode = 2
 size_flags_horizontal = 0
 focus_neighbor_left = NodePath("../../ButtonVoltar")
@@ -146,7 +146,7 @@ text = "Dados Salvos"
 flat = true
 alignment = 0
 
-[node name="VBoxConfigs" type="VBoxContainer" parent="."]
+[node name="VBoxConfigs" type="VBoxContainer" parent="." unique_id=1247765504]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -160,14 +160,14 @@ offset_bottom = 210.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GridContainerControles" type="GridContainer" parent="VBoxConfigs"]
+[node name="GridContainerControles" type="GridContainer" parent="VBoxConfigs" unique_id=1248351758]
 visible = false
 layout_mode = 2
 theme_override_constants/h_separation = 50
 columns = 2
 metadata/tag = "controles"
 
-[node name="ButtonControleP1" type="Button" parent="VBoxConfigs/GridContainerControles"]
+[node name="ButtonControleP1" type="Button" parent="VBoxConfigs/GridContainerControles" unique_id=868273188]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -179,7 +179,7 @@ theme_override_colors/font_pressed_color = Color(0.764706, 1, 0.517647, 1)
 toggle_mode = true
 text = "Controle P1"
 
-[node name="ButtonControleP2" type="Button" parent="VBoxConfigs/GridContainerControles"]
+[node name="ButtonControleP2" type="Button" parent="VBoxConfigs/GridContainerControles" unique_id=1253886259]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -192,12 +192,12 @@ toggle_mode = true
 button_pressed = true
 text = "Controle P2"
 
-[node name="LabelTipoControle" type="Label" parent="VBoxConfigs/GridContainerControles"]
+[node name="LabelTipoControle" type="Label" parent="VBoxConfigs/GridContainerControles" unique_id=2116375459]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Tipo do Controle"
 
-[node name="OptionsTipoControles" type="OptionButton" parent="VBoxConfigs/GridContainerControles"]
+[node name="OptionsTipoControles" type="OptionButton" parent="VBoxConfigs/GridContainerControles" unique_id=1867133096]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 allow_reselect = true
@@ -205,23 +205,23 @@ item_count = 2
 popup/item_0/id = 0
 popup/item_1/id = 1
 
-[node name="VSeparator" type="VSeparator" parent="VBoxConfigs/GridContainerControles"]
+[node name="VSeparator" type="VSeparator" parent="VBoxConfigs/GridContainerControles" unique_id=1200229934]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="VSeparator2" type="VSeparator" parent="VBoxConfigs/GridContainerControles"]
+[node name="VSeparator2" type="VSeparator" parent="VBoxConfigs/GridContainerControles" unique_id=639468987]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="LabelLoadControles" type="Label" parent="VBoxConfigs/GridContainerControles"]
+[node name="LabelLoadControles" type="Label" parent="VBoxConfigs/GridContainerControles" unique_id=1412150756]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Carregar Controles
 Personalizados
 "
 
-[node name="ButtonLoadControles" type="Button" parent="VBoxConfigs/GridContainerControles"]
+[node name="ButtonLoadControles" type="Button" parent="VBoxConfigs/GridContainerControles" unique_id=711962235]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -229,12 +229,12 @@ size_flags_vertical = 0
 theme = ExtResource("5_eu4q4")
 text = "Carregar"
 
-[node name="LabelPersonalizarControles" type="Label" parent="VBoxConfigs/GridContainerControles"]
+[node name="LabelPersonalizarControles" type="Label" parent="VBoxConfigs/GridContainerControles" unique_id=1501447236]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Personalizar Controles"
 
-[node name="ButtonPersonalizarControles" type="Button" parent="VBoxConfigs/GridContainerControles"]
+[node name="ButtonPersonalizarControles" type="Button" parent="VBoxConfigs/GridContainerControles" unique_id=2014334499]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -242,20 +242,21 @@ size_flags_vertical = 4
 theme = ExtResource("5_eu4q4")
 text = "Editar"
 
-[node name="PersonalizarControles" type="Control" parent="VBoxConfigs" node_paths=PackedStringArray("menu_configuracao", "primeiro_botao")]
+[node name="PersonalizarControles" type="Control" parent="VBoxConfigs" unique_id=1668569737 node_paths=PackedStringArray("menu_configuracao", "primeiro_botao")]
+visible = false
 layout_mode = 2
 script = ExtResource("6_eu4q4")
 menu_configuracao = NodePath("../..")
 primeiro_botao = NodePath("ScrollContainerPersControles/GridContainer/ButtonDesfazer")
 
-[node name="ScrollContainerPersControles" type="ScrollContainer" parent="VBoxConfigs/PersonalizarControles"]
+[node name="ScrollContainerPersControles" type="ScrollContainer" parent="VBoxConfigs/PersonalizarControles" unique_id=279151076]
 custom_minimum_size = Vector2(0, 500)
-layout_mode = 2
+layout_mode = 0
 offset_top = 4.0
 offset_right = 775.0
 offset_bottom = 504.0
 
-[node name="GridContainer" type="GridContainer" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles"]
+[node name="GridContainer" type="GridContainer" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles" unique_id=1917478060]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -263,45 +264,45 @@ theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 10
 columns = 3
 
-[node name="HSeparator" type="HSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="HSeparator" type="HSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=690080764]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="HSeparator2" type="HSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=1326425437]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
-[node name="HSeparator3" type="HSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="HSeparator3" type="HSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=1090397177]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
-[node name="LabelFerramentas" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="LabelFerramentas" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=521068372]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
 text = "Ferramentas"
 
-[node name="LabelBotao" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="LabelBotao" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=834017285]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
 text = "Botão"
 
-[node name="LabelBotaoExtra" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="LabelBotaoExtra" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=2087724094]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
 text = "Botão Extra"
 
-[node name="LabelPegar" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="LabelPegar" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=599081467]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Pegar"
 
-[node name="ButtonFerPegar" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="ButtonFerPegar" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=316224132]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -309,7 +310,7 @@ size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
 text = "A"
 
-[node name="ButtonFerPegar2" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="ButtonFerPegar2" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=1983176986]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -317,12 +318,12 @@ size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
 text = "A"
 
-[node name="LabelLargar" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="LabelLargar" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=908367771]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Largar"
 
-[node name="ButtonFerLargar" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="ButtonFerLargar" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=1026961454]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -330,7 +331,7 @@ size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
 text = "A"
 
-[node name="ButtonFerLargar2" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="ButtonFerLargar2" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=1093243360]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -338,12 +339,12 @@ size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
 text = "A"
 
-[node name="LabelUsar" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="LabelUsar" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=701573018]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Usar"
 
-[node name="ButtonFerUsar" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="ButtonFerUsar" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=68790500]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -351,7 +352,7 @@ size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
 text = "A"
 
-[node name="ButtonFerUsar2" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="ButtonFerUsar2" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=1357864023]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -359,12 +360,12 @@ size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
 text = "A"
 
-[node name="LabelJogarForca" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="LabelJogarForca" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=1317244909]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Força de Jogar"
 
-[node name="ButtonFerJogarForca" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="ButtonFerJogarForca" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=1080620332]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -372,7 +373,7 @@ size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
 text = "A"
 
-[node name="ButtonFerJogarForca2" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="ButtonFerJogarForca2" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=11375235]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -380,40 +381,40 @@ size_flags_vertical = 4
 theme = ExtResource("6_kdt1j")
 text = "A"
 
-[node name="LabelSalvarControles" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="LabelSalvarControles" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=758770826]
 layout_mode = 2
 size_flags_vertical = 8
 theme = ExtResource("5_eu4q4")
 text = "Salvar Controles"
 
-[node name="VSeparator" type="VSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="VSeparator" type="VSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=537317263]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 
-[node name="ButtonSalvarControles" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="ButtonSalvarControles" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=93196899]
 layout_mode = 2
 size_flags_vertical = 4
 theme = ExtResource("5_eu4q4")
 text = "Salvar"
 
-[node name="LabelDesfazer" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="LabelDesfazer" type="Label" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=703884741]
 layout_mode = 2
 size_flags_vertical = 8
 theme = ExtResource("5_eu4q4")
 text = "Desfazer Alterações"
 
-[node name="VSeparator2" type="VSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="VSeparator2" type="VSeparator" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=1967211852]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="ButtonDesfazer" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer"]
+[node name="ButtonDesfazer" type="Button" parent="VBoxConfigs/PersonalizarControles/ScrollContainerPersControles/GridContainer" unique_id=1085854234]
 layout_mode = 2
 size_flags_vertical = 4
 theme = ExtResource("5_eu4q4")
 text = "Desfazer"
 
-[node name="ColorRectWaitingInput" type="ColorRect" parent="VBoxConfigs/PersonalizarControles"]
+[node name="ColorRectWaitingInput" type="ColorRect" parent="VBoxConfigs/PersonalizarControles" unique_id=226598114]
 visible = false
 z_index = 99
 z_as_relative = false
@@ -431,7 +432,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.705882)
 
-[node name="Label" type="Label" parent="VBoxConfigs/PersonalizarControles/ColorRectWaitingInput"]
+[node name="Label" type="Label" parent="VBoxConfigs/PersonalizarControles/ColorRectWaitingInput" unique_id=800349471]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -447,7 +448,7 @@ grow_vertical = 2
 theme = ExtResource("4_kdt1j")
 text = "Esperando Input"
 
-[node name="Button" type="Button" parent="VBoxConfigs/PersonalizarControles/ColorRectWaitingInput"]
+[node name="Button" type="Button" parent="VBoxConfigs/PersonalizarControles/ColorRectWaitingInput" unique_id=505755163]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_right = 8.0
@@ -459,33 +460,33 @@ focus_next = NodePath(".")
 focus_previous = NodePath(".")
 focus_mode = 0
 
-[node name="AimAllTime" type="CheckButton" parent="VBoxConfigs"]
+[node name="AimAllTime" type="CheckButton" parent="VBoxConfigs" unique_id=869492751]
 visible = false
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Controlar o indicador de direção tempo todo"
 metadata/tag = "gameplay"
 
-[node name="TrackingColor" type="CheckButton" parent="VBoxConfigs"]
+[node name="TrackingColor" type="CheckButton" parent="VBoxConfigs" unique_id=758324801]
 visible = false
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Desativar transparência do Indicador de direção "
 metadata/tag = "gameplay"
 
-[node name="GridContainerAudio" type="GridContainer" parent="VBoxConfigs"]
+[node name="GridContainerAudio" type="GridContainer" parent="VBoxConfigs" unique_id=1376789051]
 visible = false
 layout_mode = 2
 theme_override_constants/h_separation = 50
 columns = 2
 metadata/tag = "audio"
 
-[node name="LabelMusicaMenu" type="Label" parent="VBoxConfigs/GridContainerAudio"]
+[node name="LabelMusicaMenu" type="Label" parent="VBoxConfigs/GridContainerAudio" unique_id=1973310576]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Volume Música Menu"
 
-[node name="HSliderMusicaMenu" type="HSlider" parent="VBoxConfigs/GridContainerAudio"]
+[node name="HSliderMusicaMenu" type="HSlider" parent="VBoxConfigs/GridContainerAudio" unique_id=1810261648]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -493,12 +494,12 @@ min_value = -30.0
 max_value = 0.0
 value = -20.0
 
-[node name="LabelMusicaPartida" type="Label" parent="VBoxConfigs/GridContainerAudio"]
+[node name="LabelMusicaPartida" type="Label" parent="VBoxConfigs/GridContainerAudio" unique_id=2009157343]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Volume Música Partida"
 
-[node name="HSliderMusicaPartida" type="HSlider" parent="VBoxConfigs/GridContainerAudio"]
+[node name="HSliderMusicaPartida" type="HSlider" parent="VBoxConfigs/GridContainerAudio" unique_id=1220456718]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -506,69 +507,68 @@ min_value = -35.0
 max_value = -10.0
 value = -25.0
 
-[node name="LabelEffects" type="Label" parent="VBoxConfigs/GridContainerAudio"]
+[node name="LabelEffects" type="Label" parent="VBoxConfigs/GridContainerAudio" unique_id=1146606960]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Volume Efeitos Sonoros"
 
-[node name="HSliderEffects" type="HSlider" parent="VBoxConfigs/GridContainerAudio"]
+[node name="HSliderEffects" type="HSlider" parent="VBoxConfigs/GridContainerAudio" unique_id=650015353]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 min_value = -20.0
 max_value = 20.0
 
-[node name="TelaCheia" type="CheckButton" parent="VBoxConfigs"]
+[node name="TelaCheia" type="CheckButton" parent="VBoxConfigs" unique_id=572198923]
 visible = false
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Tela cheia"
 metadata/tag = "exibicao"
 
-[node name="RemEfeitosGraf" type="CheckButton" parent="VBoxConfigs"]
+[node name="RemEfeitosGraf" type="CheckButton" parent="VBoxConfigs" unique_id=2046442925]
 visible = false
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Remover Efeitos Gráficos"
 metadata/tag = "exibicao"
 
-[node name="RemLogoIntro" type="CheckButton" parent="VBoxConfigs"]
+[node name="RemLogoIntro" type="CheckButton" parent="VBoxConfigs" unique_id=556233366]
 visible = false
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Remover Logos na Abertura do Jogo"
 metadata/tag = "exibicao"
 
-[node name="GridContainerSave" type="GridContainer" parent="VBoxConfigs"]
-visible = false
+[node name="GridContainerSave" type="GridContainer" parent="VBoxConfigs" unique_id=724755185]
 layout_mode = 2
 theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 10
 columns = 2
 metadata/tag = "save"
 
-[node name="LabelResetConfigs" type="Label" parent="VBoxConfigs/GridContainerSave"]
+[node name="LabelResetConfigs" type="Label" parent="VBoxConfigs/GridContainerSave" unique_id=1738567860]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 theme_override_font_sizes/font_size = 34
 text = "Voltar as Configurações Gameplay,
 Áudio, Exibição Para os valores Iniciais"
 
-[node name="ButtonResetConfigs" type="Button" parent="VBoxConfigs/GridContainerSave"]
+[node name="ButtonResetConfigs" type="Button" parent="VBoxConfigs/GridContainerSave" unique_id=2081286000]
 layout_mode = 2
 size_flags_vertical = 4
 theme = ExtResource("5_eu4q4")
 text = "Voltar"
 
-[node name="LabelResetControles" type="Label" parent="VBoxConfigs/GridContainerSave"]
+[node name="LabelResetControles" type="Label" parent="VBoxConfigs/GridContainerSave" unique_id=509189350]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 theme_override_font_sizes/font_size = 35
 text = "Remover Controles Personalizados"
 
-[node name="LabelResetControlesMais" type="Label" parent="VBoxConfigs/GridContainerSave/LabelResetControles"]
+[node name="LabelResetControlesMais" type="Label" parent="VBoxConfigs/GridContainerSave/LabelResetControles" unique_id=762816327]
 visible = false
-layout_mode = 2
+layout_mode = 0
 offset_top = 32.0
 offset_right = 451.0
 offset_bottom = 68.0
@@ -578,52 +578,52 @@ theme_override_font_sizes/font_size = 35
 text = "Para ter efeito
 O jogo deverá ser reiniciado"
 
-[node name="ButtonResetControles" type="Button" parent="VBoxConfigs/GridContainerSave"]
+[node name="ButtonResetControles" type="Button" parent="VBoxConfigs/GridContainerSave" unique_id=1887734438]
 layout_mode = 2
 size_flags_vertical = 4
 theme = ExtResource("5_eu4q4")
 text = "Remover"
 
-[node name="LabelDeletarPartida" type="Label" parent="VBoxConfigs/GridContainerSave"]
+[node name="LabelDeletarPartida" type="Label" parent="VBoxConfigs/GridContainerSave" unique_id=234755711]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Deletar Save das partidas"
 
-[node name="ButtonDeletarPartida" type="Button" parent="VBoxConfigs/GridContainerSave"]
+[node name="ButtonDeletarPartida" type="Button" parent="VBoxConfigs/GridContainerSave" unique_id=1553011920]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 toggle_mode = true
 text = "Deletar"
 
-[node name="LabelPartidaCerteza" type="Label" parent="VBoxConfigs/GridContainerSave"]
+[node name="LabelPartidaCerteza" type="Label" parent="VBoxConfigs/GridContainerSave" unique_id=316752153]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Tem certeza? "
 
-[node name="ButtonDeletarPartidaCerteza" type="Button" parent="VBoxConfigs/GridContainerSave"]
+[node name="ButtonDeletarPartidaCerteza" type="Button" parent="VBoxConfigs/GridContainerSave" unique_id=1503993590]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.95373, 0, 0.316003, 1)
 text = "Sim, Deletar"
 
-[node name="LabelDeletarTodo" type="Label" parent="VBoxConfigs/GridContainerSave"]
+[node name="LabelDeletarTodo" type="Label" parent="VBoxConfigs/GridContainerSave" unique_id=1314555844]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Deletar Todo o Save"
 
-[node name="ButtonDeletarTodo" type="Button" parent="VBoxConfigs/GridContainerSave"]
+[node name="ButtonDeletarTodo" type="Button" parent="VBoxConfigs/GridContainerSave" unique_id=489405198]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 toggle_mode = true
 text = "Deletar"
 
-[node name="LabelTodoCerteza" type="Label" parent="VBoxConfigs/GridContainerSave"]
+[node name="LabelTodoCerteza" type="Label" parent="VBoxConfigs/GridContainerSave" unique_id=822766522]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 text = "Tem certeza?"
 
-[node name="LabelTodoCerteza2" type="Label" parent="VBoxConfigs/GridContainerSave/LabelTodoCerteza"]
-layout_mode = 2
+[node name="LabelTodoCerteza2" type="Label" parent="VBoxConfigs/GridContainerSave/LabelTodoCerteza" unique_id=523129287]
+layout_mode = 0
 offset_top = 36.0
 offset_right = 283.0
 offset_bottom = 68.0
@@ -631,7 +631,7 @@ theme = ExtResource("5_eu4q4")
 theme_override_font_sizes/font_size = 35
 text = "Até as estatísticas serão perdidas"
 
-[node name="ButtonDeletarTodoCerteza" type="Button" parent="VBoxConfigs/GridContainerSave"]
+[node name="ButtonDeletarTodoCerteza" type="Button" parent="VBoxConfigs/GridContainerSave" unique_id=181391837]
 layout_mode = 2
 theme = ExtResource("5_eu4q4")
 theme_override_colors/font_color = Color(0.95373, 0, 0.316003, 1)
