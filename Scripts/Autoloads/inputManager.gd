@@ -34,9 +34,9 @@ const controle_tipo_string : Dictionary[Controle_tipo, String] = {
 }
 
 const botoes_acoes_res: Dictionary[Controle_tipo, BotoesAcoesControleRes] = {
-	Controle_tipo.PS     : preload("res://PreSets/UI/BotoesAcoesControle_PS.tres"),
-	Controle_tipo.XBOX   : preload("res://PreSets/UI/BotoesAcoesControle_PS.tres"),
-	Controle_tipo.SWITCH : preload("res://PreSets/UI/BotoesAcoesControle_PS.tres")
+	Controle_tipo.PS     : preload("uid://bb1vt8svdoehm"),
+	Controle_tipo.XBOX   : preload("uid://b5eoky2b85c48"),
+	Controle_tipo.SWITCH : preload("uid://cu6e5pw1ydoyi")
 }
 
 # actionMap_players[player id] -> acoes[nome da acao (do action_names)] -> nome da acao pro player no InputMap
@@ -162,7 +162,7 @@ func _find_data_event(player_id: PlayerId, action_name: String) -> Dictionary:
 func get_text_action(player_id: PlayerId, action_name: String) -> String:
 	var data  : Dictionary = _find_data_event(player_id, action_name)
 	if data.is_empty(): return '-'
-	var texto : String     = get_texto_acao(data,   player_id)
+	var texto : String = get_texto_acao(data,   player_id)
 	return texto
 
 

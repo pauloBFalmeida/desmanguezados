@@ -68,8 +68,7 @@ func info_tipo_update() -> void:
 # Acontecer quando esta em cada tipo_informacao
 # ---------------------------------------------------------
 func _info_pegar_ferramenta() -> void:
-	_ajustar_simbolo(curr_jogador.player_id, Info_tipo.PEGAR_FERRAMENTA)
-	label_texto.text = "\nPegar"
+	mudar_texto(curr_jogador.player_id, Info_tipo.PEGAR_FERRAMENTA)
 	
 	# espera o jogador pegar a ferramenta
 	await curr_jogador.pegou_ferramenta
@@ -83,8 +82,7 @@ func _info_usar_ferramenta() -> void:
 	await _mudar_parent(curr_jogador)
 	
 	# muda o texto
-	_ajustar_simbolo(curr_jogador.player_id, Info_tipo.USAR_FERRAMENTA)
-	label_texto.text = "\nUsar"
+	mudar_texto(curr_jogador.player_id, Info_tipo.USAR_FERRAMENTA)
 	
 	# -- decide o que fazer para o jogador --
 	var _callable_mostrar    := func(_b): info_mostrar()
@@ -118,11 +116,10 @@ func _info_largar_ferramenta() -> void:
 	info_esconder_now()
 	
 	# muda o texto
-	_ajustar_simbolo(curr_jogador.player_id, Info_tipo.LARGAR_FERRAMENTA)
-	label_texto.text = "\nLargar"
+	mudar_texto(curr_jogador.player_id, Info_tipo.LARGAR_FERRAMENTA)
 	
 	# -- decide o que fazer para o jogador --
-	_criar_tween_transparente()
+	get_tree().create_timer(5.0).timeout.connect(_criar_tween_transparente)
 	
 	# -- esperar as condicoes para terminar --
 	await curr_jogador.largou_ferramenta
@@ -133,18 +130,16 @@ func _info_largar_ferramenta() -> void:
 
 func _info_jogar_ferramenta() -> void:
 	# muda o texto
-	_ajustar_simbolo(curr_jogador.player_id, Info_tipo.LARGAR_FERRAMENTA)
-	label_texto.text = "\nJogar"
+	mudar_texto(curr_jogador.player_id, Info_tipo.JOGAR_FERRAMENTA)
 	
 	# deixa visivel
 	info_mostrar()
 	
 	# espera um pouco segundos -> para deixar menos visivel
-	await get_tree().create_timer(5.0).timeout
-	_criar_tween_transparente()
+	get_tree().create_timer(5.0).timeout.connect(_criar_tween_transparente)
 	
 	# -- esperar as condicoes para terminar --
-	await curr_jogador.largou_ferramenta
+	await curr_jogador.jogou_ferramenta
 	
 	# avanca para a proxima info
 	tipo_informacao = Info_tipo.ACABAR
@@ -254,7 +249,56 @@ func tomar_acao(jogador : Jogador) -> void:
 # ---------------------------------------------------------
 # Simbolo
 # ---------------------------------------------------------
-func _ajustar_simbolo(player_id: InputManager.PlayerId, info_tipo: Info_tipo) -> void:
+
+func mudar_texto(player_id: InputManager.PlayerId, info_tipo: Info_tipo) -> void:
+	# -- ajusta o texto
+	## Forma de como fazer o input (opcional)
+	var texto_forma : String = ""
+	if info_tipo == Info_tipo.JOGAR_FERRAMENTA:
+		texto_forma = "Segure"
+	
+	## Acao, o que faz ex: joga, larga, ...
+	var texto_acao : String = ""
+	match (info_tipo):
+		Info_tipo.PEGAR_FERRAMENTA:
+			texto_acao = "Pegar"
+		Info_tipo.USAR_FERRAMENTA:
+			texto_acao = "Usar"
+		Info_tipo.LARGAR_FERRAMENTA:
+			texto_acao = "Largar"
+		Info_tipo.JOGAR_FERRAMENTA:
+			texto_acao = "Jogar"
+	
+	# -- ajusta o simbolo
+	## Input do controle
+	var texture := _ajustar_simbolo(player_id, info_tipo)
+	if info_tipo == Info_tipo.JOGAR_FERRAMENTA:
+		texture = _ajustar_simbolo(player_id, Info_tipo.LARGAR_FERRAMENTA)
+	
+	var texto_botao : String = ''
+	# se nao tem icone do controle, mostre o teclado botao do teclado
+	if texture == null:
+		match (info_tipo):
+			Info_tipo.PEGAR_FERRAMENTA:
+				texto_botao = InputManager.get_text_action(player_id, "pickup")
+			Info_tipo.USAR_FERRAMENTA:
+				texto_botao = InputManager.get_text_action(player_id, "interact")
+			Info_tipo.LARGAR_FERRAMENTA:
+				texto_botao = InputManager.get_text_action(player_id, "drop")
+			Info_tipo.JOGAR_FERRAMENTA:
+				texto_botao = InputManager.get_text_action(player_id, "drop")
+		texto_botao = texto_botao.to_upper()
+	
+	# -- Mostra o texto 
+	# label texto tem a formatacao
+	# Forma - de como fazer o input (se tiver)
+	# Simbolo ou Botao - input
+	# Acao - o que faz 
+	label_texto.text = texto_forma + '\n'
+	label_texto.text += texto_botao + "\n"
+	label_texto.text += texto_acao
+
+func _ajustar_simbolo(player_id: InputManager.PlayerId, info_tipo: Info_tipo) -> Texture:
 	match (info_tipo):
 		Info_tipo.PEGAR_FERRAMENTA:
 			texture_simbolo.texture = InputManager.get_image_action(
@@ -271,13 +315,16 @@ func _ajustar_simbolo(player_id: InputManager.PlayerId, info_tipo: Info_tipo) ->
 				player_id,
 				"drop"
 			)
+	return texture_simbolo.texture
 
 # ---------------------------------------------------------
 # Area de interacao
 # ---------------------------------------------------------
 func _atualizar_jogador(jogador : Jogador) -> void:
-	# se estiver como filho de jogador -> nao mude a cor
-	if get_parent() is Jogador: return
+	# se nao for para jogar
+	if tipo_informacao != Info_tipo.JOGAR_FERRAMENTA:
+		# se estiver como filho de jogador -> nao mude a cor
+		if get_parent() is Jogador: return
 	
 	curr_jogador = jogador
 	label_simbolo.add_theme_color_override("font_color", jogador.theme_color)
